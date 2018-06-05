@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -e
+
+CMD=$0
+DIR=$(dirname "$CMD")
+
+HOST_NAME=$1
+
+SERVICES="api registry vpn db"
+SERVICES="${SERVICES} img devices" # FIXME: remove
+
+usage() {
+  echo "usage: $0 HOST_NAME"
+  echo
+  echo "  HOST_NAME   the domain name to add host entries for, eg. example.com"
+  echo
+}
+
+if [ -z "$HOST_NAME" ]; then
+  usage
+  exit 1
+fi
+
+# We need sudo to write to /etc/hosts, so first write to a temp file and then
+# append all entries to hosts file.
+tmp=$(mktemp --tmpdir openbalena.XXXX)
+for service in $SERVICES; do
+  name="${service}.${HOST_NAME}"
+  if ! grep "\s$name" /etc/hosts >/dev/null 2>&1 ; then
+    echo "adding $name"
+    echo "127.0.0.1 $name" >>$tmp
+  fi
+done
+cat $tmp | sudo tee -a /etc/hosts >/dev/null
+rm -f $tmp

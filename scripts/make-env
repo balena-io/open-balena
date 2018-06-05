@@ -1,0 +1,40 @@
+#!/bin/sh
+
+set -e
+
+HOST_NAME="$1"
+ROOT_CA="$2"
+TOKEN_AUTH_PUB="$3"
+TOKEN_AUTH_KEY="$4"
+TOKEN_AUTH_KID="$5"
+
+usage() {
+  echo "usage: $0 HOST_NAME ROOT_CA TOKEN_AUTH_PUB TOKEN_AUTH_KEY TOKEN_AUTH_KID"
+  echo
+}
+
+randstr() {
+  LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | fold -w ${1:-32} | head -n 1
+}
+
+b64encode() {
+  cat "$1" | base64 --wrap=0 2>/dev/null || cat "$1" | base64 --break=0
+}
+
+if [ -z "$HOST_NAME"  ] || [ -z "$ROOT_CA" ] || [ -z "$TOKEN_AUTH_PUB" ] || [ -z "$TOKEN_AUTH_KEY" ] || [ -z "$TOKEN_AUTH_KID" ]; then
+  usage
+  exit 1
+fi
+
+cat <<STR
+export OPENBALENA_DEBUG=true
+export OPENBALENA_PRODUCTION_MODE=false
+export OPENBALENA_HOST_NAME=$HOST_NAME
+export OPENBALENA_JWT_SECRET=$(randstr 32)
+export OPENBALENA_RESINOS_REGISTRY_CODE=$(randstr 32)
+export OPENBALENA_ROOT_CA=$(b64encode "$ROOT_CA")
+export OPENBALENA_TOKEN_AUTH_PUB=$(b64encode "$TOKEN_AUTH_PUB")
+export OPENBALENA_TOKEN_AUTH_KEY=$(b64encode "$TOKEN_AUTH_KEY")
+export OPENBALENA_TOKEN_AUTH_KID=$(b64encode "$TOKEN_AUTH_KID")
+export OPENBALENA_VPN_SERVICE_API_KEY=$(randstr 32)
+STR

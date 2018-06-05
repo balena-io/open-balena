@@ -1,0 +1,58 @@
+#!/bin/sh
+
+set -e
+
+CMD=$0
+DIR=$(dirname "$CMD")
+
+HOST_NAME=${1:-openbalena.local}
+PROJECT_NAME=${2:-demo}
+
+PROJECT_DIR="$(pwd)/${PROJECT_NAME}"
+CERTS_DIR="${PROJECT_DIR}/certs"
+
+usage() {
+  echo "usage: $0 [HOST_NAME [PROJECT_NAME]]"
+  echo
+  echo "  HOST_NAME     the domain name this deployment will run as, eg. example.com. Default is 'openbalena.local'"
+  echo "  PROJECT_NAME  a name for the deployment, eg. staging. Default is 'demo'"
+  echo
+}
+
+echo_bold() {
+  printf "\033[1m${@}\033[0m\n"
+}
+
+if [ -d "$PROJECT_DIR" ]; then
+  echo 'Project directory already exists. Please remove it or specify another project name.'
+  exit 1
+fi
+
+echo_bold "==> Creating new project at: $PROJECT_DIR"
+mkdir -p "$PROJECT_DIR" "$CERTS_DIR"
+
+echo_bold "==> Creating root CA cert..."
+"${DIR}/gen-root-ca-cert" $HOST_NAME "$CERTS_DIR"
+
+echo_bold "==> Creating token auth cert..."
+"${DIR}/gen-token-auth-cert" $HOST_NAME "$CERTS_DIR"
+
+echo_bold "==> Setting up environment..."
+cat >"${PROJECT_DIR}/activate" <<STR
+$("${DIR}/make-env" \
+  $HOST_NAME \
+  "${CERTS_DIR}/root.chain.pem" \
+  "${CERTS_DIR}/token-auth.crt" \
+  "${CERTS_DIR}/token-auth.pem" \
+  "${CERTS_DIR}/token-auth.kid")
+STR
+
+echo_bold "==> Adding default compose file..."
+echo "version: '2.1'" >"${PROJECT_DIR}/docker-compose.yml"
+
+# FIXME: should be explicitly requested via a flag
+echo_bold "==> Patching /etc/hosts..."
+"${DIR}/patch-hosts" $HOST_NAME
+
+echo_bold "==> Activating project..."
+"${DIR}/select-project" "$PROJECT_DIR"

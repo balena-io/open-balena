@@ -1,0 +1,42 @@
+#!/bin/sh
+
+set -e
+
+CMD=$0
+DIR=$(dirname "$CMD")
+
+CN=$1
+OUT=${2:-.}
+
+CERT_FILE="${OUT}/token-auth"
+EXPIRY_DAYS=730
+
+usage() {
+  echo "usage: $0 HOST_NAME [OUT]"
+  echo
+  echo "  HOST_NAME   the domain name the certificate is valid for, eg. example.com"
+  echo "  OUT         path to output directory generated files will be placed in"
+  echo
+}
+
+keyid() {
+  # FIXME: do this in bash or python, not node
+  nodejs "${DIR}/_keyid.js" "$1"
+}
+
+if [ -z "$CN" ]; then
+  usage
+  exit 1
+fi
+
+openssl ecparam -name prime256v1 -genkey -noout -out "${CERT_FILE}.pem" 2>/dev/null
+openssl req -x509 -new -nodes -days "${EXPIRY_DAYS}" -key "${CERT_FILE}.pem" -subj "/CN=api.${CN}" -out "${CERT_FILE}.crt" 2>/dev/null
+openssl ec -in "${CERT_FILE}.pem" -pubout -outform DER -out "${CERT_FILE}".der 2>/dev/null
+keyid "${CERT_FILE}".der >"${CERT_FILE}".kid
+
+# Cleanup
+rm "${CERT_FILE}.der"
+
+echo "PUB=${CERT_FILE}.crt"
+echo "KEY=${CERT_FILE}.pem"
+echo "KID=${CERT_FILE}.kid"

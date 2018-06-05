@@ -1,0 +1,15 @@
+version: '2.1'
+
+services:
+  component:
+    cap_add:
+      - SYS_ADMIN
+      - SYS_RESOURCE
+    environment:
+      - CONFD_BACKEND=ENV
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+
+  system:
+    security_opt:
+      - seccomp:unconfined
