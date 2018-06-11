@@ -21,7 +21,7 @@ Vagrant.configure('2') do |config|
   config.vm.provision :docker_compose
 
   # FIXME: remove node
-  config.vm.provision :shell, inline: 'apt-get install nodejs'
+  config.vm.provision :shell, inline: 'apt-get update && apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*'
 
   # FIXME: remove `docker login`
   config.vm.provision :shell, inline: "docker login --username resindev --password #{ENV.fetch('DOCKERHUB_PASSWORD')}"
