@@ -7,7 +7,7 @@ Vagrant.require_version '>= 2.0.0'
 end
 
 Vagrant.configure('2') do |config|
-  config.vm.define 'open-balena-vm'
+  config.vm.define 'openbalenavm'
   config.vm.box = 'bento/ubuntu-16.04'
   config.vm.box_url = 'https://vagrantcloud.com/bento/boxes/ubuntu-16.04/versions/201803.24.0/providers/virtualbox.box'
 
