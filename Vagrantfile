@@ -25,6 +25,6 @@ Vagrant.configure('2') do |config|
 
   # FIXME: remove `docker login`
   config.vm.provision :shell, inline: "docker login --username resindev --password #{ENV.fetch('DOCKERHUB_PASSWORD')}"
-  config.vm.provision :shell, inline: 'cd /home/vagrant/open-balena && ./scripts/start-project'
+  config.vm.provision :shell, inline: "cd /home/vagrant/open-balena && ./scripts/start-project #{ENV.fetch('OPENBALENA_PROJECT_NAME', '')} #{ENV.fetch('OPENBALENA_HOST_NAME', '')}"
   config.vm.provision :shell, inline: 'cd /home/vagrant/open-balena && ./scripts/run-fig-command up -d', run: 'always'
 end
