@@ -14,8 +14,6 @@ services:
     image: resin/resin-api:${OPENBALENA_API_VERSION_TAG:-master}
     depends_on:
       - db
-    security_opt:
-      - seccomp:unconfined
     environment:
       ADMIN_LIST: 
       AUTH_RESINOS_REGISTRY_CODE: ${OPENBALENA_RESINOS_REGISTRY_CODE}
