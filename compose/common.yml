@@ -7,8 +7,10 @@ services:
       - SYS_RESOURCE
     environment:
       - CONFD_BACKEND=ENV
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    tmpfs:
+      - /run
+      - /sys/fs/cgroup
+    privileged: true
 
   system:
     security_opt:
