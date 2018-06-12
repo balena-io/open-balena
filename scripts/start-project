@@ -5,17 +5,17 @@ set -e
 CMD=$0
 DIR=$(dirname "$CMD")
 
-HOST_NAME=${1:-openbalena.local}
-PROJECT_NAME=${2:-demo}
+PROJECT_NAME=${1:-demo}
+HOST_NAME=${2:-openbalena.local}
 
 PROJECT_DIR="$(pwd)/${PROJECT_NAME}"
 CERTS_DIR="${PROJECT_DIR}/certs"
 
 usage() {
-  echo "usage: $0 [HOST_NAME [PROJECT_NAME]]"
+  echo "usage: $0 [PROJECT_NAME [HOST_NAME]]"
   echo
-  echo "  HOST_NAME     the domain name this deployment will run as, eg. example.com. Default is 'openbalena.local'"
   echo "  PROJECT_NAME  a name for the deployment, eg. staging. Default is 'demo'"
+  echo "  HOST_NAME     the domain name this deployment will run as, eg. example.com. Default is 'openbalena.local'"
   echo
 }
 
