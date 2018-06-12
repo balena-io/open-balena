@@ -4,6 +4,7 @@ set -e
 
 CMD=$0
 DIR=$(dirname "$CMD")
+BASE_DIR=$(dirname "$DIR")
 
 PROJECT_NAME=${1:-demo}
 HOST_NAME=${2:-openbalena.local}
@@ -48,7 +49,7 @@ $("${DIR}/make-env" \
 STR
 
 echo_bold "==> Adding default compose file..."
-echo "version: '2.1'" >"${PROJECT_DIR}/docker-compose.yml"
+cp "${BASE_DIR}/compose/template.yml" "${PROJECT_DIR}/docker-compose.yml"
 
 # FIXME: should be explicitly requested via a flag
 echo_bold "==> Patching /etc/hosts..."
