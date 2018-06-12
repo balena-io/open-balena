@@ -29,6 +29,6 @@ Vagrant.configure('2') do |config|
   config.vm.provision :shell, privileged: false,
     inline: "cd /home/vagrant/open-balena && ./scripts/start-project #{ENV.fetch('OPENBALENA_PROJECT_NAME', '')} #{ENV.fetch('OPENBALENA_HOST_NAME', '')}"
   config.vm.provision :shell, privileged: false,
-    inline: 'cd /home/vagrant/open-balena && ./scripts/run-fig-command up -d',
+    inline: 'cd /home/vagrant/open-balena && ./scripts/run-fig-command up -d || true',
     run: 'always'
 end
