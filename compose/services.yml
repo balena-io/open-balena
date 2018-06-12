@@ -18,7 +18,7 @@ services:
       ADMIN_LIST: 
       AUTH_RESINOS_REGISTRY_CODE: ${OPENBALENA_RESINOS_REGISTRY_CODE}
       BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
-      DB_HOST: db
+      DB_HOST: db.${OPENBALENA_HOST_NAME}
       DB_PASSWORD: docker
       DB_PORT: 5432
       DB_USER: docker
@@ -164,6 +164,16 @@ services:
       - "222:222"
       - "443:443"
       - "5432:5432"
+    networks:
+      default:
+        aliases:
+          - api.${OPENBALENA_HOST_NAME}
+          - registry.${OPENBALENA_HOST_NAME}
+          - vpn.${OPENBALENA_HOST_NAME}
+          - db.${OPENBALENA_HOST_NAME}
+          # FIXME: remove
+          - proxy.${OPENBALENA_HOST_NAME}
+          - img.${OPENBALENA_HOST_NAME}
     environment:
       BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
       HAPROXY_HOSTNAME: ${OPENBALENA_HOST_NAME}
