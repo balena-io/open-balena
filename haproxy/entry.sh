@@ -1,9 +1,10 @@
-#!/bin/sh
+#!/bin/bash -eu
 
-CA_B64="$BALENA_ROOT_CA"
-CA_FILE=/etc/ssl/private/root.chain.pem
-
-mkdir -p $(dirname "$CA_FILE")
-echo "$CA_B64" | base64 -d >"$CA_FILE"
-
+HAPROXY_CHAIN=/etc/ssl/private/open-balena.pem
+mkdir -p "$(dirname "${HAPROXY_CHAIN}")"
+(
+    echo "${BALENA_HAPROXY_CRT}" | base64 -d
+    echo "${BALENA_HAPROXY_KEY}" | base64 -d
+    echo "${BALENA_ROOT_CA}" | base64 -d
+) > "${HAPROXY_CHAIN}"
 exec haproxy -f /usr/local/etc/haproxy/haproxy.cfg

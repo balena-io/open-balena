@@ -1,6 +1,4 @@
-#!/bin/sh
-
-set -e
+#!/bin/bash -eu
 
 CMD=$0
 DIR=$(dirname "$CMD")
@@ -21,7 +19,7 @@ usage() {
 }
 
 echo_bold() {
-  printf "\033[1m${@}\033[0m\n"
+  printf "\033[1m%s\033[0m\n" "${@}"
 }
 
 if [ -d "$PROJECT_DIR" ]; then
@@ -32,21 +30,20 @@ fi
 echo_bold "==> Creating new project at: $PROJECT_DIR"
 mkdir -p "$PROJECT_DIR" "$CERTS_DIR"
 
-echo_bold "==> Creating root CA cert..."
-"${DIR}/gen-root-ca-cert" $HOST_NAME "$CERTS_DIR"
+echo_bold "==> Generating root CA cert..."
+source "${DIR}/gen-root-ca" "${HOST_NAME}" "${CERTS_DIR}"
 
-echo_bold "==> Creating token auth cert..."
-"${DIR}/gen-token-auth-cert" $HOST_NAME "$CERTS_DIR"
+echo_bold "==> Generating root cert chain for haproxy..."
+source "${DIR}/gen-root-cert" "${HOST_NAME}" "${CERTS_DIR}"
+
+echo_bold "==> Generating token auth cert..."
+source "${DIR}/gen-token-auth-cert" "${HOST_NAME}" "${CERTS_DIR}"
+
+echo_bold "==> Generating VPN CA, cert and dhparam (this may take a while)..."
+source "${DIR}/gen-vpn-certs" "${HOST_NAME}" "${CERTS_DIR}"
 
 echo_bold "==> Setting up environment..."
-cat >"${PROJECT_DIR}/activate" <<STR
-$("${DIR}/make-env" \
-  $HOST_NAME \
-  "${CERTS_DIR}/root.chain.pem" \
-  "${CERTS_DIR}/token-auth.crt" \
-  "${CERTS_DIR}/token-auth.pem" \
-  "${CERTS_DIR}/token-auth.kid")
-STR
+cat >"${PROJECT_DIR}/activate" <(source "${DIR}/make-env")
 
 echo_bold "==> Adding default compose file..."
 cp "${BASE_DIR}/compose/template.yml" "${PROJECT_DIR}/docker-compose.yml"
@@ -56,4 +53,4 @@ echo_bold "==> Patching /etc/hosts..."
 "${DIR}/patch-hosts" $HOST_NAME
 
 echo_bold "==> Activating project..."
-"${DIR}/select-project" "$PROJECT_DIR"
+"${DIR}/select-project" "${PROJECT_DIR}"

@@ -1,30 +1,42 @@
-#!/bin/sh
-
-set -e
-
-HOST_NAME="$1"
-ROOT_CA="$2"
-TOKEN_AUTH_PUB="$3"
-TOKEN_AUTH_KEY="$4"
-TOKEN_AUTH_KID="$5"
+#!/bin/bash -eu
 
 usage() {
-  echo "usage: $0 HOST_NAME ROOT_CA TOKEN_AUTH_PUB TOKEN_AUTH_KEY TOKEN_AUTH_KID"
+  echo "usage: $0"
+  echo
+  echo "Required Variables:"
+  echo
+  echo "  HOST_NAME"
+  echo "  ROOT_CA    Path to root CA certificate"
+  echo "  ROOT_CRT   Path to root/wildcard certificate"
+  echo "  ROOT_KEY   Path to root/wildcard private key"
+  echo "  JWT_CRT    Path to Token Auth certificate"
+  echo "  JWT_KEY    Path to Token Auth private key"
+  echo "  JWT_KID    The KeyID for the Token Auth certificate"
+  echo "  VPN_CA     Path to the VPN sub-CA certificate"
+  echo "  VPN_CRT    Path to the VPN server certificate"
+  echo "  VPN_KEY    Path to the VPN server private key"
+  echo "  VPN_DH     Path to the VPN server Diffie Hellman parameters"
   echo
 }
 
+for var in HOST_NAME ROOT_CA ROOT_CRT ROOT_KEY JWT_CRT JWT_KEY JWT_KID VPN_CA VPN_CRT VPN_KEY VPN_DH; do
+    if [ -z "${!var-}" ]; then
+        usage
+        exit 1
+    fi
+done
+
 randstr() {
-  LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | fold -w ${1:-32} | head -n 1
+  LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | fold -w "${1:-32}" | head -n 1
 }
 
 b64encode() {
-  cat "$1" | base64 --wrap=0 2>/dev/null || cat "$1" | base64 --break=0
+  cat "$@" | base64 --wrap=0 2>/dev/null || cat "$@" | base64 --break=0
 }
 
-if [ -z "$HOST_NAME"  ] || [ -z "$ROOT_CA" ] || [ -z "$TOKEN_AUTH_PUB" ] || [ -z "$TOKEN_AUTH_KEY" ] || [ -z "$TOKEN_AUTH_KID" ]; then
-  usage
-  exit 1
-fi
+b64encode_str() {
+  echo -n "$@" | base64 --wrap=0 - 2>/dev/null || echo -n "$@" | base64 --break=0 -
+}
 
 cat <<STR
 export OPENBALENA_DEBUG=true
@@ -33,8 +45,14 @@ export OPENBALENA_HOST_NAME=$HOST_NAME
 export OPENBALENA_JWT_SECRET=$(randstr 32)
 export OPENBALENA_RESINOS_REGISTRY_CODE=$(randstr 32)
 export OPENBALENA_ROOT_CA=$(b64encode "$ROOT_CA")
-export OPENBALENA_TOKEN_AUTH_PUB=$(b64encode "$TOKEN_AUTH_PUB")
-export OPENBALENA_TOKEN_AUTH_KEY=$(b64encode "$TOKEN_AUTH_KEY")
-export OPENBALENA_TOKEN_AUTH_KID=$(b64encode "$TOKEN_AUTH_KID")
+export OPENBALENA_ROOT_CRT=$(b64encode "${ROOT_CRT}")
+export OPENBALENA_ROOT_KEY=$(b64encode "${ROOT_KEY}")
+export OPENBALENA_TOKEN_AUTH_PUB=$(b64encode "$JWT_CRT")
+export OPENBALENA_TOKEN_AUTH_KEY=$(b64encode "$JWT_KEY")
+export OPENBALENA_TOKEN_AUTH_KID=$(b64encode_str "$JWT_KID")
+export OPENBALENA_VPN_CA=$(b64encode "$VPN_CA")
+export OPENBALENA_VPN_SERVER_CRT=$(b64encode "$VPN_CRT")
+export OPENBALENA_VPN_SERVER_KEY=$(b64encode "$VPN_KEY")
+export OPENBALENA_VPN_SERVER_DH=$(b64encode "$VPN_DH")
 export OPENBALENA_VPN_SERVICE_API_KEY=$(randstr 32)
 STR

@@ -1,42 +1,42 @@
-#!/bin/sh
-
-set -e
-
-CMD=$0
-DIR=$(dirname "$CMD")
-
-CN=$1
-OUT=${2:-.}
-
-CERT_FILE="${OUT}/token-auth"
-EXPIRY_DAYS=730
+#!/bin/bash -eu
 
 usage() {
-  echo "usage: $0 HOST_NAME [OUT]"
+  echo "usage: $0 COMMON_NAME [OUT]"
   echo
-  echo "  HOST_NAME   the domain name the certificate is valid for, eg. example.com"
-  echo "  OUT         path to output directory generated files will be placed in"
+  echo "  COMMON_NAME   the domain name the certificate is valid for, eg. example.com"
+  echo "  OUT           path to output directory generated files will be placed in"
   echo
 }
 
-keyid() {
-  # FIXME: do this in bash or python, not node
-  nodejs "${DIR}/_keyid.js" "$1"
-}
-
-if [ -z "$CN" ]; then
+if [ -z "$1" ]; then
   usage
   exit 1
 fi
 
-openssl ecparam -name prime256v1 -genkey -noout -out "${CERT_FILE}.pem" 2>/dev/null
-openssl req -x509 -new -nodes -days "${EXPIRY_DAYS}" -key "${CERT_FILE}.pem" -subj "/CN=api.${CN}" -out "${CERT_FILE}.crt" 2>/dev/null
-openssl ec -in "${CERT_FILE}.pem" -pubout -outform DER -out "${CERT_FILE}".der 2>/dev/null
-keyid "${CERT_FILE}".der >"${CERT_FILE}".kid
+CMD="$(realpath "$0")"
+DIR="$(dirname "${CMD}")"
 
-# Cleanup
-rm "${CERT_FILE}.der"
+CN="$1"
+OUT="$(realpath "${2:-.}")"
 
-echo "PUB=${CERT_FILE}.crt"
-echo "KEY=${CERT_FILE}.pem"
-echo "KID=${CERT_FILE}.kid"
+source "${DIR}/ssl-common.sh"
+
+keyid() {
+  local der="$(openssl ec -in "$1" -pubout -outform DER 2>/dev/null)"
+  python -c "import sys as S; from base64 import b32encode as B; import hashlib as H; h = H.sha256(); h.update(S.argv[1].encode('ascii')); s = B(h.digest()[:30]).decode('ascii'); S.stdout.write(':'.join([s[i:i+4] for i in range(0, len(s), 4)]))" "${der}"
+}
+
+# generate api CSR and sign
+"$easyrsa_bin" --pki-dir="${ROOT_PKI}" --days=730 --use-algo=ec --curve=prime256v1 build-server-full "api.${CN}" nopass 2>/dev/null
+JWT_CRT="${ROOT_PKI}/issued/api.${CN}.crt"
+JWT_KEY="${ROOT_PKI}/private/api.${CN}.key"
+echo "JWT_CRT=${JWT_CRT//$OUT/\$OUT}"
+echo "JWT_KEY=${JWT_KEY//$OUT/\$OUT}"
+
+# update indexes and generate CRLs
+"$easyrsa_bin" --pki-dir="${ROOT_PKI}" update-db 2>/dev/null
+"$easyrsa_bin" --pki-dir="${ROOT_PKI}" gen-crl 2>/dev/null
+
+# generate key ID
+JWT_KID="$(keyid "${JWT_CRT}")"
+echo "JWT_KID=${JWT_KID//$OUT/\$OUT}"
