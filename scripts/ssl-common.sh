@@ -1,4 +1,5 @@
 #!/bin/bash -eu
+# shellcheck disable=SC2034
 
 # ensure we have `easyrsa` available
 if [ -z "${easyrsa_bin-}" ] || [ ! -x "${easyrsa_bin}" ]; then
@@ -8,6 +9,7 @@ if [ -z "${easyrsa_bin-}" ] || [ ! -x "${easyrsa_bin}" ]; then
         easyrsa_url="https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.5/EasyRSA-nix-3.0.5.tgz"
         (cd "${easyrsa_dir}"; curl -sL "${easyrsa_url}" | tar xz --strip-components=1)
         easyrsa_bin="${easyrsa_dir}/easyrsa"
+        # shellcheck disable=SC2064
         trap "rm -rf \"${easyrsa_dir}\"" EXIT
     fi
     export EASYRSA_BATCH=1

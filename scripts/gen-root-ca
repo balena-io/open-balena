@@ -19,6 +19,7 @@ DIR="$(dirname "${CMD}")"
 CN="$1"
 OUT="$(realpath "${2:-.}")"
 
+# shellcheck source=scripts/ssl-common.sh
 source "${DIR}/ssl-common.sh"
 
 # Create a secret key and CA file for the self-signed CA

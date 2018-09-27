@@ -19,10 +19,12 @@ DIR="$(dirname "${CMD}")"
 CN="$1"
 OUT="$(realpath "${2:-.}")"
 
+# shellcheck source=scripts/ssl-common.sh
 source "${DIR}/ssl-common.sh"
 
 keyid() {
-  local der="$(openssl ec -in "$1" -pubout -outform DER 2>/dev/null)"
+  local der
+  der="$(openssl ec -in "$1" -pubout -outform DER 2>/dev/null)"
   python -c "import sys as S; from base64 import b32encode as B; import hashlib as H; h = H.sha256(); h.update(S.argv[1].encode('ascii')); s = B(h.digest()[:30]).decode('ascii'); S.stdout.write(':'.join([s[i:i+4] for i in range(0, len(s), 4)]))" "${der}"
 }
 

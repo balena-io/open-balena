@@ -1,11 +1,4 @@
-#!/bin/sh
-
-set -e
-
-CMD=$0
-DIR=$(dirname "$CMD")
-
-DOMAIN=$1
+#!/bin/bash -eu
 
 SERVICES="api registry vpn db"
 SERVICES="${SERVICES} img devices" # FIXME: remove
@@ -17,20 +10,23 @@ usage() {
   echo
 }
 
-if [ -z "$DOMAIN" ]; then
+if [ -z "$1" ]; then
   usage
   exit 1
 fi
 
+DOMAIN="$1"
+
 # We need sudo to write to /etc/hosts, so first write to a temp file and then
 # append all entries to hosts file.
-tmp=$(mktemp --tmpdir openbalena.XXXX)
+tmp="$(mktemp --tmpdir openbalena.XXXX)"
 for service in $SERVICES; do
   name="${service}.${DOMAIN}"
-  if ! grep "\s$name" /etc/hosts >/dev/null 2>&1 ; then
+  if ! grep "\\s$name" /etc/hosts >/dev/null 2>&1 ; then
     echo "adding $name"
-    echo "127.0.0.1 $name" >>$tmp
+    echo "127.0.0.1 $name" >>"${tmp}"
   fi
 done
-cat $tmp | sudo tee -a /etc/hosts >/dev/null
-rm -f $tmp
+# shellcheck disable=SC2024
+sudo tee -a /etc/hosts >/dev/null <"${tmp}"
+rm -f "${tmp}"

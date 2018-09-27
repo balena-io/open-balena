@@ -7,21 +7,6 @@ BASE_DIR=$(dirname "$DIR")
 PROJECT_NAME=demo
 DOMAIN=openbalena.local
 
-show_help=false
-patch_hosts=false
-while getopts ":hpn:d:" opt; do
-    case "${opt}" in
-        h) show_help=true;;
-        p) patch_hosts=true;;
-        P) PROJECT_NAME="${OPTARG}";;
-        H) DOMAIN="${OPTARG}";;
-    esac
-done
-shift $((OPTIND-1))
-
-PROJECT_DIR="$(pwd)/${PROJECT_NAME}"
-CERTS_DIR="${PROJECT_DIR}/certs"
-
 usage() {
   echo "usage: $0 [-h] [-p] [-n PROJECT_NAME] [-d DOMAIN]"
   echo
@@ -31,13 +16,33 @@ usage() {
   echo
 }
 
+show_help=false
+patch_hosts=false
+while getopts ":hpn:d:" opt; do
+    case "${opt}" in
+        h) show_help=true;;
+        p) patch_hosts=true;;
+        n) PROJECT_NAME="${OPTARG}";;
+        d) DOMAIN="${OPTARG}";;
+        *)
+          echo "Invalid argument: -${OPTARG}"
+          usage
+          exit 1
+          ;;
+    esac
+done
+shift $((OPTIND-1))
+
+PROJECT_DIR="$(pwd)/${PROJECT_NAME}"
+CERTS_DIR="${PROJECT_DIR}/certs"
+
 if [ "$show_help" = "true" ]; then
     usage
     exit 1
 fi
 
 echo_bold() {
-  printf "\033[1m%s\033[0m\n" "${@}"
+  printf "\\033[1m%s\\033[0m\\n" "${@}"
 }
 
 if [ -d "$PROJECT_DIR" ]; then
@@ -49,26 +54,32 @@ echo_bold "==> Creating new project at: $PROJECT_DIR"
 mkdir -p "$PROJECT_DIR" "$CERTS_DIR"
 
 echo_bold "==> Generating root CA cert..."
+# shellcheck source=scripts/gen-root-ca
 source "${DIR}/gen-root-ca" "${DOMAIN}" "${CERTS_DIR}"
 
 echo_bold "==> Generating root cert chain for haproxy..."
+# shellcheck source=scripts/gen-root-cert
 source "${DIR}/gen-root-cert" "${DOMAIN}" "${CERTS_DIR}"
 
 echo_bold "==> Generating token auth cert..."
+# shellcheck source=scripts/gen-token-auth-cert
 source "${DIR}/gen-token-auth-cert" "${DOMAIN}" "${CERTS_DIR}"
 
 echo_bold "==> Generating VPN CA, cert and dhparam (this may take a while)..."
+# shellcheck source=scripts/gen-vpn-certs
 source "${DIR}/gen-vpn-certs" "${DOMAIN}" "${CERTS_DIR}"
 
 echo_bold "==> Setting up environment..."
+# shellcheck source=scripts/make-env
 cat >"${PROJECT_DIR}/activate" <(source "${DIR}/make-env")
 
 echo_bold "==> Adding default compose file..."
 cp "${BASE_DIR}/compose/template.yml" "${PROJECT_DIR}/docker-compose.yml"
 
 if [ "${patch_hosts}" = "true" ]; then
-    echo_bold "==> Patching /etc/hosts..."
-    source "${DIR}/patch-hosts" "${DOMAIN}"
+  echo_bold "==> Patching /etc/hosts..."
+  # shellcheck source=scripts/patch-hosts
+  source "${DIR}/patch-hosts" "${DOMAIN}"
 fi
 
 echo_bold "==> Activating project..."
