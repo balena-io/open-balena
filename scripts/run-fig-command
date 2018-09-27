@@ -7,7 +7,7 @@ DIR=$(dirname "$CMD")
 BASE_DIR=$(dirname "$DIR")
 
 echo_bold() {
-  printf "\033[1m${@}\033[0m\n"
+  printf "\033[1m%s\033[0m\n" "$@"
 }
 
 PROJECT_FILE="${BASE_DIR}/.project"
