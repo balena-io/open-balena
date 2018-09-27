@@ -24,7 +24,7 @@ Vagrant.configure('2') do |config|
   config.vm.provision :shell, inline: 'apt-get update && apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*'
 
   # FIXME: remove `docker login`
-  config.vm.provision :shell, inline: "docker login --username resindev --password #{ENV.fetch('DOCKERHUB_PASSWORD')}"
+  config.vm.provision :shell, privileged: false, inline: "docker login --username resindev --password #{ENV.fetch('DOCKERHUB_PASSWORD')}"
 
   config.vm.provision :shell, privileged: false,
     # FIXME: -n/-d should only be passed if the relevant ENV var is set
