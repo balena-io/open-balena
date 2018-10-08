@@ -1,13 +1,11 @@
-#!/bin/sh
+#!/bin/bash -eu
 
-set -e
-
-CMD=$0
-DIR=$(dirname "$CMD")
-BASE_DIR=$(dirname "$DIR")
+CMD="$0"
+DIR="$(dirname "$CMD")"
+BASE_DIR="$(dirname "$DIR")"
 
 echo_bold() {
-  printf "\033[1m${@}\033[0m\n"
+  printf "\\033[1m%s\\033[0m\\n" "$@"
 }
 
 PROJECT_FILE="${BASE_DIR}/.project"
@@ -16,16 +14,17 @@ if [ ! -f "$PROJECT_FILE" ]; then
   echo_bold 'See README.md for help.'
   exit 1
 fi
-PROJECT=$(cat "$PROJECT_FILE")
+PROJECT="$(cat "$PROJECT_FILE")"
 if [ ! -f "${PROJECT}/activate" ]; then
   echo_bold 'No project activated. Please create or select an existing one first.'
   echo_bold 'See README.md for help.'
   exit 1
 fi
-PROJECT_NAME=$(basename "$PROJECT")
+PROJECT_NAME="$(basename "$PROJECT")"
 
-. "${PROJECT}/activate"; docker-compose \
-  --project-name $PROJECT_NAME \
+# shellcheck source=/dev/null
+source "${PROJECT}/activate"; docker-compose \
+  --project-name "${PROJECT_NAME}" \
   -f "${BASE_DIR}/compose/services.yml" \
   -f "${PROJECT}/docker-compose.yml" \
   "$@"

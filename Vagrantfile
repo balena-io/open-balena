@@ -24,10 +24,11 @@ Vagrant.configure('2') do |config|
   config.vm.provision :shell, inline: 'apt-get update && apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*'
 
   # FIXME: remove `docker login`
-  config.vm.provision :shell, inline: "docker login --username resindev --password #{ENV.fetch('DOCKERHUB_PASSWORD')}"
+  config.vm.provision :shell, privileged: false, inline: "docker login --username resindev --password #{ENV.fetch('DOCKERHUB_PASSWORD')}"
 
   config.vm.provision :shell, privileged: false,
-    inline: "cd /home/vagrant/open-balena && ./scripts/start-project #{ENV.fetch('OPENBALENA_PROJECT_NAME', '')} #{ENV.fetch('OPENBALENA_HOST_NAME', '')}"
+    # FIXME: -n/-d should only be passed if the relevant ENV var is set
+    inline: "cd /home/vagrant/open-balena && ./scripts/start-project -p -n #{ENV.fetch('OPENBALENA_PROJECT_NAME', 'demo')} -d #{ENV.fetch('OPENBALENA_DOMAIN', 'openbalena.local')}"
   config.vm.provision :shell, privileged: false,
     inline: 'cd /home/vagrant/open-balena && ./scripts/run-fig-command up -d || true',
     run: 'always'
