@@ -3,8 +3,8 @@ version: '2.1'
 volumes:
   db:
   registry:
-  # FIXME: remove
-  img:
+  s3:
+  redis:
 
 services:
   api:
@@ -14,6 +14,8 @@ services:
     image: resin/resin-api:${OPENBALENA_API_VERSION_TAG:-master}
     depends_on:
       - db
+      - s3
+      - redis
     environment:
       ADMIN_LIST: 
       AUTH_RESINOS_REGISTRY_CODE: ${OPENBALENA_RESINOS_REGISTRY_CODE}
@@ -99,6 +101,8 @@ services:
     image: resin/open-balena-registry:${OPENBALENA_REGISTRY_VERSION_TAG:-master}
     depends_on:
       - api
+      - s3
+      - redis
     volumes:
       - registry:/data
     environment:
@@ -150,6 +154,22 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
 
+  s3:
+    extends:
+      file: ./common.yml
+      service: system
+    image: resin/open-balena-s3:${OPENBALENA_S3_VERSION_TAG:-master}
+    volumes:
+      - s3:/export
+
+  redis:
+    extends:
+      file: ./common.yml
+      service: system
+    image: redis:alpine
+    volumes:
+      - redis:/data
+
   haproxy:
     extends:
       file: ./common.yml
@@ -160,14 +180,14 @@ services:
       - registry
       - vpn
       - db
-      # FIXME: remove
-      - proxy
-      - img
+      - s3
+      - redis
     ports:
       - "80:80"
       - "222:222"
       - "443:443"
       - "5432:5432"
+      - "6379:6379"
     networks:
       default:
         aliases:
@@ -175,57 +195,10 @@ services:
           - registry.${OPENBALENA_HOST_NAME}
           - vpn.${OPENBALENA_HOST_NAME}
           - db.${OPENBALENA_HOST_NAME}
-          # FIXME: remove
-          - proxy.${OPENBALENA_HOST_NAME}
-          - img.${OPENBALENA_HOST_NAME}
+          - s3.${OPENBALENA_HOST_NAME}
+          - redis.${OPENBALENA_HOST_NAME}
     environment:
       BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
       BALENA_HAPROXY_CRT: ${OPENBALENA_ROOT_CRT}
       BALENA_HAPROXY_KEY: ${OPENBALENA_ROOT_KEY}
       HAPROXY_HOSTNAME: ${OPENBALENA_HOST_NAME}
-
-# FIXME: remove the following
-
-  proxy:
-    extends:
-      file: ./common.yml
-      service: component
-    image: resin/resin-proxy:${OPENBALENA_PROXY_VERSION_TAG:-master}
-    depends_on:
-      - api
-      - vpn
-    environment:
-      BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
-      DEBUG: '${OPENBALENA_DEBUG}'
-      DEVICE_URLS_BASE: devices.${OPENBALENA_HOST_NAME}
-      IDLE_CONNECTION_TIMEOUT: 50
-      JSON_WEB_TOKEN_SECRET: ${OPENBALENA_JWT_SECRET}
-      LOGENTRIES_TOKEN: 
-      PRODUCTION_MODE: '${OPENBALENA_PRODUCTION_MODE}'
-      PROXY_PROTOCOL_PORTS: 
-      PROXY_SERVICE_API_KEY: __unused__5
-      RESIN_API_HOST: api.${OPENBALENA_HOST_NAME}
-      SENTRY_DSN: 
-
-  img:
-    extends:
-      file: ./common.yml
-      service: component
-    image: resin/resin-img:${OPENBALENA_IMG_VERSION_TAG:-master}
-    depends_on:
-      - api
-    volumes:
-      - img:/prepdir
-    environment:
-      BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
-      DEVELOPMENT: 1
-      LKL_MEMORY: 268435456
-      LOGENTRIES_TOKEN: 
-      NODEPING_KEY: xxx
-      RESIN_IMG_S3_ACCESS_KEY: abcdef1234
-      RESIN_IMG_S3_BUCKET: resin-image-maker
-      RESIN_IMG_S3_ENDPOINT: s3.${OPENBALENA_HOST_NAME}
-      RESIN_IMG_S3_FORCE_PATH_STYLE: 'true'
-      RESIN_IMG_S3_SECRET_KEY: 1234567890
-      RESIN_IMG_STORAGE_DRIVER: passthrough
-      SENTRY_DSN: 

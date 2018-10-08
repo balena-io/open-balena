@@ -1,7 +1,6 @@
 #!/bin/bash -eu
 
-SERVICES="api registry vpn db"
-SERVICES="${SERVICES} img devices" # FIXME: remove
+SERVICES="api registry vpn db s3 redis"
 
 usage() {
   echo "usage: $0 DOMAIN"
