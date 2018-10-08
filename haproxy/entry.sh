@@ -1,4 +1,5 @@
-#!/bin/bash -eu
+#!/bin/sh
+set -e
 
 HAPROXY_CHAIN=/etc/ssl/private/open-balena.pem
 mkdir -p "$(dirname "${HAPROXY_CHAIN}")"
