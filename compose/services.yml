@@ -17,24 +17,34 @@ services:
       - s3
       - redis
     environment:
-      ADMIN_LIST: 
+      API_HOST: ${OPENBALENA_HOST_NAME}
+      API_VPN_SERVICE_API_KEY: ${OPENBALENA_API_VPN_SERVICE_API_KEY}
       AUTH_RESINOS_REGISTRY_CODE: ${OPENBALENA_RESINOS_REGISTRY_CODE}
       BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
+      COOKIE_SESSION_SECRET: __unused__
       DB_HOST: db.${OPENBALENA_HOST_NAME}
       DB_PASSWORD: docker
+      DB_POOL_SIZE:
       DB_PORT: 5432
       DB_USER: docker
       DEBUG: '${OPENBALENA_DEBUG}'
-      DEVICE_CONFIG_OPENVPN_CA: yyy
-      DEVICE_CONFIG_OPENVPN_CONFIG: yyy
-      DEVICE_CONFIG_SSH_AUTHORIZED_KEYS: yyy
-      EMAIL_RECIPIENT_OVERRIDE: 
-      HOST: ${OPENBALENA_HOST_NAME}
+      DELTA_HOST: __unused__
       IMAGE_MAKER_URL: img.${OPENBALENA_HOST_NAME}
+      INTERCOM_SECRET_KEY: __unused__
       JSON_WEB_TOKEN_EXPIRY_MINUTES: 10080
       JSON_WEB_TOKEN_SECRET: ${OPENBALENA_JWT_SECRET}
+      MIXPANEL_TOKEN: __unused__
       PRODUCTION_MODE: '${OPENBALENA_PRODUCTION_MODE}'
+      PUBNUB_PUBLISH_KEY: __unused__
+      PUBNUB_SUBSCRIBE_KEY: __unused__
+      RATE_LIMIT_FACTOR: 1
+      RATE_LIMIT_MEMORY_BACKEND:
+      REDIS_HOST: redis.${OPENBALENA_HOST_NAME}
+      REDIS_PORT: 6379
       REGISTRY2_HOST: registry.${OPENBALENA_HOST_NAME}
+      REGISTRY_HOST: __unused__
+      SENTRY_DSN:
+      TOKEN_AUTH_BUILDER_TOKEN: __unused__
       TOKEN_AUTH_CERT_ISSUER: api.${OPENBALENA_HOST_NAME}
       TOKEN_AUTH_CERT_KEY: ${OPENBALENA_TOKEN_AUTH_KEY}
       TOKEN_AUTH_CERT_KID: ${OPENBALENA_TOKEN_AUTH_KID}
@@ -43,56 +53,6 @@ services:
       VPN_HOST: vpn.${OPENBALENA_HOST_NAME}
       VPN_PORT: 443
       VPN_SERVICE_API_KEY: ${OPENBALENA_VPN_SERVICE_API_KEY}
-      # FIXME: remove all the following
-      ADMIN_HOST: __unused__
-      AUTH_FACEBOOK_CLIENT_ID: __unused__
-      AUTH_FACEBOOK_CLIENT_SECRET: __unused__
-      AUTH_GITHUB_CLIENT_ID: __unused__
-      AUTH_GITHUB_CLIENT_SECRET: __unused__
-      AUTH_GOOGLE_CLIENT_ID: __unused__
-      AUTH_GOOGLE_CLIENT_SECRET: __unused__
-      AUTH_TWITTER_CONSUMER_KEY: __unused__
-      AUTH_TWITTER_CONSUMER_SECRET: __unused__
-      BUILDER_SERVICE_API_KEY: __unused__1 # must be unique
-      COOKIE_SESSION_SECRET: __unused__
-      DB_ANALYTICS_PASSWORD: 
-      DELTA_HOST: __unused__
-      DELTA_SERVICE_API_KEY: __unused__2 # must be unique
-      DEVICE_URLS_BASE: __unused__
-      DIGITIZER_API_KEY: __unused__3 # must be unique
-      GA_ID: __unused__
-      GA_SITE: __unused__
-      GEOIP_LICENCE_KEY: __unused__
-      GEOIP_USER_ID: __unused__
-      GIT_HOST: __unused__
-      GIT_HOSTNAME: __unused__
-      GIT_PORT: 80
-      GIT_SERVICE_API_KEY: __unused__4 # must be unique
-      INTERCOM_APP_ID: __unused__
-      INTERCOM_SECRET_KEY: __unused__
-      MAILGUN_API_KEY: __unused__
-      MAILGUN_DOMAIN: __unused__
-      MIXPANEL_ACCOUNT_ID: __unused__
-      MIXPANEL_API_KEY: __unused__
-      MIXPANEL_API_SECRET: __unused__
-      MIXPANEL_TOKEN: __unused__
-      PROXY_SERVICE_API_KEY: __unused__5 # must be unique
-      PUBNUB_PUBLISH_KEY: __unused__
-      PUBNUB_SUBSCRIBE_KEY: __unused__
-      RECAPTCHA_PRIVATE_KEY: __unused__
-      RECAPTCHA_PUBLIC_KEY: __unused__
-      RECURLY_PRIVATE_KEY: __unused__
-      RECURLY_PUBLIC_KEY: __unused__
-      RECURLY_SUBDOMAIN: __unused__
-      REDIS_HOST: __unused__
-      REDIS_PORT: 6379
-      REGISTRY_HOST: __unused__
-      SENTRY_DSN: 
-      TOKEN_AUTH_BUILDER_TOKEN: __unused__
-      TWOFACTOR_ISSUER: __unused__
-      UI_HOST: __unused__
-      ZENDESK_DOMAIN: __unused__
-      ZENDESK_SHARED_SECRET: __unused__
 
   registry:
     extends:
