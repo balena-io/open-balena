@@ -1,0 +1,12 @@
+#!/bin/bash -eu
+
+CMD="$(realpath "$0")"
+DIR="$(dirname "${CMD}")"
+
+FIG="${DIR}/run-fig-command"
+
+USERNAME="$1"
+EMAIL="$2"
+PASSWORD="$3"
+
+"${FIG}" exec api /bin/bash -c 'export $(grep -v "^#" config/env | xargs -d "\n"); node index.js create-superuser '${USERNAME}' '${EMAIL}' '${PASSWORD}''
