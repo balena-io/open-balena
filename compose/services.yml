@@ -11,7 +11,11 @@ services:
     extends:
       file: ./common.yml
       service: component
-    image: resin/resin-api:${OPENBALENA_API_VERSION_TAG:-master}
+    # image: resin/open-balena-api:${OPENBALENA_API_VERSION_TAG:-master}
+    build: ../src/api
+    volumes: [
+      '../src/api:/usr/src/app'
+    ]
     depends_on:
       - db
       - s3
