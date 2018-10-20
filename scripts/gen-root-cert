@@ -23,7 +23,7 @@ OUT="$(realpath "${2:-.}")"
 source "${DIR}/ssl-common.sh"
 
 # generate default CSR and sign (root + wildcard)
-"$easyrsa_bin" --pki-dir="${ROOT_PKI}" --days="${CRT_EXPIRY_DAYS}" --subject-alt-name="DNS:api.${CN}" build-server-full "*.${CN}" nopass 2>/dev/null
+"$easyrsa_bin" --pki-dir="${ROOT_PKI}" --days="${CRT_EXPIRY_DAYS}" --subject-alt-name="DNS:*.${CN}" build-server-full "*.${CN}" nopass
 ROOT_CRT="${ROOT_PKI}"'/issued/*.'"${CN}"'.crt'
 ROOT_KEY="${ROOT_PKI}"'/private/*.'"${CN}"'.key'
 echo "ROOT_CRT=${ROOT_CRT//$OUT/\$OUT}"
