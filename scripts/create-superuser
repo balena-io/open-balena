@@ -1,4 +1,13 @@
-#!/bin/bash -eu
+#!/bin/bash -e
+
+usage() {
+  echo "usage: $0 USERNAME EMAIL PASSWORD"
+}
+
+if [ -z "$1" ]; then
+  usage
+  exit 1
+fi
 
 CMD="$(realpath "$0")"
 DIR="$(dirname "${CMD}")"

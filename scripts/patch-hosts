@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/bash -e
 
 SERVICES="api registry vpn db s3 redis"
 

@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/bash -e
 # shellcheck disable=SC2034
 
 # ensure we have `easyrsa` available

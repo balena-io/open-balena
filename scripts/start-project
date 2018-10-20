@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/bash -e
 
 CMD=$0
 DIR=$(dirname "$CMD")
@@ -10,9 +10,9 @@ DOMAIN=openbalena.local
 usage() {
   echo "usage: $0 [-h] [-p] [-n PROJECT_NAME] [-d DOMAIN]"
   echo
-  echo "  -p            patch hosts - patch the host /etc/hosts file"
-  echo "  PROJECT_NAME  a name for the deployment, eg. staging. Default is 'demo'"
-  echo "  DOMAIN     the domain name this deployment will run as, eg. example.com. Default is 'openbalena.local'"
+  echo "  -p               patch hosts - patch the host /etc/hosts file"
+  echo "  -n PROJECT_NAME  a name for the deployment, eg. staging. Default is 'demo'"
+  echo "  -d DOMAIN        the domain name this deployment will run as, eg. example.com. Default is 'openbalena.local'"
   echo
 }
 

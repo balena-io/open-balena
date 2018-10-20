@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/bash -e
 
 CMD="$0"
 DIR="$(dirname "$CMD")"
