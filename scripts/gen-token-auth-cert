@@ -22,23 +22,24 @@ OUT="$(realpath "${2:-.}")"
 # shellcheck source=scripts/ssl-common.sh
 source "${DIR}/ssl-common.sh"
 
+CERT_DIR="${OUT}/api"
+CERT_FILE="${CERT_DIR}/api.${CN}"
+
 keyid() {
-  local der
-  der="$(openssl ec -in "$1" -pubout -outform DER 2>/dev/null)"
-  python -c "import sys as S; from base64 import b32encode as B; import hashlib as H; h = H.sha256(); h.update(S.argv[1].encode('ascii')); s = B(h.digest()[:30]).decode('ascii'); S.stdout.write(':'.join([s[i:i+4] for i in range(0, len(s), 4)]))" "${der}"
+  nodejs "${DIR}/_keyid.js" "$1"
 }
 
-# generate api CSR and sign
-"$easyrsa_bin" --pki-dir="${ROOT_PKI}" --days=730 --use-algo=ec --curve=prime256v1 build-server-full "api.${CN}" nopass 2>/dev/null
-JWT_CRT="${ROOT_PKI}/issued/api.${CN}.crt"
-JWT_KEY="${ROOT_PKI}/private/api.${CN}.key"
+JWT_CRT="${CERT_FILE}.crt"
+JWT_KEY="${CERT_FILE}.pem"
+JWT_KID="${CERT_FILE}.kid"
+
+mkdir -p "${CERT_DIR}"
+openssl ecparam -name prime256v1 -genkey -noout -out "${JWT_KEY}" 2>/dev/null
+openssl req -x509 -new -nodes -days "${CRT_EXPIRY_DAYS}" -key "${JWT_KEY}" -subj "/CN=api.${CN}" -out "${JWT_CRT}" 2>/dev/null
+openssl ec -in "${JWT_KEY}" -pubout -outform DER -out "${CERT_FILE}.der" 2>/dev/null
+keyid "${CERT_FILE}.der" >"${JWT_KID}"
+rm "${CERT_FILE}.der"
+
 echo "JWT_CRT=${JWT_CRT//$OUT/\$OUT}"
 echo "JWT_KEY=${JWT_KEY//$OUT/\$OUT}"
-
-# update indexes and generate CRLs
-"$easyrsa_bin" --pki-dir="${ROOT_PKI}" update-db 2>/dev/null
-"$easyrsa_bin" --pki-dir="${ROOT_PKI}" gen-crl 2>/dev/null
-
-# generate key ID
-JWT_KID="$(keyid "${JWT_CRT}")"
 echo "JWT_KID=${JWT_KID//$OUT/\$OUT}"

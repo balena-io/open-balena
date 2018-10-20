@@ -11,7 +11,7 @@ usage() {
   echo "  ROOT_KEY   Path to root/wildcard private key"
   echo "  JWT_CRT    Path to Token Auth certificate"
   echo "  JWT_KEY    Path to Token Auth private key"
-  echo "  JWT_KID    The KeyID for the Token Auth certificate"
+  echo "  JWT_KID    Path to KeyID for the Token Auth certificate"
   echo "  VPN_CA     Path to the VPN sub-CA certificate"
   echo "  VPN_CRT    Path to the VPN server certificate"
   echo "  VPN_KEY    Path to the VPN server private key"
@@ -20,10 +20,10 @@ usage() {
 }
 
 for var in DOMAIN ROOT_CA ROOT_CRT ROOT_KEY JWT_CRT JWT_KEY JWT_KID VPN_CA VPN_CRT VPN_KEY VPN_DH; do
-    if [ -z "${!var-}" ]; then
-        usage
-        exit 1
-    fi
+  if [ -z "${!var-}" ]; then
+    usage
+    exit 1
+  fi
 done
 
 randstr() {
@@ -32,10 +32,6 @@ randstr() {
 
 b64encode() {
   cat "$@" | base64 --wrap=0 2>/dev/null || cat "$@" | base64 --break=0
-}
-
-b64encode_str() {
-  echo -n "$@" | base64 --wrap=0 - 2>/dev/null || echo -n "$@" | base64 --break=0 -
 }
 
 cat <<STR
@@ -49,7 +45,7 @@ export OPENBALENA_ROOT_CRT=$(b64encode "${ROOT_CRT}")
 export OPENBALENA_ROOT_KEY=$(b64encode "${ROOT_KEY}")
 export OPENBALENA_TOKEN_AUTH_PUB=$(b64encode "$JWT_CRT")
 export OPENBALENA_TOKEN_AUTH_KEY=$(b64encode "$JWT_KEY")
-export OPENBALENA_TOKEN_AUTH_KID=$(b64encode_str "$JWT_KID")
+export OPENBALENA_TOKEN_AUTH_KID=$(b64encode "$JWT_KID")
 export OPENBALENA_VPN_CA=$(b64encode "$VPN_CA")
 export OPENBALENA_VPN_SERVER_CRT=$(b64encode "$VPN_CRT")
 export OPENBALENA_VPN_SERVER_KEY=$(b64encode "$VPN_KEY")
