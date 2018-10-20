@@ -34,11 +34,11 @@ Remove all traces of a project by deleting its folder.
 
 Start the platform with:
 
-    $ ./scripts/run-fig-command up
+    $ ./scripts/compose up
 
 Stop the platform with:
 
-    $ ./scripts/run-fig-command stop
+    $ ./scripts/compose stop
 
 ### macOS & Windows
 

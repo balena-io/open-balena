@@ -3,7 +3,7 @@
 CMD="$(realpath "$0")"
 DIR="$(dirname "${CMD}")"
 
-FIG="${DIR}/run-fig-command"
+FIG="${DIR}/compose"
 
 USERNAME="$1"
 EMAIL="$2"

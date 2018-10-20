@@ -30,6 +30,6 @@ Vagrant.configure('2') do |config|
     # FIXME: -n/-d should only be passed if the relevant ENV var is set
     inline: "cd /home/vagrant/open-balena && ./scripts/start-project -p -n #{ENV.fetch('OPENBALENA_PROJECT_NAME', 'demo')} -d #{ENV.fetch('OPENBALENA_DOMAIN', 'openbalena.local')}"
   config.vm.provision :shell, privileged: false,
-    inline: 'cd /home/vagrant/open-balena && ./scripts/run-fig-command up -d || true',
+    inline: 'cd /home/vagrant/open-balena && ./scripts/compose up -d || true',
     run: 'always'
 end
