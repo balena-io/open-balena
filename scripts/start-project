@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
-CMD=$0
-DIR=$(dirname "$CMD")
-BASE_DIR=$(dirname "$DIR")
+CMD="$0"
+DIR=$(dirname "${CMD}")
+BASE_DIR=$(dirname "${DIR}")
 
 PROJECT_NAME=demo
 DOMAIN=openbalena.local
@@ -19,17 +19,17 @@ usage() {
 show_help=false
 patch_hosts=false
 while getopts ":hpn:d:" opt; do
-    case "${opt}" in
-        h) show_help=true;;
-        p) patch_hosts=true;;
-        n) PROJECT_NAME="${OPTARG}";;
-        d) DOMAIN="${OPTARG}";;
-        *)
-          echo "Invalid argument: -${OPTARG}"
-          usage
-          exit 1
-          ;;
-    esac
+  case "${opt}" in
+    h) show_help=true;;
+    p) patch_hosts=true;;
+    n) PROJECT_NAME="${OPTARG}";;
+    d) DOMAIN="${OPTARG}";;
+    *)
+      echo "Invalid argument: -${OPTARG}"
+      usage
+      exit 1
+      ;;
+  esac
 done
 shift $((OPTIND-1))
 
@@ -37,8 +37,8 @@ PROJECT_DIR="$(pwd)/${PROJECT_NAME}"
 CERTS_DIR="${PROJECT_DIR}/certs"
 
 if [ "$show_help" = "true" ]; then
-    usage
-    exit 1
+  usage
+  exit 1
 fi
 
 echo_bold() {

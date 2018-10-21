@@ -1,9 +1,5 @@
 #!/bin/bash -e
 
-CMD="$0"
-DIR="$(dirname "$CMD")"
-BASE_DIR="$(dirname "$DIR")"
-
 usage() {
   echo "usage: $0 PROJECT_PATH"
   echo
@@ -16,8 +12,12 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
+CMD="$0"
+DIR="$(dirname "${CMD}")"
+BASE_DIR="$(dirname "${DIR}")"
+
 PROJECT_PATH="$1"
-PROJECT_DIR="$(realpath "$PROJECT_PATH")"
+PROJECT_DIR="$(realpath "${PROJECT_PATH}")"
 
 if [ ! -d "$PROJECT_DIR" ]; then
   echo 'Project path refers to a directory that does not exist.'

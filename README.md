@@ -24,11 +24,11 @@ command. If you wish to run the platform under a specific domain name,
 you can specify it as the second argument. The default is `openbalena.local`.
 For example:
 
-    $ ./scripts/start-project mydeployment my.domain.com
+    $ ./scripts/start-project -n mydeployment -d mydomain.com
 
 You can create as many deployments as needed and switch between them using:
 
-    $ ./scripts/select-project mydeployment
+    $ ./scripts/select-project -n mydeployment
 
 Remove all traces of a project by deleting its folder.
 

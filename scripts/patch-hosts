@@ -1,7 +1,5 @@
 #!/bin/bash -e
 
-SERVICES="api registry vpn db s3 redis"
-
 usage() {
   echo "usage: $0 DOMAIN"
   echo
@@ -14,6 +12,7 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
+SERVICES="api registry vpn db s3 redis"
 DOMAIN="$1"
 
 # We need sudo to write to /etc/hosts, so first write to a temp file and then
