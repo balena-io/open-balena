@@ -27,19 +27,19 @@ var base32 = (function() {
 
   return function(plain) {
     if (!Buffer.isBuffer(plain)) {
-      plain = Buffer.alloc(plain);
+      plain = new Buffer(plain);
     }
     var i = 0;
     var j = 0;
     var shiftIndex = 0;
     var digit = 0;
-    var encoded = Buffer.alloc(quintetCount(plain) * 8);
+    var encoded = new Buffer(quintetCount(plain) * 8);
 
     /* byte by byte isn't as pretty as quintet by quintet but tests a bit
       faster. will have to revisit. */
     while(i < plain.length) {
       var current = plain[i];
-    
+
       if(shiftIndex > 3) {
         digit = current & (0xff >> shiftIndex);
         shiftIndex = (shiftIndex + 5) % 8;
@@ -48,10 +48,10 @@ var base32 = (function() {
         i++;
       } else {
         digit = (current >> (8 - (shiftIndex + 5))) & 0x1f;
-        shiftIndex = (shiftIndex + 5) % 8;            
+        shiftIndex = (shiftIndex + 5) % 8;
         if(shiftIndex == 0) i++;
       }
-      
+
       encoded[j] = charTable.charCodeAt(digit);
       j++;
     }
