@@ -11,11 +11,7 @@ services:
     extends:
       file: ./common.yml
       service: component
-    # image: resin/open-balena-api:${OPENBALENA_API_VERSION_TAG:-master}
-    build: ../src/api
-    volumes: [
-      '../src/api:/usr/src/app'
-    ]
+    image: balena/open-balena-api:${OPENBALENA_API_VERSION_TAG:-master}
     depends_on:
       - db
       - s3
@@ -59,7 +55,7 @@ services:
     extends:
       file: ./common.yml
       service: component
-    image: resin/open-balena-registry:${OPENBALENA_REGISTRY_VERSION_TAG:-master}
+    image: balena/open-balena-registry:${OPENBALENA_REGISTRY_VERSION_TAG:-master}
     depends_on:
       - api
       - s3
@@ -68,50 +64,46 @@ services:
       - registry:/data
     environment:
       API_TOKENAUTH_CRT: ${OPENBALENA_TOKEN_AUTH_PUB}
+      BALENA_REGISTRY2_HOST: registry.${OPENBALENA_HOST_NAME}
       BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
+      BALENA_TOKEN_AUTH_ISSUER: api.${OPENBALENA_HOST_NAME}
+      BALENA_TOKEN_AUTH_REALM: https://api.${OPENBALENA_HOST_NAME}/auth/v1/token
       COMMON_REGION: 
-      REGISTRY2_HOST: registry.${OPENBALENA_HOST_NAME}
       REGISTRY2_S3_BUCKET: 
       REGISTRY2_S3_KEY: 
       REGISTRY2_S3_SECRET: 
+      REGISTRY2_SECRETKEY: ${OPENBALENA_REGISTRY_SECRET_KEY}
       REGISTRY2_STORAGEPATH: /data
-      TOKENAUTH_ISSUER: api.${OPENBALENA_HOST_NAME}
-      TOKENAUTH_REALM: https://api.${OPENBALENA_HOST_NAME}/auth/v1/token
-      # FIXME: remove the following
-      REGISTRY2_SECRETKEY: __unused__
 
   vpn:
     extends:
       file: ./common.yml
       service: component
-    image: resin/resin-vpn:${OPENBALENA_VPN_VERSION_TAG:-master}
+    image: balena/open-balena-vpn:${OPENBALENA_VPN_VERSION_TAG:-master}
     depends_on:
       - api
     cap_add:
       - NET_ADMIN
     environment:
       API_SERVICE_API_KEY: ${OPENBALENA_API_VPN_SERVICE_API_KEY}
+      BALENA_API_HOST: api.${OPENBALENA_HOST_NAME}
       BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
       BALENA_VPN_PORT: 443
-      LOGENTRIES_TOKEN: 
       PRODUCTION_MODE: '${OPENBALENA_PRODUCTION_MODE}'
-      RESIN_API_HOST: api.${OPENBALENA_HOST_NAME}
       RESIN_VPN_GATEWAY: 10.2.0.1
       SENTRY_DSN: 
       VPN_HAPROXY_USEPROXYPROTOCOL: 'true'
-      VPN_SERVICE_API_KEY: ${OPENBALENA_VPN_SERVICE_API_KEY}
       VPN_OPENVPN_CA_CRT: ${OPENBALENA_VPN_CA}
       VPN_OPENVPN_SERVER_CRT: ${OPENBALENA_VPN_SERVER_CRT}
-      VPN_OPENVPN_SERVER_KEY: ${OPENBALENA_VPN_SERVER_KEY}
       VPN_OPENVPN_SERVER_DH: ${OPENBALENA_VPN_SERVER_DH}
-      # FIXME: remove all of the following
-      PROXY_SERVICE_API_KEY: __unused__5
+      VPN_OPENVPN_SERVER_KEY: ${OPENBALENA_VPN_SERVER_KEY}
+      VPN_SERVICE_API_KEY: ${OPENBALENA_VPN_SERVICE_API_KEY}
 
   db:
     extends:
       file: ./common.yml
       service: system
-    image: resin/open-balena-db:${OPENBALENA_DB_VERSION_TAG:-master}
+    image: balena/open-balena-db:${OPENBALENA_DB_VERSION_TAG:-master}
     volumes:
       - db:/var/lib/postgresql/data
 
@@ -119,7 +111,7 @@ services:
     extends:
       file: ./common.yml
       service: system
-    image: resin/open-balena-s3:${OPENBALENA_S3_VERSION_TAG:-master}
+    image: balena/open-balena-s3:${OPENBALENA_S3_VERSION_TAG:-master}
     volumes:
       - s3:/export
 
@@ -159,7 +151,7 @@ services:
           - s3.${OPENBALENA_HOST_NAME}
           - redis.${OPENBALENA_HOST_NAME}
     environment:
-      BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
       BALENA_HAPROXY_CRT: ${OPENBALENA_ROOT_CRT}
       BALENA_HAPROXY_KEY: ${OPENBALENA_ROOT_KEY}
+      BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
       HAPROXY_HOSTNAME: ${OPENBALENA_HOST_NAME}
