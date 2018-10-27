@@ -12,33 +12,41 @@
 
 Make sure you have the software listed above installed.
 
-In a terminal, change into the `open-balena` directory and create a new
-deployment:
+In a terminal, clone the project with:
 
-    $ ./scripts/start-project
+    $ git clone https://github.com/balena-io/open-balena.git
 
-This will create a new directory, `demo`, and generate appropriate SSL
-certificates and configuration for the platform. You can configure the
-deployment name by passing it as the first argument to the `start-project`
-command. If you wish to run the platform under a specific domain name,
-you can specify it as the second argument. The default is `openbalena.local`.
-For example:
+Change into the `open-balena` directory and run the configuration script.
+This will create a new directory, `config`, and generate appropriate SSL
+certificates and configuration for the instance.
 
-    $ ./scripts/start-project -n mydeployment -d mydomain.com
+    $ ./scripts/quickstart
 
-You can create as many deployments as needed and switch between them using:
+You may optionally configure the instance to run under a custom domain name.
+The default is `openbalena.local`. For example:
 
-    $ ./scripts/select-project -n mydeployment
+    $ ./scripts/quickstart -d mydomain.com
 
-Remove all traces of a project by deleting its folder.
+For more available options, see the script's help:
 
-Start the platform with:
+    $ ./scripts/quickstart -h
 
-    $ ./scripts/compose up
+Start the instance with:
 
-Stop the platform with:
+    $ ./scripts/compose up -d
+
+Stop the instance with:
 
     $ ./scripts/compose stop
+
+To remove all traces of the instance, run the following commands and finally
+delete the configuration folder.
+
+**WARNING**: This will remove *all* data.
+
+    $ ./scripts/compose kill
+    $ ./scripts/compose down
+    $ docker volume rm openbalena_s3 openbalena_redis openbalena_db openbalena_registry
 
 ### macOS & Windows
 

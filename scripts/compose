@@ -1,30 +1,24 @@
 #!/bin/bash -e
 
-CMD="$0"
-DIR="$(dirname "$CMD")"
-BASE_DIR="$(dirname "$DIR")"
+CMD="$(realpath "$0")"
+DIR="$(dirname "${CMD}")"
+BASE_DIR="$(dirname "${DIR}")"
+CONFIG_DIR="${BASE_DIR}/config"
 
 echo_bold() {
   printf "\\033[1m%s\\033[0m\\n" "$@"
 }
 
-PROJECT_FILE="${BASE_DIR}/.project"
-if [ ! -f "$PROJECT_FILE" ]; then
-  echo_bold 'No project activated. Please create or select an existing one first.'
+ENV_FILE="${CONFIG_DIR}/activate"
+if [ ! -f "$ENV_FILE" ]; then
+  echo_bold 'No configuration found; please create one first with: ./scripts/quickstart'
   echo_bold 'See README.md for help.'
   exit 1
 fi
-PROJECT="$(cat "$PROJECT_FILE")"
-if [ ! -f "${PROJECT}/activate" ]; then
-  echo_bold 'No project activated. Please create or select an existing one first.'
-  echo_bold 'See README.md for help.'
-  exit 1
-fi
-PROJECT_NAME="$(basename "$PROJECT")"
 
 # shellcheck source=/dev/null
-source "${PROJECT}/activate"; docker-compose \
-  --project-name "${PROJECT_NAME}" \
+source "${ENV_FILE}"; docker-compose \
+  --project-name 'openbalena' \
   -f "${BASE_DIR}/compose/services.yml" \
-  -f "${PROJECT}/docker-compose.yml" \
+  -f "${CONFIG_DIR}/docker-compose.yml" \
   "$@"

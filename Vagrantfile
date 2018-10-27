@@ -13,7 +13,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.synced_folder '.', '/vagrant', disabled: true
   config.vm.synced_folder '.', '/home/vagrant/open-balena'
-  config.vm.network 'public_network', bridge: ENV.fetch('OPENBALENA_BRIDGE', true)
+  config.vm.network 'public_network', bridge: ENV.fetch('OPENBALENA_BRIDGE', '')
 
   config.ssh.forward_agent = true
 
@@ -23,13 +23,6 @@ Vagrant.configure('2') do |config|
   # FIXME: remove node
   config.vm.provision :shell, inline: 'apt-get update && apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*'
 
-  # FIXME: remove `docker login`
-  config.vm.provision :shell, privileged: false, inline: "docker login --username resindev --password #{ENV.fetch('DOCKERHUB_PASSWORD')}"
-
   config.vm.provision :shell, privileged: false,
-    # FIXME: -n/-d should only be passed if the relevant ENV var is set
-    inline: "cd /home/vagrant/open-balena && ./scripts/start-project -p -n #{ENV.fetch('OPENBALENA_PROJECT_NAME', 'demo')} -d #{ENV.fetch('OPENBALENA_DOMAIN', 'openbalena.local')}"
-  config.vm.provision :shell, privileged: false,
-    inline: 'cd /home/vagrant/open-balena && ./scripts/compose up -d || true',
-    run: 'always'
+    inline: "cd /home/vagrant/open-balena && ./scripts/quickstart -p -d #{ENV.fetch('OPENBALENA_DOMAIN', 'openbalena.local')}"
 end
