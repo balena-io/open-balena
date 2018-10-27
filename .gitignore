@@ -1,4 +1,3 @@
-*.srl
 .DS_Store
 .project
 .vagrant/
