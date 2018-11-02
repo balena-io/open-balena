@@ -5,6 +5,7 @@
 - Docker Compose >= 1.11
 - OpenSSL >= 1.0.0
 - Python >= 2.7 or >=3.4
+- NodeJS >= 4.0
 
 ## Installation
 
