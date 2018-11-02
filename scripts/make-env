@@ -34,6 +34,34 @@ b64encode() {
   cat "$@" | base64 --wrap=0 2>/dev/null || cat "$@" | base64 --break=0
 }
 
+VPN_CONFIG=$(b64encode <<STR
+client
+remote vpn.$DOMAIN 443
+resolv-retry infinite
+
+remote-cert-tls server
+ca /etc/openvpn/ca.crt
+auth-user-pass /var/volatile/vpn-auth
+auth-retry none
+script-security 2
+up /etc/openvpn-misc/upscript.sh
+up-restart
+down /etc/openvpn-misc/downscript.sh
+
+comp-lzo
+dev resin-vpn
+dev-type tun
+proto tcp
+nobind
+
+persist-key
+persist-tun
+verb 3
+user openvpn
+group openvpn
+STR
+)
+
 cat <<STR
 export OPENBALENA_PRODUCTION_MODE=false
 export OPENBALENA_COOKIE_SESSION_SECRET=$(randstr 32)
@@ -48,11 +76,13 @@ export OPENBALENA_TOKEN_AUTH_PUB=$(b64encode "$JWT_CRT")
 export OPENBALENA_TOKEN_AUTH_KEY=$(b64encode "$JWT_KEY")
 export OPENBALENA_TOKEN_AUTH_KID=$(b64encode "$JWT_KID")
 export OPENBALENA_VPN_CA=$(b64encode "$VPN_CA")
+export OPENBALENA_VPN_CONFIG=$VPN_CONFIG
 export OPENBALENA_VPN_SERVER_CRT=$(b64encode "$VPN_CRT")
 export OPENBALENA_VPN_SERVER_KEY=$(b64encode "$VPN_KEY")
 export OPENBALENA_VPN_SERVER_DH=$(b64encode "$VPN_DH")
 export OPENBALENA_VPN_SERVICE_API_KEY=$(randstr 32)
 export OPENBALENA_API_VPN_SERVICE_API_KEY=$(randstr 32)
 export OPENBALENA_REGISTRY_SECRET_KEY=$(randstr 32)
+export OPENBALENA_SSH_AUTHORIZED_KEYS=
 export NODE_EXTRA_CA_CERTS="$ROOT_CA"
 STR
