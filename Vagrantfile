@@ -25,4 +25,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.provision :shell, privileged: false,
     inline: "cd /home/vagrant/open-balena && ./scripts/quickstart -p -d #{ENV.fetch('OPENBALENA_DOMAIN', 'openbalena.local')}"
+
+  config.vm.provision :shell, privileged: false,
+    inline: "echo 'cd ~/open-balena' >> ~/.bashrc"
 end
