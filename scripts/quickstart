@@ -9,20 +9,24 @@ CERTS_DIR="${CONFIG_DIR}/certs"
 DOMAIN=openbalena.local
 
 usage() {
-  echo "usage: $0 [-h] [-p] [-d DOMAIN]"
+  echo "usage: $0 [-h] [-p] [-d DOMAIN] -U EMAIL -P PASSWORD"
   echo
-  echo "  -p         patch hosts - patch the host /etc/hosts file"
-  echo "  -d DOMAIN  the domain name this deployment will run as, eg. example.com. Default is 'openbalena.local'"
+  echo "  -p           patch hosts - patch the host /etc/hosts file"
+  echo "  -d DOMAIN    the domain name this deployment will run as, eg. example.com. Default is 'openbalena.local'"
+  echo "  -U EMAIL     the email address of the superuser account, used to login to your install from the Balena CLI"
+  echo "  -P PASSWORD  the password to use for the superuser account."
   echo
 }
 
 show_help=false
 patch_hosts=false
-while getopts ":hpd:" opt; do
+while getopts ":hpd:U:P:" opt; do
   case "${opt}" in
     h) show_help=true;;
     p) patch_hosts=true;;
     d) DOMAIN="${OPTARG}";;
+    U) SUPERUSER_EMAIL="${OPTARG}";;
+    P) SUPERUSER_PASSWORD="${OPTARG}";;
     *)
       echo "Invalid argument: -${OPTARG}"
       usage
@@ -31,6 +35,11 @@ while getopts ":hpd:" opt; do
   esac
 done
 shift $((OPTIND-1))
+
+if [ -z "${SUPERUSER_EMAIL}" ] || [ -z "${SUPERUSER_PASSWORD}" ]; then
+  usage
+  exit 1
+fi
 
 if [ "$show_help" = "true" ]; then
   usage
