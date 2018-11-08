@@ -1,0 +1,6 @@
+openbalena:
+  version: v1.0.0
+  docker-compose:
+    template: openbalena/v1.0.0/docker-compose/templates/docker-compose.tpl.yml
+    config-store: openbalena/v1.0.0/docker-compose/environment.env
+  archive-store: release

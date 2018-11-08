@@ -1,0 +1,168 @@
+version: '2.1'
+
+volumes:
+  db:
+  registry:
+  s3:
+  redis:
+
+services:
+  api:
+    image: balena/open-balena-api:${OPENBALENA_API_VERSION_TAG:-master}
+    depends_on:
+    - db
+    - s3
+    - redis
+    cap_add:
+    - SYS_ADMIN
+    - SYS_RESOURCE
+    tmpfs:
+    - /run
+    - /sys/fs/cgroup
+    security_opt:
+    - apparmor:unconfined
+    environment:
+      API_VPN_SERVICE_API_KEY: "{{{OPENBALENA_API_VPN_SERVICE_API_KEY}}}"
+      BALENA_ROOT_CA: "{{{OPENBALENA_ROOT_CA}}}"
+      CONFD_BACKEND: ENV
+      COOKIE_SESSION_SECRET: "{{{OPENBALENA_COOKIE_SESSION_SECRET}}}"
+      DB_HOST: db # <<
+      DB_PASSWORD: docker
+      DB_PORT: 5432
+      DB_USER: docker
+      DELTA_HOST: delta.{{{OPENBALENA_HOST_NAME}}}
+      DEVICE_CONFIG_OPENVPN_CONFIG: "{{{OPENBALENA_VPN_CONFIG}}}"
+      DEVICE_CONFIG_OPENVPN_CA: "{{{OPENBALENA_VPN_CA}}}"
+      DEVICE_CONFIG_SSH_AUTHORIZED_KEYS: "{{{OPENBALENA_SSH_AUTHORIZED_KEYS}}}"
+      HOST: api.{{{OPENBALENA_HOST_NAME}}}
+      IMAGE_MAKER_URL: img.{{{OPENBALENA_HOST_NAME}}}
+      IMAGE_STORAGE_BUCKET: resin-production-img-cloudformation
+      IMAGE_STORAGE_PREFIX: resinos
+      IMAGE_STORAGE_ENDPOINT: s3.amazonaws.com
+      JSON_WEB_TOKEN_EXPIRY_MINUTES: 10080
+      JSON_WEB_TOKEN_SECRET: "{{{OPENBALENA_JWT_SECRET}}}"
+      MIXPANEL_TOKEN: __unused__
+      PRODUCTION_MODE: '{{{OPENBALENA_PRODUCTION_MODE}}}'
+      PUBNUB_PUBLISH_KEY: __unused__
+      PUBNUB_SUBSCRIBE_KEY: __unused__
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REGISTRY2_HOST: registry.{{{OPENBALENA_HOST_NAME}}}
+      REGISTRY_HOST: registry.{{{OPENBALENA_HOST_NAME}}}
+      SENTRY_DSN:
+      SUPERUSER_EMAIL: "{{{OPENBALENA_SUPERUSER_EMAIL}}}"
+      SUPERUSER_PASSWORD: "{{{OPENBALENA_SUPERUSER_PASSWORD}}}"
+      TOKEN_AUTH_BUILDER_TOKEN: "{{{OPENBALENA_TOKEN_AUTH_BUILDER_TOKEN}}}"
+      TOKEN_AUTH_CERT_ISSUER: api.{{{OPENBALENA_HOST_NAME}}}
+      TOKEN_AUTH_CERT_KEY: "{{{OPENBALENA_TOKEN_AUTH_KEY}}}"
+      TOKEN_AUTH_CERT_KID: "{{{OPENBALENA_TOKEN_AUTH_KID}}}"
+      TOKEN_AUTH_CERT_PUB: "{{{OPENBALENA_TOKEN_AUTH_PUB}}}"
+      TOKEN_AUTH_JWT_ALGO: 'ES256'
+      VPN_HOST: vpn.{{{OPENBALENA_HOST_NAME}}}
+      VPN_PORT: 443
+      VPN_SERVICE_API_KEY: "{{{OPENBALENA_VPN_SERVICE_API_KEY}}}"
+  registry:
+    image: balena/open-balena-registry:${OPENBALENA_REGISTRY_VERSION_TAG:-master}
+    depends_on:
+    - api
+    - s3
+    - redis
+    volumes:
+    - registry:/data
+    cap_add:
+    - SYS_ADMIN
+    - SYS_RESOURCE
+    tmpfs:
+    - /run
+    - /sys/fs/cgroup
+    security_opt:
+    - apparmor:unconfined
+    environment:
+      API_TOKENAUTH_CRT: "{{{OPENBALENA_TOKEN_AUTH_PUB}}}"
+      BALENA_REGISTRY2_HOST: registry.{{{OPENBALENA_HOST_NAME}}}
+      BALENA_ROOT_CA: "{{{OPENBALENA_ROOT_CA}}}"
+      BALENA_TOKEN_AUTH_ISSUER: api.{{{OPENBALENA_HOST_NAME}}}
+      BALENA_TOKEN_AUTH_REALM: https://api.{{{OPENBALENA_HOST_NAME}}}/auth/v1/token
+      COMMON_REGION:
+      REGISTRY2_S3_BUCKET:
+      REGISTRY2_S3_KEY:
+      REGISTRY2_S3_SECRET:
+      REGISTRY2_SECRETKEY: "{{{OPENBALENA_REGISTRY_SECRET_KEY}}}"
+      REGISTRY2_STORAGEPATH: /data
+
+  vpn:
+    image: balena/open-balena-vpn:${OPENBALENA_VPN_VERSION_TAG:-master}
+    depends_on:
+    - api
+    cap_add:
+    - SYS_ADMIN
+    - SYS_RESOURCE
+    - NET_ADMIN
+    tmpfs:
+    - /run
+    - /sys/fs/cgroup
+    security_opt:
+    - apparmor:unconfined
+    environment:
+      API_SERVICE_API_KEY: "{{{OPENBALENA_API_VPN_SERVICE_API_KEY}}}"
+      BALENA_API_HOST: api.{{{OPENBALENA_HOST_NAME}}}
+      BALENA_ROOT_CA: "{{{OPENBALENA_ROOT_CA}}}"
+      BALENA_VPN_PORT: 443
+      PRODUCTION_MODE: '{{{OPEN_BALENA_PRODUCTION_MODE}}}'
+      RESIN_VPN_GATEWAY: 10.2.0.1
+      SENTRY_DSN:
+      VPN_HAPROXY_USEPROXYPROTOCOL: 'true'
+      VPN_OPENVPN_CA_CRT: "{{{OPENBALENA_VPN_CA}}}"
+      VPN_OPENVPN_SERVER_CRT: "{{{OPENBALENA_VPN_SERVER_CRT}}}"
+      VPN_OPENVPN_SERVER_DH: "{{{OPENBALENA_VPN_SERVER_DH}}}"
+      VPN_OPENVPN_SERVER_KEY: "{{{OPENBALENA_VPN_SERVER_KEY}}}"
+      VPN_SERVICE_API_KEY: "{{{OPENBALENA_VPN_SERVICE_API_KEY}}}"
+
+  db:
+    image: balena/open-balena-db:${OPENBALENA_DB_VERSION_TAG:-master}
+    volumes:
+    - db:/var/lib/postgresql/data
+
+  s3:
+    image: balena/open-balena-s3:${OPENBALENA_S3_VERSION_TAG:-master}
+    volumes:
+    - s3:/export
+    cap_add:
+    - SYS_RESOURCE
+    - SYS_ADMIN
+    tmpfs:
+    - /run
+    - /sys/fs/cgroup
+    security_opt:
+    - apparmor:unconfined
+
+  redis:
+    image: redis:alpine
+    volumes:
+    - redis:/data
+    cap_add:
+    - SYS_RESOURCE
+    - SYS_ADMIN
+  haproxy:
+    security_opt:
+    - seccomp:unconfined
+    image: balena/open-balena-haproxy:v1.0.1
+    depends_on:
+    - api
+    - registry
+    - vpn
+    - db
+    - s3
+    - redis
+    ports:
+    - "80:80"
+    - "443:443"
+    networks:
+      default:
+        aliases:
+        - api.{{{OPENBALENA_HOST_NAME}}}
+        - registry.{{{OPENBALENA_HOST_NAME}}}
+        - vpn.{{{OPENBALENA_HOST_NAME}}}
+        - s3.{{{OPENBALENA_HOST_NAME}}}
+    environment:
+      PROXY_CONFIG: '{{{OPENBALENA_HAPROXY_CONFIG}}}'

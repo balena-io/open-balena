@@ -1,0 +1,231 @@
+---
+properties:
+  - OPENBALENA_PRODUCTION_MODE:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+  - OPENBALENA_COOKIE_SESSION_SECRET:
+      type: string
+      pattern: "^[0-9A-Za-z_]{16,64}$"
+      default:
+        eval: GENERATE_API_KEY({length: 32})
+  - OPENBALENA_HOST_NAME:
+      type: hostname
+  - OPENBALENA_JWT_SECRET:
+      type: string
+      pattern: "^[0-9A-Za-z_]{16,64}$"
+      default:
+        eval: GENERATE_API_KEY({length: 32})
+  - OPENBALENA_RESINOS_REGISTRY_CODE:
+      type: string
+      pattern: "^[0-9A-Za-z_]{16,64}$"
+      default:
+        eval: GENERATE_API_KEY({length: 32})
+  - OPENBALENA_ROOT_KEY:
+      type: string
+      default:
+        eval: base64(GENERATE_PRIVATE_KEY({bits: 4096}))
+  - OPENBALENA_CRT_KEY:
+      type: string
+      default:
+        eval: base64(GENERATE_PRIVATE_KEY({bits: 4096}))
+  - OPENBALENA_ROOT_CA:
+      type: string
+      default:
+        eval: >
+          base64(GENERATE_CA_CERT({
+            caAttrs: {
+              C: 'US',
+              L: 'Seattle',
+              O: 'Balena Ltd.',
+              OU: 'DevOps',
+              CN: 'global-ca.io',
+              ST: 'Washington'
+            },
+            caPrivateKeyPEM: base64decode(OPENBALENA_ROOT_KEY),
+            validFrom: '2015',
+            validTo: '2025',
+            bits: 4096
+          }))
+  - OPENBALENA_CRT:
+      type: string
+      default:
+        eval: >
+          base64(GENERATE_CERT({
+            certAttrs: {
+              C: 'US',
+              L: 'Seattle',
+              O: 'Balena Ltd.',
+              OU: 'DevOps',
+              CN: '*.' + OPENBALENA_HOST_NAME,
+              ST: 'Washington'
+            },
+            caCertPEM: base64decode(OPENBALENA_ROOT_CA),
+            caPrivateKeyPEM: base64decode(OPENBALENA_ROOT_KEY),
+            privateKeyPEM: base64decode(OPENBALENA_CRT_KEY),
+            validFrom: '2015',
+            validTo: '2025',
+            bits: 4096
+          }))
+  - OPENBALENA_TOKEN_AUTH_PUB:
+      type: string
+  - OPENBALENA_TOKEN_AUTH_KEY:
+      type: string
+  - OPENBALENA_TOKEN_AUTH_KID:
+      type: string
+  - OPENBALENA_TOKEN_AUTH_BUILDER_TOKEN:
+      type: string
+      pattern: "^[0-9A-Za-z_]{16,128}$"
+      default:
+        eval: GENERATE_API_KEY({length: 64})
+  - OPENBALENA_VPN_SERVER_KEY:
+      type: string
+      default:
+        eval: base64(GENERATE_PRIVATE_KEY({bits: 4096}))
+  - OPENBALENA_VPN_SERVER_CRT:
+      type: string
+      default:
+        eval: >
+          base64(GENERATE_CERT({
+            caAttrs: {
+              C: 'US',
+              L: 'Seattle',
+              O: 'Balena Ltd.',
+              OU: 'DevOps',
+              CN: 'vpn-ca.' + OPENBALENA_HOST_NAME,
+              ST: 'Washington'
+            },
+            caCertPEM: base64decode(OPENBALENA_ROOT_CA),
+            caPrivateKeyPEM: base64decode(OPENBALENA_ROOT_KEY),
+            privateKeyPEM: base64decode(OPENBALENA_VPN_SERVER_KEY),
+            validFrom: '2015',
+            validTo: '2025'
+          }))
+  - OPENBALENA_VPN_SERVER_DH:
+      type: string
+      default:
+        eval: base64(GENERATE_DH_PARAM())
+
+  - OPENBALENA_VPN_SERVICE_API_KEY:
+      type: string
+      pattern: "^[0-9A-Za-z_]{16,64}$"
+      default:
+        eval: GENERATE_API_KEY({length: 32})
+  - OPENBALENA_API_VPN_SERVICE_API_KEY:
+      type: string
+      pattern: "^[0-9A-Za-z_]{16,64}$"
+      default:
+        eval: GENERATE_API_KEY({length: 32})
+  - OPENBALENA_REGISTRY_SECRET_KEY:
+      type: string
+      pattern: "^[0-9A-Za-z_]{16,64}$"
+      default:
+        eval: GENERATE_API_KEY({length: 32})
+  - OPENBALENA_VPN_CONFIG:
+      type: string
+      default:
+        eval: |-
+          base64(`
+          client
+          remote vpn.` + OPENBALENA_HOST_NAME + `443
+          resolv-retry infinite
+
+          remote-cert-tls server
+          ca /etc/openvpn/ca.crt
+          auth-user-pass /var/volatile/vpn-auth
+          auth-retry none
+          script-security 2
+          up /etc/openvpn-misc/upscript.sh
+          up-restart
+          down /etc/openvpn-misc/downscript.sh
+
+          comp-lzo
+          dev resin-vpn
+          dev-type tun
+          proto tcp
+          nobind
+
+          persist-key
+          persist-tun
+          verb 3
+          user openvpn
+          group openvpn
+          `)
+  - OPENBALENA_SUPERUSER_EMAIL:
+      type: email
+  - OPENBALENA_SUPERUSER_PASSWORD:
+      type: string
+  - OPENBALENA_SSH_AUTHORIZED_KEYS:
+      type: string
+  - OPENBALENA_HAPROXY_CONFIG:
+      type: string
+      default:
+        eval: |
+          `
+          {
+            "api": {
+              "backend": [
+              {
+                "url": "http://api:80"
+              }
+              ],
+              "frontend": [
+              {
+                "protocol": "https",
+                "domain": "` + OPENBALENA_HOST_NAME + `",
+                "subdomain": "api",
+                "port": "443",
+                "crt": "` + escape(base64decode(OPENBALENA_CRT) + base64decode(OPENBALENA_CRT_KEY) + base64decode(OPENBALENA_ROOT_CA)) + `"
+              }
+              ]
+            },
+            "registry": {
+              "backend": [
+              {
+                "url": "http://registry:80"
+              }
+              ],
+              "frontend": [
+              {
+                "protocol": "https",
+                "domain": "` + OPENBALENA_HOST_NAME + `",
+                "subdomain": "registry",
+                "port": "443",
+                "crt": "` + escape(base64decode(OPENBALENA_CRT) + base64decode(OPENBALENA_CRT_KEY) + base64decode(OPENBALENA_ROOT_CA)) + `"
+              }
+              ]
+            },
+            "s3": {
+              "backend": [
+              {
+                "url": "http://s3:80"
+              }
+              ],
+              "frontend": [
+              {
+                "protocol": "https",
+                "domain": "` + OPENBALENA_HOST_NAME + `",
+                "subdomain": "s3",
+                "port": "443",
+                "crt": "` + escape(base64decode(OPENBALENA_CRT) + base64decode(OPENBALENA_CRT_KEY) + base64decode(OPENBALENA_ROOT_CA)) + `"
+              }
+              ]
+            },
+            "vpn": {
+              "backend": [
+              {
+                "url": "tcp://vpn:443"
+              }
+              ],
+              "frontend": [
+              {
+                "protocol": "tcp",
+                "domain": "` + OPENBALENA_HOST_NAME + `",
+                "subdomain": "vpn",
+                "port": "443"
+              }
+              ]
+            }
+          }
+          `
