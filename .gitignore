@@ -3,3 +3,5 @@
 .vagrant/
 config/
 src/
+.idea
+release
