@@ -1,64 +1,113 @@
+<img alt="openBalena" src="docs/assets/openbalena-logo.svg" height="82">
 
-## Host requirements
+---
 
-- Docker >= 18.05.0
-- Docker Compose >= 1.11
-- OpenSSL >= 1.0.0
-- Python >= 2.7 or >=3.4
-- NodeJS >= 4.0
+OpenBalena is a platform to deploy and manage connected devices. Devices run
+[balenaOS][balena-os-website], a host operating system designed for running
+containers on IoT devices, and are managed via the [balena CLI][balena-cli],
+which you can use to configure your application containers, push updates, check
+status, view logs, and so forth. OpenBalena’s backend services, composed of
+battle-tested components that we’ve run in production on [balenaCloud][balena-cloud-website]
+for years, can store device information securely and reliably, allow remote
+management via a built-in VPN service, and efficiently distribute container
+images to your devices.
 
-## Installation
+To learn more about openBalena, visit [balena.io/open][open-balena-website].
 
-Make sure you have the software listed above installed.
 
-In a terminal, clone the project with:
+## Features
 
-    $ git clone https://github.com/balena-io/open-balena.git
+- **Simple provisioning**: Adding devices to your fleet is a breeze
+- **Easy updates**: Remotely update the software on your devices with a single command
+- **Container-based**: Benefit from the power of virtualization, optimized for the edge
+- **Scalable**: Deploy and manage one device, or one million
+- **Powerful API & SDK**: Extend openBalena to fit your needs
+- **Built-in VPN**: Access your devices regardless of their network environment
 
-Change into the `open-balena` directory and run the configuration script.
-This will create a new directory, `config`, and generate appropriate SSL
-certificates and configuration for the instance.
 
-    $ ./scripts/quickstart
+## Roadmap
 
-You may optionally configure the instance to run under a custom domain name.
-The default is `openbalena.local`. For example:
+OpenBalena is currently in beta. While fully functional, it lacks features we
+consider important before we can comfortably call it production-ready. During
+this phase, don’t be alarmed if things don’t work as expected just yet (and
+please let us know about any bugs or errors you encounter!). The following
+improvements and new functionality is planned:
 
-    $ ./scripts/quickstart -d mydomain.com
+- Full documentation
+- Full test suite
+- Simplified deployment
+- Remote host OS updates
+- Support for custom device types
 
-For more available options, see the script's help:
 
-    $ ./scripts/quickstart -h
+## Contributing
 
-Start the instance with:
+Everyone is welcome to contribute to openBalena. There are many different ways
+to get involved apart from submitting pull requests, including helping other
+users on the [forums][forums], reporting or triaging [issues][issue-tracker],
+reviewing and discussing [pull requests][pulls], or just spreading the word.
 
-    $ ./scripts/compose up -d
+All of openBalena is hosted on GitHub. Apart from its constituent components,
+which are the [API][open-balena-api], [VPN][open-balena-vpn], [Registry][open-balena-registry],
+[S3 storage service][open-balena-s3], and [Database][open-balena-db], contributions
+are also welcome to its client-side software such as the [balena CLI][balena-cli],
+the [balena SDK][balena-sdk], [balenaOS][balena-os] and [balenaEngine][balena-engine].
 
-Stop the instance with:
 
-    $ ./scripts/compose stop
+## Getting Started
 
-To remove all traces of the instance, run the following commands and finally
-delete the configuration folder.
+Our [Getting Started][getting-started] guide is the most direct path to getting
+an openBalena installation up and running and successfully deploying your
+application to your device(s).
 
-**WARNING**: This will remove *all* data.
 
-    $ ./scripts/compose kill
-    $ ./scripts/compose down
-    $ docker volume rm openbalena_s3 openbalena_redis openbalena_db openbalena_registry
+## Documentation
 
-### macOS & Windows
+While we're still working on the project documentation, please refer to the
+[balenaCloud documentation][documentation]. BalenaCloud is built on top of
+openBalena, so the core concepts and functionality is identical. The following
+sections are of particular interest:
 
-On macOS and Windows you need Vagrant. `open-balena` is not being tested with
-docker-machine. `open-balena` comes with an appropriate `Vagrantfile` for
-setting up the VM, installing dependencies and starting the platform.
+- [Overview / A balena primer](https://balena.io/docs/learn/welcome/primer)
+- [Overview / Core Concepts](https://balena.io/docs/learn/welcome/concepts)
+- [Overview / Going to production](https://balena.io/docs/learn/welcome/production-plan)
+- [Develop / Define a container](https://balena.io/docs/learn/develop/dockerfile)
+- [Develop / Multiple containers](https://balena.io/docs/learn/develop/multicontainer)
+- [Develop / Runtime](https://balena.io/docs/learn/develop/runtime)
+- [Develop / Interact with hardware](https://balena.io/docs/learn/develop/hardware)
+- [Deploy / Optimize your builds](https://balena.io/docs/learn/deploy/build-optimization)
+- [Reference](https://balena.io/docs/reference)
+- [FAQ](https://balena.io/docs/faq/troubleshooting/faq)
 
-- Install Vagrant >= 2.0
-- `$ vagrant plugin install vagrant-docker-compose`
-- `$ vagrant up`
 
-When provisioning completes and the VM has started, `open-balena` services
-should be running inside the VM. You will need to expose these services to
-the outside in order for them to be reachable by devices. To do so, you must
-setup DNS for the domain name you've deployed the instance as to point to the
-VM's IP address.
+## Getting Help
+
+You are welcome to submit any questions, participate in discussions and request
+help with any issue in [openBalena forums][forums]. The balena team frequents
+these forums and will be happy to help. You can also ask other community members
+for help, or contribute by answering questions posted by fellow openBalena users.
+Please do not use the issue tracker for support-related questions.
+
+
+## License
+
+OpenBalena is licensed under the terms of AGPL v3. See [LICENSE](LICENSE) for details.
+
+
+[balena-cli]: https://github.com/balena-io/balena-cli
+[balena-cloud-website]: https://balena.io/cloud
+[balena-engine]: https://github.com/balena-os/balena-engine
+[balena-os-website]: https://balena.io/os
+[balena-os]: https://github.com/balena-os/meta-balena
+[balena-sdk]: https://github.com/balena-io/balena-sdk
+[documentation]: https://balena.io/docs/learn/welcome/introduction/
+[forums]: https://forums.balena.io/c/open-balena
+[getting-started]: https://balena.io/open/docs/getting-started
+[issue-tracker]: https://github.com/balena-io/open-balena/issues
+[open-balena-api]: https://github.com/balena-io/open-balena-api
+[open-balena-db]: https://github.com/balena-io/open-balena-db
+[open-balena-registry]: https://github.com/balena-io/open-balena-registry
+[open-balena-s3]: https://github.com/balena-io/open-balena-s3
+[open-balena-vpn]: https://github.com/balena-io/open-balena-vpn
+[open-balena-website]: https://balena.io/open
+[pulls]: https://github.com/balena-io/open-balena/pulls
