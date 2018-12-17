@@ -91,4 +91,4 @@ echo_bold "==> Success!"
 echo '  - Start the instance with: ./scripts/compose up -d'
 echo '  - Stop the instance with: ./scripts/compose stop'
 echo '  - To create the superuser, see: ./scripts/create-superuser -h'
-echo "  - Use the following certificate with Balena CLI: ${CONFIG_DIR}/root/ca.crt"
+echo "  - Use the following certificate with Balena CLI: ${CERTS_DIR}/root/ca.crt"
