@@ -42,13 +42,12 @@ JWT_CRT="${CERT_FILE}.crt"
 JWT_KEY="${CERT_FILE}.pem"
 JWT_KID="${CERT_FILE}.kid"
 
-mkdir -p "${CERT_DIR}"
-openssl ecparam -name prime256v1 -genkey -noout -out "${JWT_KEY}" 2>/dev/null
-openssl req -x509 -new -nodes -days "${CRT_EXPIRY_DAYS}" -key "${JWT_KEY}" -subj "/CN=api.${CN}" -out "${JWT_CRT}" 2>/dev/null
-openssl ec -in "${JWT_KEY}" -pubout -outform DER -out "${CERT_FILE}.der" 2>/dev/null
-keyid "${CERT_FILE}.der" >"${JWT_KID}"
-rm "${CERT_FILE}.der"
-
-echo "JWT_CRT=${JWT_CRT//$OUT/\$OUT}"
-echo "JWT_KEY=${JWT_KEY//$OUT/\$OUT}"
-echo "JWT_KID=${JWT_KID//$OUT/\$OUT}"
+if [ ! -f $JWT_CRT ] || [ ! -f $JWT_KEY ] || [ ! -f $JWT_KID ]; then
+  rm -f $JWT_CRT $JWT_KEY $JWT_KID
+  mkdir -p "${CERT_DIR}"
+  openssl ecparam -name prime256v1 -genkey -noout -out "${JWT_KEY}" 2>/dev/null
+  openssl req -x509 -new -nodes -days "${CRT_EXPIRY_DAYS}" -key "${JWT_KEY}" -subj "/CN=api.${CN}" -out "${JWT_CRT}" 2>/dev/null
+  openssl ec -in "${JWT_KEY}" -pubout -outform DER -out "${CERT_FILE}.der" 2>/dev/null
+  keyid "${CERT_FILE}.der" >"${JWT_KID}"
+  rm "${CERT_FILE}.der"
+fi

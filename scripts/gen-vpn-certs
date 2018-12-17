@@ -21,33 +21,35 @@ OUT="$(realpath "${2:-.}")"
 
 # shellcheck source=scripts/ssl-common.sh
 source "${DIR}/ssl-common.sh"
+
 VPN_PKI="$(realpath "${OUT}/vpn")"
-
-# generate VPN sub-CA
-"$easyrsa_bin" --pki-dir="${VPN_PKI}" init-pki 2>/dev/null
-"$easyrsa_bin" --pki-dir="${VPN_PKI}" --days="${CA_EXPIRY_DAYS}" --req-cn="vpn-ca.${CN}" build-ca nopass subca 2>/dev/null
-
-# import sub-CA CSR into root PKI, sign, and copy back to vpn PKI
-"$easyrsa_bin" --pki-dir="${ROOT_PKI}" import-req "${VPN_PKI}/reqs/ca.req" "vpn-ca" 2>/dev/null
-"$easyrsa_bin" --pki-dir="${ROOT_PKI}" sign-req ca "vpn-ca" 2>/dev/null
-cp "${ROOT_PKI}/issued/vpn-ca.crt" "${VPN_PKI}/ca.crt"
 VPN_CA="${VPN_PKI}/ca.crt"
-echo "VPN_CA=${VPN_CA//$OUT/\$OUT}"
-
-# generate and sign vpn server certificate
-"$easyrsa_bin" --pki-dir="${VPN_PKI}" --days="${CRT_EXPIRY_DAYS}" build-server-full "vpn.${CN}" nopass 2>/dev/null
 VPN_CRT="${VPN_PKI}/issued/vpn.${CN}.crt"
 VPN_KEY="${VPN_PKI}/private/vpn.${CN}.key"
-echo "VPN_CRT=${VPN_CRT//$OUT/\$OUT}"
-echo "VPN_KEY=${VPN_KEY//$OUT/\$OUT}"
-
-# generate vpn dhparams (keysize of 2048 will do, 4096 can wind up taking hours to generate)
-"$easyrsa_bin" --pki-dir="${VPN_PKI}" --keysize=2048 gen-dh 2>/dev/null
 VPN_DH="${VPN_PKI}/dh.pem"
-echo "VPN_DH=${VPN_DH//$OUT/\$OUT}"
 
-# update indexes and generate CRLs
-"$easyrsa_bin" --pki-dir="${ROOT_PKI}" update-db 2>/dev/null
-"$easyrsa_bin" --pki-dir="${VPN_PKI}" update-db 2>/dev/null
-"$easyrsa_bin" --pki-dir="${ROOT_PKI}" gen-crl 2>/dev/null
-"$easyrsa_bin" --pki-dir="${VPN_PKI}" gen-crl 2>/dev/null
+if [ ! -f $VPN_CA ] || [ ! -f $VPN_CRT ] || [ ! -f $VPN_KEY ] || [ ! -f $VPN_DH ]; then
+
+  rm -f $VPN_CA $VPN_CRT $VPN_DH $VPN_KEY
+
+  # generate VPN sub-CA
+  "$easyrsa_bin" --pki-dir="${VPN_PKI}" init-pki &>/dev/null
+  "$easyrsa_bin" --pki-dir="${VPN_PKI}" --days="${CA_EXPIRY_DAYS}" --req-cn="vpn-ca.${CN}" build-ca nopass subca 2>/dev/null
+
+  # import sub-CA CSR into root PKI, sign, and copy back to vpn PKI
+  "$easyrsa_bin" --pki-dir="${ROOT_PKI}" import-req "${VPN_PKI}/reqs/ca.req" "vpn-ca" 2>/dev/null
+  "$easyrsa_bin" --pki-dir="${ROOT_PKI}" sign-req ca "vpn-ca" 2>/dev/null
+  cp "${ROOT_PKI}/issued/vpn-ca.crt" "${VPN_PKI}/ca.crt"
+
+  # generate and sign vpn server certificate
+  "$easyrsa_bin" --pki-dir="${VPN_PKI}" --days="${CRT_EXPIRY_DAYS}" build-server-full "vpn.${CN}" nopass 2>/dev/null
+
+  # generate vpn dhparams (keysize of 2048 will do, 4096 can wind up taking hours to generate)
+  "$easyrsa_bin" --pki-dir="${VPN_PKI}" --keysize=2048 gen-dh 2>/dev/null
+
+  # update indexes and generate CRLs
+  "$easyrsa_bin" --pki-dir="${ROOT_PKI}" update-db 2>/dev/null
+  "$easyrsa_bin" --pki-dir="${VPN_PKI}" update-db 2>/dev/null
+  "$easyrsa_bin" --pki-dir="${ROOT_PKI}" gen-crl 2>/dev/null
+  "$easyrsa_bin" --pki-dir="${VPN_PKI}" gen-crl 2>/dev/null
+fi

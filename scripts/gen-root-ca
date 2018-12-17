@@ -22,12 +22,14 @@ OUT="$(realpath "${2:-.}")"
 # shellcheck source=scripts/ssl-common.sh
 source "${DIR}/ssl-common.sh"
 
-# Create a secret key and CA file for the self-signed CA
-"$easyrsa_bin" --pki-dir="${ROOT_PKI}" init-pki 2>/dev/null
-"$easyrsa_bin" --pki-dir="${ROOT_PKI}" --days="${CA_EXPIRY_DAYS}" --req-cn="ca.${CN}" build-ca nopass 2>/dev/null
 ROOT_CA="${ROOT_PKI}/ca.crt"
-echo "ROOT_CA=${ROOT_CA//$OUT/\$OUT}"
 
-# update indexes and generate CRLs
-"$easyrsa_bin" --pki-dir="${ROOT_PKI}" update-db 2>/dev/null
-"$easyrsa_bin" --pki-dir="${ROOT_PKI}" gen-crl 2>/dev/null
+if [ ! -f $ROOT_CA ]; then
+  # Create a secret key and CA file for the self-signed CA
+  "$easyrsa_bin" --pki-dir="${ROOT_PKI}" init-pki 2>/dev/null
+  "$easyrsa_bin" --pki-dir="${ROOT_PKI}" --days="${CA_EXPIRY_DAYS}" --req-cn="ca.${CN}" build-ca nopass 2>/dev/null
+
+  # update indexes and generate CRLs
+  "$easyrsa_bin" --pki-dir="${ROOT_PKI}" update-db 2>/dev/null
+  "$easyrsa_bin" --pki-dir="${ROOT_PKI}" gen-crl 2>/dev/null
+fi

@@ -18,6 +18,8 @@ echo_bold() {
   printf "\\033[1m%s\\033[0m\\n" "${@}"
 }
 
+source "${BASH_SOURCE%/*}/_realpath"
+
 CMD="$(realpath "$0")"
 DIR="$(dirname "${CMD}")"
 FIG="${DIR}/compose"
