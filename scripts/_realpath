@@ -1,0 +1,24 @@
+#!/bin/bash -e
+
+REALPATH=
+REALPATHS=(
+    'realpath'
+    'grealpath'
+    'greadlink -f'
+)
+for cmd in "${REALPATHS[@]}"; do
+if command -v "${cmd%% *}" &>/dev/null; then
+    REALPATH="${cmd}"
+    break
+fi
+done
+
+if [ -z "${REALPATH}" ]; then
+    local RED=`tput setaf 1`
+    echo "${RED}ERROR: Unable to find suitable command for realpath."
+    exit 1
+fi
+
+realpath() {
+  echo $(command ${REALPATH} "$@")
+}
