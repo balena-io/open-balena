@@ -1,10 +1,12 @@
-version: '2.1'
+version: "2.1"
 
 volumes:
-  db:
-  registry:
-  s3:
-  redis:
+  certs: {}
+  cert-provider: {}
+  db: {}
+  redis: {}
+  registry: {}
+  s3: {}
 
 services:
   api:
@@ -20,7 +22,7 @@ services:
       API_VPN_SERVICE_API_KEY: ${OPENBALENA_API_VPN_SERVICE_API_KEY}
       BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
       COOKIE_SESSION_SECRET: ${OPENBALENA_COOKIE_SESSION_SECRET}
-      DB_HOST: db.${OPENBALENA_HOST_NAME}
+      DB_HOST: db
       DB_PASSWORD: docker
       DB_PORT: 5432
       DB_USER: docker
@@ -36,10 +38,10 @@ services:
       JSON_WEB_TOKEN_EXPIRY_MINUTES: 10080
       JSON_WEB_TOKEN_SECRET: ${OPENBALENA_JWT_SECRET}
       MIXPANEL_TOKEN: __unused__
-      PRODUCTION_MODE: '${OPENBALENA_PRODUCTION_MODE}'
+      PRODUCTION_MODE: "${OPENBALENA_PRODUCTION_MODE}"
       PUBNUB_PUBLISH_KEY: __unused__
       PUBNUB_SUBSCRIBE_KEY: __unused__
-      REDIS_HOST: redis.${OPENBALENA_HOST_NAME}
+      REDIS_HOST: redis
       REDIS_PORT: 6379
       REGISTRY2_HOST: registry.${OPENBALENA_HOST_NAME}
       REGISTRY_HOST: registry.${OPENBALENA_HOST_NAME}
@@ -49,7 +51,7 @@ services:
       TOKEN_AUTH_CERT_KEY: ${OPENBALENA_TOKEN_AUTH_KEY}
       TOKEN_AUTH_CERT_KID: ${OPENBALENA_TOKEN_AUTH_KID}
       TOKEN_AUTH_CERT_PUB: ${OPENBALENA_TOKEN_AUTH_PUB}
-      TOKEN_AUTH_JWT_ALGO: 'ES256'
+      TOKEN_AUTH_JWT_ALGO: "ES256"
       VPN_HOST: vpn.${OPENBALENA_HOST_NAME}
       VPN_PORT: 443
       VPN_SERVICE_API_KEY: ${OPENBALENA_VPN_SERVICE_API_KEY}
@@ -73,10 +75,10 @@ services:
       BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
       BALENA_TOKEN_AUTH_ISSUER: api.${OPENBALENA_HOST_NAME}
       BALENA_TOKEN_AUTH_REALM: https://api.${OPENBALENA_HOST_NAME}/auth/v1/token
-      COMMON_REGION: 
-      REGISTRY2_S3_BUCKET: 
-      REGISTRY2_S3_KEY: 
-      REGISTRY2_S3_SECRET: 
+      COMMON_REGION:
+      REGISTRY2_S3_BUCKET:
+      REGISTRY2_S3_KEY:
+      REGISTRY2_S3_SECRET:
       REGISTRY2_SECRETKEY: ${OPENBALENA_REGISTRY_SECRET_KEY}
       REGISTRY2_STORAGEPATH: /data
 
@@ -94,10 +96,10 @@ services:
       BALENA_API_HOST: api.${OPENBALENA_HOST_NAME}
       BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
       BALENA_VPN_PORT: 443
-      PRODUCTION_MODE: '${OPENBALENA_PRODUCTION_MODE}'
+      PRODUCTION_MODE: "${OPENBALENA_PRODUCTION_MODE}"
       RESIN_VPN_GATEWAY: 10.2.0.1
-      SENTRY_DSN: 
-      VPN_HAPROXY_USEPROXYPROTOCOL: 'true'
+      SENTRY_DSN:
+      VPN_HAPROXY_USEPROXYPROTOCOL: "true"
       VPN_OPENVPN_CA_CRT: ${OPENBALENA_VPN_CA}
       VPN_OPENVPN_SERVER_CRT: ${OPENBALENA_VPN_SERVER_CRT}
       VPN_OPENVPN_SERVER_DH: ${OPENBALENA_VPN_SERVER_DH}
@@ -135,11 +137,12 @@ services:
     build: ../haproxy
     depends_on:
       - api
-      - registry
-      - vpn
+      - cert-provider
       - db
       - s3
       - redis
+      - registry
+      - vpn
     ports:
       - "80:80"
       - "443:443"
@@ -162,3 +165,15 @@ services:
       BALENA_HAPROXY_KEY: ${OPENBALENA_ROOT_KEY}
       BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
       HAPROXY_HOSTNAME: ${OPENBALENA_HOST_NAME}
+    volumes:
+      - certs:/certs:ro
+
+  cert-provider:
+    build: ../cert-provider
+    volumes:
+      - certs:/certs
+      - cert-provider:/usr/src/app/certs
+    environment:
+      ACTIVE: ${OPENBALENA_ACME_CERT_ENABLED}
+      DOMAINS: "api.${OPENBALENA_HOST_NAME},registry.${OPENBALENA_HOST_NAME},s3.${OPENBALENA_HOST_NAME},vpn.${OPENBALENA_HOST_NAME}"
+      OUTPUT_PEM: /certs/open-balena.pem
