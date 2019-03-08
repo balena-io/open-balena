@@ -1,6 +1,10 @@
-FROM haproxy:1.8-alpine
+FROM haproxy:1.9-alpine
+
+VOLUME [ "/certs" ]
+
+RUN apk add --update inotify-tools
 
 COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
-COPY entry.sh /open-balena-entry
+COPY start-haproxy.sh /start-haproxy
 
-CMD /open-balena-entry
+CMD /start-haproxy

@@ -21,6 +21,10 @@ fi
 
 source "${BASH_SOURCE%/*}/_realpath"
 
+domainResolves() {
+  getent hosts "$1" > /dev/null 2>&1
+}
+
 CMD="$(realpath "$0")"
 DIR="$(dirname "${CMD}")"
 BASE_DIR="$(dirname "${DIR}")"
@@ -30,8 +34,9 @@ CERTS_DIR="${CONFIG_DIR}/certs"
 DOMAIN=openbalena.local
 
 usage() {
-  echo "usage: $0 [-h] [-p] [-d DOMAIN] -U EMAIL -P PASSWORD"
+  echo "usage: $0 [-c] [-h] [-p] [-d DOMAIN] -U EMAIL -P PASSWORD"
   echo
+  echo "  -c           enable the ACME certificate service in staging or production mode."
   echo "  -p           patch hosts - patch the host /etc/hosts file"
   echo "  -d DOMAIN    the domain name this deployment will run as, eg. example.com. Default is 'openbalena.local'"
   echo "  -U EMAIL     the email address of the superuser account, used to login to your install from the Balena CLI"
@@ -41,7 +46,7 @@ usage() {
 
 show_help=false
 patch_hosts=false
-while getopts ":hpxd:U:P:" opt; do
+while getopts ":chpxd:U:P:" opt; do
   case "${opt}" in
     h) show_help=true;;
     p) patch_hosts=true;;
@@ -49,6 +54,7 @@ while getopts ":hpxd:U:P:" opt; do
     d) DOMAIN="${OPTARG}";;
     U) SUPERUSER_EMAIL="${OPTARG}";;
     P) SUPERUSER_PASSWORD="${OPTARG}";;
+    c) ACME_CERT_ENABLED="true";;
     *)
       echo "Invalid argument: -${OPTARG}"
       usage
@@ -68,8 +74,17 @@ if [ "$show_help" = "true" ]; then
   exit 1
 fi
 
+if [ ! -z "$ACME_CERT_ENABLED" ]; then
+  echo "${BLUE}[INFO]${RESET} ACME Certificate request is ${BOLD}ENABLED${RESET}."
+  
+  if ! domainResolves "api.${DOMAIN}"; then
+    echo "${YELLOW}[WARN]${RESET} Unable to resolve \"api.${DOMAIN}\"!"
+    echo "${YELLOW}[WARN]${RESET} This might mean that you cannot use an ACME issued certificate."
+  fi
+fi
+
 echo_bold() {
-  printf "\\033[1m%s\\033[0m\\n" "${@}"
+  echo "${BOLD}${@}${RESET}"
 }
 
 echo_bold "==> Creating new configuration at: $CONFIG_DIR"
@@ -110,5 +125,7 @@ fi
 echo_bold "==> Success!"
 echo '  - Start the instance with: ./scripts/compose up -d'
 echo '  - Stop the instance with: ./scripts/compose stop'
-echo '  - To create the superuser, see: ./scripts/create-superuser -h'
-echo "  - Use the following certificate with Balena CLI: ${CERTS_DIR}/root/ca.crt"
+
+if [ -z "${ACME_CERT_ENABLED}" ]; then
+  echo "  - Use the following certificate with Balena CLI: ${CERTS_DIR}/root/ca.crt"
+fi
