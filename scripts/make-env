@@ -12,7 +12,7 @@ usage() {
   echo "  JWT_CRT    Path to Token Auth certificate"
   echo "  JWT_KEY    Path to Token Auth private key"
   echo "  JWT_KID    Path to KeyID for the Token Auth certificate"
-  echo "  VPN_CA     Path to the VPN sub-CA certificate"
+  echo "  VPN_CA     Path to the VPN CA certificate"
   echo "  VPN_CRT    Path to the VPN server certificate"
   echo "  VPN_KEY    Path to the VPN server private key"
   echo "  VPN_DH     Path to the VPN server Diffie Hellman parameters"
@@ -83,7 +83,7 @@ export OPENBALENA_TOKEN_AUTH_PUB=$(b64file "$JWT_CRT")
 export OPENBALENA_TOKEN_AUTH_KEY=$(b64file "$JWT_KEY")
 export OPENBALENA_TOKEN_AUTH_KID=$(b64file "$JWT_KID")
 export OPENBALENA_VPN_CA=$(b64file "$VPN_CA")
-export OPENBALENA_VPN_CA_CHAIN=$(b64file "$ROOT_CA" "$VPN_CA")
+export OPENBALENA_VPN_CA_CHAIN=$(b64file "$VPN_CA")
 export OPENBALENA_VPN_CONFIG=$(b64encode "$VPN_CONFIG")
 export OPENBALENA_VPN_SERVER_CRT=$(b64file "$VPN_CRT")
 export OPENBALENA_VPN_SERVER_KEY=$(b64file "$VPN_KEY")
