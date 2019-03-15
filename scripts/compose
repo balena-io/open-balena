@@ -11,6 +11,12 @@ echo_bold() {
   printf "\\033[1m%s\\033[0m\\n" "$@"
 }
 
+VERSIONS_FILE="${BASE_DIR}/compose/versions"
+if [ ! -f "$VERSIONS_FILE" ]; then
+  echo_bold "No service versions defined in ${VERSIONS_FILE}"
+  exit 1
+fi
+
 ENV_FILE="${CONFIG_DIR}/activate"
 if [ ! -f "$ENV_FILE" ]; then
   echo_bold 'No configuration found; please create one first with: ./scripts/quickstart'
@@ -19,7 +25,7 @@ if [ ! -f "$ENV_FILE" ]; then
 fi
 
 # shellcheck source=/dev/null
-source "${ENV_FILE}"; docker-compose \
+source "${VERSIONS_FILE}"; source "${ENV_FILE}"; docker-compose \
   --project-name 'openbalena' \
   -f "${BASE_DIR}/compose/services.yml" \
   -f "${CONFIG_DIR}/docker-compose.yml" \
