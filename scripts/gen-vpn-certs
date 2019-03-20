@@ -32,14 +32,9 @@ if [ ! -f $VPN_CA ] || [ ! -f $VPN_CRT ] || [ ! -f $VPN_KEY ] || [ ! -f $VPN_DH 
 
   rm -f $VPN_CA $VPN_CRT $VPN_DH $VPN_KEY
 
-  # generate VPN sub-CA
+  # generate VPN CA
   "$easyrsa_bin" --pki-dir="${VPN_PKI}" init-pki &>/dev/null
-  "$easyrsa_bin" --pki-dir="${VPN_PKI}" --days="${CA_EXPIRY_DAYS}" --req-cn="vpn-ca.${CN}" build-ca nopass subca 2>/dev/null
-
-  # import sub-CA CSR into root PKI, sign, and copy back to vpn PKI
-  "$easyrsa_bin" --pki-dir="${ROOT_PKI}" import-req "${VPN_PKI}/reqs/ca.req" "vpn-ca" 2>/dev/null
-  "$easyrsa_bin" --pki-dir="${ROOT_PKI}" sign-req ca "vpn-ca" 2>/dev/null
-  cp "${ROOT_PKI}/issued/vpn-ca.crt" "${VPN_PKI}/ca.crt"
+  "$easyrsa_bin" --pki-dir="${VPN_PKI}" --days="${CA_EXPIRY_DAYS}" --req-cn="vpn-ca.${CN}" build-ca nopass 2>/dev/null
 
   # generate and sign vpn server certificate
   "$easyrsa_bin" --pki-dir="${VPN_PKI}" --days="${CRT_EXPIRY_DAYS}" build-server-full "vpn.${CN}" nopass 2>/dev/null
@@ -48,8 +43,6 @@ if [ ! -f $VPN_CA ] || [ ! -f $VPN_CRT ] || [ ! -f $VPN_KEY ] || [ ! -f $VPN_DH 
   "$easyrsa_bin" --pki-dir="${VPN_PKI}" --keysize=2048 gen-dh 2>/dev/null
 
   # update indexes and generate CRLs
-  "$easyrsa_bin" --pki-dir="${ROOT_PKI}" update-db 2>/dev/null
   "$easyrsa_bin" --pki-dir="${VPN_PKI}" update-db 2>/dev/null
-  "$easyrsa_bin" --pki-dir="${ROOT_PKI}" gen-crl 2>/dev/null
   "$easyrsa_bin" --pki-dir="${VPN_PKI}" gen-crl 2>/dev/null
 fi
