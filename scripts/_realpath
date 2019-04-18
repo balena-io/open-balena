@@ -1,5 +1,11 @@
 #!/bin/bash -e
 
+echo_error() {
+    local RED=`tput setaf 1`
+    local RESET=`tput sgr0`
+    echo "${RED}ERROR: ${1}${RESET}"
+}
+
 REALPATH=
 REALPATHS=(
     'realpath'
@@ -14,8 +20,13 @@ fi
 done
 
 if [ -z "${REALPATH}" ]; then
-    local RED=`tput setaf 1`
-    echo "${RED}ERROR: Unable to find suitable command for realpath."
+    echo_error 'Unable to find suitable command for realpath.'
+    if [ $(uname) == 'Darwin' ]; then
+        echo 'GNU coreutils are required to build openBalena on MacOS. To install with brew, run'
+        echo ''
+        echo '    brew install coreutils'
+        echo ''
+    fi
     exit 1
 fi
 
