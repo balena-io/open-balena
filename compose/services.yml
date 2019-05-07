@@ -117,10 +117,13 @@ services:
   s3:
     extends:
       file: ./common.yml
-      service: system
+      service: component
     image: balena/open-balena-s3:${OPENBALENA_S3_VERSION_TAG:-master}
     volumes:
       - s3:/export
+    environment:
+      S3_MINIO_ACCESS_KEY: abcdef1234
+      S3_MINIO_SECRET_KEY: "1234567890"
 
   redis:
     extends:
