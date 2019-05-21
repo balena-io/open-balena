@@ -1,1 +1,875 @@
-[]
+- commits:
+    - subject: 'tidy: Remove unused DEVICE_CONFIG_OPENVPN_CONFIG variable'
+      hash: 199d8eb4a454cc99a9cd8329fa6beae49b9040e1
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Rich Bayliss <rich@balena.io>
+        signed-off-by: Rich Bayliss <rich@balena.io>
+      author: Rich Bayliss
+    - subject: 'services: Update Registry service version'
+      hash: 6fdc554e4396f950398fcf61640386ef70e57467
+      body: >
+        Update open-balena-registry to 2.7.0
+
+
+        This allows registry to be configured to use its internal Redis instance
+        for caching. It is still disabled by default though.
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Akis Kesoglou
+    - subject: 'services: Update API service version'
+      hash: f8b8a1589a6f46589721b0eb3cb2a156730ca56c
+      body: |
+        Update open-balena-api from 0.11.8 to 0.19.5
+
+        This brings in the latest bugfixes and changes.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Rich Bayliss <rich@balena.io>
+        signed-off-by: Rich Bayliss <rich@balena.io>
+      author: Rich Bayliss
+      nested:
+        - commits:
+            - subject: Update typed-error to 3.1.0
+              hash: 7ba397da9f1765258c533d454aa49dbacb9c0b79
+              body: |
+                Update typed-error from 2.0.0 to 3.1.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: 'dev: Enforce prettier coding standards'
+                      hash: 47c07a641fa39ddb833b41aff7a918accad08289
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                        Signed-off-by: Will Boyce <will@balena.io>
+                        signed-off-by: Will Boyce <will@balena.io>
+                      author: Will Boyce
+                    - subject: 'npm: Update dependencies and remove `package-lock.json`'
+                      hash: 067bceb5c8dfd46f7e4ff0f58dead46fd9626167
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                        Signed-off-by: Will Boyce <will@balena.io>
+                        signed-off-by: Will Boyce <will@balena.io>
+                      author: Will Boyce
+                    - subject: >-
+                        codeowners: Add top contributors @wrboyce, @Page-, and
+                        @dfunckt
+                      hash: 6acc8757a594f74f264c8d68ea4501c61bda9951
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                        Signed-off-by: Will Boyce <will@balena.io>
+                        signed-off-by: Will Boyce <will@balena.io>
+                      author: Will Boyce
+                    - subject: 'versionbot: Add CHANGELOG.yml (for nested changelogs)'
+                      hash: 2b684a0bb0c95a5dbd3b130ba0f184d3464d298f
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                        Signed-off-by: Will Boyce <will@balena.io>
+                        signed-off-by: Will Boyce <will@balena.io>
+                      author: Will Boyce
+                  version: typed-error-3.1.0
+                  date: 2019-04-01T10:20:01.427Z
+                - commits:
+                    - author: CameronDiver
+                      body: ''
+                      footers:
+                        change-type: patch
+                        signed-off-by: Cameron Diver <cameron@balena.io>
+                      hash: aaa9391dc463c1037f85e845d30f6f9434bb4dc1
+                      subject: Update README with new import style
+                  date: '2018-11-01T12:08:25Z'
+                  version: typed-error-3.0.2
+                - commits:
+                    - author: Pagan Gazzard
+                      body: ''
+                      footers:
+                        change-type: patch
+                      hash: 627cdd281d7b086df8fe5ed1ccb0e0e0df3df062
+                      subject: Update to typescript 3
+                    - author: Pagan Gazzard
+                      body: ''
+                      footers:
+                        change-type: patch
+                      hash: 00d182bb2bc29bd82adb4e8ea4527f6bda6c5278
+                      subject: Update dev dependencies
+                    - author: Pagan Gazzard
+                      body: ''
+                      hash: 94adac5d747f16b9228b39e56007ee0126c6f99c
+                      subject: Add node-10 to the circle test suite
+                  date: '2018-10-29T14:05:23Z'
+                  version: typed-error-3.0.1
+                - commits:
+                    - author: Will Boyce
+                      body: >-
+                        * Switch to `export ...` syntax (from `export = ...`)
+
+                        * Fix invalid export of class inheriting non-exported
+                        class
+                      footers:
+                        change-type: major
+                      hash: a6307b8c04d3456ad7d8a6ac19035b5e718c4311
+                      subject: Distribute generated typescript declaration
+                    - author: Will Boyce
+                      body: ''
+                      footers:
+                        change-type: patch
+                      hash: 37c4b700baadba8cdd6bc0c40df74b30b1a6301c
+                      subject: use circle for build/publish and add package-lock
+                    - author: Will Boyce
+                      body: ''
+                      footers:
+                        change-type: patch
+                      hash: 83e809281f5172ca1ff71bdf0ee663cd504f1428
+                      subject: add lint scripts/requirements
+                    - author: Will Boyce
+                      body: ''
+                      footers:
+                        change-type: minor
+                      hash: da9431d08e501a0d4d0db3a7fb2c0bd06d76d064
+                      subject: Remove `BaseError` class and  directly subclass `Error`
+                    - author: Will Boyce
+                      body: ''
+                      footers:
+                        change-type: patch
+                      hash: e46a36b54498b68f513c6cb947e217c11525e160
+                      subject: 'Update dependencies, clean up package/tsconfig'
+                  date: '2018-04-17T08:19:27Z'
+                  version: typed-error-3.0.0
+                - commits:
+                    - author: Akis Kesoglou
+                      body: ''
+                      footers:
+                        change-type: patch
+                      hash: d35c44f1e57f6386c6f769f8cafc28e0886719cc
+                      subject: Add LICENSE
+                  date: '2017-12-15T17:19:00Z'
+                  version: typed-error-2.0.1
+          version: open-balena-api-0.19.5
+          date: 2019-05-20T12:59:21.646Z
+        - commits:
+            - subject: Some linting fixes for resin-lint 3
+              hash: 808fc3e1ec9b21d8df1166bc3265d92d6bfa1c59
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+          version: open-balena-api-0.19.4
+          date: 2019-05-20T12:11:09.118Z
+        - commits:
+            - subject: Silence expected API key related rejections
+              hash: d9e10e7128be9c562bcabbd58243830c6b2d1e01
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Akis Kesoglou
+          version: open-balena-api-0.19.3
+          date: 2019-05-17T11:47:13.587Z
+        - commits:
+            - subject: Update dependencies
+              hash: a01960d25643dd5da4f090638db8e87b297c00c5
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+          version: open-balena-api-0.19.2
+          date: 2019-05-17T10:44:43.341Z
+        - commits:
+            - subject: Make use of a prepared query for device state query
+              hash: ffa3f0bbba27d2c7246a45ab4ed4ff342a5c772c
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+            - subject: Update pinejs to 10.14.0
+              hash: ff02a77bebe6d4fbdd0a7fa9e2f2ef736fc560bc
+              body: |
+                Update pinejs from 10.11.0 to 10.14.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: >-
+                        Update pinejs-client-core and make use of prepared
+                        queries
+                      hash: f61469c74fcba879bffb1e5e677805480e16e614
+                      body: |
+                        Update abstract-sql-compiler from 6.4.0 to 6.4.2
+                        Update odata-parser from 1.0.1 to 1.0.3
+                        Update odata-to-abstract-sql from 3.1.1 to 3.1.2
+                        Update pinejs-client-core from 5.3.6 to 5.5.1
+                        Update sbvr-parser from 0.2.1 to 0.2.2
+                        Update sbvr-types from 2.0.2 to 2.0.3
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: >-
+                                Add .versionbot/CHANGELOG.yml for downstream
+                                changelogs
+                              hash: d871880a00c86b8eeec37489cf1d62a3688aabcc
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: odata-parser-1.0.3
+                          date: 2019-05-08T14:25:13.528Z
+                        - commits:
+                            - author: Pagan Gazzard
+                              body: ''
+                              footers:
+                                change-type: patch
+                              hash: 70ac83b0059a99d1d42e986f0a42fb7120c35ee8
+                              subject: Update dependencies
+                          date: '2019-04-15T06:51:46Z'
+                          version: odata-parser-1.0.2
+                        - commits:
+                            - subject: Update and fix lodash typings
+                              hash: 2bf073bbff3a94d66c31e07d98c3e298f5132b2c
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                            - subject: Update husky/mocha dev dependencies
+                              hash: 29f7d52185186bdb1171fdf27a923eb38887d009
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: abstract-sql-compiler-6.4.2
+                          date: 2019-05-09T21:32:48.414Z
+                        - commits:
+                            - subject: Fix typescript compilation
+                              hash: a3733e5c348687d74dd290538c6a7f3f3a4a4bb0
+                              body: |
+                                Update odata-parser from 1.0.1 to 1.0.3
+                                Update odata-to-abstract-sql from 3.0.0 to 3.0.1
+                                Update sbvr-parser from 0.2.1 to 0.2.2
+                                Update sbvr-types from 2.0.0 to 2.0.3
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested:
+                                - commits:
+                                    - subject: >-
+                                        Add .versionbot/CHANGELOG.yml for
+                                        downstream changelogs
+                                      hash: 45c5843b204def5a727b8ba8dfafb2a2347f50f3
+                                      body: ''
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                  version: sbvr-parser-0.2.2
+                                  date: 2019-05-08T14:23:57.847Z
+                            - subject: Add node 12 tests
+                              hash: 094c059eb3c5fd6f3502c53e40ed4b90197ed5c2
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                            - subject: Add repo.yml for upstream changelogs
+                              hash: 3f4bffe3a107a4b6fd30c15bf1e70c79e68e226e
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                            - subject: >-
+                                Add .versionbot/CHANGELOG.yml for downstream
+                                changelogs
+                              hash: 5e4ab1569e5e7f7648d4c14df8d3bf9f834a4828
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: abstract-sql-compiler-6.4.1
+                          date: 2019-05-08T16:45:44.728Z
+                        - commits:
+                            - subject: >-
+                                Fix downstream declaration creation errors due
+                                to `Dictionary`
+                              hash: a8a39edff8cc7e1d05fb9b67037718970e94296c
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-5.5.1
+                          date: 2019-05-15T13:32:13.920Z
+                        - commits:
+                            - subject: >-
+                                Add a prepare method that prepares a query into
+                                a function
+                              hash: eb7eccca7d90c453710575ebdf3adb9ef56835a7
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-5.5.0
+                          date: 2019-05-15T11:51:46.450Z
+                        - commits:
+                            - subject: Add CODEOWNERS
+                              hash: e01174008f812e0c24ec1036aa1f9ff0bc716e85
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                                Signed-off-by: Gergely Imreh <gergely@balena.io>
+                                signed-off-by: Gergely Imreh <gergely@balena.io>
+                              author: Gergely Imreh
+                          version: pinejs-client-js-5.4.1
+                          date: 2019-05-10T10:14:00.677Z
+                        - commits:
+                            - subject: >-
+                                Add support for parameter aliases in resource
+                                ids
+                              hash: a4e6a640a3ced56bcd3ef7bf22770338e089a90d
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-5.4.0
+                          date: 2019-05-10T09:57:46.863Z
+                        - commits:
+                            - subject: Deduplicate transformation of GET results
+                              hash: dd856e24072f652684adf63af97408ee0ba7389c
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-5.3.10
+                          date: 2019-05-10T09:44:09.422Z
+                        - commits:
+                            - subject: >-
+                                Simplify how we expose types, which means
+                                `subscribe` is now exposed
+                              hash: f81e0cc59e75e0f9ffc71d9f122b9cfab9c05165
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-5.3.9
+                          date: 2019-05-10T08:57:16.276Z
+                        - commits:
+                            - subject: Add automatic formatting via prettier
+                              hash: a345d32f295acfa8ed4e5b815c24e1e7fdb335f2
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-5.3.8
+                          date: 2019-05-09T17:38:43.260Z
+                        - commits:
+                            - subject: 'Remove node 4 build, add node 12'
+                              hash: 8d549277d80746feadbdd8a6bba37eb076270440
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                            - subject: >-
+                                Add .versionbot/CHANGELOG.yml for downstream
+                                changelogs
+                              hash: 067bedf65e86a902b7334ed6e5f117d6ac41afde
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-5.3.7
+                          date: 2019-05-08T15:41:50.201Z
+                        - commits:
+                            - subject: Add node 12 tests
+                              hash: a6cc208654a36228a35fb8d8886e62bccc3c9fa4
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                            - subject: Add repo.yml for upstream changelogs
+                              hash: e50ca4f49d80b3e89d37f7d8bf6607b0f797c7ae
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                            - subject: >-
+                                Add .versionbot/CHANGELOG.yml for downstream
+                                changelogs
+                              hash: 9d68e94757f2f9498dedf3d6f085ce77ea70652a
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: odata-to-abstract-sql-3.1.2
+                          date: 2019-05-08T15:52:48.099Z
+                        - commits:
+                            - subject: >-
+                                Add .versionbot/CHANGELOG.yml for downstream
+                                changelogs
+                              hash: cc2e3e23030521788c127b5750abf3c65645a710
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: sbvr-types-2.0.3
+                          date: 2019-05-08T14:29:46.824Z
+                        - commits:
+                            - subject: >-
+                                Add .versionbot/CHANGELOG.yml for downstream
+                                changelogs
+                              hash: 45c5843b204def5a727b8ba8dfafb2a2347f50f3
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: sbvr-parser-0.2.2
+                          date: 2019-05-08T14:23:57.847Z
+                  version: pinejs-10.14.0
+                  date: 2019-05-15T14:12:22.538Z
+                - commits:
+                    - subject: >-
+                        Fix possible null error when using a parameter alias
+                        with no value
+                      hash: ee0cb996e27a2234eb62608152230074a614cc4e
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                  version: pinejs-10.13.3
+                  date: 2019-05-14T11:01:52.288Z
+                - commits:
+                    - subject: Add repo.yml for nested changelogs
+                      hash: 02a34373d90f29b5ec06f9ae9823d87207fbb577
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                  version: pinejs-10.13.2
+                  date: 2019-05-08T15:09:50.814Z
+                - commits:
+                    - subject: Add node 12 to the circle tests
+                      hash: 7ae335dce37abf005daaa2e43239ed26ae2519de
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                  version: pinejs-10.13.1
+                  date: 2019-05-06T21:37:25.704Z
+                - commits:
+                    - subject: Expose odata-compiler as a bin script
+                      hash: cf86826e0d6653c456057d4de8d849d00ffc023f
+                      body: >
+                        This means that it will now match the module
+                        dependencies of the
+
+                        installed pinejs
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                  version: pinejs-10.13.0
+                  date: 2019-05-06T17:33:54.911Z
+                - commits:
+                    - subject: Expose sbvr-compiler as a bin script
+                      hash: e6718ffe901b4d711f47493ff907ee1fe2f947e0
+                      body: >
+                        This means that it will now match the module
+                        dependencies of the
+
+                        installed pinejs
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                    - subject: >-
+                        Move odata-metadata-generator into odata-metadata
+                        directory
+                      hash: d414696ff13c9d9f2183f44eda434d0da8d26f01
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                  version: pinejs-10.12.0
+                  date: 2019-05-01T13:08:20.878Z
+                - commits:
+                    - subject: >-
+                        Update @types/lodash, avoiding `_.isObject` where
+                        necessary
+                      hash: 77a281beef4e9b82c6070dba3027ddd606e4c08b
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                  version: pinejs-10.11.3
+                  date: 2019-05-01T11:07:54.197Z
+                - commits:
+                    - subject: >-
+                        Only validate the model if the query affected at least 1
+                        row
+                      hash: 8bfd0a1f1cd45a837957f210979ec910e0e46261
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                  version: pinejs-10.11.2
+                  date: 2019-04-22T13:42:40.543Z
+                - commits:
+                    - subject: >-
+                        Switch odata-metadata-generator to using an abstract sql
+                        model
+                      hash: 9cf5c16b50f7371552cb8876dd5ca724cccdf911
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                  version: pinejs-10.11.1
+                  date: 2019-04-11T16:03:38.840Z
+          version: open-balena-api-0.19.1
+          date: 2019-05-15T19:19:14.258Z
+        - commits:
+            - subject: Update target to es2018
+              hash: b3bab02244ae85e4805db95eec92a3ae61fb0d92
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+          version: open-balena-api-0.19.0
+          date: 2019-05-15T15:25:47.366Z
+        - commits:
+            - subject: 'bug: Resolve NPM dependency issues preventing startup'
+              hash: 13842dee794bd12465ba97572a7a3ee0a19b7fc6
+              body: |
+                Add `ts-node` as a dependency, as it had been marked as devOnly
+                in a previous PR.
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Rich Bayliss <rich@balena.io>
+                signed-off-by: Rich Bayliss <rich@balena.io>
+              author: Rich Bayliss
+          version: open-balena-api-0.18.6
+          date: 2019-05-10T11:05:12.524Z
+        - commits:
+            - subject: Add typed-error upstream to repo.yml
+              hash: d50d88a873988aa2c9cf1f50ed721fbf92565869
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+            - subject: Add open-balena-base upstream to repo.yml
+              hash: 2d039de7c4c8f8728a5a5af931fa83f55ef2a303
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+          version: open-balena-api-0.18.5
+          date: 2019-05-08T16:12:46.186Z
+        - commits:
+            - subject: Disable the service start limit
+              hash: d69d9b2355616685dfb570be6aa6c14ccc97a7c2
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+            - subject: Update open-balena-base to v7.0.2
+              hash: d363fa289386f39de9af1bc3a3eb0690b35d9ea0
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+          version: open-balena-api-0.18.4
+          date: 2019-05-06T11:23:47.208Z
+        - commits:
+            - subject: 'tests: Add test framework'
+              hash: 52c6eebcc45f637d15b48b7ea7942e6011b891eb
+              body: |
+                Add a test framework to allow testing of the openBalena API
+
+                Added CircleCI pipeline to run tests.
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Rich Bayliss <rich@balena.io>
+                signed-off-by: Rich Bayliss <rich@balena.io>
+              author: Rich Bayliss
+          version: open-balena-api-0.18.3
+          date: 2019-05-01T09:06:36.206Z
+        - commits:
+            - subject: Fix import ordering issue
+              hash: d4f207d8b7d9c55ef0f173fd3e58d20d46a964bc
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+          version: open-balena-api-0.18.2
+          date: 2019-04-29T12:32:17.257Z
+        - commits:
+            - subject: 'versionbot: add machine readable changelog'
+              hash: 95c57fb121cda374e36e45aaf82ee36877e8b82f
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Gergely Imreh <gergely@balena.io>
+                signed-off-by: Gergely Imreh <gergely@balena.io>
+              author: Gergely Imreh
+          version: open-balena-api-0.18.1
+          date: 2019-04-29T11:23:22.500Z
+        - commits:
+            - author: Gergely Imreh
+              body: |-
+                That OS version and upwards have docker with capability to pull
+                from registry v2.
+              footers:
+                change-type: minor
+                signed-off-by: Gergely Imreh <gergely@balena.io>
+              hash: 9fa9f17256d3c975f1fa590d5d132433d1b20646
+              subject: >-
+                device-config: allow devices going back to v1.2.1 to use
+                registry v2
+          date: '2019-04-29T09:32:40Z'
+          version: open-balena-api-0.18.0
+        - commits:
+            - author: Pagan Gazzard
+              body: ''
+              footers:
+                change-type: patch
+              hash: 41b3e535f633862c8191c0ee94b2a089179316ef
+              subject: Handle requesting registry scopes with explicit indices above 20
+          date: '2019-04-26T19:16:24Z'
+          version: open-balena-api-0.17.4
+        - commits:
+            - author: Pagan Gazzard
+              body: ''
+              footers:
+                change-type: patch
+              hash: 501a5cb839d7bd6e24a4e702c9b2d55f6a7ccdae
+              subject: Use more accurate `BadRequestError`s for invalid env var names
+            - author: Pagan Gazzard
+              body: ''
+              hash: ec8543f76672e23a36353f2d38444f74867a3e64
+              subject: Remove unnecessary `nameProp` argument from `addEnvHooks`
+            - author: Pagan Gazzard
+              body: ''
+              hash: 8ca26a0368feaf72a40d528fc462dbb953426797
+              subject: Avoid unnecessary object creation on env var validation
+          date: '2019-04-26T09:24:50Z'
+          version: open-balena-api-0.17.3
+        - commits:
+            - author: Will Boyce
+              body: >-
+                Allowing the server to dictate when keys are renegotiated allows
+                us to
+
+                control load spikes more effectively.
+              footers:
+                change-type: patch
+                signed-off-by: Will Boyce <will@balena.io>
+              hash: de52f7e24057f12b0b9381d462ca1d0d0ea5a8d6
+              subject: 'os-config: disable client-initiated vpn tls key renegotiation'
+          date: '2019-04-24T12:32:57Z'
+          version: open-balena-api-0.17.2
+        - commits:
+            - author: Pagan Gazzard
+              body: ''
+              footers:
+                change-type: patch
+              hash: f4676ba5237d374c9148db9855e7e0ce29bddb38
+              subject: Remove unused `DEVICE_CONFIG_OPENVPN_CONFIG` fron env backend
+          date: '2019-04-19T14:06:00Z'
+          version: open-balena-api-0.17.1
+        - commits:
+            - author: Pagan Gazzard
+              body: ''
+              footers:
+                change-type: minor
+              hash: ef31eaefa2c75a3e6f61268bdc60af4b1e39f970
+              subject: Rename `env_var_name` to `name` to match cloud
+          date: '2019-04-18T15:54:23Z'
+          version: open-balena-api-0.17.0
+        - commits:
+            - author: Rich Bayliss
+              body: |-
+                Add missing changes to make the `my_application` resource return
+                results, instead of throwing an exception.
+              footers:
+                change-type: patch
+                signed-off-by: Rich Bayliss <rich@balena.io>
+              hash: 065454c21c7308b9e51395186a8023fc3b11b6a7
+              subject: >-
+                fix: Changes required to make `my_application` resource
+                available
+          date: '2019-04-18T13:38:33Z'
+          version: open-balena-api-0.16.1
+        - commits:
+            - author: Pagan Gazzard
+              body: ''
+              footers:
+                change-type: minor
+              hash: 12bab4ff126f8156afa8aa1ad62f8776746d7c6e
+              subject: Handle `my_applications` within pinejs
+          date: '2019-04-17T14:18:41Z'
+          version: open-balena-api-0.16.0
+        - commits:
+            - author: Will Boyce
+              body: ''
+              footers:
+                change-type: patch
+                signed-off-by: Will Boyce <will@balena.io>
+              hash: 285091d355eb71099925d8e0eb5748aa50213de5
+              subject: 'device-proxy: use `.balena` tld in favour of `.resin`'
+          date: '2019-04-17T12:13:03Z'
+          version: open-balena-api-0.15.2
+        - commits:
+            - author: Pagan Gazzard
+              body: ''
+              footers:
+                change-type: patch
+              hash: 76063693f447bdd155abe12004d52e51831fe7a9
+              subject: Update method-override to 3.x
+          date: '2019-04-17T09:52:51Z'
+          version: open-balena-api-0.15.1
+        - commits:
+            - author: Pagan Gazzard
+              body: |-
+                Also splits index.js to make sure the bulk of it is typed
+                Update pinejs from 10.8.0 to 10.11.0
+              footers:
+                change-type: minor
+              hash: 384f53606795d4b565d8a851b86316ce4fcfbcb9
+              subject: >-
+                Rename `configPath` to `config` and make sure config.json is
+                valid
+          date: '2019-04-15T18:37:57Z'
+          version: open-balena-api-0.15.0
+        - commits:
+            - author: Pablo Carranza Velez
+              body: >-
+                Added to the supervisor in
+                https://github.com/balena-io/balena-supervisor/pull/934
+
+                We add this variable to the whitelist and add the information so
+                that the UI can show it and allow changing it.
+              footers:
+                change-type: minor
+                signed-off-by: Pablo Carranza Velez <pablocarranza@gmail.com>
+              hash: ed41b29c8211d37897f656ed5b55594f3317aebe
+              subject: >-
+                Whitelist the new RESIN_SUPERVISOR_INSTANT_UPDATE_TRIGGER
+                configuration variable
+          date: '2019-04-11T18:27:19Z'
+          version: open-balena-api-0.14.0
+        - commits:
+            - author: Pagan Gazzard
+              body: ''
+              footers:
+                change-type: patch
+              hash: f827088cd504c62753390d2f3929d9b9de708914
+              subject: Fix `ResolvableReturnType` typing
+          date: '2019-04-02T15:20:27Z'
+          version: open-balena-api-0.13.3
+        - commits:
+            - author: Pagan Gazzard
+              body: ''
+              footers:
+                change-type: patch
+              hash: c0e11d4fd0080a74ca67568062ec8133fa9deb68
+              subject: Add CODEOWNERS file
+          date: '2019-04-01T13:32:08Z'
+          version: open-balena-api-0.13.2
+        - commits:
+            - author: Pagan Gazzard
+              body: ''
+              footers:
+                change-type: patch
+              hash: da963b34c86e0f3a5bb7caefcf5cfad82a1de49e
+              subject: Add an index for the vpn's service instance lookup
+          date: '2019-04-01T13:18:22Z'
+          version: open-balena-api-0.13.1
+        - commits:
+            - author: Pagan Gazzard
+              body: Update pinejs from 10.6.1 to 10.8.0
+              footers:
+                change-type: patch
+              hash: 4f7200e14388b379e4b068a64acbf2d4f4d62a9c
+              subject: Use a readTransaction for device state
+            - author: Pagan Gazzard
+              body: ''
+              footers:
+                change-type: minor
+              hash: 1f5005153dcf8aeb20622b6f23cc0131b9afd74a
+              subject: >-
+                Remove runInTransaction wrapper to avoid unnecessary function
+                creation
+            - author: Pagan Gazzard
+              body: ''
+              hash: 4ce469103710955e23754b09a94f8d1793cf82bc
+              subject: Avoid need to repeateadly check for `readTransaction` existence
+          date: '2019-03-28T11:00:59Z'
+          version: open-balena-api-0.13.0
+        - commits:
+            - author: Stevche Radevski
+              body: |-
+                This will allow us to store the pre
+                and post-image build logs as shown in
+                the terminal.
+              footers:
+                change-type: minor
+                signed-off-by: Stevche Radevski <stevche@balena.io>
+              hash: e781deead7e08e4fc35e33769ab8262fdc941f2b
+              subject: Add build log to release resource
+          date: '2019-03-19T14:19:56Z'
+          version: open-balena-api-0.12.0
+  version: 1.2.0
+  date: 2019-05-21T14:52:12.117Z
