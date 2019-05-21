@@ -27,7 +27,6 @@ services:
       DB_PORT: 5432
       DB_USER: docker
       DELTA_HOST: delta.${OPENBALENA_HOST_NAME}
-      DEVICE_CONFIG_OPENVPN_CONFIG: ${OPENBALENA_VPN_CONFIG}
       DEVICE_CONFIG_OPENVPN_CA: ${OPENBALENA_VPN_CA_CHAIN}
       DEVICE_CONFIG_SSH_AUTHORIZED_KEYS: ${OPENBALENA_SSH_AUTHORIZED_KEYS}
       HOST: api.${OPENBALENA_HOST_NAME}
@@ -64,7 +63,6 @@ services:
       service: component
     image: balena/open-balena-registry:${OPENBALENA_REGISTRY_VERSION_TAG:-master}
     depends_on:
-      - api
       - s3
       - redis
     volumes:
@@ -76,6 +74,11 @@ services:
       BALENA_TOKEN_AUTH_ISSUER: api.${OPENBALENA_HOST_NAME}
       BALENA_TOKEN_AUTH_REALM: https://api.${OPENBALENA_HOST_NAME}/auth/v1/token
       COMMON_REGION:
+      REGISTRY2_CACHE_ENABLED: "false"
+      REGISTRY2_CACHE_ADDR: 127.0.0.1:6379
+      REGISTRY2_CACHE_DB: 0
+      REGISTRY2_CACHE_MAXMEMORY_MB: 1024 # megabytes
+      REGISTRY2_CACHE_MAXMEMORY_POLICY: allkeys-lru
       REGISTRY2_S3_BUCKET:
       REGISTRY2_S3_KEY:
       REGISTRY2_S3_SECRET:
