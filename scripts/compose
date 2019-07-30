@@ -24,9 +24,17 @@ if [ ! -f "$ENV_FILE" ]; then
   exit 1
 fi
 
+source "${ENV_FILE}"
+
+# only include the MDNS publisher IF the domain is valid...
+if [ ${OPENBALENA_HOST_NAME: -6} == ".local" ]; then
+  INCLUDE_MDNS="-f ${BASE_DIR}/compose/mdns.yml"
+fi
+
 # shellcheck source=/dev/null
-source "${VERSIONS_FILE}"; source "${ENV_FILE}"; docker-compose \
+source "${VERSIONS_FILE}"; docker-compose \
   --project-name 'openbalena' \
   -f "${BASE_DIR}/compose/services.yml" \
+  ${INCLUDE_MDNS} \
   -f "${CONFIG_DIR}/docker-compose.yml" \
   "$@"

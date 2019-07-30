@@ -16,6 +16,12 @@ RESET=`tput sgr0`
 OPENSSL_VERSION=$(openssl version -v)
 if [[ "${OPENSSL_VERSION}" =~ ^LibreSSL.*$ ]]; then
   echo -e "${RED}ERROR: You may not have a compatible OpenSSL version (${OPENSSL_VERSION}). Please install OpenSSL version 1.0.2q or above.${RESET}"
+  if [ $(uname) == 'Darwin' ]; then
+        echo 'OpenSSL is required to build openBalena on macOS. To install with brew, run'
+        echo ''
+        echo '    brew install openssl'
+        echo ''
+    fi
   exit 1
 fi
 
@@ -125,7 +131,25 @@ fi
 echo_bold "==> Success!"
 echo '  - Start the instance with: ./scripts/compose up -d'
 echo '  - Stop the instance with: ./scripts/compose stop'
+echo '  - To create a single, flat, docker-compose.yml file, run:'
+echo ''
+echo '      ./scripts/compose config > docker-compose.yml'
+echo ''
 
 if [ -z "${ACME_CERT_ENABLED}" ]; then
   echo "  - Use the following certificate with Balena CLI: ${CERTS_DIR}/root/ca.crt"
+
+  case $(uname) in
+    Darwin)
+      echo ''
+      printf '    On macOS:\n\n'
+      printf '      sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" "%s/root/ca.crt"\n' "${CERTS_DIR}"
+      echo ''
+      ;;
+    *)
+      ;;
+  esac
+
+  echo -e "    ${YELLOW}IMPORTANT:${RESET} You will need to restart your Docker daemon after trusting this certificate to allow your workstation to push images to the registry."
+  echo ''
 fi
