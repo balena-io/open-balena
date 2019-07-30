@@ -7,4 +7,4 @@
 # `compose/services.yml` as the "base" config.
 #
 # You may view the effective config with `scripts/compose config`.
-version: '2.1'
+version: "2.0"

@@ -1,4 +1,4 @@
-version: "2.1"
+version: "2.0"
 
 volumes:
   certs: {}
@@ -13,7 +13,7 @@ services:
     extends:
       file: ./common.yml
       service: component
-    image: balena/open-balena-api:${OPENBALENA_API_VERSION_TAG:-master}
+    image: balena/open-balena-api:${OPENBALENA_API_VERSION_TAG}
     depends_on:
       - db
       - s3
@@ -44,7 +44,7 @@ services:
       REDIS_PORT: 6379
       REGISTRY2_HOST: registry.${OPENBALENA_HOST_NAME}
       REGISTRY_HOST: registry.${OPENBALENA_HOST_NAME}
-      SENTRY_DSN:
+      SENTRY_DSN: ""
       TOKEN_AUTH_BUILDER_TOKEN: ${OPENBALENA_TOKEN_AUTH_BUILDER_TOKEN}
       TOKEN_AUTH_CERT_ISSUER: api.${OPENBALENA_HOST_NAME}
       TOKEN_AUTH_CERT_KEY: ${OPENBALENA_TOKEN_AUTH_KEY}
@@ -61,7 +61,7 @@ services:
     extends:
       file: ./common.yml
       service: component
-    image: balena/open-balena-registry:${OPENBALENA_REGISTRY_VERSION_TAG:-master}
+    image: balena/open-balena-registry:${OPENBALENA_REGISTRY_VERSION_TAG}
     depends_on:
       - s3
       - redis
@@ -89,7 +89,7 @@ services:
     extends:
       file: ./common.yml
       service: component
-    image: balena/open-balena-vpn:${OPENBALENA_VPN_VERSION_TAG:-master}
+    image: balena/open-balena-vpn:${OPENBALENA_VPN_VERSION_TAG}
     depends_on:
       - api
     cap_add:
@@ -101,7 +101,7 @@ services:
       BALENA_VPN_PORT: 443
       PRODUCTION_MODE: "${OPENBALENA_PRODUCTION_MODE}"
       RESIN_VPN_GATEWAY: 10.2.0.1
-      SENTRY_DSN:
+      SENTRY_DSN: ""
       VPN_HAPROXY_USEPROXYPROTOCOL: "true"
       VPN_OPENVPN_CA_CRT: ${OPENBALENA_VPN_CA}
       VPN_OPENVPN_SERVER_CRT: ${OPENBALENA_VPN_SERVER_CRT}
@@ -113,7 +113,7 @@ services:
     extends:
       file: ./common.yml
       service: system
-    image: balena/open-balena-db:${OPENBALENA_DB_VERSION_TAG:-master}
+    image: balena/open-balena-db:${OPENBALENA_DB_VERSION_TAG}
     volumes:
       - db:/var/lib/postgresql/data
 
@@ -121,7 +121,7 @@ services:
     extends:
       file: ./common.yml
       service: component
-    image: balena/open-balena-s3:${OPENBALENA_S3_VERSION_TAG:-master}
+    image: balena/open-balena-s3:${OPENBALENA_S3_VERSION_TAG}
     volumes:
       - s3:/export
     environment:
@@ -140,7 +140,7 @@ services:
     extends:
       file: ./common.yml
       service: system
-    build: ../haproxy
+    build: ../src/haproxy
     depends_on:
       - api
       - cert-provider
@@ -175,7 +175,7 @@ services:
       - certs:/certs:ro
 
   cert-provider:
-    build: ../cert-provider
+    build: ../src/cert-provider
     volumes:
       - certs:/certs
       - cert-provider:/usr/src/app/certs

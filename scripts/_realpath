@@ -22,7 +22,7 @@ done
 if [ -z "${REALPATH}" ]; then
     echo_error 'Unable to find suitable command for realpath.'
     if [ $(uname) == 'Darwin' ]; then
-        echo 'GNU coreutils are required to build openBalena on MacOS. To install with brew, run'
+        echo 'GNU coreutils are required to build openBalena on macOS. To install with brew, run'
         echo ''
         echo '    brew install coreutils'
         echo ''
