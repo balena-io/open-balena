@@ -1,4 +1,48 @@
 - commits:
+    - subject: 'services: Update Registry service version'
+      hash: 853ffb33e8e29b085db57df1773f8875dca5bbe3
+      body: |
+        Update open-balena-registry to 2.11.1
+
+        This allows the registry to use an S3 bucket for storing images.
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Rich Bayliss <rich@balena.io>
+        signed-off-by: Rich Bayliss <rich@balena.io>
+      author: Rich Bayliss
+    - subject: >-
+        feature: Support deployment via balena push to local-mode balenaOS
+        devices
+      hash: a029160caf20096a14eb4955e1d5ddc7ecfdebf5
+      body: >
+        - remove some `.gitignore` entries as this is also honoured by `balena
+        push`
+
+        - added a step to `scripts/quickstart` to produce a single, flat
+        `docker-compose.yml` after running
+
+        - set the compose file versions to `2.0` to ensure only supported terms
+        are used in the `docker-compose.yml` file output
+
+        - quoted empty env values as these need to be passed in as blank, and
+        not ommitted
+
+        - include the MDNS publisher service IF the domain being used is a
+        .local one
+
+        - corrected spelling of macOS in script messages
+
+        - move sidecar container source into ./src as per convention
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Rich Bayliss <rich@balena.io>
+        signed-off-by: Rich Bayliss <rich@balena.io>
+      author: Rich Bayliss
+  version: 1.3.0
+  date: 2019-07-30T11:12:51.064Z
+- commits:
     - subject: 'tidy: Remove unused DEVICE_CONFIG_OPENVPN_CONFIG variable'
       hash: 199d8eb4a454cc99a9cd8329fa6beae49b9040e1
       body: ''
