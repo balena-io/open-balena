@@ -6,9 +6,11 @@ VOLUME [ "/usr/src/app/certs" ]
 
 RUN apk add --update bash curl git openssl ncurses socat
 
+# from https://github.com/Neilpang/acme.sh/releases/tag/2.8.5
 RUN git clone https://github.com/Neilpang/acme.sh.git && \
     cd acme.sh && \
-    git checkout 08357e3cb0d80c84bdaf3e42ce0e439665387f57 . && \
+    git fetch && git fetch --tags && \
+    git checkout 2.8.5 . && \
     ./acme.sh --install  \
     --cert-home /usr/src/app/certs
 
