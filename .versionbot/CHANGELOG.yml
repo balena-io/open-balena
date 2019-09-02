@@ -1,4 +1,21 @@
 - commits:
+    - subject: 'feature: Use S3 bucket for Registry service backend'
+      hash: 2a7d0687a22f6b4b3bedc88e18bee165ef03c932
+      body: |
+        Update open-balena-s3 to 2.8.3
+
+        This makes new installations of openBalena use the S3 container as a
+        storage backend for the Registry service by default. Existing installs
+        should not be affected.
+      footer:
+        Change-type: major
+        change-type: major
+        Signed-off-by: Rich Bayliss <rich@balena.io>
+        signed-off-by: Rich Bayliss <rich@balena.io>
+      author: Rich Bayliss
+  version: 2.0.0
+  date: 2019-09-02T09:32:56.813Z
+- commits:
     - subject: 'services: Update Registry service version'
       hash: 853ffb33e8e29b085db57df1773f8875dca5bbe3
       body: |
