@@ -79,6 +79,15 @@ sections are of particular interest:
 - [Reference](https://balena.io/docs/reference)
 - [FAQ](https://balena.io/docs/faq/troubleshooting/faq)
 
+## openBalena vs balenaCloud
+
+Whilst openBalena and balenaCloud share the same core technology, there are some key differences:
+
+| openBalena  | balenaCloud  |
+|---|---|
+| self hosted | hosted by balena |
+| single user | multi-user and orgs  |
+| no dashboard | full dashboard |
 
 ## Getting Help
 
