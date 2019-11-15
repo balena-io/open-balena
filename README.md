@@ -9,8 +9,7 @@ which you can use to configure your application containers, push updates, check
 status, view logs, and so forth. OpenBalena’s backend services, composed of
 battle-tested components that we’ve run in production on [balenaCloud][balena-cloud-website]
 for years, can store device information securely and reliably, allow remote
-management via a built-in VPN service, and efficiently distribute container
-images to your devices.
+management, and efficiently distribute container images to your devices.
 
 To learn more about openBalena, visit [balena.io/open][open-balena-website].
 
@@ -22,7 +21,7 @@ To learn more about openBalena, visit [balena.io/open][open-balena-website].
 - **Container-based**: Benefit from the power of virtualization, optimized for the edge
 - **Scalable**: Deploy and manage one device, or one million
 - **Powerful API & SDK**: Extend openBalena to fit your needs
-- **Built-in VPN**: Access your devices regardless of their network environment
+- **Built-in terminal connection**: Access your devices regardless of their network environment
 
 
 ## Roadmap
