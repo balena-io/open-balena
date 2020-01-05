@@ -9,7 +9,7 @@ RUN apk add --update bash curl git openssl ncurses socat
 RUN git clone https://github.com/Neilpang/acme.sh.git && \
     cd acme.sh && \
     git fetch && git fetch --tags && \
-    git checkout 2.8.2 . && \
+    git checkout 2.8.3 . && \
     ./acme.sh --install  \
     --cert-home /usr/src/app/certs
 
