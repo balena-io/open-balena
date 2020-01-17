@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # the acme.sh client script, installed via Git in the Dockerfile...
 ACME_BIN="$(realpath ~/.acme.sh/acme.sh)"
@@ -45,14 +45,20 @@ retryWithDelay() {
     DELAY=${3:-5}
 
     local ATTEMPT=0
-    while [ $RETRIES -gt $ATTEMPT ]; do
-        let "ATTEMPT++"
+    while [ "$RETRIES" -gt "$ATTEMPT" ]; do
+        (( ATTEMPT++ ))
+        logInfo "($ATTEMPT/$RETRIES) Connecting..."
         if $1; then
+            logInfo "($ATTEMPT/$RETRIES) Success!"
             return $?
         fi
 
-        echo "($ATTEMPT/$RETRIES) Retrying in ${DELAY} seconds..."
-        sleep $DELAY
+        if [ "$RETRIES" -gt "$ATTEMPT" ]; then
+            logInfo "($ATTEMPT/$RETRIES) Failed. Retrying in ${DELAY} seconds..."
+            sleep "$DELAY"
+        else
+            logInfo "($ATTEMPT/$RETRIES) Failed!"
+        fi
     done
 
     return 1
@@ -62,7 +68,7 @@ waitForOnline() {
     ADDRESS="${1,,}"
 
     logInfo "Waiting for ${ADDRESS} to be available via HTTP..."
-    retryWithDelay "curl --output /dev/null --silent --head --fail http://${ADDRESS}" 6 5
+    retryWithDelay "curl --output /dev/null --silent --head --fail --max-time 5 http://${ADDRESS}"
 }
 
 isUsingStagingCert() {
@@ -167,7 +173,10 @@ acquireCertificate() {
 
 pre-flight || logErrorAndStop "Unable to continue due to misconfiguration. See errors above."
 
-waitForOnline "${ACME_DOMAINS[0]}" || logErrorAndStop "Unable to access ${ACME_DOMAINS[0]} on port 80. This is needed for certificate validation."
+while ! waitForOnline "${ACME_DOMAINS[0]}"; do
+    logInfo "Unable to access ${ACME_DOMAINS[0]} on port 80. This is needed for certificate validation. Retrying in 30 seconds..."
+    sleep 30
+done
 
 if ! lastAcquiredCertFor "production"; then
     acquireCertificate "staging" || logErrorAndStop "Unable to acquire a staging certificate."
