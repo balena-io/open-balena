@@ -1,4 +1,31 @@
 - commits:
+    - subject: 'cert-provider: Update to support ACMEv2 on staging provider'
+      hash: d67e29223ff314b40fd745ce78301e550c2c9148
+      body: >
+        Acquiring a staging certificiate from LetsEncrypt was failing, so
+        acme.sh was
+
+        updated to version 2.8.5, which includes support for using ACMEv2 on the
+
+        LetsEncrypt servers.
+
+
+        Changes to the state flow to make access retries infinite as it became
+        apparent
+
+        that in some scenarios the certificate acquisition could fail to occur
+        due to
+
+        containers taking longer to become accessible.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Rich Bayliss <rich@balena.io>
+        signed-off-by: Rich Bayliss <rich@balena.io>
+      author: Rich Bayliss
+  version: 2.0.1
+  date: 2020-01-17T10:27:22.097Z
+- commits:
     - subject: 'feature: Use S3 bucket for Registry service backend'
       hash: 2a7d0687a22f6b4b3bedc88e18bee165ef03c932
       body: |
