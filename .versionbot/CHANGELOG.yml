@@ -1,4 +1,16 @@
 - commits:
+    - subject: Added units to haproxy.cfg default timeouts
+      hash: de0293563f32961ff756df63d096af0fb2203d12
+      body: >
+        I added unit 's' (second) to the default timeouts in order to make them
+        more readable.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Frederic Tausch
+  version: 2.0.2
+  date: 2020-04-03T13:47:29.358Z
+- commits:
     - subject: 'cert-provider: Update to support ACMEv2 on staging provider'
       hash: d67e29223ff314b40fd745ce78301e550c2c9148
       body: >
