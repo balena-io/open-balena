@@ -60,6 +60,8 @@ Our [Getting Started][getting-started] guide is the most direct path to getting
 an openBalena installation up and running and successfully deploying your
 application to your device(s).
 
+> **IMPORTANT:** Due to changes in [balenaOS][balena-os], only versions up to and including `2.49.0` are currently supported.
+
 
 ## Documentation
 
