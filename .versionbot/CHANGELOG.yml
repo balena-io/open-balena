@@ -1,4 +1,20 @@
 - commits:
+    - subject: 'docs: Add PSA about balenaOS version breakage'
+      hash: d33560755f5e121b1ee6524615b995d14982d35d
+      body: |
+        Due to a change in the balena-supervisor codebase, only balenaOS
+        versions <= 2.49.0 are working with open-balena.
+
+        This documentation change is a band-aid while we resolve the issue.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Rich Bayliss <rich@balena.io>
+        signed-off-by: Rich Bayliss <rich@balena.io>
+      author: Rich Bayliss
+  version: 2.0.3
+  date: 2020-06-01T09:37:09.224Z
+- commits:
     - subject: Added units to haproxy.cfg default timeouts
       hash: de0293563f32961ff756df63d096af0fb2203d12
       body: >
