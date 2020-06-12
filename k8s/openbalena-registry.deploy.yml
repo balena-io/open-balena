@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: registry
+  name: registry
+  namespace: openbalena
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: registry
+    spec:
+      containers:
+      - image: balena/open-balena-registry:${OPENBALENA_REGISTRY_VERSION_TAG}
+        name: registry
+        resources: {}
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN", "SYS_RESOURCE"]
+        env:
+          - name: API_TOKENAUTH_CRT
+            value: "${OPENBALENA_TOKEN_AUTH_PUB}"
+          - name: BALENA_REGISTRY2_HOST
+            value: "registry.${OPENBALENA_HOST_NAME}"
+          - name: BALENA_ROOT_CA
+            value: "${OPENBALENA_ROOT_CA}"
+          - name: BALENA_TOKEN_AUTH_ISSUER
+            value: "api.${OPENBALENA_HOST_NAME}"
+          - name: BALENA_TOKEN_AUTH_REALM
+            value: "https://api.${OPENBALENA_HOST_NAME}/auth/v1/token"
+          - name: COMMON_REGION
+            value: "${OPENBALENA_S3_REGION}"
+          - name: REGISTRY2_CACHE_ENABLED
+            value: "false"
+          - name: REGISTRY2_CACHE_ADDR
+            value: "127.0.0.1:6379"
+          - name: REGISTRY2_CACHE_DB
+            value: "0"
+          - name: REGISTRY2_CACHE_MAXMEMORY_MB
+            value: "1024" # Megabytes
+          - name: REGISTRY2_CACHE_MAXMEMORY_POLICY
+            value: "allkeys-lru"
+          - name: REGISTRY2_S3_REGION_ENDPOINT
+            value: "${OPENBALENA_S3_ENDPOINT}"
+          - name: REGISTRY2_S3_BUCKET
+            value: "${OPENBALENA_REGISTRY2_S3_BUCKET}"
+          - name: REGISTRY2_S3_KEY
+            value: "${OPENBALENA_S3_ACCESS_KEY}"
+          - name: REGISTRY2_S3_SECRET
+            value: "${OPENBALENA_S3_SECRET_KEY}"
+          - name: REGISTRY2_SECRETKEY
+            value: "${OPENBALENA_REGISTRY_SECRET_KEY}"
+          - name: REGISTRY2_STORAGEPATH
+            value: "/data"
+status: {}

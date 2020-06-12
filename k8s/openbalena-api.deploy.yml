@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: api
+  name: api
+  namespace: openbalena
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: api
+    spec:
+      containers:
+      - image: balena/open-balena-api:${OPENBALENA_API_VERSION_TAG}
+        name: open-balena-api
+        resources: {}
+        env:
+          - name: API_VPN_SERVICE_API_KEY
+            value: "${OPENBALENA_API_VPN_SERVICE_API_KEY}"
+          - name: BALENA_ROOT_CA
+            value: "${OPENBALENA_ROOT_CA}"
+          - name: COOKIE_SESSION_SECRET
+            value: "${OPENBALENA_COOKIE_SESSION_SECRET}"
+          - name: DB_HOST
+            value: "db"
+          - name: DB_PASSWORD
+            value: "docker"
+          - name: DB_PORT
+            value: "5432"
+          - name: DB_USER
+            value: "docker"
+          - name: DELTA_HOST
+            value: "delta.${OPENBALENA_HOST_NAME}"
+          - name: DEVICE_CONFIG_OPENVPN_CA
+            value: "${OPENBALENA_VPN_CA_CHAIN}"
+          - name: DEVICE_CONFIG_SSH_AUTHORIZED_KEYS
+            value: "${OPENBALENA_SSH_AUTHORIZED_KEYS}"
+          - name: HOST
+            value: "api.${OPENBALENA_HOST_NAME}"
+          - name: IMAGE_MAKER_URL
+            value: "img.${OPENBALENA_HOST_NAME}"
+          - name: IMAGE_STORAGE_BUCKET
+            value: "resin-production-img-cloudformation"
+          - name: IMAGE_STORAGE_PREFIX
+            value: "s3.amazonaws.com"
+          - name: JSON_WEB_TOKEN_EXPIRY_MINUTES
+            value: "10080"
+          - name: JSON_WEB_TOKEN_SECRET
+            value: "${OPENBALENA_JWT_SECRET}"
+          - name: MIXPANEL_TOKEN
+            value: "__unused__"
+          - name: PRODUCTION_MODE
+            value: "${OPENBALENA_PRODUCTION_MODE}"
+          - name: PUBNUB_PUBLISH_KEY
+            value: "__unused__"
+          - name: PUBNUB_SUBSCRIBE_KEY
+            value: "__unused__"
+          - name: REDIS_HOST
+            value: "redis"
+          - name: REDIS_PORT
+            value: "6379"
+          - name: REGISTRY2_HOST
+            value: "registry.${OPENBALENA_HOST_NAME}"
+          - name: REGISTRY_HOST
+            value: "registry.${OPENBALENA_HOST_NAME}"
+          - name: SENTRY_DSN
+            value: ""
+          - name: TOKEN_AUTH_BUILDER_TOKEN
+            value: "${OPENBALENA_TOKEN_AUTH_BUILDER_TOKEN}"
+          - name: TOKEN_AUTH_CERT_ISSUER
+            value: "api.${OPENBALENA_HOST_NAME}"
+          - name: TOKEN_AUTH_CERT_KEY
+            value: "${OPENBALENA_TOKEN_AUTH_KEY}"
+          - name: TOKEN_AUTH_CERT_KID
+            value: "${OPENBALENA_TOKEN_AUTH_KID}"
+          - name: TOKEN_AUTH_CERT_PUB
+            value: "${OPENBALENA_TOKEN_AUTH_PUB}"
+          - name: TOKEN_AUTH_JWT_ALGO
+            value: "ES256"
+          - name: VPN_HOST
+            value: "vpn.${OPENBALENA_HOST_NAME}"
+          - name: VPN_PORT
+            value: "443"
+          - name: VPN_SERVICE_API_KEY
+            value: "${OPENBALENA_VPN_SERVICE_API_KEY}"
+          - name: SUPERUSER_EMAIL
+            value: "${OPENBALENA_SUPERUSER_EMAIL}"
+          - name: SUPERUSER_PASSWORD
+            value: "${OPENBALENA_SUPERUSER_PASSWORD}"
+status: {}
