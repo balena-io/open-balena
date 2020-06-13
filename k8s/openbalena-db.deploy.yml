@@ -22,4 +22,11 @@ spec:
       - image: balena/open-balena-db:${OPENBALENA_DB_VERSION_TAG}
         name: open-balena-db
         resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: compose-db
+      volumes:
+      - name: compose-db
+        persistentVolumeClaim:
+          claimName: compose-db
 status: {}

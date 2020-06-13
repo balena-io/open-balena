@@ -34,15 +34,45 @@ fi
 # shellcheck source=/dev/null
 source "${VERSIONS_FILE}"
 
+
+# Check if delete command
+if [[ $1 == "delete" ]]; then
+  kubectl delete -f "${BASE_DIR}/k8s/"
+  exit 0
+fi
+
 # Apply every file
 # Namespace
 envsubst < "${BASE_DIR}/k8s/namespace.yml" | kubectl apply -f -
 
+# Volumes
+envsubst < "${BASE_DIR}/k8s/redis.volume.yml" | kubectl apply -f -
+envsubst < "${BASE_DIR}/k8s/openbalena-db.volume.yml" | kubectl apply -f -
+envsubst < "${BASE_DIR}/k8s/openbalena-registry.volume.yml" | kubectl apply -f -
+envsubst < "${BASE_DIR}/k8s/openbalena-s3.volume.yml" | kubectl apply -f -
+
+# Services
+envsubst < "${BASE_DIR}/k8s/redis.service.yml" | kubectl apply -f -
+envsubst < "${BASE_DIR}/k8s/openbalena-db.service.yml" | kubectl apply -f -
+envsubst < "${BASE_DIR}/k8s/openbalena-s3.service.yml" | kubectl apply -f -
+envsubst < "${BASE_DIR}/k8s/openbalena-api.service.yml" | kubectl apply -f -
+envsubst < "${BASE_DIR}/k8s/openbalena-registry.service.yml" | kubectl apply -f -
+envsubst < "${BASE_DIR}/k8s/openbalena-vpn.service.yml" | kubectl apply -f -
+
 # Deployments
 envsubst < "${BASE_DIR}/k8s/redis.deploy.yml" | kubectl apply -f -
-
 envsubst < "${BASE_DIR}/k8s/openbalena-db.deploy.yml" | kubectl apply -f -
 envsubst < "${BASE_DIR}/k8s/openbalena-s3.deploy.yml" | kubectl apply -f -
+
+# Wait for deployments to be ready
+kubectl wait -n openbalena --for=condition=ready pod -l app=redis
+kubectl wait -n openbalena --for=condition=ready pod -l app=db
+kubectl wait -n openbalena --for=condition=ready pod -l app=s3
+
+# Start the rest of the deployments
 envsubst < "${BASE_DIR}/k8s/openbalena-api.deploy.yml" | kubectl apply -f -
 envsubst < "${BASE_DIR}/k8s/openbalena-registry.deploy.yml" | kubectl apply -f -
 envsubst < "${BASE_DIR}/k8s/openbalena-vpn.deploy.yml" | kubectl apply -f -
+
+# Start Ingress
+envsubst < "${BASE_DIR}/k8s/ingress.yml" | kubectl apply -f -

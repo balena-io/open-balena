@@ -22,31 +22,51 @@ spec:
       - image: balena/open-balena-vpn:${OPENBALENA_VPN_VERSION_TAG}
         name: open-balena-vpn
         resources: {}
+        securityContext:
+          capabilities:
+            add:
+            - SYS_ADMIN
+            - SYS_RESOURCE
+          privileged: true
         env:
-          - name: API_SERVICE_API_KEY
-            value: "${OPENBALENA_API_VPN_SERVICE_API_KEY}"
-          - name: BALENA_API_HOST
-            value: "api.${OPENBALENA_HOST_NAME}"
-          - name: BALENA_ROOT_CA
-            value: "${OPENBALENA_ROOT_CA}"
-          - name: BALENA_VPN_PORT
-            value: "443"
-          - name: PRODUCTION_MODE
-            value: "${OPENBALENA_PRODUCTION_MODE}"
-          - name: RESIN_VPN_GATEWAY
-            value: "10.2.0.1"
-          - name: SENTRY_DSN
-            value: ""
-          - name: VPN_HAPROXY_USEPROXYPROTOCOL
-            value: "true"
-          - name: VPN_OPENVPN_CA_CRT
-            value: "${OPENBALENA_VPN_CA}"
-          - name: VPN_OPENVPN_SERVER_CRT
-            value: "${OPENBALENA_VPN_SERVER_CRT}"
-          - name: VPN_OPENVPN_SERVER_DH
-            value: "${OPENBALENA_VPN_SERVER_DH}"
-          - name: VPN_OPENVPN_SERVER_KEY
-            value: "${OPENBALENA_VPN_SERVER_KEY}"
-          - name: VPN_SERVICE_API_KEY
-            value: "${OPENBALENA_VPN_SERVICE_API_KEY}"
+        - name: CONFD_BACKEND
+          value: "ENV"
+        - name: API_SERVICE_API_KEY
+          value: "${OPENBALENA_API_VPN_SERVICE_API_KEY}"
+        - name: BALENA_API_HOST
+          value: "api.${OPENBALENA_HOST_NAME}"
+        - name: BALENA_ROOT_CA
+          value: "${OPENBALENA_ROOT_CA}"
+        - name: BALENA_VPN_PORT
+          value: "443"
+        - name: PRODUCTION_MODE
+          value: "${OPENBALENA_PRODUCTION_MODE}"
+        - name: RESIN_VPN_GATEWAY
+          value: "10.2.0.1"
+        - name: SENTRY_DSN
+          value: ""
+        - name: VPN_HAPROXY_USEPROXYPROTOCOL
+          value: "true"
+        - name: VPN_OPENVPN_CA_CRT
+          value: "${OPENBALENA_VPN_CA}"
+        - name: VPN_OPENVPN_SERVER_CRT
+          value: "${OPENBALENA_VPN_SERVER_CRT}"
+        - name: VPN_OPENVPN_SERVER_DH
+          value: "${OPENBALENA_VPN_SERVER_DH}"
+        - name: VPN_OPENVPN_SERVER_KEY
+          value: "${OPENBALENA_VPN_SERVER_KEY}"
+        - name: VPN_SERVICE_API_KEY
+          value: "${OPENBALENA_VPN_SERVICE_API_KEY}"
+        volumeMounts:
+        - mountPath: /run
+          name: api-tmpfs0
+        - mountPath: /sys/fs/cgroup
+          name: api-tmpfs1
+      volumes:
+      - emptyDir:
+          medium: Memory
+        name: api-tmpfs0
+      - emptyDir:
+          medium: Memory
+        name: api-tmpfs1
 status: {}
