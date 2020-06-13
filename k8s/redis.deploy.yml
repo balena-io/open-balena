@@ -22,4 +22,11 @@ spec:
       - image: redis:alpine
         name: redis
         resources: {}
+        volumeMounts:
+        - mountPath: /data
+          name: compose-redis
+      volumes:
+      - name: compose-redis
+        persistentVolumeClaim:
+          claimName: compose-redis
 status: {}

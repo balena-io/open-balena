@@ -1,0 +1,44 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-nginx
+  namespace: openbalena
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - api.${OPENBALENA_HOST_NAME}
+    - registry.${OPENBALENA_HOST_NAME}
+    - vpn.${OPENBALENA_HOST_NAME}
+    - s3.${OPENBALENA_HOST_NAME}
+    secretName: echo-tls
+  rules:
+  - host: api.${OPENBALENA_HOST_NAME}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: api
+          servicePort: 80
+  - host: registry.${OPENBALENA_HOST_NAME}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: registry
+          servicePort: 80
+  - host: vpn.${OPENBALENA_HOST_NAME}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: vpn
+          servicePort: 80
+  - host: s3.${OPENBALENA_HOST_NAME}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: s3
+          servicePort: 80

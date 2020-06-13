@@ -22,21 +22,36 @@ spec:
       - image: balena/open-balena-s3:${OPENBALENA_S3_VERSION_TAG}
         name: s3
         resources: {}
-        volumeMounts:
-          - mountPath: /run
-            name: cache-volumes
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - SYS_ADMIN
+              - SYS_RESOURCE
         env:
-          - name: CONFD_BACKEND
-            value: "ENV"
-          - name: S3_MINIO_ACCESS_KEY
-            value: "${OPENBALENA_S3_ACCESS_KEY}"
-          - name: S3_MINIO_SECRET_KEY
-            value: "${OPENBALENA_S3_SECRET_KEY}"
-          - name: BUCKETS
-            value: "${OPENBALENA_S3_BUCKETS}"
-
+        - name: CONFD_BACKEND
+          value: "ENV"
+        - name: S3_MINIO_ACCESS_KEY
+          value: "${OPENBALENA_S3_ACCESS_KEY}"
+        - name: S3_MINIO_SECRET_KEY
+          value: "${OPENBALENA_S3_SECRET_KEY}"
+        - name: BUCKETS
+          value: "${OPENBALENA_S3_BUCKETS}"
+        volumeMounts:
+        - mountPath: /export
+          name: compose-s3
+        - mountPath: /run
+          name: s3-tmpfs0
+        - mountPath: /sys/fs/cgroup
+          name: s3-tmpfs1
       volumes:
-        - name: cache-volumes
-          emptyDir:
-            medium: Memory
+      - name: compose-s3
+        persistentVolumeClaim:
+          claimName: compose-s3
+      - name: s3-tmpfs0
+        emptyDir:
+          medium: Memory
+      - name: s3-tmpfs1
+        emptyDir:
+          medium: Memory
 status: {}
