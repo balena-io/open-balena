@@ -4,6 +4,7 @@ metadata:
   name: ingress-nginx
   namespace: openbalena
   annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 500m
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   tls:
