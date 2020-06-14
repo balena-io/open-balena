@@ -40,7 +40,6 @@ spec:
         volumeMounts:
         - mountPath: /export
           name: volume-s3
-          subPath: s3
         - mountPath: /run
           name: s3-tmpfs0
         - mountPath: /sys/fs/cgroup
