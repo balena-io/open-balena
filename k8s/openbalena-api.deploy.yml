@@ -57,8 +57,10 @@ spec:
           value: "img.${OPENBALENA_HOST_NAME}"
         - name: IMAGE_STORAGE_BUCKET
           value: "resin-production-img-cloudformation"
-        - name: IMAGE_STORAGE_PREFIX
+        - name: IMAGE_STORAGE_ENDPOINT
           value: "s3.amazonaws.com"
+        - name: IMAGE_STORAGE_PREFIX
+          value: "resinos"
         - name: JSON_WEB_TOKEN_EXPIRY_MINUTES
           value: "10080"
         - name: JSON_WEB_TOKEN_SECRET
