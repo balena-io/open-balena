@@ -39,15 +39,16 @@ spec:
           value: "${OPENBALENA_S3_BUCKETS}"
         volumeMounts:
         - mountPath: /export
-          name: compose-s3
+          name: volume-s3
+          subPath: s3
         - mountPath: /run
           name: s3-tmpfs0
         - mountPath: /sys/fs/cgroup
           name: s3-tmpfs1
       volumes:
-      - name: compose-s3
+      - name: volume-s3
         persistentVolumeClaim:
-          claimName: compose-s3
+          claimName: volume-s3
       - name: s3-tmpfs0
         emptyDir:
           medium: Memory
