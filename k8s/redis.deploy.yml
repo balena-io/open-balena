@@ -24,9 +24,10 @@ spec:
         resources: {}
         volumeMounts:
         - mountPath: /data
-          name: compose-redis
+          name: volume-redis
+          subPath: redis
       volumes:
-      - name: compose-redis
+      - name: volume-redis
         persistentVolumeClaim:
-          claimName: compose-redis
+          claimName: volume-redis
 status: {}

@@ -24,9 +24,10 @@ spec:
         resources: {}
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: compose-db
+          name: volume-db
+          subPath: postgres
       volumes:
-      - name: compose-db
+      - name: volume-db
         persistentVolumeClaim:
-          claimName: compose-db
+          claimName: volume-db
 status: {}

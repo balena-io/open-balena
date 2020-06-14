@@ -67,15 +67,16 @@ spec:
           value: "/data"
         volumeMounts:
         - mountPath: /data
-          name: compose-registry
+          name: volume-registry
+          subPath: registry
         - mountPath: /run
           name: registry-tmpfs0
         - mountPath: /sys/fs/cgroup
           name: registry-tmpfs1
       volumes:
-      - name: compose-registry
+      - name: volume-registry
         persistentVolumeClaim:
-          claimName: compose-registry
+          claimName: volume-registry
       - name: registry-tmpfs0
         emptyDir:
           medium: Memory

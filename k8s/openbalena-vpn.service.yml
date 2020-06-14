@@ -35,7 +35,8 @@ spec:
     protocol: TCP
     targetPort: 3128
     name: vpn-lb
-  type: LoadBalancer
+    nodePort: 30001
+  type: NodePort
   selector:
     app: vpn
 status:
