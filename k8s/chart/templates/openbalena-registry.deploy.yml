@@ -1,0 +1,115 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  name: volume-registry
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ index .Values "deployments" "registry" "volume" "storage" }}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: registry
+  name: registry
+spec:
+  replicas: {{ index .Values "deployments" "registry" "replicas" }}
+  selector:
+    matchLabels:
+      app: registry
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: registry
+    spec:
+      containers:
+      - image: {{ index .Values "deployments" "registry" "image" }}:{{ index .Values "deployments" "registry" "version" }}
+        name: registry
+        resources: {}
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - SYS_ADMIN
+              - SYS_RESOURCE
+        env:
+        - name: CONFD_BACKEND
+          value: "ENV"
+        - name: API_TOKENAUTH_CRT
+          value: "{{ index .Values "keys" "token-auth-pub" }}"
+        - name: BALENA_REGISTRY2_HOST
+          value: "registry.{{ index .Values "hostname" }}"
+        - name: BALENA_ROOT_CA
+          value: "{{ index .Values "certificates" "root" "ca" }}"
+        - name: BALENA_TOKEN_AUTH_ISSUER
+          value: "api.{{ index .Values "hostname" }}"
+        - name: BALENA_TOKEN_AUTH_REALM
+          value: "https://api.{{ index .Values "hostname" }}/auth/v1/token"
+        - name: COMMON_REGION
+          value: "{{ index .Values "deployments" "s3" "config" "region" }}"
+        - name: REGISTRY2_CACHE_ENABLED
+          value: "false"
+        - name: REGISTRY2_CACHE_ADDR
+          value: "127.0.0.1:6379"
+        - name: REGISTRY2_CACHE_DB
+          value: "0"
+        - name: REGISTRY2_CACHE_MAXMEMORY_MB
+          value: "1024" # Megabytes
+        - name: REGISTRY2_CACHE_MAXMEMORY_POLICY
+          value: "allkeys-lru"
+        - name: REGISTRY2_S3_REGION_ENDPOINT
+          value: "{{ index .Values "deployments" "s3" "config" "endpoint" }}"
+        - name: REGISTRY2_S3_BUCKET
+          value: "{{ index .Values "deployments" "s3" "config" "bucket" }}"
+        - name: REGISTRY2_S3_KEY
+          value: "{{ index .Values "deployments" "s3" "config" "access-key" }}"
+        - name: REGISTRY2_S3_SECRET
+          value: "{{ index .Values "deployments" "s3" "config" "secret-key" }}"
+        - name: REGISTRY2_SECRETKEY
+          value: "{{ index .Values "keys" "registry-secret-key" }}"
+        - name: REGISTRY2_STORAGEPATH
+          value: "/data"
+        volumeMounts:
+        - mountPath: /data
+          name: volume-registry
+          subPath: registry
+        - mountPath: /run
+          name: registry-tmpfs0
+        - mountPath: /sys/fs/cgroup
+          name: registry-tmpfs1
+      volumes:
+      - name: volume-registry
+        persistentVolumeClaim:
+          claimName: volume-registry
+      - name: registry-tmpfs0
+        emptyDir:
+          medium: Memory
+      - name: registry-tmpfs1
+        emptyDir:
+          medium: Memory
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: registry
+  name: registry
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: registry
+status:
+  loadBalancer: {}

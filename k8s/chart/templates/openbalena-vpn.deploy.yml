@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: vpn
+  name: vpn
+spec:
+  replicas: {{ index .Values "deployments" "vpn" "replicas" }}
+  selector:
+    matchLabels:
+      app: vpn
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: vpn
+    spec:
+      # Add nodeSelector, so you can define where the pods should be created
+      # nodeSelector:
+      #   doks.digitalocean.com/node-pool: pool-openbalena-vpn
+
+      # Add this affinity to determine that only 1 VPN per pod is going to be created
+      # affinity:
+      #   podAntiAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #     - topologyKey: kubernetes.io/hostname
+      #       labelSelector:
+      #         matchLabels:
+      #           app: vpn
+
+      containers:
+      - image: {{ index .Values "deployments" "vpn" "image" }}:{{ index .Values "deployments" "vpn" "version" }}
+        name: vpn
+        resources: {}
+        securityContext:
+          capabilities:
+            add:
+            - SYS_ADMIN
+            - SYS_RESOURCE
+            - NET_ADMIN
+          privileged: true
+        env:
+        - name: CONFD_BACKEND
+          value: "ENV"
+        - name: API_SERVICE_API_KEY
+          value: "{{ index .Values "keys" "api-vpn-service-api-key" }}"
+        - name: BALENA_API_HOST
+          value: "api.{{ index .Values "hostname" }}"
+        - name: BALENA_ROOT_CA
+          value: "{{ index .Values "certificates" "root" "ca" }}"
+        - name: BALENA_VPN_PORT
+          value: "443"
+        - name: PRODUCTION_MODE
+          value: "{{ index .Values "config" "production-mode" }}"
+        - name: RESIN_VPN_GATEWAY
+          value: "10.2.0.1"
+        - name: SENTRY_DSN
+          value: "{{ index .Values "deployments" "vpn" "sentry-dsn" }}"
+        - name: VPN_HAPROXY_USEPROXYPROTOCOL
+          value: "true"
+        - name: VPN_OPENVPN_CA_CRT
+          value: "{{ index .Values "certificates" "vpn" "ca" }}"
+        - name: VPN_OPENVPN_SERVER_CRT
+          value: "{{ index .Values "certificates" "vpn" "crt" }}"
+        - name: VPN_OPENVPN_SERVER_DH
+          value: "{{ index .Values "certificates" "vpn" "dh" }}"
+        - name: VPN_OPENVPN_SERVER_KEY
+          value: "{{ index .Values "certificates" "vpn" "server-key" }}"
+        - name: VPN_SERVICE_API_KEY
+          value: "{{ index .Values "keys" "service-api-key" }}"
+        volumeMounts:
+        - mountPath: /run
+          name: api-tmpfs0
+        - mountPath: /sys/fs/cgroup
+          name: api-tmpfs1
+      volumes:
+      - emptyDir:
+          medium: Memory
+        name: api-tmpfs0
+      - emptyDir:
+          medium: Memory
+        name: api-tmpfs1
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: vpn
+  name: vpn
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+    name: http
+  - port: 443
+    protocol: TCP
+    targetPort: 443
+    name: https
+  - port: 3128
+    protocol: TCP
+    targetPort: 3128
+    name: proxy
+  selector:
+    app: vpn
+status:
+  loadBalancer: {}
