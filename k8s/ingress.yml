@@ -1,17 +1,16 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: ingress-nginx
+  name: ingress
   namespace: openbalena
   annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: 500m
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
   - hosts:
     - api.${OPENBALENA_HOST_NAME}
     - registry.${OPENBALENA_HOST_NAME}
-    - vpn.${OPENBALENA_HOST_NAME}
     - s3.${OPENBALENA_HOST_NAME}
     secretName: echo-tls
   rules:
@@ -29,6 +28,17 @@ spec:
         backend:
           serviceName: registry
           servicePort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-vpn
+  namespace: openbalena
+  annotations:
+    kubernetes.io/ingress.class: "haproxy"
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
   - host: vpn.${OPENBALENA_HOST_NAME}
     http:
       paths:
@@ -36,10 +46,11 @@ spec:
         backend:
           serviceName: vpn
           servicePort: 80
-  - host: s3.${OPENBALENA_HOST_NAME}
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: s3
-          servicePort: 80
+
+  # - host: s3.${OPENBALENA_HOST_NAME}
+  #   http:
+  #     paths:
+  #     - path: /
+  #       backend:
+  #         serviceName: s3
+  #         servicePort: 80
