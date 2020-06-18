@@ -12,6 +12,10 @@ config:
   production-mode: "${OPENBALENA_PRODUCTION_MODE}" # OPENBALENA_PRODUCTION_MODE
   ssh-authorized-keys: "${OPENBALENA_SSH_AUTHORIZED_KEYS}" # OPENBALENA_SSH_AUTHORIZED_KEYS
 
+  # NGINX Ingress uses this variable
+  # If your containers exceed the size of 200mb, change this!
+  client-max-body-size: "200m"
+
 # Deployments
 deployments:
   api:
