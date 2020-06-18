@@ -1,0 +1,61 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: {{ index .Values "namespace" }}
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - api.{{ index .Values "hostname" }}
+    - registry.{{ index .Values "hostname" }}
+
+    {{- if index .Values "deployments" "s3" "enabled" }}
+    - s3.{{ index .Values "hostname" }}
+    {{- end }}
+    secretName: echo-tls
+  rules:
+  - host: api.{{ index .Values "hostname" }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: api
+          servicePort: 80
+  - host: registry.{{ index .Values "hostname" }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: registry
+          servicePort: 80
+
+  {{- if index .Values "deployments" "s3" "enabled" }}
+  - host: s3.{{ index .Values "hostname" }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: s3
+          servicePort: 80
+  {{- end }}
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-vpn
+  namespace: {{ index .Values "namespace" }}
+  annotations:
+    kubernetes.io/ingress.class: "haproxy"
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - host: vpn.{{ index .Values "hostname" }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: vpn
+          servicePort: 80

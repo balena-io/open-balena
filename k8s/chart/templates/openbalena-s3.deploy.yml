@@ -1,0 +1,88 @@
+{{- if index .Values "deployments" "s3" "enabled" }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  name: volume-s3
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ index .Values "deployments" "s3" "volume" "storage" }}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: s3
+  name: s3
+spec:
+  replicas: {{ index .Values "deployments" "s3" "replicas" }}
+  selector:
+    matchLabels:
+      app: s3
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: s3
+    spec:
+      containers:
+      - image: {{ index .Values "deployments" "s3" "image" }}:{{ index .Values "deployments" "s3" "version" }}
+        name: s3
+        resources: {}
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - SYS_ADMIN
+              - SYS_RESOURCE
+        env:
+        - name: CONFD_BACKEND
+          value: "ENV"
+        - name: S3_MINIO_ACCESS_KEY
+          value: "{{ index .Values "deployments" "s3" "config" "access-key" }}"
+        - name: S3_MINIO_SECRET_KEY
+          value: "{{ index .Values "deployments" "s3" "config" "secret-key" }}"
+        - name: BUCKETS
+          value: "{{ index .Values "deployments" "s3" "config" "bucket" }}"
+        volumeMounts:
+        - mountPath: /export
+          name: volume-s3
+        - mountPath: /run
+          name: s3-tmpfs0
+        - mountPath: /sys/fs/cgroup
+          name: s3-tmpfs1
+      volumes:
+      - name: volume-s3
+        persistentVolumeClaim:
+          claimName: volume-s3
+      - name: s3-tmpfs0
+        emptyDir:
+          medium: Memory
+      - name: s3-tmpfs1
+        emptyDir:
+          medium: Memory
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: s3
+  name: s3
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: s3
+status:
+  loadBalancer: {}
+{{- end }}

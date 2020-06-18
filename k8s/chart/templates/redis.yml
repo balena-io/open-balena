@@ -1,0 +1,64 @@
+{{- if index .Values "deployments" "redis" "enabled" }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  name: volume-{{ index .Values "deployments" "redis" "config" "host" }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ index .Values "deployments" "redis" "volume" "storage" }}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: {{ index .Values "deployments" "redis" "config" "host" }}
+  name: {{ index .Values "deployments" "redis" "config" "host" }}
+spec:
+  replicas: {{ index .Values "deployments" "redis" "replicas" }}
+  selector:
+    matchLabels:
+      app: {{ index .Values "deployments" "redis" "config" "host" }}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ index .Values "deployments" "redis" "config" "host" }}
+    spec:
+      containers:
+      - image: {{ index .Values "deployments" "redis" "image" }}:{{ index .Values "deployments" "redis" "version" }}
+        name: redis
+        resources: {}
+        volumeMounts:
+        - mountPath: /data
+          name: volume-{{ index .Values "deployments" "redis" "config" "host" }}
+          subPath: redis
+      volumes:
+      - name: volume-{{ index .Values "deployments" "redis" "config" "host" }}
+        persistentVolumeClaim:
+          claimName: volume-{{ index .Values "deployments" "redis" "config" "host" }}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: {{ index .Values "deployments" "redis" "config" "host" }}
+  name: {{ index .Values "deployments" "redis" "config" "host" }}
+spec:
+  ports:
+  - port: 6379
+    protocol: TCP
+    targetPort: {{ index .Values "deployments" "redis" "config" "port" }}
+  selector:
+    app: {{ index .Values "deployments" "redis" "config" "host" }}
+status:
+  loadBalancer: {}
+{{- end }}
