@@ -57,7 +57,7 @@ deployments:
       secret-key: "${OPENBALENA_S3_SECRET_KEY}" # OPENBALENA_S3_SECRET_KEY
 
     volume:
-      storage: "1Gi"
+      storage: "25Gi"
 
   db:
     image: balena/open-balena-db
