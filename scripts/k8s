@@ -17,62 +17,38 @@ if [ ! -f "$VERSIONS_FILE" ]; then
   exit 1
 fi
 
-ENV_FILE="${CONFIG_DIR}/activate"
-if [ ! -f "$ENV_FILE" ]; then
+SETTINGS_FILE="${CONFIG_DIR}/k8s/settings.yaml"
+if [[ ! -f "$SETTINGS_FILE" ]]; then
   echo_bold 'No configuration found; please create one first with: ./scripts/quickstart'
   echo_bold 'See README.md for help.'
   exit 1
 fi
 
-source "${ENV_FILE}"
-
-# only include the MDNS publisher IF the domain is valid...
-if [ ${OPENBALENA_HOST_NAME: -6} == ".local" ]; then
-  INCLUDE_MDNS="-f ${BASE_DIR}/compose/mdns.yml"
-fi
-
-# shellcheck source=/dev/null
-source "${VERSIONS_FILE}"
-
-
-# Check if delete command
-if [[ $1 == "delete" ]]; then
-  kubectl delete -f "${BASE_DIR}/k8s/"
+# Uninstall
+if [ "$@" = "uninstall" ]; then
+  helm uninstall openbalena --namespace openbalena
+  kubectl delete -f "${BASE_DIR}/k8s/namespace.yml"
+  kubectl delete ns cert-manager
   exit 0
 fi
 
-# Apply every file
-# Namespace
-envsubst < "${BASE_DIR}/k8s/namespace.yml" | kubectl apply -f -
+install_certmanager () {
+  kubectl create namespace cert-manager || true
+  kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager.yaml
+}
 
-# Volumes
-envsubst < "${BASE_DIR}/k8s/redis.volume.yml" | kubectl apply -f -
-envsubst < "${BASE_DIR}/k8s/openbalena-db.volume.yml" | kubectl apply -f -
-envsubst < "${BASE_DIR}/k8s/openbalena-registry.volume.yml" | kubectl apply -f -
-envsubst < "${BASE_DIR}/k8s/openbalena-s3.volume.yml" | kubectl apply -f -
+install_openbalena () {
+  # Create namespace
+  kubectl apply -f "${BASE_DIR}/k8s/namespace.yml"
 
-# Services
-envsubst < "${BASE_DIR}/k8s/redis.service.yml" | kubectl apply -f -
-envsubst < "${BASE_DIR}/k8s/openbalena-db.service.yml" | kubectl apply -f -
-envsubst < "${BASE_DIR}/k8s/openbalena-s3.service.yml" | kubectl apply -f -
-envsubst < "${BASE_DIR}/k8s/openbalena-api.service.yml" | kubectl apply -f -
-envsubst < "${BASE_DIR}/k8s/openbalena-registry.service.yml" | kubectl apply -f -
-envsubst < "${BASE_DIR}/k8s/openbalena-vpn.service.yml" | kubectl apply -f -
+  # Helm
+  helm dependency update "${BASE_DIR}/k8s/chart"
+  helm upgrade --install openbalena "${BASE_DIR}/k8s/chart" --namespace openbalena -f "${SETTINGS_FILE}"
 
-# Deployments
-envsubst < "${BASE_DIR}/k8s/redis.deploy.yml" | kubectl apply -f -
-envsubst < "${BASE_DIR}/k8s/openbalena-db.deploy.yml" | kubectl apply -f -
-envsubst < "${BASE_DIR}/k8s/openbalena-s3.deploy.yml" | kubectl apply -f -
+  # Apply cert-manager issuer
+  kubectl apply -f "${CONFIG_DIR}/k8s/cert-issuer.yml"
+}
 
-# Wait for deployments to be ready
-kubectl wait -n openbalena --for=condition=ready pod -l app=redis
-kubectl wait -n openbalena --for=condition=ready pod -l app=db
-kubectl wait -n openbalena --for=condition=ready pod -l app=s3
-
-# Start the rest of the deployments
-envsubst < "${BASE_DIR}/k8s/openbalena-api.deploy.yml" | kubectl apply -f -
-envsubst < "${BASE_DIR}/k8s/openbalena-registry.deploy.yml" | kubectl apply -f -
-envsubst < "${BASE_DIR}/k8s/openbalena-vpn.deploy.yml" | kubectl apply -f -
-
-# Start Ingress
-envsubst < "${BASE_DIR}/k8s/ingress.yml" | kubectl apply -f -
+# Install cert-manager & openbalena
+install_certmanager
+install_openbalena
