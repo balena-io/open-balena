@@ -136,6 +136,7 @@ haproxy:
       annotations:
         # Add DigitalOcean LoadBalancer label
         service.beta.kubernetes.io/do-loadbalancer-name: "k8s-openbalena-vpn"
+        service.beta.kubernetes.io/do-loadbalancer-hostname: "vpn.${OPENBALENA_HOST_NAME}"
 
       # Change the HTTPS port
       httpsPorts:
@@ -158,3 +159,4 @@ nginx:
       annotations:
         # Add DigitalOcean LoadBalancer label
         service.beta.kubernetes.io/do-loadbalancer-name: "k8s-openbalena"
+        service.beta.kubernetes.io/do-loadbalancer-hostname: "${OPENBALENA_HOST_NAME}"
