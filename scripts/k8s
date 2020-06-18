@@ -49,6 +49,10 @@ install_openbalena () {
   kubectl apply -f "${CONFIG_DIR}/k8s/cert-issuer.yml"
 }
 
-# Install cert-manager & openbalena
-install_certmanager
+# Install cert-manager only when using install command
+if [ "$@" = "install" ]; then
+  install_certmanager
+fi
+
+# Always use install_openbalena, because it upgrades as well
 install_openbalena
