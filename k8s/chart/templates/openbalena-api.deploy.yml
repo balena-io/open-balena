@@ -40,7 +40,7 @@ spec:
         - name: COOKIE_SESSION_SECRET
           value: "{{ index .Values "keys" "cookie-secret" }}"
         - name: DB_HOST
-          value: "db"
+          value: "openbalena-db"
         - name: DB_PASSWORD
           value: "docker"
         - name: DB_PORT

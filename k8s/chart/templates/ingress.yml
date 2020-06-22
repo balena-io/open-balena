@@ -26,14 +26,14 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: api
+          serviceName: openbalena-api
           servicePort: 80
   - host: registry.{{ index .Values "hostname" }}
     http:
       paths:
       - path: /
         backend:
-          serviceName: registry
+          serviceName: openbalena-registry
           servicePort: 80
 
   {{- if index .Values "deployments" "s3" "enabled" }}
@@ -42,7 +42,7 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: s3
+          serviceName: openbalena-s3
           servicePort: 80
   {{- end }}
 ---
@@ -64,5 +64,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: vpn
+          serviceName: openbalena-vpn
           servicePort: 80
