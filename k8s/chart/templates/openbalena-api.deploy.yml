@@ -3,23 +3,26 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: api
-  name: api
+    app: openbalena
+    component: api
+  name: openbalena-api
 spec:
   replicas: {{ index .Values "deployments" "api" "replicas" }}
   selector:
     matchLabels:
-      app: api
+      app: openbalena
+      component: api
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: api
+        app: openbalena
+        component: api
     spec:
       containers:
       - image: {{ index .Values "deployments" "api" "image" }}:{{ index .Values "deployments" "api" "version" }}
-        name: api
+        name: openbalena-api
         resources: {}
         securityContext:
           capabilities:
@@ -123,14 +126,16 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: api
-  name: api
+    app: openbalena
+    component: api
+  name: openbalena-api
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 80
   selector:
-    app: api
+    app: openbalena
+    component: api
 status:
   loadBalancer: {}

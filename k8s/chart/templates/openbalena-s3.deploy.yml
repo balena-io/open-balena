@@ -3,7 +3,10 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
-  name: volume-s3
+  name: openbalena-s3-volume
+  labels:
+    app: openbalena
+    component: s3
 spec:
   accessModes:
   - ReadWriteOnce
@@ -17,23 +20,26 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: s3
-  name: s3
+    app: openbalena
+    component: s3
+  name: openbalena-s3
 spec:
   replicas: {{ index .Values "deployments" "s3" "replicas" }}
   selector:
     matchLabels:
-      app: s3
+      app: openbalena
+      component: s3
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: s3
+        app: openbalena
+        component: s3
     spec:
       containers:
       - image: {{ index .Values "deployments" "s3" "image" }}:{{ index .Values "deployments" "s3" "version" }}
-        name: s3
+        name: openbalena-s3
         resources: {}
         securityContext:
           privileged: true
@@ -52,19 +58,19 @@ spec:
           value: "{{ index .Values "deployments" "s3" "config" "bucket" }}"
         volumeMounts:
         - mountPath: /export
-          name: volume-s3
+          name: openbalena-s3-volume
         - mountPath: /run
-          name: s3-tmpfs0
+          name: openbalena-s3-tmpfs0
         - mountPath: /sys/fs/cgroup
-          name: s3-tmpfs1
+          name: openbalena-s3-tmpfs1
       volumes:
-      - name: volume-s3
+      - name: openbalena-s3-volume
         persistentVolumeClaim:
-          claimName: volume-s3
-      - name: s3-tmpfs0
+          claimName: openbalena-s3-volume
+      - name: openbalena-s3-tmpfs0
         emptyDir:
           medium: Memory
-      - name: s3-tmpfs1
+      - name: openbalena-s3-tmpfs1
         emptyDir:
           medium: Memory
 status: {}
@@ -74,8 +80,9 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: s3
-  name: s3
+    app: openbalena
+    component: s3
+  name: openbalena-s3
 spec:
   ports:
   - port: 80

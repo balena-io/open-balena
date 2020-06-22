@@ -3,19 +3,22 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: vpn
-  name: vpn
+    app: openbalena
+    component: vpn
+  name: openbalena-vpn
 spec:
   replicas: {{ index .Values "deployments" "vpn" "replicas" }}
   selector:
     matchLabels:
-      app: vpn
+      app: openbalena
+      component: vpn
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: vpn
+        app: openbalena
+        component: vpn
     spec:
       # Add nodeSelector, so you can define where the pods should be created
       # nodeSelector:
@@ -32,7 +35,7 @@ spec:
 
       containers:
       - image: {{ index .Values "deployments" "vpn" "image" }}:{{ index .Values "deployments" "vpn" "version" }}
-        name: vpn
+        name: openbalena-vpn
         resources: {}
         securityContext:
           capabilities:
@@ -72,16 +75,16 @@ spec:
           value: "{{ index .Values "keys" "service-api-key" }}"
         volumeMounts:
         - mountPath: /run
-          name: api-tmpfs0
+          name: openbalena-api-tmpfs0
         - mountPath: /sys/fs/cgroup
-          name: api-tmpfs1
+          name: openbalena-api-tmpfs1
       volumes:
       - emptyDir:
           medium: Memory
-        name: api-tmpfs0
+        name: openbalena-api-tmpfs0
       - emptyDir:
           medium: Memory
-        name: api-tmpfs1
+        name: openbalena-api-tmpfs1
 status: {}
 ---
 apiVersion: v1
@@ -89,8 +92,9 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: vpn
-  name: vpn
+    app: openbalena
+    component: vpn
+  name: openbalena-vpn
 spec:
   ports:
   - port: 80
@@ -106,6 +110,7 @@ spec:
     targetPort: 3128
     name: proxy
   selector:
-    app: vpn
+    app: openbalena
+    component: vpn
 status:
   loadBalancer: {}

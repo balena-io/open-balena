@@ -3,7 +3,10 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
-  name: volume-{{ index .Values "deployments" "redis" "config" "host" }}
+  name: openbalena-redis-volume
+  labels:
+    app: openbalena
+    component: redis
 spec:
   accessModes:
   - ReadWriteOnce
@@ -17,32 +20,35 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: {{ index .Values "deployments" "redis" "config" "host" }}
-  name: {{ index .Values "deployments" "redis" "config" "host" }}
+    app: openbalena
+    component: redis
+  name: openbalena-redis
 spec:
   replicas: {{ index .Values "deployments" "redis" "replicas" }}
   selector:
     matchLabels:
-      app: {{ index .Values "deployments" "redis" "config" "host" }}
+      app: openbalena
+      component: redis
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: {{ index .Values "deployments" "redis" "config" "host" }}
+        app: openbalena
+        component: redis
     spec:
       containers:
       - image: {{ index .Values "deployments" "redis" "image" }}:{{ index .Values "deployments" "redis" "version" }}
-        name: redis
+        name: openbalena-redis
         resources: {}
         volumeMounts:
         - mountPath: /data
-          name: volume-{{ index .Values "deployments" "redis" "config" "host" }}
+          name: openbalena-redis-volume
           subPath: redis
       volumes:
-      - name: volume-{{ index .Values "deployments" "redis" "config" "host" }}
+      - name: openbalena-redis-volume
         persistentVolumeClaim:
-          claimName: volume-{{ index .Values "deployments" "redis" "config" "host" }}
+          claimName: volume-redis
 status: {}
 ---
 apiVersion: v1
@@ -50,15 +56,16 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: {{ index .Values "deployments" "redis" "config" "host" }}
-  name: {{ index .Values "deployments" "redis" "config" "host" }}
+    app: openbalena
+    component: redis
+  name: openbalena-redis
 spec:
   ports:
   - port: 6379
     protocol: TCP
     targetPort: {{ index .Values "deployments" "redis" "config" "port" }}
   selector:
-    app: {{ index .Values "deployments" "redis" "config" "host" }}
+    app: openbalena-redis
 status:
   loadBalancer: {}
 {{- end }}
