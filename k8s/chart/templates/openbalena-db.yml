@@ -2,7 +2,10 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
-  name: volume-db
+  name: openbalena-db-volume
+  labels:
+    app: openbalena
+    component: db
 spec:
   accessModes:
   - ReadWriteOnce
@@ -16,32 +19,35 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: db
-  name: db
+    app: openbalena
+    component: db
+  name: openbalena-db
 spec:
   replicas: {{ index .Values "deployments" "db" "replicas" }}
   selector:
     matchLabels:
-      app: db
+      app: openbalena
+      component: db
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: db
+        app: openbalena
+        component: db
     spec:
       containers:
       - image: {{ index .Values "deployments" "db" "image" }}:{{ index .Values "deployments" "db" "version" }}
-        name: db
+        name: openbalena-db
         resources: {}
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: volume-db
+          name: openbalena-db-volume
           subPath: postgres
       volumes:
-      - name: volume-db
+      - name: openbalena-db-volume
         persistentVolumeClaim:
-          claimName: volume-db
+          claimName: openbalena-db-volume
 status: {}
 ---
 apiVersion: v1
@@ -49,14 +55,16 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: db
-  name: db
+    app: openbalena
+    component: db
+  name: openbalena-db
 spec:
   ports:
   - port: 5432
     protocol: TCP
     targetPort: 5432
   selector:
-    app: db
+    app: openbalena
+    component: db
 status:
   loadBalancer: {}
