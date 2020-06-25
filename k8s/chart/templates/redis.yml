@@ -48,7 +48,7 @@ spec:
       volumes:
       - name: openbalena-redis-volume
         persistentVolumeClaim:
-          claimName: volume-redis
+          claimName: openbalena-redis-volume
 status: {}
 ---
 apiVersion: v1
@@ -65,7 +65,8 @@ spec:
     protocol: TCP
     targetPort: {{ index .Values "deployments" "redis" "config" "port" }}
   selector:
-    app: openbalena-redis
+    app: openbalena
+    component: redis
 status:
   loadBalancer: {}
 {{- end }}

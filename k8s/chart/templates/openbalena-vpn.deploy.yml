@@ -75,16 +75,16 @@ spec:
           value: "{{ index .Values "keys" "service-api-key" }}"
         volumeMounts:
         - mountPath: /run
-          name: openbalena-api-tmpfs0
+          name: openbalena-vpn-tmpfs0
         - mountPath: /sys/fs/cgroup
-          name: openbalena-api-tmpfs1
+          name: openbalena-vpn-tmpfs1
       volumes:
       - emptyDir:
           medium: Memory
-        name: openbalena-api-tmpfs0
+        name: openbalena-vpn-tmpfs0
       - emptyDir:
           medium: Memory
-        name: openbalena-api-tmpfs1
+        name: openbalena-vpn-tmpfs1
 status: {}
 ---
 apiVersion: v1

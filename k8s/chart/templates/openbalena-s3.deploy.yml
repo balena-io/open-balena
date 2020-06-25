@@ -89,7 +89,8 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    app: s3
+    app: openbalena
+    component: s3
 status:
   loadBalancer: {}
 {{- end }}
