@@ -145,8 +145,8 @@ haproxy:
 
     # Add TCP proxies for the VPN
     tcp:
-      443: "{{ .Release.Namespace }}/vpn:443::PROXY-V2"
-      3128: "{{ .Release.Namespace }}/vpn:3128"
+      443: "{{ .Release.Namespace }}/openbalena-vpn:443::PROXY-V2"
+      3128: "{{ .Release.Namespace }}/openbalena-vpn:3128"
 
 ##
 ## NGINX Ingress Chart$
