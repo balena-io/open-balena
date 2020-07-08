@@ -1,22 +1,6 @@
 {{- if index .Values "deployments" "redis" "enabled" }}
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  creationTimestamp: null
-  name: openbalena-redis-volume
-  labels:
-    app: openbalena
-    component: redis
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: {{ index .Values "deployments" "redis" "volume" "storage" }}
-status: {}
----
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   creationTimestamp: null
   labels:
@@ -24,12 +8,12 @@ metadata:
     component: redis
   name: openbalena-redis
 spec:
+  serviceName: openbalena-redis
   replicas: {{ index .Values "deployments" "redis" "replicas" }}
   selector:
     matchLabels:
       app: openbalena
       component: redis
-  strategy: {}
   template:
     metadata:
       creationTimestamp: null
@@ -38,7 +22,7 @@ spec:
         component: redis
     spec:
       containers:
-      - image: {{ index .Values "deployments" "redis" "image" }}:{{ index .Values "deployments" "redis" "version" }}
+      - image: "{{ index .Values "deployments" "redis" "image" }}:{{ index .Values "deployments" "redis" "version" }}"
         name: openbalena-redis
         resources: {}
         volumeMounts:
@@ -49,7 +33,15 @@ spec:
       - name: openbalena-redis-volume
         persistentVolumeClaim:
           claimName: openbalena-redis-volume
-status: {}
+  volumeClaimTemplates:
+  - metadata:
+      name: openbalena-redis-volume
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: {{ index .Values "deployments" "redis" "volume" "storage" }}
 ---
 apiVersion: v1
 kind: Service

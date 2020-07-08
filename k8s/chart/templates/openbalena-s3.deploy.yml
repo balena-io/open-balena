@@ -1,22 +1,6 @@
 {{- if index .Values "deployments" "s3" "enabled" }}
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  creationTimestamp: null
-  name: openbalena-s3-volume
-  labels:
-    app: openbalena
-    component: s3
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: {{ index .Values "deployments" "s3" "volume" "storage" }}
-status: {}
----
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   creationTimestamp: null
   labels:
@@ -24,12 +8,12 @@ metadata:
     component: s3
   name: openbalena-s3
 spec:
+  serviceName: openbalena-s3
   replicas: {{ index .Values "deployments" "s3" "replicas" }}
   selector:
     matchLabels:
       app: openbalena
       component: s3
-  strategy: {}
   template:
     metadata:
       creationTimestamp: null
@@ -38,7 +22,7 @@ spec:
         component: s3
     spec:
       containers:
-      - image: {{ index .Values "deployments" "s3" "image" }}:{{ index .Values "deployments" "s3" "version" }}
+      - image: '{{ index .Values "deployments" "s3" "image" }}:{{ index .Values "deployments" "s3" "version" }}'
         name: openbalena-s3
         resources: {}
         securityContext:
@@ -73,7 +57,15 @@ spec:
       - name: openbalena-s3-tmpfs1
         emptyDir:
           medium: Memory
-status: {}
+  volumeClaimTemplates:
+  - metadata:
+      name: openbalena-s3-volume
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: {{ index .Values "deployments" "s3" "volume" "storage" }}
 ---
 apiVersion: v1
 kind: Service
