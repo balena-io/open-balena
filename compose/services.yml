@@ -185,3 +185,4 @@ services:
       ACTIVE: ${OPENBALENA_ACME_CERT_ENABLED}
       DOMAINS: "api.${OPENBALENA_HOST_NAME},registry.${OPENBALENA_HOST_NAME},s3.${OPENBALENA_HOST_NAME},vpn.${OPENBALENA_HOST_NAME}"
       OUTPUT_PEM: /certs/open-balena.pem
+    restart: always
