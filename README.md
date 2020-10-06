@@ -27,11 +27,21 @@ To learn more about openBalena, visit [balena.io/open][open-balena-website].
 
 ## Getting Started
 
-Our [Getting Started][getting-started] guide is the most direct path to getting
+Our [Getting Started guide][getting-started] is the most direct path to getting
 an openBalena installation up and running and successfully deploying your
 application to your device(s).
 
-> **IMPORTANT:** Due to changes in [balenaOS][balena-os], only versions up to and including `2.49.0` are currently supported. Additionally, only [balenaCLI](balena-cli) versions `<v12.2.2` are fully supported at the moment.
+
+## Compatibility
+
+The current release of openBalena has the following minimum version requirements:
+
+- balenaOS v2.58.3
+- balena CLI v12.23.4
+
+If you are updating from previous openBalena versions, ensure you update the balena
+CLI and reprovision any devices to at least the minimum required versions in order
+for them to be fully compatible with this release, as some features may not work.
 
 
 ## Documentation
