@@ -1,4 +1,19 @@
 - commits:
+    - subject: 'docs: note that balenaCLI is incompatible >12.2.2'
+      hash: 71a692b28b9c49e47dd8f490a0900b384b43b677
+      body: ''
+      footer:
+        Connects-to: '#85'
+        connects-to: '#85'
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Matthew McGinn <matthew@balena.io>
+        signed-off-by: Matthew McGinn <matthew@balena.io>
+      author: Matthew McGinn
+      nested: []
+  version: 2.0.4
+  date: 2020-10-08T19:37:59.881Z
+- commits:
     - subject: 'docs: Add PSA about balenaOS version breakage'
       hash: d33560755f5e121b1ee6524615b995d14982d35d
       body: |
