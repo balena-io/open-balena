@@ -60,7 +60,7 @@ Our [Getting Started][getting-started] guide is the most direct path to getting
 an openBalena installation up and running and successfully deploying your
 application to your device(s).
 
-> **IMPORTANT:** Due to changes in [balenaOS][balena-os], only versions up to and including `2.49.0` are currently supported.
+> **IMPORTANT:** Due to changes in [balenaOS][balena-os], only versions up to and including `2.49.0` are currently supported. Additionally, only [balenaCLI](balena-cli) versions `<v12.2.2` are fully supported at the moment.
 
 
 ## Documentation
