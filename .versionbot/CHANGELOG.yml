@@ -1,4 +1,19 @@
 - commits:
+    - subject: 'docs: add table comparing features of openBalena and balenaCloud'
+      hash: feeb83040528cc906290c360f8cf2fe02e095165
+      body: ''
+      footer:
+        Connects-to: '#62'
+        connects-to: '#62'
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Matthew McGinn <matthew@balena.io>
+        signed-off-by: Matthew McGinn <matthew@balena.io>
+      author: Matthew McGinn
+      nested: []
+  version: 2.0.5
+  date: 2020-10-09T12:25:09.249Z
+- commits:
     - subject: 'docs: note that balenaCLI is incompatible >12.2.2'
       hash: 71a692b28b9c49e47dd8f490a0900b384b43b677
       body: ''
