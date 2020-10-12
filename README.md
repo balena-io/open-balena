@@ -81,6 +81,22 @@ sections are of particular interest:
 - [Reference](https://balena.io/docs/reference)
 - [FAQ](https://balena.io/docs/faq/troubleshooting/faq)
 
+## Differences between openBalena and balenaCloud
+
+| openBalena                                                                               | balenaCloud                                                                                                                                                                                                                                                             |
+| -----                                                                                    | ----                                                                                                                                                                                                                                                                    |
+| Device updates using full images                                                         | Device updates using [delta images](https://www.balena.io/docs/learn/deploy/delta/)                                                                                                                                                                                     |
+| Support for a single user                                                                | Support for [multiple users](https://www.balena.io/docs/learn/manage/account/#application-members)                                                                                                                                                                      |
+| Self-hosted deployment and scaling                                                     | balena-managed scaling and deployment |
+| Community support via [forums](https://forums.balena.io/c/open-balena) | Private support on [paid plans](https://www.balena.io/pricing/)                                                                                                                                           |
+| Deploy via `balena deploy` only                                        | Build remotely with native builders using [`balena push`](https://www.balena.io/docs/learn/deploy/deployment/#balena-push) or  [`git push`](https://www.balena.io/docs/learn/deploy/deployment/#git-push) |
+| No support for building via `git push`                                 | Use the same CI workflow with [`git push`](https://www.balena.io/docs/learn/deploy/deployment/#git-push)                                                                                                  |
+| No public URL support                                                  | Serve websites directly from device with [public device URLs](https://www.balena.io/docs/learn/manage/actions/#enable-public-device-url)                                                                  |
+| Management via `balena-cli` only                                       | Cloud-based device management dashboard                                                                                                                                                                   |
+| Download images from https://www.balena.io/os/                         | Download preconfigured images directly from the dashboard                                                                                                                                                 |
+| No supported remote diagnostics                                        | Remote device diagnostics                                                                                                                                                                                 |
+
+Additionally, refer back to the [roadmap](#roadmap) above for planned but not yet implemented features.
 
 ## Getting Help
 
