@@ -25,35 +25,6 @@ To learn more about openBalena, visit [balena.io/open][open-balena-website].
 - **Built-in VPN**: Access your devices regardless of their network environment
 
 
-## Roadmap
-
-OpenBalena is currently in beta. While fully functional, it lacks features we
-consider important before we can comfortably call it production-ready. During
-this phase, don’t be alarmed if things don’t work as expected just yet (and
-please let us know about any bugs or errors you encounter!). The following
-improvements and new functionality is planned:
-
-- Full documentation
-- Full test suite
-- Simplified deployment
-- Remote host OS updates
-- Support for custom device types
-
-
-## Contributing
-
-Everyone is welcome to contribute to openBalena. There are many different ways
-to get involved apart from submitting pull requests, including helping other
-users on the [forums][forums], reporting or triaging [issues][issue-tracker],
-reviewing and discussing [pull requests][pulls], or just spreading the word.
-
-All of openBalena is hosted on GitHub. Apart from its constituent components,
-which are the [API][open-balena-api], [VPN][open-balena-vpn], [Registry][open-balena-registry],
-[S3 storage service][open-balena-s3], and [Database][open-balena-db], contributions
-are also welcome to its client-side software such as the [balena CLI][balena-cli],
-the [balena SDK][balena-sdk], [balenaOS][balena-os] and [balenaEngine][balena-engine].
-
-
 ## Getting Started
 
 Our [Getting Started][getting-started] guide is the most direct path to getting
@@ -81,22 +52,6 @@ sections are of particular interest:
 - [Reference](https://balena.io/docs/reference)
 - [FAQ](https://balena.io/docs/faq/troubleshooting/faq)
 
-## Differences between openBalena and balenaCloud
-
-| openBalena                                                                               | balenaCloud                                                                                                                                                                                                                                                             |
-| -----                                                                                    | ----                                                                                                                                                                                                                                                                    |
-| Device updates using full images                                                         | Device updates using [delta images](https://www.balena.io/docs/learn/deploy/delta/)                                                                                                                                                                                     |
-| Support for a single user                                                                | Support for [multiple users](https://www.balena.io/docs/learn/manage/account/#application-members)                                                                                                                                                                      |
-| Self-hosted deployment and scaling                                                     | balena-managed scaling and deployment |
-| Community support via [forums](https://forums.balena.io/c/open-balena) | Private support on [paid plans](https://www.balena.io/pricing/)                                                                                                                                           |
-| Deploy via `balena deploy` only                                        | Build remotely with native builders using [`balena push`](https://www.balena.io/docs/learn/deploy/deployment/#balena-push) or  [`git push`](https://www.balena.io/docs/learn/deploy/deployment/#git-push) |
-| No support for building via `git push`                                 | Use the same CI workflow with [`git push`](https://www.balena.io/docs/learn/deploy/deployment/#git-push)                                                                                                  |
-| No public URL support                                                  | Serve websites directly from device with [public device URLs](https://www.balena.io/docs/learn/manage/actions/#enable-public-device-url)                                                                  |
-| Management via `balena-cli` only                                       | Cloud-based device management dashboard                                                                                                                                                                   |
-| Download images from https://www.balena.io/os/                         | Download preconfigured images directly from the dashboard                                                                                                                                                 |
-| No supported remote diagnostics                                        | Remote device diagnostics                                                                                                                                                                                 |
-
-Additionally, refer back to the [roadmap](#roadmap) above for planned but not yet implemented features.
 
 ## Getting Help
 
@@ -105,6 +60,53 @@ help with any issue in [openBalena forums][forums]. The balena team frequents
 these forums and will be happy to help. You can also ask other community members
 for help, or contribute by answering questions posted by fellow openBalena users.
 Please do not use the issue tracker for support-related questions.
+
+
+## Contributing
+
+Everyone is welcome to contribute to openBalena. There are many different ways
+to get involved apart from submitting pull requests, including helping other
+users on the [forums][forums], reporting or triaging [issues][issue-tracker],
+reviewing and discussing [pull requests][pulls], or just spreading the word.
+
+All of openBalena is hosted on GitHub. Apart from its constituent components,
+which are the [API][open-balena-api], [VPN][open-balena-vpn], [Registry][open-balena-registry],
+[S3 storage service][open-balena-s3], and [Database][open-balena-db], contributions
+are also welcome to its client-side software such as the [balena CLI][balena-cli],
+the [balena SDK][balena-sdk], [balenaOS][balena-os] and [balenaEngine][balena-engine].
+
+
+## Roadmap
+
+OpenBalena is currently in beta. While fully functional, it lacks features we
+consider important before we can comfortably call it production-ready. During
+this phase, don’t be alarmed if things don’t work as expected just yet (and
+please let us know about any bugs or errors you encounter!). The following
+improvements and new functionality is planned:
+
+- Full documentation
+- Full test suite
+- Simplified deployment
+- Remote host OS updates
+- Support for custom device types
+
+
+## Differences between openBalena and balenaCloud
+
+| openBalena                                          | balenaCloud                                                                                                                                                                                                                                                             |
+| -----                                               | ----                                                                                                                                                                                                                                                                    |
+| Device updates using full images                    | Device updates using [delta images](https://www.balena.io/docs/learn/deploy/delta/)                                                                                                                                                                                     |
+| Support for a single user                           | Support for [multiple users](https://www.balena.io/docs/learn/manage/account/#application-members)                                                                                                                                                                      |
+| Self-hosted deployment and scaling                  | balena-managed scaling and deployment |
+| Community support via [forums][forums]              | Private support on [paid plans](https://www.balena.io/pricing/)                                                                                                                                           |
+| Deploy via `balena deploy` only                     | Build remotely with native builders using [`balena push`](https://www.balena.io/docs/learn/deploy/deployment/#balena-push) or  [`git push`](https://www.balena.io/docs/learn/deploy/deployment/#git-push) |
+| No support for building via `git push`              | Use the same CI workflow with [`git push`](https://www.balena.io/docs/learn/deploy/deployment/#git-push)                                                                                                  |
+| No public URL support                               | Serve websites directly from device with [public device URLs](https://www.balena.io/docs/learn/manage/actions/#enable-public-device-url)                                                                  |
+| Management via `balena-cli` only                    | Cloud-based device management dashboard                                                                                                                                                                   |
+| Download images from [balena.io][balena-os-website] | Download preconfigured images directly from the dashboard                                                                                                                                                 |
+| No supported remote diagnostics                     | Remote device diagnostics                                                                                                                                                                                 |
+
+Additionally, refer back to the [roadmap](#roadmap) above for planned but not yet implemented features.
 
 
 ## License
