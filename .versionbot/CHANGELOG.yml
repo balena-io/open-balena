@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update versions of services
+      hash: 1f7ed769c094030b6c5ee60114498ebdb1e4ccf5
+      body: ''
+      footer:
+        Change-type: major
+        change-type: major
+      author: Akis Kesoglou
+      nested: []
+  version: 3.0.0
+  date: 2020-10-28T12:08:55.481Z
+- commits:
     - subject: 'docs: add table comparing features of openBalena and balenaCloud'
       hash: feeb83040528cc906290c360f8cf2fe02e095165
       body: ''
