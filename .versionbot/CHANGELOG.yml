@@ -1,4 +1,18 @@
 - commits:
+    - subject: Update the API fixing an issue with migrations
+      hash: eec16b843d5e18d21658173b51d004b3600aced9
+      body: >
+        When updating from previous versions, the API will fail to execute the
+        database migrations. This updates the API version to include a fix for
+        this.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Akis Kesoglou
+      nested: []
+  version: 3.0.1
+  date: 2020-10-29T11:38:33.463Z
+- commits:
     - subject: Update versions of services
       hash: 1f7ed769c094030b6c5ee60114498ebdb1e4ccf5
       body: ''
