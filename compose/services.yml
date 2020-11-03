@@ -32,7 +32,7 @@ services:
       HOST: api.${OPENBALENA_HOST_NAME}
       IMAGE_MAKER_URL: img.${OPENBALENA_HOST_NAME}
       IMAGE_STORAGE_BUCKET: resin-production-img-cloudformation
-      IMAGE_STORAGE_PREFIX: resinos
+      IMAGE_STORAGE_PREFIX: images
       IMAGE_STORAGE_ENDPOINT: s3.amazonaws.com
       JSON_WEB_TOKEN_EXPIRY_MINUTES: 10080
       JSON_WEB_TOKEN_SECRET: ${OPENBALENA_JWT_SECRET}
