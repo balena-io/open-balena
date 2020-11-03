@@ -1,4 +1,17 @@
 - commits:
+    - subject: Change S3 OS images folder from resinos to images
+      hash: 7790290d0e967838d79d5de344f6a18f17882036
+      body: ''
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Stevche Radevski <stevche@balena.io>
+        signed-off-by: Stevche Radevski <stevche@balena.io>
+      author: Stevche Radevski
+      nested: []
+  version: 3.1.0
+  date: 2020-11-03T16:19:49.675Z
+- commits:
     - subject: Update the API fixing an issue with migrations
       hash: eec16b843d5e18d21658173b51d004b3600aced9
       body: >
