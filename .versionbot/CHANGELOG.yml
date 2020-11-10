@@ -1,4 +1,23 @@
 - commits:
+    - subject: Update open-balena-api
+      hash: bfce474ff018496b72d008ec99ec1a6a813f457e
+      body: >
+        Fixes a bug with a migration that would keep obsolete DB columns around
+        and prevent creation of applications and devices.
+
+
+        See https://github.com/balena-io/open-balena-api/pull/507
+
+
+        Fixes #94 #95
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Akis Kesoglou
+      nested: []
+  version: 3.1.1
+  date: 2020-11-10T15:56:36.600Z
+- commits:
     - subject: Change S3 OS images folder from resinos to images
       hash: 7790290d0e967838d79d5de344f6a18f17882036
       body: ''
