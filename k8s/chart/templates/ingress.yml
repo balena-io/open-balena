@@ -2,7 +2,6 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: openbalena-ingress
-  namespace: {{ index .Values "namespace" }}
   labels:
     app: openbalena
     component: ingress
@@ -50,7 +49,6 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: openbalena-ingress-vpn
-  namespace: {{ index .Values "namespace" }}
   labels:
     app: openbalena
     component: ingress-vpn
