@@ -55,6 +55,7 @@ metadata:
     app: openbalena
     component: ingress-vpn
   annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     kubernetes.io/ingress.class: "haproxy"
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
