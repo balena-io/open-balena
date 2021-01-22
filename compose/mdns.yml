@@ -22,7 +22,7 @@ services:
         # the resin backend (eg. that for BALENA_ROOT_CA if present).
         MDNS_TLD: ${OPENBALENA_HOST_NAME}
         # List of subdomains to advertise. This must include all required hosts.
-        MDNS_SUBDOMAINS: '["api", "db", "registry", "s3", "vpn"]'
+        MDNS_SUBDOMAINS: '["api", "db", "registry", "s3", "tunnel", "vpn"]'
         # The expectation is the DBus socket to use is always at the following location.
         DBUS_SESSION_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
         # Selects the interface used for incoming connections from the wider subnet.

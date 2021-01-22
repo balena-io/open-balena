@@ -37,7 +37,7 @@ application to your device(s).
 The current release of openBalena has the following minimum version requirements:
 
 - balenaOS v2.58.3
-- balena CLI v12.23.4
+- balena CLI v12.38.5
 
 If you are updating from previous openBalena versions, ensure you update the balena
 CLI and reprovision any devices to at least the minimum required versions in order
