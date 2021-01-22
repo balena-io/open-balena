@@ -1,4 +1,20 @@
 - commits:
+    - subject: 'tunnel: Expose tunnel service via TLS'
+      hash: b3d184c13c4a550c44f2ed3125d5240475b6508d
+      body: |
+        In order to support the new CLI and balenaCloud deployment
+        schemes for the tunnel service, the service is now exposed via
+        the TLS port 443 on the `tunnel.{domain}` server name.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Rich Bayliss <rich@balena.io>
+        signed-off-by: Rich Bayliss <rich@balena.io>
+      author: Rich Bayliss
+      nested: []
+  version: 3.1.2
+  date: 2021-01-22T11:57:55.393Z
+- commits:
     - subject: Update open-balena-api
       hash: bfce474ff018496b72d008ec99ec1a6a813f457e
       body: >
