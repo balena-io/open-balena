@@ -1,4 +1,15 @@
 - commits:
+    - subject: Remove Rich from CODEOWNERS
+      hash: a0ef371621dbf6db325715f7cddcc17d33a4df45
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Akis Kesoglou
+      nested: []
+  version: 3.1.3
+  date: 2021-01-26T11:35:15.017Z
+- commits:
     - subject: 'tunnel: Expose tunnel service via TLS'
       hash: b3d184c13c4a550c44f2ed3125d5240475b6508d
       body: |
