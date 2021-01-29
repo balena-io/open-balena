@@ -1,4 +1,2219 @@
 - commits:
+    - subject: Update services
+      hash: 3898342a5bb8fab6bc4780287db1262084c30ecf
+      body: |
+        Update open-balena-api from 0.109.2 to 0.119.5
+        Update balena-mdns-publisher from 1.7.9 to 1.9.2
+        Update open-balena-registry from 2.13.11 to 2.14.4
+        Update open-balena-vpn from 9.16.1 to 9.17.4
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Akis Kesoglou
+      nested:
+        - commits:
+            - subject: 'tests: prefix all tests with [0-9][0-9]_ for consistency'
+              hash: 914ef3361b2660d5e2f8a49484d7c2a685472e6a
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.119.5
+          date: 2021-01-28T15:52:26.286Z
+        - commits:
+            - subject: Add tests for the unique successful release commit rule
+              hash: b5ca5c1c49214984ff6692aee1d68d4aa1e85b7d
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.119.4
+          date: 2021-01-28T14:10:16.647Z
+        - commits:
+            - subject: Remove Rich from CODEOWNERS
+              hash: b66f0aa362a0bb84901fb1e0cceab92af4faee4d
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Akis Kesoglou
+              nested: []
+          version: open-balena-api-0.119.3
+          date: 2021-01-26T12:14:00.675Z
+        - commits:
+            - subject: Update pinejs to 14.14.3
+              hash: 30897a2b4739fe67047d929fb0822b57820d0915
+              body: |
+                Update pinejs from 14.14.0 to 14.14.3
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: >-
+                        Update odata-parser to 2.2.2 for optimized number
+                        parsing
+                      hash: bc1ebfa88818d767f71c3f4a74f84ff5172cef89
+                      body: |
+                        Update odata-parser from 2.2.1 to 2.2.2
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: Optimize number parsing
+                              hash: e443ad68f1e3b68ae9aee771160b81da5f319e9c
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: odata-parser-2.2.2
+                          date: 2021-01-25T13:00:50.460Z
+                  version: pinejs-14.14.3
+                  date: 2021-01-25T13:32:51.513Z
+                - commits:
+                    - subject: Use 400s for data type validation errors
+                      hash: accb2af358db0da17c441e8e0e2c5b4978660d88
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.14.2
+                  date: 2021-01-25T12:11:29.450Z
+                - commits:
+                    - subject: >-
+                        Use 500s for any database errors that are not explicitly
+                        handled
+                      hash: b23493871a05b0f3e94eec9df660346910cc53da
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.14.1
+                  date: 2021-01-25T11:59:49.995Z
+          version: open-balena-api-0.119.2
+          date: 2021-01-25T14:11:09.348Z
+        - commits:
+            - subject: >-
+                Fix potential TypeError from attempting to read `.length` of
+                null
+              hash: 40797a88d31f19e9a558aa0a10ae66251d205f00
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.119.1
+          date: 2021-01-25T13:41:40.648Z
+        - commits:
+            - subject: >-
+                Switch to using an object to specify dependent resources to
+                delete
+              hash: 2f35215e966f3c3951b07f85596e489942f45e50
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.119.0
+          date: 2021-01-22T16:03:13.524Z
+        - commits:
+            - subject: Update pinejs to 14.14.0
+              hash: 062323eccc76d38fb34a0873e0a99b483241390a
+              body: |
+                Update pinejs from 14.12.0 to 14.14.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: >-
+                        Add the ability to specify query/statement timeouts for
+                        pg backend
+                      hash: 59e65485c4c7bc40c449b19cfabe4d1148352b92
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.14.0
+                  date: 2021-01-22T14:13:31.230Z
+                - commits:
+                    - subject: >-
+                        Allow specifying database options on init instead of via
+                        env vars
+                      hash: c61a6a5a89130aa2d70e1693ecca76c8846fbcbe
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                    - subject: Only connect to the database once `init` has been called
+                      hash: 3c0602e30e74174e875e8c9ae26e9c7dbd8c34bf
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.13.0
+                  date: 2021-01-22T13:11:50.823Z
+                - commits:
+                    - subject: Handle `DEBUG` in the env module
+                      hash: 74ecf0a94511a8c232ce25205f3d138e3920793e
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.12.2
+                  date: 2021-01-22T13:01:30.206Z
+                - commits:
+                    - subject: Handle `TRANSACTION_TIMEOUT_MS` in the env module
+                      hash: b0257583f6fc634a12986ff5890c01c3fe6b4203
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.12.1
+                  date: 2021-01-22T12:36:49.766Z
+          version: open-balena-api-0.118.7
+          date: 2021-01-22T14:45:08.406Z
+        - commits:
+            - subject: Update pinejs to 14.12.0
+              hash: d1539f1c79928437c71f26e745a13c05385c22bc
+              body: |
+                Update pinejs from 14.10.2 to 14.12.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: >-
+                        Error/dequeue all queued up queries when rolling back a
+                        pg transaction
+                      hash: 7b289fa319b8ae7e7a87712d80a197fb05f89687
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.12.0
+                  date: 2021-01-20T18:52:36.093Z
+                - commits:
+                    - subject: >-
+                        Add a timeout for pg rollbacks after which the
+                        connection is terminated
+                      hash: e67830dc6f3a9b6c73f20e6c71f14dcbacadca21
+                      body: >
+                        This avoids issues where a postgres connection can hang
+                        and the
+
+                        rollback never finishes and the client is never released
+                        from the pool
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.11.0
+                  date: 2021-01-20T18:06:20.156Z
+          version: open-balena-api-0.118.6
+          date: 2021-01-20T19:15:50.313Z
+        - commits:
+            - subject: include empty stubbed migration
+              hash: 247256f004901502c5dd54b6bc6bf987a9eeb035
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.118.5
+          date: 2021-01-19T18:04:30.375Z
+        - commits:
+            - subject: Update pinejs to 14.10.2 for performance optimization
+              hash: a883fb704e7ad7ae1401afa3b541f8a4f3ccdd6c
+              body: |
+                Update pinejs from 14.10.1 to 14.10.2
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Optimize generating constrained abstract sql model
+                      hash: b176abf77bf4f550ea7728fee52b5d6746ec7d22
+                      body: >
+                        Instantiating an `OData2AbstractSQL` instance can be
+                        relatively costly
+
+                        and as such reusing a memoized instance can provide a
+                        reasonable
+
+                        performance improvement
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.10.2
+                  date: 2021-01-18T21:14:38.233Z
+          version: open-balena-api-0.118.4
+          date: 2021-01-19T17:52:26.410Z
+        - commits:
+            - subject: 'model: add some release metadata'
+              hash: 6f6cff6746dbd90cb154c2dc474adf5e3a95afb0
+              body: ''
+              footer:
+                Connects-to: 'https://github.com/balena-io/balena-io/issues/2335'
+                connects-to: 'https://github.com/balena-io/balena-io/issues/2335'
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.118.3
+          date: 2021-01-19T14:34:21.934Z
+        - commits:
+            - subject: >-
+                Separate application delete hook components into individual
+                hooks
+              hash: e1a5ffa9af59f5c67766bfd999b6a3b2632b7506
+              body: >
+                This allows them to be isolated from each other and also allows
+                them to
+
+                be executed in parallel
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.118.2
+          date: 2021-01-18T22:04:40.566Z
+        - commits:
+            - subject: 'Tests: remove unused `tx` argument from fixtures'
+              hash: 72bb7a72efd288bbbc1d138dacf784ac70e7d7ba
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.118.1
+          date: 2021-01-18T18:01:20.508Z
+        - commits:
+            - subject: Add BALENA_HOST_SPLASH_IMAGE config var in the schema
+              hash: 2284a76f839a1fbfb30d5e9836848f05c2be275d
+              body: ''
+              footer:
+                Resolves: '#530'
+                resolves: '#530'
+                Change-type: minor
+                change-type: minor
+                Depends-on: 'https://github.com/balena-os/meta-balena/pull/2092'
+                depends-on: 'https://github.com/balena-os/meta-balena/pull/2092'
+                See: >-
+                  https://www.flowdock.com/app/rulemotion/r-etcherprv/threads/uBhQEVeU3r8gmPdHIzpfffbhSGM
+                see: >-
+                  https://www.flowdock.com/app/rulemotion/r-etcherprv/threads/uBhQEVeU3r8gmPdHIzpfffbhSGM
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.118.0
+          date: 2021-01-18T17:17:30.302Z
+        - commits:
+            - subject: Update open-balena-base to 11.0.4
+              hash: cc911b794553ae339ec1d63efebb17f4b80fa3eb
+              body: |
+                Update open-balena-base from 11.0.3 to 11.0.4
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.15.4 and npm to 6.14.10
+                      hash: 0a52eb67b211fdc31d73e279e6e871b2e803f485
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.4
+                  date: 2021-01-08T15:21:19.521Z
+          version: open-balena-api-0.117.4
+          date: 2021-01-13T14:20:41.047Z
+        - commits:
+            - subject: Express user has direct access to application using a CROSS JOIN
+              hash: d8b50a9e9103525e0087eacbe600394b5aa0c833
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.117.3
+          date: 2021-01-13T13:57:17.834Z
+        - commits:
+            - subject: >-
+                Remove unnecessary DELETE hook that tries to validate config/env
+                vars
+              hash: 6174c46e2ed5bde1501cbbda145c62cd7bc32cd4
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.117.2
+          date: 2021-01-13T13:05:41.240Z
+        - commits:
+            - subject: Update pinejs to 14.10.0 to enable postgres keepalive
+              hash: 3d61888fc5d2667b70a77e6c792dabec0aef141e
+              body: |
+                Update pinejs from 14.9.2 to 14.10.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: >-
+                        Enable keepAlive for postgres by default with the
+                        ability to disable
+                      hash: 17f87b11c7a90d2854e43e026310ffacc30f34dd
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.10.0
+                  date: 2021-01-06T17:25:06.369Z
+                - commits:
+                    - subject: >-
+                        Ensure database connection errors are wrapped as
+                        `DatabaseError`s
+                      hash: 9e38c17841635a15ccbded69f1518db65f3ba3c2
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.9.5
+                  date: 2021-01-06T13:32:20.239Z
+                - commits:
+                    - subject: 'Dev: switch from grunt-replace to grunt-contrib-replace'
+                      hash: 11af8aedcf7c433ef10a256cf84fae6042e8ddef
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.9.4
+                  date: 2021-01-06T11:12:15.791Z
+                - commits:
+                    - subject: >-
+                        Use an .npmrc to prevent creating a package-lock on each
+                        install
+                      hash: cdaccaf22a81e79c63bde0785ae32bd94decc866
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                        Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                      author: Thodoris Greasidis
+                      nested: []
+                  version: pinejs-14.9.3
+                  date: 2021-01-05T11:43:29.118Z
+          version: open-balena-api-0.117.1
+          date: 2021-01-11T19:55:00.368Z
+        - commits:
+            - subject: Make use of rule to check constraint optimizations
+              hash: bd3b791efd8bb386b62edb9464e20601790af983
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.117.0
+          date: 2021-01-11T19:26:30.512Z
+        - commits:
+            - subject: >-
+                Split npm script for model typings generation to two separate
+                ones
+              hash: e8a4c20fab016016e96ab07392edb32dae30e221
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.116.2
+          date: 2021-01-08T15:34:45.496Z
+        - commits:
+            - subject: Add npm script for generating model typings
+              hash: e952bdfad4a43140396b4ad527d8b982ab0267b5
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.116.1
+          date: 2021-01-07T13:35:50.278Z
+        - commits:
+            - subject: Add `user has direct access to application` virtual resource
+              hash: 9784a799935138d1d06432e6777907ddae73d6a3
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                See: 'https://app.frontapp.com/open/cnv_8tqn74d'
+                see: 'https://app.frontapp.com/open/cnv_8tqn74d'
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.116.0
+          date: 2021-01-07T12:42:44.392Z
+        - commits:
+            - subject: Regenerate balena-model types to include type helpers
+              hash: a8d98c9f608aed7b7f2ee8126648fcaebc21c94e
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.115.5
+          date: 2021-01-04T15:49:20.402Z
+        - commits:
+            - subject: Update pinejs to 14.9.2
+              hash: 280ca4e2a150a2d47669ca3b49dcd9a816139c06
+              body: |
+                Update pinejs from 14.9.1 to 14.9.2
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update dependencies
+                      hash: 4e8560b15a7b601750c132f0c38f8f3fc3da5d4e
+                      body: |
+                        Update abstract-sql-compiler from 7.4.2 to 7.8.1
+                        Update abstract-sql-to-typescript from 1.0.1 to 1.1.0
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: Convert some lodash usage to native equivalents
+                              hash: 400937fd3b220dccd557d67ff33d83d51ff0b939
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.8.1
+                          date: 2021-01-04T13:04:45.938Z
+                        - commits:
+                            - subject: >-
+                                Optimize Is[Not]DistinctFrom and [Not]Exists for
+                                non-null values
+                              hash: 682e84dea2088fb0c336b05be83183e627c20d4f
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.8.0
+                          date: 2021-01-01T20:22:14.871Z
+                        - commits:
+                            - subject: Optimize EXISTS/NOT EXISTS for empty queries
+                              hash: 39431de07eeb98d731a114c1717575d364ddc06f
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.7.0
+                          date: 2021-01-01T17:47:15.206Z
+                        - commits:
+                            - subject: >-
+                                Optimize away AND/ORs with false/true
+                                respectively
+                              hash: f0249d98032b0306f7d216b5ad8e8d2c96c466fc
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.6.0
+                          date: 2021-01-01T16:18:03.545Z
+                        - commits:
+                            - subject: Optimize out booleans from AND/OR where possible
+                              hash: d3d9a86ebc231dc4b11b20311e6d007a19202b18
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.5.0
+                          date: 2021-01-01T14:03:49.386Z
+                        - commits:
+                            - subject: >-
+                                Add type helpers for dealing with
+                                expanded/deferred read types
+                              hash: 8267272e729853cb8e16467f1d345074d1a331fe
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-to-typescript-1.1.0
+                          date: 2020-12-30T18:06:04.613Z
+                        - commits:
+                            - subject: >-
+                                Use the referenced field's data type for foreign
+                                keys/concept types
+                              hash: eb768404e75c538d3b694c393e30e43abd30f020
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-to-typescript-1.0.3
+                          date: 2020-12-30T15:42:05.820Z
+                        - commits:
+                            - subject: Fix defaulting mode to `read`
+                              hash: 377ed4c9c2bc65d94f4ade0fe667c3f91bd3baca
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-to-typescript-1.0.2
+                          date: 2020-12-30T13:42:23.242Z
+                  version: pinejs-14.9.2
+                  date: 2021-01-04T13:21:50.515Z
+          version: open-balena-api-0.115.4
+          date: 2021-01-04T13:49:14.239Z
+        - commits:
+            - subject: Add and use automatically generated model typings
+              hash: fabe57d640838cdc9466240a5f811cb1f38fe6d3
+              body: |
+                Update pinejs from 14.7.0 to 14.9.1
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update abstract-sql-to-typescript to 1.0.1
+                      hash: fa2d67e6e0770141ef160218f2e83252b05a0a26
+                      body: |
+                        Update abstract-sql-to-typescript from 1.0.0 to 1.0.1
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: Fix types for ConceptType fields
+                              hash: b718096c1ead1c276e687e444e09b388d6e4f966
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-to-typescript-1.0.1
+                          date: 2020-12-28T20:00:06.230Z
+                  version: pinejs-14.9.1
+                  date: 2020-12-28T20:15:05.545Z
+                - commits:
+                    - subject: >-
+                        Add support for config file inputs to
+                        abstract-sql/odata-compiler
+                      hash: 6b7b825bc478d7931340f8aeb760bb5e569bbff3
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                    - subject: >-
+                        Add support for more input types to
+                        abstract-sql-compiler
+                      hash: 431f3dbcb2177c602042e01c46eac45b185c555c
+                      body: >
+                        We now support support passing an SBVR file or a model
+                        specification
+
+                        as well as an abstract sql model, and we also accept any
+                        file type that
+
+                        is acceptable to nodejs `require` rather than just a
+                        JSON file
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.9.0
+                  date: 2020-12-28T19:36:16.000Z
+                - commits:
+                    - subject: >-
+                        Add typescript type generation to
+                        sbvr/abstract-sql-compiler
+                      hash: d73e2d48f95771a1fd0d737701b7d0d4dac4cefb
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.8.0
+                  date: 2020-12-28T19:02:51.939Z
+                - commits:
+                    - subject: Share code between the cli tools
+                      hash: 26e2aa66057336338cc6497b1dbf655c22b67d53
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.7.2
+                  date: 2020-12-28T18:50:15.152Z
+                - commits:
+                    - subject: Update abstract-sql-compiler to 7.4.2
+                      hash: df8305ad2098b68be9fb5cd64685c8df17756a8a
+                      body: |
+                        Update abstract-sql-compiler from 7.4.1 to 7.4.2
+                        Update odata-to-abstract-sql from 5.4.0 to 5.4.1
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                        Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                      author: Thodoris Greasidis
+                      nested:
+                        - commits:
+                            - subject: Improve Relationship typings
+                              hash: 91465f7c65bc43ee2eba1c9db7dbce424a1b18d4
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                                See: >-
+                                  https://github.com/balena-io/open-balena-api/pull/510#discussion_r546872607
+                                see: >-
+                                  https://github.com/balena-io/open-balena-api/pull/510#discussion_r546872607
+                                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                              author: Thodoris Greasidis
+                              nested: []
+                          version: abstract-sql-compiler-7.4.2
+                          date: 2020-12-21T23:58:09.407Z
+                        - commits:
+                            - subject: Update abstract-sql-compiler to 7.4.2
+                              hash: 4fc1c0cb35edb423a98e66f2c10347290ae25e0c
+                              body: |
+                                Update abstract-sql-compiler from 7.4.0 to 7.4.2
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                              author: Thodoris Greasidis
+                              nested:
+                                - commits:
+                                    - subject: Improve Relationship typings
+                                      hash: 91465f7c65bc43ee2eba1c9db7dbce424a1b18d4
+                                      body: ''
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                        See: >-
+                                          https://github.com/balena-io/open-balena-api/pull/510#discussion_r546872607
+                                        see: >-
+                                          https://github.com/balena-io/open-balena-api/pull/510#discussion_r546872607
+                                        Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                                        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                                      author: Thodoris Greasidis
+                                      nested: []
+                                  version: abstract-sql-compiler-7.4.2
+                                  date: 2020-12-21T23:58:09.407Z
+                                - commits:
+                                    - subject: >-
+                                        Fix `containsNode` when that node type
+                                        is at the top level
+                                      hash: 888791a9b281d5fc91ddeb8876f024b1397718e7
+                                      body: ''
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                      nested: []
+                                  version: abstract-sql-compiler-7.4.1
+                                  date: 2020-12-18T20:17:51.469Z
+                          version: odata-to-abstract-sql-5.4.1
+                          date: 2020-12-26T20:45:55.372Z
+                  version: pinejs-14.7.1
+                  date: 2020-12-28T18:37:36.032Z
+          version: open-balena-api-0.115.3
+          date: 2020-12-28T20:57:49.496Z
+        - commits:
+            - subject: Add the ability to generate a materialized pinejs config.json
+              hash: 8f7569e4d29fe143ef653cb42eb1b29eac8c62f3
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.115.2
+          date: 2020-12-28T19:43:06.614Z
+        - commits:
+            - subject: >-
+                Catch exception when resolving asset real path to prevent other
+                contract syncing to fail
+              hash: 2ff289c61a12089e86fa7aa5caf392fdd674ecc0
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Stevche Radevski <stevche@balena.io>
+                signed-off-by: Stevche Radevski <stevche@balena.io>
+              author: Stevche Radevski
+              nested: []
+          version: open-balena-api-0.115.1
+          date: 2020-12-28T16:08:45.337Z
+        - commits:
+            - subject: >-
+                Perform username/email checks in a hook rather than custom
+                function
+              hash: 8def9edff1aba65c86471350ff3b39cf4865a756
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.115.0
+          date: 2020-12-23T19:03:37.348Z
+        - commits:
+            - subject: Update open-balena-base to 11.0.3
+              hash: add440bf51b79a63e875002a36e2638f8c154d0d
+              body: |
+                Update open-balena-base from 11.0.2 to 11.0.3
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.15.3 and npm to 6.14.9
+                      hash: 6d9ed96133ca1b4783eafc8b8698f10cd88aaad2
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.3
+                  date: 2020-12-18T12:11:00.995Z
+          version: open-balena-api-0.114.2
+          date: 2020-12-23T18:37:00.697Z
+        - commits:
+            - subject: 'env-vars: Add the RESIN_ & BALENA_ namespaces programmatically'
+              hash: 88845455feefa174d5c261bee31372cda5e390c3
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.114.1
+          date: 2020-12-23T17:40:10.875Z
+        - commits:
+            - subject: Changes based on PR review
+              hash: 6f0dbee49206663912e08d1d5bcc1cdd97bfca5d
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Stevche Radevski <stevche@balena.io>
+                signed-off-by: Stevche Radevski <stevche@balena.io>
+              author: Stevche Radevski
+              nested: []
+            - subject: Add a base64-encoded logo to device types
+              hash: d236f9a96e7984e15022c85040435fae88aeca70
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                Signed-off-by: Stevche Radevski <stevche@balena.io>
+                signed-off-by: Stevche Radevski <stevche@balena.io>
+              author: Stevche Radevski
+              nested: []
+          version: open-balena-api-0.114.0
+          date: 2020-12-23T15:21:14.200Z
+        - commits:
+            - subject: Update pinejs to 14.7.0
+              hash: e5b69152b68796809e31fe1c45c69d5a806289f8
+              body: |
+                Update pinejs from 14.6.0 to 14.7.0
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update dependencies
+                      hash: 1f96ee42e4502cdcc00409bfb80b59cab1915930
+                      body: |
+                        Update abstract-sql-compiler from 7.2.0 to 7.4.1
+                        Update odata-to-abstract-sql from 5.3.1 to 5.4.0
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: >-
+                                Fix `containsNode` when that node type is at the
+                                top level
+                              hash: 888791a9b281d5fc91ddeb8876f024b1397718e7
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.4.1
+                          date: 2020-12-18T20:17:51.469Z
+                        - commits:
+                            - subject: Add support for table definitions
+                              hash: 2939656834c374e35af8867d6337b119b58cd198
+                              body: >
+                                Static definitions will be converted to views
+                                and dynamic definitions
+
+                                will be ignored
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.4.0
+                          date: 2020-12-18T18:35:31.430Z
+                        - commits:
+                            - subject: >-
+                                Allow compiling `*QueryNode`s to direct strings
+                                without binds
+                              hash: 7f1880eab543da17ba99ea3940ac52f266d2b07d
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.3.0
+                          date: 2020-12-18T17:29:10.301Z
+                        - commits:
+                            - subject: Improve typings for compilation results
+                              hash: 22764a4675ef385a1ef8ce10e633364449ae22b5
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.2.1
+                          date: 2020-12-18T17:13:41.288Z
+                        - commits:
+                            - subject: >-
+                                Add support for official abstract-sql table
+                                definitions
+                              hash: 54aeac9955a23bba0df8df203dcb4ab8889f5612
+                              body: |
+                                Update abstract-sql-compiler from 7.0.4 to 7.4.0
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested:
+                                - commits:
+                                    - subject: Add support for table definitions
+                                      hash: 2939656834c374e35af8867d6337b119b58cd198
+                                      body: >
+                                        Static definitions will be converted to
+                                        views and dynamic definitions
+
+                                        will be ignored
+                                      footer:
+                                        Change-type: minor
+                                        change-type: minor
+                                      author: Pagan Gazzard
+                                      nested: []
+                                  version: abstract-sql-compiler-7.4.0
+                                  date: 2020-12-18T18:35:31.430Z
+                                - commits:
+                                    - subject: >-
+                                        Allow compiling `*QueryNode`s to direct
+                                        strings without binds
+                                      hash: 7f1880eab543da17ba99ea3940ac52f266d2b07d
+                                      body: ''
+                                      footer:
+                                        Change-type: minor
+                                        change-type: minor
+                                      author: Pagan Gazzard
+                                      nested: []
+                                  version: abstract-sql-compiler-7.3.0
+                                  date: 2020-12-18T17:29:10.301Z
+                                - commits:
+                                    - subject: Improve typings for compilation results
+                                      hash: 22764a4675ef385a1ef8ce10e633364449ae22b5
+                                      body: ''
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                      nested: []
+                                  version: abstract-sql-compiler-7.2.1
+                                  date: 2020-12-18T17:13:41.288Z
+                                - commits:
+                                    - subject: Add an `optimizeSchema` function
+                                      hash: 43a3c0eac0ed0c57a79fbc62d025c058ab8dbb1c
+                                      body: >
+                                        Currently this can optimize certain
+                                        rules into check constraints
+                                      footer:
+                                        Change-type: minor
+                                        change-type: minor
+                                      author: Pagan Gazzard
+                                      nested: []
+                                  version: abstract-sql-compiler-7.2.0
+                                  date: 2020-12-16T16:59:18.573Z
+                                - commits:
+                                    - subject: >-
+                                        Add check constraint support at the
+                                        table level
+                                      hash: 2ac556f3bdc6143a9a4be37c47079659ee20a866
+                                      body: ''
+                                      footer:
+                                        Change-type: minor
+                                        change-type: minor
+                                      author: Pagan Gazzard
+                                      nested: []
+                                  version: abstract-sql-compiler-7.1.0
+                                  date: 2020-12-09T22:44:11.220Z
+                                - commits:
+                                    - subject: >-
+                                        Convert tests from coffeescript to
+                                        type-checked javascript
+                                      hash: ec898159bee4cff9300c5d8b655eb02327a9f636
+                                      body: ''
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                      nested: []
+                                  version: abstract-sql-compiler-7.0.7
+                                  date: 2020-12-09T22:08:07.007Z
+                                - commits:
+                                    - subject: Fix the `NOT(NOT(...))` optimization
+                                      hash: dd8c6f3b63dd0b781f9768332416fb5371a8c809
+                                      body: ''
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                      nested: []
+                                  version: abstract-sql-compiler-7.0.6
+                                  date: 2020-11-30T18:18:15.073Z
+                                - commits:
+                                    - subject: Remove some type casts
+                                      hash: c8e61c426077b2fe8f697f12c0f8ecb30a082d8b
+                                      body: ''
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                      nested: []
+                                  version: abstract-sql-compiler-7.0.5
+                                  date: 2020-11-30T15:24:49.372Z
+                          version: odata-to-abstract-sql-5.4.0
+                          date: 2020-12-18T19:51:57.067Z
+                        - commits:
+                            - subject: >-
+                                Avoid trying to rewrite binds if there are none
+                                to rewrite
+                              hash: a635bfeedc973daf93b3386b36bcd785ff6d052e
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: odata-to-abstract-sql-5.3.2
+                          date: 2020-12-18T18:41:41.474Z
+                  version: pinejs-14.7.0
+                  date: 2020-12-18T22:35:22.726Z
+          version: open-balena-api-0.113.0
+          date: 2020-12-18T22:52:49.165Z
+        - commits:
+            - subject: Export the DEVICE_TYPE_SPECIFIC_CONFIG_VAR_PROPERTIES
+              hash: b653ffa24b61403036be309eec22e7c029b0e963
+              body: |
+                This is needed so that the cloud API can add private
+                device types in the device type specific config vars
+                definitions.
+              footer:
+                Change-type: minor
+                change-type: minor
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.112.0
+          date: 2020-12-18T12:20:12.543Z
+        - commits:
+            - subject: Expose the RPi family config vars to raspberrypi400-64
+              hash: c67eb9d851d1c901a65a9369448d8732739a6bee
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                See: >-
+                  https://www.flowdock.com/app/rulemotion/resin-devices/threads/2gZsIuD2JGueoZRebq8nYyXtowN
+                see: >-
+                  https://www.flowdock.com/app/rulemotion/resin-devices/threads/2gZsIuD2JGueoZRebq8nYyXtowN
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.111.0
+          date: 2020-12-18T11:55:53.591Z
+        - commits:
+            - subject: Update dependencies
+              hash: 9d954da9b08dfaa9414c79e031fee337e1bdb989
+              body: |
+                Update pinejs from 14.2.6 to 14.6.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update dependencies
+                      hash: 256e8874f9ef4336c8de1f43c4eec5121ce7878c
+                      body: |
+                        Update abstract-sql-compiler from 7.0.6 to 7.2.0
+                        Update sbvr-types from 3.1.2 to 3.1.3
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: Add an `optimizeSchema` function
+                              hash: 43a3c0eac0ed0c57a79fbc62d025c058ab8dbb1c
+                              body: >
+                                Currently this can optimize certain rules into
+                                check constraints
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.2.0
+                          date: 2020-12-16T16:59:18.573Z
+                        - commits:
+                            - subject: Add check constraint support at the table level
+                              hash: 2ac556f3bdc6143a9a4be37c47079659ee20a866
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.1.0
+                          date: 2020-12-09T22:44:11.220Z
+                        - commits:
+                            - subject: >-
+                                Convert tests from coffeescript to type-checked
+                                javascript
+                              hash: ec898159bee4cff9300c5d8b655eb02327a9f636
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.0.7
+                          date: 2020-12-09T22:08:07.007Z
+                        - commits:
+                            - subject: Improve types for `SHA`
+                              hash: e7e86f33f8e8c420dd634fd1310bc8104c9651c7
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: sbvr-types-3.1.3
+                          date: 2020-12-11T15:54:24.200Z
+                  version: pinejs-14.6.0
+                  date: 2020-12-16T18:28:20.216Z
+                - commits:
+                    - subject: Add an abstract-sql-compiler bin helper
+                      hash: 10d084e12c173882f15a441315593ac652388545
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.5.0
+                  date: 2020-12-16T18:08:50.023Z
+                - commits:
+                    - subject: >-
+                        Add support for prettifying check constraints with their
+                        description
+                      hash: 8c231c779c7198c8442e11fa46c913f48d44cb20
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.4.0
+                  date: 2020-12-14T18:53:53.182Z
+                - commits:
+                    - subject: Add support for differentiating check constraint errors
+                      hash: 638b76813d21dadca515cf579acc95189e0ca0c5
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.3.0
+                  date: 2020-12-09T16:42:20.322Z
+          version: open-balena-api-0.110.10
+          date: 2020-12-16T18:49:50.847Z
+        - commits:
+            - subject: Simplify/optimize rules for runnable releases
+              hash: 0d604443cc4797af35bce54dc1c4c5348f3a10c8
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.110.9
+          date: 2020-12-14T13:51:41.732Z
+        - commits:
+            - subject: Avoid updating unchanged entries when syncing a contract
+              hash: f8dce734a22c163831b79a0aa2b7f213691fa753
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.110.8
+          date: 2020-12-11T18:21:16.448Z
+        - commits:
+            - subject: Update pinejs to 14.2.6
+              hash: 8cd9f6cfe49679c3be0d82532e1f84d074903e08
+              body: |
+                Update abstract-sql-compiler from 7.0.3 to 7.0.6
+                Update pinejs from 14.2.4 to 14.2.6
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Improve compatibility with webpack 5
+                      hash: 92ab13edaff5f1e11f94b57651e77a32a8d000bc
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.2.6
+                  date: 2020-12-02T17:59:35.984Z
+                - commits:
+                    - subject: Update dependencies
+                      hash: 1027ba938360f3c8dd7c017c75d74407fdb684bc
+                      body: |
+                        Update abstract-sql-compiler from 7.0.3 to 7.0.6
+                        Update lf-to-abstract-sql from 4.1.0 to 4.1.1
+                        Update odata-parser from 2.2.0 to 2.2.1
+                        Update odata-to-abstract-sql from 5.3.0 to 5.3.1
+                        Update sbvr-types from 3.1.0 to 3.1.2
+                        Update pinejs-client-core from 6.9.1 to 6.9.3
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: Fix the `NOT(NOT(...))` optimization
+                              hash: dd8c6f3b63dd0b781f9768332416fb5371a8c809
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.0.6
+                          date: 2020-11-30T18:18:15.073Z
+                        - commits:
+                            - subject: Remove some type casts
+                              hash: c8e61c426077b2fe8f697f12c0f8ecb30a082d8b
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.0.5
+                          date: 2020-11-30T15:24:49.372Z
+                        - commits:
+                            - subject: Update sbvr-types and make use of `castType`
+                              hash: 9613dfff39b35e6b33f7fd6eb042ab5c98d8414e
+                              body: |
+                                Update sbvr-types from 3.1.0 to 3.1.2
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested:
+                                - commits:
+                                    - subject: >-
+                                        Add a `castType` property to type
+                                        functions
+                                      hash: 409077eb9d6c0315779ddd877220280c251b4eb5
+                                      body: >
+                                        This allows specifying the correct type
+                                        to cast to when necessary
+
+                                        rather than relying on the fact the
+                                        currently all type functions happen
+
+                                        to be integers
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                  version: sbvr-types-3.1.2
+                                  date: 2020-11-25T14:49:48.878Z
+                                - commits:
+                                    - subject: Update dependencies
+                                      hash: 394b8c4d10ef16da163e05734ffb65a84717e204
+                                      body: ''
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                  version: sbvr-types-3.1.1
+                                  date: 2020-11-25T14:34:09.586Z
+                          version: abstract-sql-compiler-7.0.4
+                          date: 2020-11-25T16:29:36.439Z
+                        - commits:
+                            - subject: Update dependencies
+                              hash: c43d7a4beb0643938bb5e09f137caa1bee079f92
+                              body: |
+                                Update sbvr-parser from 1.0.1 to 1.1.1
+                                Update sbvr-types from 3.0.0 to 3.1.2
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested:
+                                - commits:
+                                    - subject: Update dependencies
+                                      hash: 5739ec4e6a5da71bfcfe1cb6a9b5c3e13dc1f56e
+                                      body: ''
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                  version: sbvr-parser-1.1.1
+                                  date: 2020-10-07T12:54:19.137Z
+                                - commits:
+                                    - subject: >-
+                                        Add support for negative numbers for
+                                        embedded data
+                                      hash: a5d4f168e66ee209b673f7b20bfc4eb7e2ad657a
+                                      body: ''
+                                      footer:
+                                        Change-type: minor
+                                        change-type: minor
+                                      author: Pagan Gazzard
+                                  version: sbvr-parser-1.1.0
+                                  date: 2020-10-07T12:26:21.195Z
+                                - commits:
+                                    - subject: >-
+                                        Add a `castType` property to type
+                                        functions
+                                      hash: 409077eb9d6c0315779ddd877220280c251b4eb5
+                                      body: >
+                                        This allows specifying the correct type
+                                        to cast to when necessary
+
+                                        rather than relying on the fact the
+                                        currently all type functions happen
+
+                                        to be integers
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                  version: sbvr-types-3.1.2
+                                  date: 2020-11-25T14:49:48.878Z
+                                - commits:
+                                    - subject: Update dependencies
+                                      hash: 394b8c4d10ef16da163e05734ffb65a84717e204
+                                      body: ''
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                  version: sbvr-types-3.1.1
+                                  date: 2020-11-25T14:34:09.586Z
+                                - commits:
+                                    - subject: Update dependencies
+                                      hash: 33be8837bde82d29f182506f4b93e33157bea185
+                                      body: ''
+                                      footer:
+                                        Change-type: minor
+                                        change-type: minor
+                                      author: Pagan Gazzard
+                                  version: sbvr-types-3.1.0
+                                  date: 2020-06-17T21:13:53.393Z
+                          version: lf-to-abstract-sql-4.1.1
+                          date: 2020-11-25T15:56:29.282Z
+                        - commits:
+                            - subject: Update dependencies
+                              hash: a1906bf3447b6c8ab30ae9951883a738050d69aa
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: odata-parser-2.2.1
+                          date: 2020-11-25T16:09:50.140Z
+                        - commits:
+                            - subject: Update dependencies
+                              hash: 7ac6abdbe98e08b361721841d0f67c6ed83ed3a1
+                              body: |
+                                Update abstract-sql-compiler from 7.0.2 to 7.0.4
+                                Update odata-parser from 2.1.0 to 2.2.1
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested:
+                                - commits:
+                                    - subject: >-
+                                        Update sbvr-types and make use of
+                                        `castType`
+                                      hash: 9613dfff39b35e6b33f7fd6eb042ab5c98d8414e
+                                      body: |
+                                        Update sbvr-types from 3.1.0 to 3.1.2
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                      nested:
+                                        - commits:
+                                            - subject: >-
+                                                Add a `castType` property to type
+                                                functions
+                                              hash: 409077eb9d6c0315779ddd877220280c251b4eb5
+                                              body: >
+                                                This allows specifying the correct type
+                                                to cast to when necessary
+
+                                                rather than relying on the fact the
+                                                currently all type functions happen
+
+                                                to be integers
+                                              footer:
+                                                Change-type: patch
+                                                change-type: patch
+                                              author: Pagan Gazzard
+                                          version: sbvr-types-3.1.2
+                                          date: 2020-11-25T14:49:48.878Z
+                                        - commits:
+                                            - subject: Update dependencies
+                                              hash: 394b8c4d10ef16da163e05734ffb65a84717e204
+                                              body: ''
+                                              footer:
+                                                Change-type: patch
+                                                change-type: patch
+                                              author: Pagan Gazzard
+                                          version: sbvr-types-3.1.1
+                                          date: 2020-11-25T14:34:09.586Z
+                                  version: abstract-sql-compiler-7.0.4
+                                  date: 2020-11-25T16:29:36.439Z
+                                - commits:
+                                    - subject: >-
+                                        Remove accidental `necessity` from the
+                                        `AbstractSqlField` types
+                                      hash: f9583ff668efb8e74480b0458b14d6caa3821550
+                                      body: ''
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                      nested: []
+                                  version: abstract-sql-compiler-7.0.3
+                                  date: 2020-10-02T13:25:39.199Z
+                                - commits:
+                                    - subject: Update dependencies
+                                      hash: a1906bf3447b6c8ab30ae9951883a738050d69aa
+                                      body: ''
+                                      footer:
+                                        Change-type: patch
+                                        change-type: patch
+                                      author: Pagan Gazzard
+                                  version: odata-parser-2.2.1
+                                  date: 2020-11-25T16:09:50.140Z
+                                - commits:
+                                    - subject: >-
+                                        Add support for metadata argument in
+                                        $format
+                                      hash: eecb0df57610d3f13bfc6b168790690dc0dce038
+                                      body: ''
+                                      footer:
+                                        Change-type: minor
+                                        change-type: minor
+                                      author: Pagan Gazzard
+                                  version: odata-parser-2.2.0
+                                  date: 2020-08-18T16:23:49.447Z
+                          version: odata-to-abstract-sql-5.3.1
+                          date: 2020-11-25T16:58:50.449Z
+                        - commits:
+                            - subject: >-
+                                Explicitly specify return types for all
+                                functions
+                              hash: d53b6cef4ba00527b889d49a6567b8964457025e
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-6.9.3
+                          date: 2020-11-20T14:26:20.412Z
+                        - commits:
+                            - subject: Update dev dependencies
+                              hash: 0af301426da52e51d50789394b19d7af205fc735
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-6.9.2
+                          date: 2020-10-23T12:21:29.017Z
+                        - commits:
+                            - subject: Add a `castType` property to type functions
+                              hash: 409077eb9d6c0315779ddd877220280c251b4eb5
+                              body: >
+                                This allows specifying the correct type to cast
+                                to when necessary
+
+                                rather than relying on the fact the currently
+                                all type functions happen
+
+                                to be integers
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: sbvr-types-3.1.2
+                          date: 2020-11-25T14:49:48.878Z
+                        - commits:
+                            - subject: Update dependencies
+                              hash: 394b8c4d10ef16da163e05734ffb65a84717e204
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: sbvr-types-3.1.1
+                          date: 2020-11-25T14:34:09.586Z
+                  version: pinejs-14.2.5
+                  date: 2020-12-02T17:15:55.965Z
+          version: open-balena-api-0.110.7
+          date: 2020-12-02T18:14:46.372Z
+        - commits:
+            - subject: Fix device log read serialization to ignore `nanoTimestamp`
+              hash: 0aa1f69ba0e761c3645cbcb319e84bad2dffe145
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thomas Manning <thomasm@balena.io>
+                signed-off-by: Thomas Manning <thomasm@balena.io>
+              author: Thomas Manning
+              nested: []
+          version: open-balena-api-0.110.6
+          date: 2020-11-30T11:49:16.853Z
+        - commits:
+            - subject: >-
+                Change LokiBackend to store using nanosecond timestamp
+                calculated when log was received
+              hash: 20e6da8bd35843496b8a032d82936896057c2310
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thomas Manning <thomasm@balena.io>
+                signed-off-by: Thomas Manning <thomasm@balena.io>
+              author: Thomas Manning
+              nested: []
+          version: open-balena-api-0.110.5
+          date: 2020-11-27T15:42:36.268Z
+        - commits:
+            - subject: Add option to Loki backend to print verbose error message
+              hash: 5956bafee7df4623647ad58a0f34336af9c294d7
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thomas Manning <thomasm@balena.io>
+                signed-off-by: Thomas Manning <thomasm@balena.io>
+              author: Thomas Manning
+              nested: []
+          version: open-balena-api-0.110.4
+          date: 2020-11-27T09:44:18.616Z
+        - commits:
+            - subject: >-
+                Remove `service_id` from LokiBackend labels to reduce
+                cardinality
+              hash: 152aa18e7b411306827913600fc5f57d614d4a39
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thomas Manning <thomasm@balena.io>
+                signed-off-by: Thomas Manning <thomasm@balena.io>
+              author: Thomas Manning
+              nested: []
+          version: open-balena-api-0.110.3
+          date: 2020-11-26T08:11:18.096Z
+        - commits:
+            - subject: Update dependencies
+              hash: 605d1f92878abf2c0c2ffae7179aac7c1d63cc00
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+            - subject: Specify es2020 for @balena/es-version
+              hash: bc0324ea1044b4ca9ddcf8196c9f10ee792ad925
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.110.2
+          date: 2020-11-23T17:28:37.685Z
+        - commits:
+            - subject: Improve the cache of the S3-fetched device types
+              hash: 4ee7e7cee87aee63384e29ca83e00500154f274b
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Stevche Radevski <stevche@balena.io>
+                signed-off-by: Stevche Radevski <stevche@balena.io>
+              author: Stevche Radevski
+              nested: []
+          version: open-balena-api-0.110.1
+          date: 2020-11-23T16:38:40.494Z
+        - commits:
+            - subject: Add contract field to release resource
+              hash: 1e89823f4bb1712963cede5a7b29acffd22296e4
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                Signed-off-by: Stevche Radevski <stevche@balena.io>
+                signed-off-by: Stevche Radevski <stevche@balena.io>
+              author: Stevche Radevski
+              nested: []
+          version: open-balena-api-0.110.0
+          date: 2020-11-23T14:59:30.408Z
+        - commits:
+            - subject: Update open-balena-base to 11.0.2
+              hash: c2c5015410f26538c408880d38eecf53b2268f73
+              body: |
+                Update open-balena-base from 11.0.0 to 11.0.2
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.15.1
+                      hash: cf533d8fa978bddd6650f129a010b285be485070
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.2
+                  date: 2020-11-18T12:45:09.418Z
+                - commits:
+                    - subject: Publish tagged versions of the no-systemd image
+                      hash: 30cd15a4e5fa065635b76f18b842a0dd43320778
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.1
+                  date: 2020-10-29T14:19:49.787Z
+          version: open-balena-api-0.109.5
+          date: 2020-11-20T11:16:19.091Z
+        - commits:
+            - subject: Add Loki host and port to sentry messages
+              hash: 36980076eb5abad778277f9562dec61ae7d96fa7
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thomas Manning <thomasm@balena.io>
+                signed-off-by: Thomas Manning <thomasm@balena.io>
+              author: Thomas Manning
+              nested: []
+          version: open-balena-api-0.109.4
+          date: 2020-11-11T11:16:06.847Z
+        - commits:
+            - subject: >-
+                Set Loki timeout to 1 second with no retries so log writes are
+                not unreasonably delayed if Loki down
+              hash: 7e37a696ff6adb70c57de3729f7f3988689abef6
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thomas Manning <thomasm@balena.io>
+                signed-off-by: Thomas Manning <thomasm@balena.io>
+              author: Thomas Manning
+              nested: []
+          version: open-balena-api-0.109.3
+          date: 2020-11-11T06:48:11.626Z
+        - commits:
+            - subject: Update open-balena-base to 11.0.4
+              hash: 7aa4aea3376cc281cb0df6e7bdd0044fde657cfd
+              body: |
+                Update open-balena-base from 11.0.3 to 11.0.4
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.15.4 and npm to 6.14.10
+                      hash: 0a52eb67b211fdc31d73e279e6e871b2e803f485
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.4
+                  date: 2021-01-08T15:21:19.521Z
+          version: open-balena-vpn-9.17.4
+          date: 2021-01-13T18:10:43.804Z
+        - commits:
+            - subject: Update open-balena-base to 11.0.3
+              hash: 6230039e8e9b2879c2591b342ca2be7b49a37c90
+              body: |
+                Update open-balena-base from 11.0.2 to 11.0.3
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.15.3 and npm to 6.14.9
+                      hash: 6d9ed96133ca1b4783eafc8b8698f10cd88aaad2
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.3
+                  date: 2020-12-18T12:11:00.995Z
+          version: open-balena-vpn-9.17.3
+          date: 2020-12-23T18:38:40.381Z
+        - commits:
+            - subject: Update open-balena-base to 11.0.2
+              hash: 2f245feb7d51e6263837d1b945f1dc44f159a6a6
+              body: |
+                Update open-balena-base from 11.0.0 to 11.0.2
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.15.1
+                      hash: cf533d8fa978bddd6650f129a010b285be485070
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.2
+                  date: 2020-11-18T12:45:09.418Z
+                - commits:
+                    - subject: Publish tagged versions of the no-systemd image
+                      hash: 30cd15a4e5fa065635b76f18b842a0dd43320778
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.1
+                  date: 2020-10-29T14:19:49.787Z
+          version: open-balena-vpn-9.17.2
+          date: 2020-11-20T11:17:21.613Z
+        - commits:
+            - subject: 'meta: remove legacy codeowners'
+              hash: 18488debdde1a09e9246dadffa667f2b57c13507
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-vpn-9.17.1
+          date: 2020-10-28T16:00:39.466Z
+        - commits:
+            - subject: Update open-balena-base to 11.0.0
+              hash: 06f0f0a6af1bbd2a0b7259ef618d09f2b926febf
+              body: |
+                Update open-balena-base from 10.1.0 to 11.0.0
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update to nodejs 14
+                      hash: d2c0a6a0549b85ed9daa1d8f4085cd5dd96e6f86
+                      body: ''
+                      footer:
+                        Change-type: major
+                        change-type: major
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.0
+                  date: 2020-10-27T16:09:19.043Z
+                - commits:
+                    - subject: Fix no-systemd nodejs version
+                      hash: 3b3db51c6012342fb70f868b8fa747078c2f2294
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-10.1.1
+                  date: 2020-10-09T16:21:15.080Z
+          version: open-balena-vpn-9.17.0
+          date: 2020-10-28T13:56:08.740Z
+        - commits:
+            - subject: Update open-balena-base to 10.1.0
+              hash: 9364c3f8613ed6356838c1c6edb96c3ed710b20a
+              body: |
+                Update open-balena-base from 10.0.2 to 10.1.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 12.19.0
+                      hash: 8431b0e087367ac38454017f86bd1d6f8e8eb814
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-10.1.0
+                  date: 2020-10-07T14:47:49.406Z
+          version: open-balena-vpn-9.16.6
+          date: 2020-10-19T15:20:37.002Z
+        - commits:
+            - subject: Fix string flattening
+              hash: cd7ff431ff8d798086baff33cc3b48ca1dd334af
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-vpn-9.16.5
+          date: 2020-10-19T14:55:19.632Z
+        - commits:
+            - subject: Update dependencies
+              hash: be866971a3b9f61ef9ac1ca4eb50de64b9ca59d0
+              body: |
+                Update pinejs-client-request from 7.2.1 to 7.2.2
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update dev dependencies
+                      hash: 65948663c760b5b33d5f294adcf555bb57baa11c
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-client-request-7.2.2
+                  date: 2020-08-24T12:24:16.294Z
+          version: open-balena-vpn-9.16.4
+          date: 2020-10-19T14:10:36.305Z
+        - commits:
+            - subject: Avoid unintentionally keeping large strings in memory
+              hash: e4557ced0db25127b06492e29b32d49b2d6bdf08
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-vpn-9.16.3
+          date: 2020-10-19T13:51:19.983Z
+        - commits:
+            - subject: Renew test certificates
+              hash: d24c331a280b23c59bbf7a3f7be0ac9854b0bde9
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: ab77
+              nested: []
+          version: open-balena-vpn-9.16.2
+          date: 2020-10-16T19:05:49.087Z
+        - commits:
+            - subject: Remove Hedley from CODEOWNERS
+              hash: 4c901fbec5d6e6463e56362502784a207c810f53
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: dfunckt
+              nested: []
+          version: open-balena-registry-2.14.4
+          date: 2021-01-29T12:58:39.406Z
+        - commits:
+            - subject: Update open-balena-base to 11.0.4
+              hash: 8005724eebe35fc49a463e5e928924e6009eb5ec
+              body: |
+                Update open-balena-base from 11.0.3 to 11.0.4
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.15.4 and npm to 6.14.10
+                      hash: 0a52eb67b211fdc31d73e279e6e871b2e803f485
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.4
+                  date: 2021-01-08T15:21:19.521Z
+          version: open-balena-registry-2.14.3
+          date: 2021-01-13T14:03:34.936Z
+        - commits:
+            - subject: Update open-balena-base to 11.0.3
+              hash: 368394a7e492ab69679fb0c623136b060d862dbc
+              body: |
+                Update open-balena-base from 11.0.2 to 11.0.3
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.15.3 and npm to 6.14.9
+                      hash: 6d9ed96133ca1b4783eafc8b8698f10cd88aaad2
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.3
+                  date: 2020-12-18T12:11:00.995Z
+          version: open-balena-registry-2.14.2
+          date: 2020-12-23T18:37:45.426Z
+        - commits:
+            - subject: Update open-balena-base to 11.0.2
+              hash: d6a095deb7721e785622c5a173285a47f2c13a65
+              body: |
+                Update open-balena-base from 11.0.0 to 11.0.2
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.15.1
+                      hash: cf533d8fa978bddd6650f129a010b285be485070
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.2
+                  date: 2020-11-18T12:45:09.418Z
+                - commits:
+                    - subject: Publish tagged versions of the no-systemd image
+                      hash: 30cd15a4e5fa065635b76f18b842a0dd43320778
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.1
+                  date: 2020-10-29T14:19:49.787Z
+          version: open-balena-registry-2.14.1
+          date: 2020-11-20T11:17:24.368Z
+        - commits:
+            - subject: Update open-balena-base to 11.0.0
+              hash: cebf320640a903926a826d03f696db04bec421bc
+              body: |
+                Update open-balena-base from 10.1.0 to 11.0.0
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update to nodejs 14
+                      hash: d2c0a6a0549b85ed9daa1d8f4085cd5dd96e6f86
+                      body: ''
+                      footer:
+                        Change-type: major
+                        change-type: major
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.0
+                  date: 2020-10-27T16:09:19.043Z
+                - commits:
+                    - subject: Fix no-systemd nodejs version
+                      hash: 3b3db51c6012342fb70f868b8fa747078c2f2294
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-10.1.1
+                  date: 2020-10-09T16:21:15.080Z
+          version: open-balena-registry-2.14.0
+          date: 2020-10-28T13:55:07.664Z
+        - commits:
+            - subject: Update open-balena-base to 10.1.0
+              hash: 4c22811baf10af90554aa177f73a54f4bcb7b7d2
+              body: |
+                Update open-balena-base from 10.0.2 to 10.1.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 12.19.0
+                      hash: 8431b0e087367ac38454017f86bd1d6f8e8eb814
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-10.1.0
+                  date: 2020-10-07T14:47:49.406Z
+          version: open-balena-registry-2.13.13
+          date: 2020-10-08T10:07:49.513Z
+        - commits:
+            - subject: Update open-balena-base to v10.0.2
+              hash: c698b21e524245438808513a2fd330b383f6d082
+              body: |
+                Update open-balena-base from 9.4.3 to 10.0.2
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Will Boyce <will@balena.io>
+                signed-off-by: Will Boyce <will@balena.io>
+              author: Will Boyce
+              nested:
+                - commits:
+                    - subject: Delete custom versionist.conf.js and add repo.yml
+                      hash: c09ff99185178766bf236b20b52c5a09cfeb8a69
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                        Signed-off-by: Giovanni Garufi <giovanni@balena.io>
+                        signed-off-by: Giovanni Garufi <giovanni@balena.io>
+                      author: Giovanni Garufi
+                      nested: []
+                  version: open-balena-base-10.0.2
+                  date: 2020-09-17T12:54:19.050Z
+                - commits:
+                    - subject: Update nodejs to 12.18.4 and npm to 6.14.8
+                      hash: 98ba722e6cc1ca083aaeacb270a6d6b1f2288a02
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                  version: open-balena-base-10.0.1
+                  date: 2020-09-17T10:34:50.316Z
+                - commits:
+                    - subject: remove support for etcd-based confd config
+                      hash: 0d01099afeb30cb3693b554174ef2443f4d745a2
+                      body: ''
+                      footer:
+                        Change-type: major
+                        change-type: major
+                        Signed-off-by: Will Boyce <will@balena.io>
+                        signed-off-by: Will Boyce <will@balena.io>
+                      author: Will Boyce
+                  version: open-balena-base-10.0.0
+                  date: 2020-08-26T09:47:40.813Z
+          version: open-balena-registry-2.13.12
+          date: 2020-10-07T17:02:49.422Z
+        - commits:
+            - author: Pagan Gazzard
+              body: Update open-balena-base from 11.0.3 to 11.0.4
+              footers:
+                change-type: patch
+              hash: 954711cea811c56fdddabd7c97bd733668823174
+              subject: Update open-balena-base to 11.0.4
+          date: '2021-01-13T14:25:01Z'
+          version: balena-mdns-publisher-1.9.2
+        - commits:
+            - author: Pagan Gazzard
+              body: Update open-balena-base from 11.0.2 to 11.0.3
+              footers:
+                change-type: patch
+              hash: 3847c8154c8eb71e948851c1580cf9d37c905484
+              subject: Update open-balena-base to 11.0.3
+          date: '2020-12-23T18:44:57Z'
+          version: balena-mdns-publisher-1.9.1
+        - commits:
+            - author: Pagan Gazzard
+              body: ''
+              footers:
+                change-type: minor
+              hash: f7bc0aa6db5866ed46f8c81f8e951a6b8a294489
+              subject: Update open-balena-base to 11.0.2
+          date: '2020-11-20T11:53:37Z'
+          version: balena-mdns-publisher-1.9.0
+        - commits:
+            - author: Pagan Gazzard
+              body: Update open-balena-base from 10.1.0 to 11.0.0
+              footers:
+                change-type: minor
+              hash: f81223eb8bafbb8b4ef0dd59c8c43cdb36cfefa8
+              subject: Update open-balena-base to 11.0.0
+          date: '2020-10-28T13:57:16Z'
+          version: balena-mdns-publisher-1.8.0
+  version: 3.2.0
+  date: 2021-01-29T15:36:50.166Z
+- commits:
     - subject: 'SECURITY: Close tunneling port (3128)'
       hash: da4c1678eccc54f61987e07add0830e14ea1fdcb
       body: >
