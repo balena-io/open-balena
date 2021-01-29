@@ -1,4 +1,21 @@
 - commits:
+    - subject: 'SECURITY: Close tunneling port (3128)'
+      hash: da4c1678eccc54f61987e07add0830e14ea1fdcb
+      body: >
+        Port 3128, which was used for tunneling into devices, was plain TCP and
+        has now been closed. Tunnelling is now via `tunnel.mydomain.com:443`
+        (see #101). balena-cli versions before v12.38.5 are now incompatible and
+        using the tunnel command will throw an error.
+      footer:
+        Refs: '#101'
+        refs: '#101'
+        Change-type: patch
+        change-type: patch
+      author: Akis Kesoglou
+      nested: []
+  version: 3.1.4
+  date: 2021-01-29T15:15:08.709Z
+- commits:
     - subject: Remove Rich from CODEOWNERS
       hash: a0ef371621dbf6db325715f7cddcc17d33a4df45
       body: ''
