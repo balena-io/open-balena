@@ -1,4 +1,15 @@
 - commits:
+    - subject: Add Matt and Paulo to CODEOWNERS
+      hash: 746be65846890130ebda95b03c056afa6a5816bb
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: dfunckt
+      nested: []
+  version: 3.2.1
+  date: 2021-02-06T23:12:49.876Z
+- commits:
     - subject: Update services
       hash: 3898342a5bb8fab6bc4780287db1262084c30ecf
       body: |
