@@ -129,7 +129,6 @@ mkdir -p "${CONFIG_DIR}/k8s";
 source "${CONFIG_DIR}/activate";
 source "${COMPOSE_DIR}/versions";
 envsubst < "${BASE_DIR}/k8s/chart/values.yaml" > "${CONFIG_DIR}/k8s/settings.yaml"
-envsubst < "${BASE_DIR}/k8s/cert-issuer.yml" > "${CONFIG_DIR}/k8s/cert-issuer.yml"
 
 if [ "${patch_hosts}" = "true" ]; then
   echo_bold "==> Patching /etc/hosts..."
