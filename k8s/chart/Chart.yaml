@@ -30,4 +30,4 @@ dependencies:
 - name: haproxy-ingress
   version: 0.0.26
   alias: haproxy
-  repository: "https://kubernetes-charts-incubator.storage.googleapis.com"
+  repository: "https://charts.helm.sh/incubator"
