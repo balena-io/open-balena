@@ -32,7 +32,7 @@ services:
       HOST: api.${OPENBALENA_HOST_NAME}
       IMAGE_MAKER_URL: img.${OPENBALENA_HOST_NAME}
       IMAGE_STORAGE_BUCKET: resin-production-img-cloudformation
-      IMAGE_STORAGE_PREFIX: resinos
+      IMAGE_STORAGE_PREFIX: images
       IMAGE_STORAGE_ENDPOINT: s3.amazonaws.com
       JSON_WEB_TOKEN_EXPIRY_MINUTES: 10080
       JSON_WEB_TOKEN_SECRET: ${OPENBALENA_JWT_SECRET}
@@ -154,9 +154,9 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "3128:3128"
     expose:
       - "222"
+      - "3128"
       - "5432"
       - "6379"
     networks:
@@ -168,6 +168,7 @@ services:
           - db.${OPENBALENA_HOST_NAME}
           - s3.${OPENBALENA_HOST_NAME}
           - redis.${OPENBALENA_HOST_NAME}
+          - tunnel.${OPENBALENA_HOST_NAME}
     environment:
       BALENA_HAPROXY_CRT: ${OPENBALENA_ROOT_CRT}
       BALENA_HAPROXY_KEY: ${OPENBALENA_ROOT_KEY}
@@ -183,5 +184,5 @@ services:
       - cert-provider:/usr/src/app/certs
     environment:
       ACTIVE: ${OPENBALENA_ACME_CERT_ENABLED}
-      DOMAINS: "api.${OPENBALENA_HOST_NAME},registry.${OPENBALENA_HOST_NAME},s3.${OPENBALENA_HOST_NAME},vpn.${OPENBALENA_HOST_NAME}"
+      DOMAINS: "api.${OPENBALENA_HOST_NAME},registry.${OPENBALENA_HOST_NAME},s3.${OPENBALENA_HOST_NAME},vpn.${OPENBALENA_HOST_NAME},tunnel.${OPENBALENA_HOST_NAME}"
       OUTPUT_PEM: /certs/open-balena.pem
