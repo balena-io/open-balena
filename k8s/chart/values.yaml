@@ -3,38 +3,59 @@
 # Declare variables to be passed into your templates.
 
 # Hostname of open-balena instance
-hostname: "${OPENBALENA_HOST_NAME}" # OPENBALENA_HOST_NAME
+hostname: "" # OPENBALENA_HOST_NAME
 
 # General configurations
 config:
-  email: "${OPENBALENA_SUPERUSER_EMAIL}" # OPENBALENA_SUPERUSER_EMAIL
-  password: "${OPENBALENA_SUPERUSER_PASSWORD}" # OPENBALENA_SUPERUSER_PASSWORD
-  production-mode: "${OPENBALENA_PRODUCTION_MODE}" # OPENBALENA_PRODUCTION_MODE
-  ssh-authorized-keys: "${OPENBALENA_SSH_AUTHORIZED_KEYS}" # OPENBALENA_SSH_AUTHORIZED_KEYS
+  # openBalena admin details
+  email: ""
+  password: ""
 
-  # NGINX Ingress uses this variable
-  # If your containers exceed the size of 200mb, change this!
-  client-max-body-size: "200m"
+  # Production mode for openBalena (will cause containers to restart when crashed)
+  production-mode: ""
+
+  # Authorized keys
+  ssh-authorized-keys: ""
+
+  s3:
+    # When enabled, this Helm chart will provide in an S3 registry
+    # If disabled, S3 will still be used, just not deployed, which means you've to provide your own S3 bucket using the details below
+    enabled: true
+
+    # S3 Configuration details
+    bucket: "" # S3 Bucket
+    endpoint: "" # S3 Endpoint
+    region: "" # S3 Region
+    access-key: "" # S3 Access key
+    secret-key: "" # S3 Secret key
+
+  redis:
+    # When enabled, this Helm chart will provide in a Redis instance
+    # If disabled, Redis will still be used, just not deployed, which means you've to provide your own Redis instance using the details below
+    enabled: true
+
+    host: "openbalena-redis" # Redis host
+    port: 6379 # Redis port (default 6379)
 
 # Deployments
 deployments:
   api:
     image: balena/open-balena-api
-    version: "${OPENBALENA_API_VERSION_TAG}"
+    version: "v0.119.5"
     replicas: 1
 
     sentry-dsn: ""
 
   vpn:
     image: balena/open-balena-vpn
-    version: "${OPENBALENA_VPN_VERSION_TAG}"
+    version: "v9.17.4"
     replicas: 1
 
     sentry-dsn: ""
 
   registry:
     image: balena/open-balena-registry
-    version: "${OPENBALENA_REGISTRY_VERSION_TAG}"
+    version: "v2.14.4"
     replicas: 1
 
     volume:
@@ -46,117 +67,82 @@ deployments:
     enabled: true
 
     image: balena/open-balena-s3
-    version: "${OPENBALENA_S3_VERSION_TAG}"
+    version: "v2.9.9"
     replicas: 1
-
-    config:
-      bucket: "${OPENBALENA_S3_BUCKETS}" # OPENBALENA_S3_BUCKETS / OPENBALENA_REGISTRY2_S3_BUCKET
-      endpoint: "${OPENBALENA_S3_ENDPOINT}" # OPENBALENA_S3_ENDPOINT
-      region: "${OPENBALENA_S3_REGION}" # OPENBALENA_S3_REGION
-      access-key: "${OPENBALENA_S3_ACCESS_KEY}" # OPENBALENA_S3_ACCESS_KEY
-      secret-key: "${OPENBALENA_S3_SECRET_KEY}" # OPENBALENA_S3_SECRET_KEY
 
     volume:
       storage: "25Gi"
 
   db:
     image: balena/open-balena-db
-    version: "${OPENBALENA_DB_VERSION_TAG}"
+    version: "v4.1.0"
     replicas: 1
 
     volume:
       storage: "1Gi"
 
   redis:
-    # You can disable this deployment you want to use another Redis service
-    # Just fill the config parts with the correct details
-    enabled: true
-
     image: redis
     version: "alpine"
     replicas: 1
-
-    config:
-      host: "openbalena-redis"
-      port: 6379
 
     volume:
       storage: "1Gi"
 
 # Keys
 keys:
-  cookie-secret: "${OPENBALENA_COOKIE_SESSION_SECRET}" # OPENBALENA_COOKIE_SESSION_SECRET
-  jwt-secret: ${OPENBALENA_JWT_SECRET} # OPENBALENA_JWT_SECRET
-  registry-code: ${OPENBALENA_RESINOS_REGISTRY_CODE} # OPENBALENA_RESINOS_REGISTRY_CODE
-  service-api-key: "${OPENBALENA_VPN_SERVICE_API_KEY}" # OPENBALENA_VPN_SERVICE_API_KEY
-  api-vpn-service-api-key: "${OPENBALENA_API_VPN_SERVICE_API_KEY}" # OPENBALENA_API_VPN_SERVICE_API_KEY
-  registry-secret-key: "${OPENBALENA_REGISTRY_SECRET_KEY}" # OPENBALENA_REGISTRY_SECRET_KEY
-  token-auth-builder-token: "${OPENBALENA_TOKEN_AUTH_BUILDER_TOKEN}" # OPENBALENA_TOKEN_AUTH_BUILDER_TOKEN
-  token-auth-pub: "${OPENBALENA_TOKEN_AUTH_PUB}" # OPENBALENA_TOKEN_AUTH_PUB
-  token-auth-key: "${OPENBALENA_TOKEN_AUTH_KEY}" # OPENBALENA_TOKEN_AUTH_KEY
-  token-auth-kid: "${OPENBALENA_TOKEN_AUTH_KID}" # OPENBALENA_TOKEN_AUTH_KID
+  cookie-secret: "" # OPENBALENA_COOKIE_SESSION_SECRET
+  jwt-secret:  # OPENBALENA_JWT_SECRET
+  registry-code:  # OPENBALENA_RESINOS_REGISTRY_CODE
+  service-api-key: "" # OPENBALENA_VPN_SERVICE_API_KEY
+  api-vpn-service-api-key: "" # OPENBALENA_API_VPN_SERVICE_API_KEY
+  registry-secret-key: "" # OPENBALENA_REGISTRY_SECRET_KEY
+  token-auth-builder-token: "" # OPENBALENA_TOKEN_AUTH_BUILDER_TOKEN
+  token-auth-pub: "" # OPENBALENA_TOKEN_AUTH_PUB
+  token-auth-key: "" # OPENBALENA_TOKEN_AUTH_KEY
+  token-auth-kid: "" # OPENBALENA_TOKEN_AUTH_KID
 
 # Certificates
 certificates:
   # Root certificates
   root:
     # OPENBALENA_ROOT_CA
-    ca: "${OPENBALENA_ROOT_CA}"
+    ca: ""
 
     # OPENBALENA_ROOT_CRT
-    crt: "${OPENBALENA_ROOT_CRT}"
+    crt: ""
 
     # OPENBALENA_ROOT_KEY
-    key: "${OPENBALENA_ROOT_KEY}"
+    key: ""
 
   vpn:
     # OPENBALENA_VPN_CA
-    ca: "${OPENBALENA_VPN_CA}"
+    ca: ""
 
     # OPENBALENA_VPN_CA_CHAIN
-    ca-chain: "${OPENBALENA_VPN_CA_CHAIN}"
+    ca-chain: ""
 
     # OPENBALENA_VPN_SERVER_CRT
-    crt: "${OPENBALENA_VPN_SERVER_CRT}"
+    crt: ""
 
     # OPENBALENA_VPN_SERVER_KEY
-    server-key: "${OPENBALENA_VPN_SERVER_KEY}"
+    server-key: ""
 
     # OPENBALENA_VPN_SERVER_DH
-    dh: "${OPENBALENA_VPN_SERVER_DH}"
+    dh: ""
 
 ##
 ## HAProxy Ingress Chart
 ##
-## https://github.com/helm/charts/blob/master/incubator/haproxy-ingress/values.yaml
+## https://github.com/haproxy-ingress/charts/blob/master/haproxy-ingress/values.yaml
 ##
 haproxy:
   controller:
-    service:
-      annotations:
-        # Add DigitalOcean LoadBalancer label
-        service.beta.kubernetes.io/do-loadbalancer-name: "k8s-openbalena-vpn"
-        service.beta.kubernetes.io/do-loadbalancer-hostname: "vpn.${OPENBALENA_HOST_NAME}"
-
-      # Change the HTTPS port
-      httpsPorts:
-      - port: 8443
-        targetPort: https
+    ingressClass: "openbalena-haproxy"
 
     # Add TCP proxies for the VPN
+    # This option is deprecated in v0.13, but we need v0.13 of HAProxy in order for all to work
+    # So we rely on this until further notice
+    # This will cause port 3129 to be opened on the Load Balancer, so keep that in mind!
     tcp:
-      443: "{{ .Release.Namespace }}/openbalena-vpn:443::PROXY-V2"
-      3128: "{{ .Release.Namespace }}/openbalena-vpn:3128"
-
-##
-## NGINX Ingress Chart$
-##
-## https://github.com/kubernetes/ingress-nginx/blob/master/charts/ingress-nginx/values.yaml
-##
-nginx:
-  controller:
-    service:
-      annotations:
-        # Add DigitalOcean LoadBalancer label
-        service.beta.kubernetes.io/do-loadbalancer-name: "k8s-openbalena"
-        service.beta.kubernetes.io/do-loadbalancer-hostname: "${OPENBALENA_HOST_NAME}"
+      3129: "{{ .Release.Namespace }}/openbalena-vpn:3128:::{{ .Release.Namespace }}/openbalena-http-tunnel-tls"

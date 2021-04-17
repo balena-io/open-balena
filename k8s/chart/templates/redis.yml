@@ -1,4 +1,4 @@
-{{- if index .Values "deployments" "redis" "enabled" }}
+{{- if index .Values "config" "redis" "enabled" }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -55,7 +55,7 @@ spec:
   ports:
   - port: 6379
     protocol: TCP
-    targetPort: {{ index .Values "deployments" "redis" "config" "port" }}
+    targetPort: 6379
   selector:
     app: openbalena
     component: redis
