@@ -85,6 +85,9 @@ spec:
       - name: openbalena-registry-tmpfs1
         emptyDir:
           medium: Memory
+
+      nodeSelector:
+        {{- toYaml .Values.deployments.registry.nodeSelector | nindent 8 }}
   volumeClaimTemplates:
   - metadata:
       name: openbalena-registry-volume

@@ -32,6 +32,9 @@ spec:
       - name: openbalena-db-volume
         persistentVolumeClaim:
           claimName: openbalena-db-volume
+
+      nodeSelector:
+        {{- toYaml .Values.deployments.db.nodeSelector | nindent 8 }}
   volumeClaimTemplates:
   - metadata:
       name: openbalena-db-volume
