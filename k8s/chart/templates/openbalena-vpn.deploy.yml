@@ -37,6 +37,11 @@ spec:
       - image: {{ index .Values "deployments" "vpn" "image" }}:{{ index .Values "deployments" "vpn" "version" }}
         name: openbalena-vpn
         resources: {}
+        ports:
+        - name: vpn
+          containerPort: 443
+          hostPort: 443
+
         securityContext:
           capabilities:
             add:

@@ -76,9 +76,9 @@ spec:
         - name: PUBNUB_SUBSCRIBE_KEY
           value: "__unused__"
         - name: REDIS_HOST
-          value: "{{ index .Values "deployments" "redis" "config" "host" }}"
+          value: "{{ index .Values "config" "redis" "host" }}"
         - name: REDIS_PORT
-          value: "{{ index .Values "deployments" "redis" "config" "port" }}"
+          value: "{{ index .Values "config" "redis" "port" }}"
         - name: REGISTRY2_HOST
           value: "registry.{{ index .Values "hostname" }}"
         - name: REGISTRY_HOST

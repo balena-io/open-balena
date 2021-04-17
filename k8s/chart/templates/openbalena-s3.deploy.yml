@@ -1,4 +1,4 @@
-{{- if index .Values "deployments" "s3" "enabled" }}
+{{- if index .Values "config" "s3" "enabled" }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -35,11 +35,11 @@ spec:
         - name: CONFD_BACKEND
           value: "ENV"
         - name: S3_MINIO_ACCESS_KEY
-          value: "{{ index .Values "deployments" "s3" "config" "access-key" }}"
+          value: "{{ index .Values "config" "s3" "access-key" }}"
         - name: S3_MINIO_SECRET_KEY
-          value: "{{ index .Values "deployments" "s3" "config" "secret-key" }}"
+          value: "{{ index .Values "config" "s3" "secret-key" }}"
         - name: BUCKETS
-          value: "{{ index .Values "deployments" "s3" "config" "bucket" }}"
+          value: "{{ index .Values "config" "s3" "bucket" }}"
         volumeMounts:
         - mountPath: /export
           name: openbalena-s3-volume

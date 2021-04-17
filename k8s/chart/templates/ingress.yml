@@ -1,67 +1,128 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: openbalena-ingress
+  name: openbalena-ingress-http
   labels:
     app: openbalena
     component: ingress
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/proxy-body-size: "{{ index .Values "config" "client-max-body-size" }}"
+    kubernetes.io/ingress.class: "openbalena-haproxy"
+    cert-manager.io/cluster-issuer: "openbalena-cluster-issuer"
 spec:
   tls:
   - hosts:
+    - {{ index .Values "hostname" }}
     - api.{{ index .Values "hostname" }}
     - registry.{{ index .Values "hostname" }}
 
-    {{- if index .Values "deployments" "s3" "enabled" }}
+    {{- if index .Values "config" "s3" "enabled" }}
     - s3.{{ index .Values "hostname" }}
     {{- end }}
-    secretName: echo-tls
+    secretName: openbalena-http-tls
   rules:
   - host: api.{{ index .Values "hostname" }}
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: openbalena-api
-          servicePort: 80
+          service:
+            name: openbalena-api
+            port:
+              number: 80
   - host: registry.{{ index .Values "hostname" }}
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: openbalena-registry
-          servicePort: 80
+          service:
+            name: openbalena-registry
+            port:
+              number: 80
 
   {{- if index .Values "deployments" "s3" "enabled" }}
   - host: s3.{{ index .Values "hostname" }}
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: openbalena-s3
-          servicePort: 80
+          service:
+            name: openbalena-s3
+            port:
+              number: 80
   {{- end }}
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: openbalena-ingress-vpn
   labels:
     app: openbalena
-    component: ingress-vpn
+    component: ingress
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    kubernetes.io/ingress.class: "haproxy"
+    kubernetes.io/ingress.class: "openbalena-haproxy"
+    cert-manager.io/cluster-issuer: "openbalena-cluster-issuer"
+
     ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/ssl-passthrough: "true"
+    ingress.kubernetes.io/proxy-protocol: "v2"
+    ingress.kubernetes.io/server-alias: "vpn.{{ index .Values "hostname" }}"
 spec:
   rules:
   - host: vpn.{{ index .Values "hostname" }}
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: openbalena-vpn
-          servicePort: 80
+          service:
+            name: openbalena-vpn
+            port:
+              number: 443
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openbalena-ingress-tunnel
+  labels:
+    app: openbalena
+    component: ingress
+  annotations:
+    kubernetes.io/ingress.class: "openbalena-haproxy"
+    cert-manager.io/cluster-issuer: "openbalena-cluster-issuer"
+
+    ingress.kubernetes.io/ssl-passthrough: "true"
+    ingress.kubernetes.io/server-alias: "tunnel.{{ index .Values "hostname" }}"
+spec:
+  tls:
+  - hosts:
+    - tunnel.{{ index .Values "hostname" }}
+    secretName: openbalena-http-tunnel-tls
+  rules:
+  - host: tunnel.{{ index .Values "hostname" }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: openbalena-haproxy
+            port:
+              number: 3129
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openbalena-haproxy
+  labels:
+    app: openbalena
+    component: haproxy
+data:
+  config-proxy: |
+    _front__tls
+        # BEGIN::Redirect to openBalena VPN
+        acl is_ssl req.ssl_ver 2:3.4
+        use_backend {{ .Release.Namespace }}_openbalena-vpn_443 if !is_ssl
+        # END::Redirect to openBalena VPN

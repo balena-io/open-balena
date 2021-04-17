@@ -44,7 +44,7 @@ spec:
         - name: BALENA_TOKEN_AUTH_REALM
           value: "https://api.{{ index .Values "hostname" }}/auth/v1/token"
         - name: COMMON_REGION
-          value: "{{ index .Values "deployments" "s3" "config" "region" }}"
+          value: "{{ index .Values "config" "s3" "region" }}"
         - name: REGISTRY2_CACHE_ENABLED
           value: "false"
         - name: REGISTRY2_CACHE_ADDR
@@ -56,13 +56,13 @@ spec:
         - name: REGISTRY2_CACHE_MAXMEMORY_POLICY
           value: "allkeys-lru"
         - name: REGISTRY2_S3_REGION_ENDPOINT
-          value: "{{ index .Values "deployments" "s3" "config" "endpoint" }}"
+          value: "{{ index .Values "config" "s3" "endpoint" }}"
         - name: REGISTRY2_S3_BUCKET
-          value: "{{ index .Values "deployments" "s3" "config" "bucket" }}"
+          value: "{{ index .Values "config" "s3" "bucket" }}"
         - name: REGISTRY2_S3_KEY
-          value: "{{ index .Values "deployments" "s3" "config" "access-key" }}"
+          value: "{{ index .Values "config" "s3" "access-key" }}"
         - name: REGISTRY2_S3_SECRET
-          value: "{{ index .Values "deployments" "s3" "config" "secret-key" }}"
+          value: "{{ index .Values "config" "s3" "secret-key" }}"
         - name: REGISTRY2_SECRETKEY
           value: "{{ index .Values "keys" "registry-secret-key" }}"
         - name: REGISTRY2_STORAGEPATH
