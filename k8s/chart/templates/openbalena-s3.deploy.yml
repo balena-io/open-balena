@@ -57,6 +57,9 @@ spec:
       - name: openbalena-s3-tmpfs1
         emptyDir:
           medium: Memory
+
+      nodeSelector:
+        {{- toYaml .Values.deployments.s3.nodeSelector | nindent 8 }}
   volumeClaimTemplates:
   - metadata:
       name: openbalena-s3-volume

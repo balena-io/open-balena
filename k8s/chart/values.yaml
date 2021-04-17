@@ -44,6 +44,8 @@ deployments:
     version: "v0.119.5"
     replicas: 1
 
+    nodeSelector: {}
+
     sentry-dsn: ""
 
   vpn:
@@ -51,12 +53,16 @@ deployments:
     version: "v9.17.4"
     replicas: 1
 
+    nodeSelector: {}
+
     sentry-dsn: ""
 
   registry:
     image: balena/open-balena-registry
     version: "v2.14.4"
     replicas: 1
+
+    nodeSelector: {}
 
     volume:
       storage: "1Gi"
@@ -70,6 +76,8 @@ deployments:
     version: "v2.9.9"
     replicas: 1
 
+    nodeSelector: {}
+
     volume:
       storage: "25Gi"
 
@@ -78,6 +86,8 @@ deployments:
     version: "v4.1.0"
     replicas: 1
 
+    nodeSelector: {}
+
     volume:
       storage: "1Gi"
 
@@ -85,6 +95,8 @@ deployments:
     image: redis
     version: "alpine"
     replicas: 1
+
+    nodeSelector: {}
 
     volume:
       storage: "1Gi"

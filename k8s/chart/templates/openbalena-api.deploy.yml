@@ -119,6 +119,9 @@ spec:
       - emptyDir:
           medium: Memory
         name: openbalena-api-tmpfs1
+
+      nodeSelector:
+        {{- toYaml .Values.deployments.api.nodeSelector | nindent 8 }}
 status: {}
 ---
 apiVersion: v1
