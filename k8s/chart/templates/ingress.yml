@@ -18,7 +18,7 @@ spec:
     {{- if index .Values "config" "s3" "enabled" }}
     - s3.{{ index .Values "hostname" }}
     {{- end }}
-    secretName: openbalena-http-tls
+    secretName: "openbalena-http-tls"
   rules:
   - host: api.{{ index .Values "hostname" }}
     http:
@@ -41,7 +41,7 @@ spec:
             port:
               number: 80
 
-  {{- if index .Values "deployments" "s3" "enabled" }}
+  {{- if index .Values "s3" "enabled" }}
   - host: s3.{{ index .Values "hostname" }}
     http:
       paths:
@@ -111,18 +111,3 @@ spec:
             name: openbalena-haproxy
             port:
               number: 3129
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: openbalena-haproxy
-  labels:
-    app: openbalena
-    component: haproxy
-data:
-  config-proxy: |
-    _front__tls
-        # BEGIN::Redirect to openBalena VPN
-        acl is_ssl req.ssl_ver 2:3.4
-        use_backend {{ .Release.Namespace }}_openbalena-vpn_443 if !is_ssl
-        # END::Redirect to openBalena VPN

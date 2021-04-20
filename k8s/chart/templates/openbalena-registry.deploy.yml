@@ -1,27 +1,25 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  creationTimestamp: null
   labels:
     app: openbalena
     component: registry
   name: openbalena-registry
 spec:
   serviceName: openbalena-registry
-  replicas: {{ index .Values "deployments" "registry" "replicas" }}
+  replicas: {{ index .Values "registry" "replicas" }}
   selector:
     matchLabels:
       app: openbalena
       component: registry
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: openbalena
         component: registry
     spec:
       containers:
-      - image: '{{ index .Values "deployments" "registry" "image" }}:{{ index .Values "deployments" "registry" "version" }}'
+      - image: '{{ index .Values "registry" "image" }}:{{ index .Values "registry" "version" }}'
         name: openbalena-registry
         resources: {}
         securityContext:
@@ -87,7 +85,7 @@ spec:
           medium: Memory
 
       nodeSelector:
-        {{- toYaml .Values.deployments.registry.nodeSelector | nindent 8 }}
+        {{- toYaml .Values.registry.nodeSelector | nindent 8 }}
   volumeClaimTemplates:
   - metadata:
       name: openbalena-registry-volume
@@ -96,12 +94,11 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: {{ index .Values "deployments" "registry" "volume" "storage" }}
+          storage: {{ index .Values "registry" "volume" "storage" }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     app: openbalena
     component: registry
@@ -114,5 +111,3 @@ spec:
   selector:
     app: openbalena
     component: registry
-status:
-  loadBalancer: {}

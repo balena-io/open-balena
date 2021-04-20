@@ -1,13 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: openbalena
     component: vpn
   name: openbalena-vpn
 spec:
-  replicas: {{ index .Values "deployments" "vpn" "replicas" }}
+  replicas: {{ index .Values "vpn" "replicas" }}
   selector:
     matchLabels:
       app: openbalena
@@ -15,13 +14,12 @@ spec:
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: openbalena
         component: vpn
     spec:
       containers:
-      - image: {{ index .Values "deployments" "vpn" "image" }}:{{ index .Values "deployments" "vpn" "version" }}
+      - image: {{ index .Values "vpn" "image" }}:{{ index .Values "vpn" "version" }}
         name: openbalena-vpn
         resources: {}
         ports:
@@ -52,7 +50,7 @@ spec:
         - name: RESIN_VPN_GATEWAY
           value: "10.2.0.1"
         - name: SENTRY_DSN
-          value: "{{ index .Values "deployments" "vpn" "sentry-dsn" }}"
+          value: "{{ index .Values "vpn" "sentry-dsn" }}"
         - name: VPN_HAPROXY_USEPROXYPROTOCOL
           value: "true"
         - name: VPN_OPENVPN_CA_CRT
@@ -79,13 +77,12 @@ spec:
         name: openbalena-vpn-tmpfs1
 
       nodeSelector:
-        {{- toYaml .Values.deployments.vpn.nodeSelector | nindent 8 }}
+        {{- toYaml .Values.vpn.nodeSelector | nindent 8 }}
 status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     app: openbalena
     component: vpn
@@ -107,5 +104,3 @@ spec:
   selector:
     app: openbalena
     component: vpn
-status:
-  loadBalancer: {}
