@@ -8,7 +8,7 @@ BASE_DIR="$(dirname "${DIR}")"
 CONFIG_DIR="${BASE_DIR}/config"
 
 NAMESPACE="${NAMESPACE:-default}"
-CERT_MANAGER="https://github.com/jetstack/cert-manager/releases/download/v1.0.4/cert-manager.yaml"
+CERT_MANAGER="https://github.com/jetstack/cert-manager/releases/download/v1.3.0/cert-manager.yaml"
 
 echo_bold() {
   printf "\\033[1m%s\\033[0m\\n" "$@"
