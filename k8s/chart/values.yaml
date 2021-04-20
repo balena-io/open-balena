@@ -156,6 +156,17 @@ haproxy:
   controller:
     ingressClass: "openbalena-haproxy"
 
+    # Change config of HAProxy
+    # This will add a snippet for the VPN using port 443
+    # TODO: Use Namespace instead of 'default'
+    config:
+      config-proxy: |-
+          _front__tls
+            # BEGIN::Redirect to openBalena VPN
+            acl is_ssl req.ssl_ver 2:3.4
+            use_backend default_openbalena-vpn_443 if !is_ssl
+            # END::Redirect to openBalena VPN
+
     # Add TCP proxies for the VPN
     # This option is deprecated in v0.13, but we need v0.13 of HAProxy in order for all to work
     # So we rely on this until further notice
