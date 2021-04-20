@@ -37,69 +37,73 @@ config:
     host: "openbalena-redis" # Redis host
     port: 6379 # Redis port (default 6379)
 
-# Deployments
-deployments:
-  api:
-    image: balena/open-balena-api
-    version: "v0.119.5"
-    replicas: 1
+# openBalena API
+api:
+  image: balena/open-balena-api
+  version: "v0.119.5"
+  replicas: 1
 
-    nodeSelector: {}
+  nodeSelector: {}
 
-    sentry-dsn: ""
+  sentry-dsn: ""
 
-  vpn:
-    image: balena/open-balena-vpn
-    version: "v9.17.4"
-    replicas: 1
+# openBalena VPN
+vpn:
+  image: balena/open-balena-vpn
+  version: "v9.17.4"
+  replicas: 1
 
-    nodeSelector: {}
+  nodeSelector: {}
 
-    sentry-dsn: ""
+  sentry-dsn: ""
 
-  registry:
-    image: balena/open-balena-registry
-    version: "v2.14.4"
-    replicas: 1
+# openBalena Registry
+registry:
+  image: balena/open-balena-registry
+  version: "v2.14.4"
+  replicas: 1
 
-    nodeSelector: {}
+  nodeSelector: {}
 
-    volume:
-      storage: "1Gi"
+  volume:
+    storage: "1Gi"
 
-  s3:
-    # You can disable this deployment you want to use another S3 service
-    # Just fill the config parts with the correct details
-    enabled: true
+# openBalena S3
+s3:
+  # You can disable this deployment you want to use another S3 service
+  # Just fill the config parts with the correct details
+  enabled: true
 
-    image: balena/open-balena-s3
-    version: "v2.9.9"
-    replicas: 1
+  image: balena/open-balena-s3
+  version: "v2.9.9"
+  replicas: 1
 
-    nodeSelector: {}
+  nodeSelector: {}
 
-    volume:
-      storage: "25Gi"
+  volume:
+    storage: "25Gi"
 
-  db:
-    image: balena/open-balena-db
-    version: "v4.1.0"
-    replicas: 1
+# openBalena Database
+db:
+  image: balena/open-balena-db
+  version: "v4.1.0"
+  replicas: 1
 
-    nodeSelector: {}
+  nodeSelector: {}
 
-    volume:
-      storage: "1Gi"
+  volume:
+    storage: "1Gi"
 
-  redis:
-    image: redis
-    version: "alpine"
-    replicas: 1
+# Redis instance
+redis:
+  image: redis
+  version: "alpine"
+  replicas: 1
 
-    nodeSelector: {}
+  nodeSelector: {}
 
-    volume:
-      storage: "1Gi"
+  volume:
+    storage: "1Gi"
 
 # Keys
 keys:

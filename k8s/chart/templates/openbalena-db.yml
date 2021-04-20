@@ -1,27 +1,25 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  creationTimestamp: null
   labels:
     app: openbalena
     component: db
   name: openbalena-db
 spec:
   serviceName: openbalena-db
-  replicas: {{ index .Values "deployments" "db" "replicas" }}
+  replicas: {{ index .Values "db" "replicas" }}
   selector:
     matchLabels:
       app: openbalena
       component: db
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: openbalena
         component: db
     spec:
       containers:
-      - image: '{{ index .Values "deployments" "db" "image" }}:{{ index .Values "deployments" "db" "version" }}'
+      - image: '{{ index .Values "db" "image" }}:{{ index .Values "db" "version" }}'
         name: openbalena-db
         resources: {}
         volumeMounts:
@@ -34,7 +32,7 @@ spec:
           claimName: openbalena-db-volume
 
       nodeSelector:
-        {{- toYaml .Values.deployments.db.nodeSelector | nindent 8 }}
+        {{- toYaml .Values.db.nodeSelector | nindent 8 }}
   volumeClaimTemplates:
   - metadata:
       name: openbalena-db-volume
@@ -43,12 +41,11 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: {{ index .Values "deployments" "db" "volume" "storage" }}
+          storage: {{ index .Values "db" "volume" "storage" }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     app: openbalena
     component: db
@@ -61,5 +58,3 @@ spec:
   selector:
     app: openbalena
     component: db
-status:
-  loadBalancer: {}

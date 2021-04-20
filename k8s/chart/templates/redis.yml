@@ -2,27 +2,25 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  creationTimestamp: null
   labels:
     app: openbalena
     component: redis
   name: openbalena-redis
 spec:
   serviceName: openbalena-redis
-  replicas: {{ index .Values "deployments" "redis" "replicas" }}
+  replicas: {{ index .Values "redis" "replicas" }}
   selector:
     matchLabels:
       app: openbalena
       component: redis
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: openbalena
         component: redis
     spec:
       containers:
-      - image: "{{ index .Values "deployments" "redis" "image" }}:{{ index .Values "deployments" "redis" "version" }}"
+      - image: "{{ index .Values "redis" "image" }}:{{ index .Values "redis" "version" }}"
         name: openbalena-redis
         resources: {}
         volumeMounts:
@@ -41,12 +39,11 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: {{ index .Values "deployments" "redis" "volume" "storage" }}
+          storage: {{ index .Values "redis" "volume" "storage" }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     app: openbalena
     component: redis
@@ -59,6 +56,4 @@ spec:
   selector:
     app: openbalena
     component: redis
-status:
-  loadBalancer: {}
 {{- end }}

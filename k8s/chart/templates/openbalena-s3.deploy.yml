@@ -2,27 +2,25 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  creationTimestamp: null
   labels:
     app: openbalena
     component: s3
   name: openbalena-s3
 spec:
   serviceName: openbalena-s3
-  replicas: {{ index .Values "deployments" "s3" "replicas" }}
+  replicas: {{ index .Values "s3" "replicas" }}
   selector:
     matchLabels:
       app: openbalena
       component: s3
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: openbalena
         component: s3
     spec:
       containers:
-      - image: '{{ index .Values "deployments" "s3" "image" }}:{{ index .Values "deployments" "s3" "version" }}'
+      - image: '{{ index .Values "s3" "image" }}:{{ index .Values "s3" "version" }}'
         name: openbalena-s3
         resources: {}
         securityContext:
@@ -59,7 +57,7 @@ spec:
           medium: Memory
 
       nodeSelector:
-        {{- toYaml .Values.deployments.s3.nodeSelector | nindent 8 }}
+        {{- toYaml .Values.s3.nodeSelector | nindent 8 }}
   volumeClaimTemplates:
   - metadata:
       name: openbalena-s3-volume
@@ -68,12 +66,11 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: {{ index .Values "deployments" "s3" "volume" "storage" }}
+          storage: {{ index .Values "s3" "volume" "storage" }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     app: openbalena
     component: s3
@@ -86,6 +83,4 @@ spec:
   selector:
     app: openbalena
     component: s3
-status:
-  loadBalancer: {}
 {{- end }}

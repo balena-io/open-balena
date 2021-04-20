@@ -1,13 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
+  name: openbalena-api
   labels:
     app: openbalena
     component: api
-  name: openbalena-api
 spec:
-  replicas: {{ index .Values "deployments" "api" "replicas" }}
+  replicas: {{ index .Values "api" "replicas" }}
   selector:
     matchLabels:
       app: openbalena
@@ -15,13 +14,12 @@ spec:
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: openbalena
         component: api
     spec:
       containers:
-      - image: {{ index .Values "deployments" "api" "image" }}:{{ index .Values "deployments" "api" "version" }}
+      - image: {{ index .Values "api" "image" }}:{{ index .Values "api" "version" }}
         name: openbalena-api
         resources: {}
         securityContext:
@@ -84,7 +82,7 @@ spec:
         - name: REGISTRY_HOST
           value: "registry.{{ index .Values "hostname" }}"
         - name: SENTRY_DSN
-          value: "{{ index .Values "deployments" "api" "sentry-dsn" }}"
+          value: "{{ index .Values "api" "sentry-dsn" }}"
         - name: TOKEN_AUTH_BUILDER_TOKEN
           value: "{{ index .Values "keys" "token-auth-builder-token" }}"
         - name: TOKEN_AUTH_CERT_ISSUER
@@ -121,13 +119,12 @@ spec:
         name: openbalena-api-tmpfs1
 
       nodeSelector:
-        {{- toYaml .Values.deployments.api.nodeSelector | nindent 8 }}
+        {{- toYaml .Values.api.nodeSelector | nindent 8 }}
 status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     app: openbalena
     component: api
@@ -140,5 +137,3 @@ spec:
   selector:
     app: openbalena
     component: api
-status:
-  loadBalancer: {}
