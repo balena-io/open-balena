@@ -1,4 +1,16 @@
 - commits:
+    - subject: 'patch: Adding supported devices to OB'
+      hash: 0cdf0ef5589c4361370cbccd435b1a655c1ccc98
+      body: >-
+        Added a line in the OB vs balenaCloud which includes a mention to the
+        devices supported by each. This list is mentioned in the FAQ section of
+        the pricing page.
+      footer: {}
+      author: rmorillo24
+      nested: []
+  version: 3.2.2
+  date: 2021-04-28T15:20:11.538Z
+- commits:
     - subject: Add Matt and Paulo to CODEOWNERS
       hash: 746be65846890130ebda95b03c056afa6a5816bb
       body: ''
