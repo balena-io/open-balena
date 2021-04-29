@@ -115,6 +115,7 @@ improvements and new functionality is planned:
 | Management via `balena-cli` only                    | Cloud-based device management dashboard                                                                                                                                                                   |
 | Download images from [balena.io][balena-os-website] | Download preconfigured images directly from the dashboard                                                                                                                                                 |
 | No supported remote diagnostics                     | Remote device diagnostics                                                                                                                                                                                 |
+| Supported devices: Raspberry Pi family, the Intel NUC, the NVIDIA Jetson TX2, and the balenaFin | All the devices listed in balena's [reference documentation](https://www.balena.io/docs/reference/hardware/devices/)   |
 
 Additionally, refer back to the [roadmap](#roadmap) above for planned but not yet implemented features.
 
