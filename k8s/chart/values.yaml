@@ -2,150 +2,251 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# Hostname of open-balena instance
-hostname: "" # OPENBALENA_HOST_NAME
+# General configuration
+global:
+  # Hostname of open-balena instance
+  hostname: ""
 
-# General configurations
-config:
   # openBalena admin details
   email: ""
   password: ""
 
   # Production mode for openBalena (will cause containers to restart when crashed)
-  production-mode: ""
+  production-mode: "false"
 
-  # Authorized keys
+  # Authorized SSH keys
   ssh-authorized-keys: ""
 
+  # S3 settings
+  # If using other settings than the default settings, you can disable the S3 StatefulSet by setting '.s3.enabled' to false
   s3:
-    # When enabled, this Helm chart will provide in an S3 registry
-    # If disabled, S3 will still be used, just not deployed, which means you've to provide your own S3 bucket using the details below
-    enabled: true
+    bucket: ""
+    endpoint: ""
+    region: ""
+    accesskey: ""
+    secretkey: ""
 
-    # S3 Configuration details
-    bucket: "" # S3 Bucket
-    endpoint: "" # S3 Endpoint
-    region: "" # S3 Region
-    access-key: "" # S3 Access key
-    secret-key: "" # S3 Secret key
+    storagePath: "/data"
+    disableRedirect: false
 
-  redis:
-    # When enabled, this Helm chart will provide in a Redis instance
-    # If disabled, Redis will still be used, just not deployed, which means you've to provide your own Redis instance using the details below
-    enabled: true
+    cloudfront:
+      endpoint:
+      keypair:
+      privatekey:
 
-    host: "openbalena-redis" # Redis host
-    port: 6379 # Redis port (default 6379)
+  # Keys
+  keys:
+    # OPENBALENA_COOKIE_SESSION_SECRET
+    cookie-secret:
+    # OPENBALENA_JWT_SECRET
+    jwt-secret:
+    # OPENBALENA_RESINOS_REGISTRY_CODE
+    registry-code:
+    # OPENBALENA_VPN_SERVICE_API_KEY
+    service-api-key:
+    # OPENBALENA_API_VPN_SERVICE_API_KEY
+    api-vpn-service-api-key:
+    # OPENBALENA_REGISTRY_SECRET_KEY
+    registry-secret-key:
+    # OPENBALENA_TOKEN_AUTH_BUILDER_TOKEN
+    token-auth-builder-token:
+    # OPENBALENA_TOKEN_AUTH_PUB
+    token-auth-pub:
+    # OPENBALENA_TOKEN_AUTH_KEY
+    token-auth-key:
+    # OPENBALENA_TOKEN_AUTH_KID
+    token-auth-kid:
+
+  # Certificates
+  certificates:
+    # Root certificates
+    root:
+      # OPENBALENA_ROOT_CA
+      ca:
+
+      # OPENBALENA_ROOT_CRT
+      crt:
+
+      # OPENBALENA_ROOT_KEY
+      key:
+
+    vpn:
+      # OPENBALENA_VPN_CA
+      ca:
+
+      # OPENBALENA_VPN_CA_CHAIN
+      ca-chain:
+
+      # OPENBALENA_VPN_SERVER_CRT
+      crt:
+
+      # OPENBALENA_VPN_SERVER_KEY
+      server-key:
+
+      # OPENBALENA_VPN_SERVER_DH
+      dh:
+
+issuer:
+  enabled: true
+  name: openbalena-issuer
+  email: ""
+  server: https://acme-v02.api.letsencrypt.org/directory
+  preferredChain: ""
+  solvers:
+    - http01:
+        ingress:
+          class: openbalena-haproxy
+
+ingress:
+  # Global ingress settings
+  annotations:
+    kubernetes.io/ingress.class: openbalena-haproxy
+    cert-manager.io/issuer: openbalena-issuer
+
+  # HTTP ingress settings
+  http:
+    annotations: {}
+
+  # Tunnel ingress settings
+  tunnel:
+    annotations: {}
+
+  # VPN ingress settings
+  vpn:
+    annotations: {}
 
 # openBalena API
 api:
-  image: balena/open-balena-api
-  version: "v0.119.5"
   replicas: 1
+  image:
+    repository: balena/open-balena-api
+    tag: "v0.119.5"
+    pullPolicy: IfNotPresent
 
+  labels: {}
+  annotations: {}
+  affinity: {}
+  resources: {}
   nodeSelector: {}
+
+  service:
+    labels: {}
+    annotations: {}
+    externalIPs: []
 
   sentry-dsn: ""
 
 # openBalena VPN
 vpn:
-  image: balena/open-balena-vpn
-  version: "v9.17.4"
   replicas: 1
+  image:
+    repository: balena/open-balena-vpn
+    tag: "v9.17.4"
+    pullPolicy: IfNotPresent
 
+  labels: {}
+  annotations: {}
+  affinity: {}
+  resources: {}
   nodeSelector: {}
+
+  service:
+    labels: {}
+    annotations: {}
+    externalIPs: []
 
   sentry-dsn: ""
 
 # openBalena Registry
 registry:
-  image: balena/open-balena-registry
-  version: "v2.14.4"
   replicas: 1
+  image:
+    repository: balena/open-balena-registry
+    tag: "v2.16.0"
+    pullPolicy: IfNotPresent
 
+  labels: {}
+  annotations: {}
+  affinity: {}
+  resources: {}
   nodeSelector: {}
 
-  volume:
-    storage: "1Gi"
+  service:
+    labels: {}
+    annotations: {}
+    externalIPs: []
+
+  storage: "10Gi"
+  storageClass:
 
 # openBalena S3
 s3:
-  # You can disable this deployment you want to use another S3 service
-  # Just fill the config parts with the correct details
+  # If disabled, please provide details in .config.s3
   enabled: true
 
-  image: balena/open-balena-s3
-  version: "v2.9.9"
   replicas: 1
+  image:
+    repository: balena/open-balena-s3
+    tag: "v2.9.9"
+    pullPolicy: IfNotPresent
 
+  labels: {}
+  annotations: {}
+  affinity: {}
+  resources: {}
   nodeSelector: {}
 
-  volume:
-    storage: "25Gi"
+  service:
+    labels: {}
+    annotations: {}
+    externalIPs: []
+
+  storage: "25Gi"
+  storageClass:
 
 # openBalena Database
 db:
-  image: balena/open-balena-db
-  version: "v4.1.0"
   replicas: 1
+  image:
+    repository: balena/open-balena-db
+    tag: "v4.1.0"
+    pullPolicy: IfNotPresent
 
+  labels: {}
+  annotations: {}
+  affinity: {}
+  resources: {}
   nodeSelector: {}
 
-  volume:
-    storage: "1Gi"
+  service:
+    labels: {}
+    annotations: {}
+    externalIPs: []
+
+  storage: "10Gi"
+  storageClass:
 
 # Redis instance
 redis:
-  image: redis
-  version: "alpine"
   replicas: 1
+  image:
+    repository: redis
+    tag: "alpine"
+    pullPolicy: IfNotPresent
 
+  labels: {}
+  annotations: {}
+  affinity: {}
+  resources: {}
   nodeSelector: {}
 
-  volume:
-    storage: "1Gi"
+  service:
+    labels: {}
+    annotations: {}
+    externalIPs: []
 
-# Keys
-keys:
-  cookie-secret: "" # OPENBALENA_COOKIE_SESSION_SECRET
-  jwt-secret:  # OPENBALENA_JWT_SECRET
-  registry-code:  # OPENBALENA_RESINOS_REGISTRY_CODE
-  service-api-key: "" # OPENBALENA_VPN_SERVICE_API_KEY
-  api-vpn-service-api-key: "" # OPENBALENA_API_VPN_SERVICE_API_KEY
-  registry-secret-key: "" # OPENBALENA_REGISTRY_SECRET_KEY
-  token-auth-builder-token: "" # OPENBALENA_TOKEN_AUTH_BUILDER_TOKEN
-  token-auth-pub: "" # OPENBALENA_TOKEN_AUTH_PUB
-  token-auth-key: "" # OPENBALENA_TOKEN_AUTH_KEY
-  token-auth-kid: "" # OPENBALENA_TOKEN_AUTH_KID
-
-# Certificates
-certificates:
-  # Root certificates
-  root:
-    # OPENBALENA_ROOT_CA
-    ca: ""
-
-    # OPENBALENA_ROOT_CRT
-    crt: ""
-
-    # OPENBALENA_ROOT_KEY
-    key: ""
-
-  vpn:
-    # OPENBALENA_VPN_CA
-    ca: ""
-
-    # OPENBALENA_VPN_CA_CHAIN
-    ca-chain: ""
-
-    # OPENBALENA_VPN_SERVER_CRT
-    crt: ""
-
-    # OPENBALENA_VPN_SERVER_KEY
-    server-key: ""
-
-    # OPENBALENA_VPN_SERVER_DH
-    dh: ""
+  storage: "10Gi"
+  storageClass:
 
 ##
 ## HAProxy Ingress Chart
@@ -154,6 +255,11 @@ certificates:
 ##
 haproxy:
   controller:
+    image:
+      repository: quay.io/jcmoraisjr/h
+      tag: v0.13.0-s2-r1
+      pullPolicy: IfNotPresent
+
     ingressClass: "openbalena-haproxy"
 
     # Change config of HAProxy
@@ -172,4 +278,4 @@ haproxy:
     # So we rely on this until further notice
     # This will cause port 3129 to be opened on the Load Balancer, so keep that in mind!
     tcp:
-      3129: "{{ .Release.Namespace }}/openbalena-vpn:3128:::{{ .Release.Namespace }}/openbalena-http-tunnel-tls"
+      3129: "{{ .Release.Namespace }}/openbalena-vpn:3128:::{{ .Release.Namespace }}/openbalena-tunnel-tls"
