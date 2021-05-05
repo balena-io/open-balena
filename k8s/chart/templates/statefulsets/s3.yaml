@@ -1,0 +1,102 @@
+{{- if .Values.s3.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "openbalena.fullname" . }}-s3
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openbalena.labels" . | nindent 4 }}
+    app.kubernetes.io/component: s3
+
+    {{- with .Values.s3.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.s3.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.s3.affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  serviceName: {{ include "openbalena.fullname" . }}-s3
+  selector:
+    matchLabels:
+      {{- include "openbalena.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: s3
+
+      {{- with .Values.s3.labels }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  {{- if .Values.s3.replicas  }}
+  replicas: {{ .Values.s3.replicas }}
+  {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- include "openbalena.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: s3
+
+        {{- with .Values.s3.labels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-s3
+        image: {{ .Values.s3.image.repository }}:{{ .Values.s3.image.tag }}
+        imagePullPolicy: {{ .Values.s3.image.pullPolicy }}
+        {{- with .Values.s3.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        ports:
+          - name: http
+            containerPort: 80
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN", "SYS_RESOURCE"]
+        env:
+        - name: CONFD_BACKEND
+          value: "ENV"
+        - name: S3_MINIO_ACCESS_KEY
+          value: "{{ index .Values "global" "s3" "accesskey" }}"
+        - name: S3_MINIO_SECRET_KEY
+          value: "{{ index .Values "global" "s3" "secretkey" }}"
+        - name: BUCKETS
+          value: "{{ index .Values "global" "s3" "bucket" }}"
+        volumeMounts:
+        - mountPath: /export
+          name: data
+        - mountPath: /run
+          name: run
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: data
+      - name: run
+        emptyDir:
+          medium: Memory
+      - name: cgroup
+        emptyDir:
+          medium: Memory
+
+      {{- with .Values.s3.nodeSelector  }}
+      nodeSelector:
+        {{- toYaml .Values.s3.nodeSelector | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      {{- if .Values.s3.storageClass }}
+      storageClassName: {{ .Values.s3.storageClass }}
+      {{- end }}
+      resources:
+        requests:
+          storage: {{ .Values.s3.storage }}
+{{- end }}

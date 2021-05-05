@@ -1,0 +1,22 @@
+{{- if .Values.issuer.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ .Values.issuer.name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openbalena.labels" . | nindent 4 }}
+spec:
+  acme:
+    email: {{ .Values.issuer.email }}
+    server: {{ .Values.issuer.server }}
+    {{- if .Values.issuer.preferredChain }}
+    preferredChain: {{ .Values.issuer.preferredChain }}
+    {{- end }}
+    privateKeySecretRef:
+      name: {{ .Values.issuer.name }}
+    {{- with .Values.issuer.solvers }}
+    solvers:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+{{- end }}
