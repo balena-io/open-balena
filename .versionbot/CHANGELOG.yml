@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update registry service
+      hash: 49831a6a60f7ce2021c6a06f89d63dc6ba5d21dd
+      body: ''
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Bart Versluijs
+      nested: []
+  version: 3.3.0
+  date: 2021-05-05T13:17:28.209Z
+- commits:
     - subject: 'patch: Adding supported devices to OB'
       hash: 0cdf0ef5589c4361370cbccd435b1a655c1ccc98
       body: >-
