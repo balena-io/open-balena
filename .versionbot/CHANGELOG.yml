@@ -1,4 +1,19 @@
 - commits:
+    - subject: >-
+        scripts/compose: Delete Balena CLI version warning This can be removed
+        completely now — it was added to ensure existing users also update to
+        the latest (at the time) CLI as they updated their open-balena
+        installation.
+      hash: cd2c3f5e11c492f91ff49da5b164c280c183a41f
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: fisehara
+      nested: []
+  version: 3.3.1
+  date: 2021-05-24T12:19:20.216Z
+- commits:
     - subject: Update registry service
       hash: 49831a6a60f7ce2021c6a06f89d63dc6ba5d21dd
       body: ''
