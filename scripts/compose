@@ -35,9 +35,6 @@ if [ ${OPENBALENA_HOST_NAME: -6} == ".local" ]; then
   INCLUDE_MDNS="-f ${BASE_DIR}/compose/mdns.yml"
 fi
 
-# show a warning to update your balena CLI tool...
-echo_bold_stderr "IMPORTANT: Please update your Balena CLI installation to version v12.38.5"
-
 # shellcheck source=/dev/null
 source "${VERSIONS_FILE}"; docker-compose \
   --project-name 'openbalena' \
