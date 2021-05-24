@@ -11,10 +11,6 @@ echo_bold() {
   printf "\\033[1m%s\\033[0m\\n" "$@"
 }
 
-echo_bold_stderr() {
-  printf "\\033[1m%s\\033[0m\\n" "$@" 1>&2
-}
-
 VERSIONS_FILE="${BASE_DIR}/compose/versions"
 if [ ! -f "$VERSIONS_FILE" ]; then
   echo_bold "No service versions defined in ${VERSIONS_FILE}"
