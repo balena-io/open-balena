@@ -1,4 +1,15 @@
 - commits:
+    - subject: Auto-install required Vagrant plugins instead of erroring out
+      hash: d71a90c1efcf75e6e33e0f63c9b49803ddafd3fd
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Mark S. Maglana
+      nested: []
+  version: 3.3.2
+  date: 2021-06-03T02:02:26.762Z
+- commits:
     - subject: >-
         scripts/compose: Delete Balena CLI version warning This can be removed
         completely now — it was added to ensure existing users also update to
