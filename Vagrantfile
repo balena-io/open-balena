@@ -1,12 +1,11 @@
-Vagrant.require_version '>= 2.0.0'
-
-[ 'vagrant-vbguest', 'vagrant-docker-compose' ].each do |p|
-  unless Vagrant.has_plugin?(p)
-    raise "Please install missing plugin: vagrant plugin install #{p}"
-  end
-end
+Vagrant.require_version '>= 2.2.0'
 
 Vagrant.configure('2') do |config|
+  config.vagrant.plugins = [
+    'vagrant-vbguest',
+    'vagrant-docker-compose'
+  ]
+
   config.vm.define 'openbalena'
   config.vm.hostname = 'openbalena-vagrant'
   config.vm.box = 'bento/ubuntu-18.04'
