@@ -123,7 +123,7 @@ cat >"${CONFIG_DIR}/activate" <(source "${DIR}/make-env")
 echo_bold "==> Adding default compose file..."
 cp "${BASE_DIR}/compose/template.yml" "${CONFIG_DIR}/docker-compose.yml"
 
-echo_bold "==> Creating Kubernetes values.yaml..."
+echo_bold "==> Adding default Kubernetes Helm file..."
 source "${CONFIG_DIR}/activate";
 source "${COMPOSE_DIR}/versions";
 envsubst < "${BASE_DIR}/compose/kubernetes.template.yaml" > "${CONFIG_DIR}/kubernetes.yaml"
