@@ -37,7 +37,6 @@ BASE_DIR="$(dirname "${DIR}")"
 CONFIG_DIR="${BASE_DIR}/config"
 CERTS_DIR="${CONFIG_DIR}/certs"
 COMPOSE_DIR="${BASE_DIR}/compose"
-K8S_DIR="${BASE_DIR}/k8s"
 
 DOMAIN=openbalena.local
 
@@ -125,7 +124,6 @@ echo_bold "==> Adding default compose file..."
 cp "${BASE_DIR}/compose/template.yml" "${CONFIG_DIR}/docker-compose.yml"
 
 echo_bold "==> Creating Kubernetes values.yaml..."
-mkdir -p "${CONFIG_DIR}/k8s";
 source "${CONFIG_DIR}/activate";
 source "${COMPOSE_DIR}/versions";
 envsubst < "${BASE_DIR}/compose/kubernetes.template.yaml" > "${CONFIG_DIR}/kubernetes.yaml"
