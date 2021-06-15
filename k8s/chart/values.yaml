@@ -86,22 +86,10 @@ global:
       # OPENBALENA_VPN_SERVER_DH
       dh:
 
-issuer:
-  enabled: true
-  name: openbalena-issuer
-  email: ""
-  server: https://acme-v02.api.letsencrypt.org/directory
-  preferredChain: ""
-  solvers:
-    - http01:
-        ingress:
-          class: openbalena-haproxy
-
 ingress:
   # Global ingress settings
   annotations:
     kubernetes.io/ingress.class: openbalena-haproxy
-    cert-manager.io/issuer: openbalena-issuer
 
   # HTTP ingress settings
   http:
