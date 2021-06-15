@@ -7,5 +7,5 @@
 /package-lock.json
 
 # Kubernetes
-k8s/chart/charts
-k8s/chart/Chart.lock
+kubernetes/helm/charts
+kubernetes/helm/Chart.lock
