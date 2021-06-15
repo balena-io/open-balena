@@ -1,4 +1,7 @@
 # openBalena - Helm
+
+> This Helm Chart is an unofficial chart and isn't created by the openBalena maintainers.
+
 This openBalena - Helm Chart is an unofficial Kubernetes chart, but will allow you to run openBalena in a Kubernetes cluster.  
 
 # Dependencies
@@ -21,6 +24,9 @@ $ helm install openbalena ./kubernetes/helm -f ./config/kubernetes.yaml
 
 The openBalena server will now be installed on your cluster on the `default` namespace.   
 More options while installing can be found in the [Helm documentation](https://helm.sh/docs/).
+
+> After installing, you've to delete the HAProxy Ingress chart once, because of an issue with the TCP TLS secret update.  
+> If you don't do this, the 'tunnel' endpoint will not work
 
 # Upgrading the chart
 If you've made any changes to the `kubernetes.yaml` chart, upgrading is as simple as installing, only changing the word 'install' with 'upgrade'.
