@@ -79,7 +79,7 @@ spec:
         - name: SENTRY_DSN
           value: "{{ index .Values "vpn" "sentry-dsn" }}"
         - name: VPN_HAPROXY_USEPROXYPROTOCOL
-          value: "true"
+          value: "false"
         - name: VPN_OPENVPN_CA_CRT
           value: "{{ index .Values "global" "certificates" "vpn" "ca" }}"
         - name: VPN_OPENVPN_SERVER_CRT
