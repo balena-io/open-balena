@@ -12,7 +12,7 @@ global:
   password: ""
 
   # Production mode for openBalena (will cause containers to restart when crashed)
-  production-mode: "false"
+  production-mode: false
 
   # Authorized SSH keys
   ssh-authorized-keys: ""
