@@ -27,7 +27,6 @@ global:
     secretkey: ""
 
     storagePath: "/data"
-    disableRedirect: false
 
     cloudfront:
       endpoint:
@@ -157,6 +156,8 @@ registry:
     repository: balena/open-balena-registry
     tag: "v2.16.0"
     pullPolicy: IfNotPresent
+
+  disableRedirect: false
 
   labels: {}
   annotations: {}

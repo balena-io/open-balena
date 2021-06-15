@@ -94,7 +94,7 @@ spec:
         - name: REGISTRY2_STORAGEPATH
           value: "{{ .Values.global.s3.storagePath }}"
 
-        {{- if .Values.global.s3.disableRedirect }}
+        {{- if .Values.registry.disableRedirect }}
         - name: REGISTRY2_DISABLE_REDIRECT
           value: "true"
         {{- end }}
