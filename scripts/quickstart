@@ -14,16 +14,16 @@ RESET=`tput sgr0`
 
 # for macos machines, we need proper OpenSSL...
 OPENSSL_VERSION=$(openssl version -v)
-# if [[ "${OPENSSL_VERSION}" =~ ^LibreSSL.*$ ]]; then
-#   echo -e "${RED}ERROR: You may not have a compatible OpenSSL version (${OPENSSL_VERSION}). Please install OpenSSL version 1.0.2q or above.${RESET}"
-#   if [ $(uname) == 'Darwin' ]; then
-#         echo 'OpenSSL is required to build openBalena on macOS. To install with brew, run'
-#         echo ''
-#         echo '    brew install openssl'
-#         echo ''
-#     fi
-#   exit 1
-# fi
+if [[ "${OPENSSL_VERSION}" =~ ^LibreSSL.*$ ]]; then
+  echo -e "${RED}ERROR: You may not have a compatible OpenSSL version (${OPENSSL_VERSION}). Please install OpenSSL version 1.0.2q or above.${RESET}"
+  if [ $(uname) == 'Darwin' ]; then
+        echo 'OpenSSL is required to build openBalena on macOS. To install with brew, run'
+        echo ''
+        echo '    brew install openssl'
+        echo ''
+    fi
+  exit 1
+fi
 
 source "${BASH_SOURCE%/*}/_realpath"
 
