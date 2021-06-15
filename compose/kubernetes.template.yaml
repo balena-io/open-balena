@@ -53,5 +53,9 @@ global:
       server-key: "${OPENBALENA_VPN_SERVER_KEY}"
       dh: "${OPENBALENA_VPN_SERVER_DH}"
 
-issuer:
-  email: "${OPENBALENA_SUPERUSER_EMAIL}"
+# To add a cert-manager issuer, use the ingress.annotations
+# It will update all ingress' annotations
+# Example of adding the annotation:
+# ingress:
+  # annotations:
+    # cert-manager.io/issuer: <issuer>
