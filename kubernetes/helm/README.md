@@ -5,7 +5,7 @@
 This openBalena - Helm Chart is an unofficial Kubernetes chart, but will allow you to run openBalena in a Kubernetes cluster.  
 
 # Dependencies
-- [HAProxy Ingress v0.13.0-snapshot.3](https://github.com/jcmoraisjr/haproxy-ingress)
+- [HAProxy Ingress v0.13.0-beta.1](https://github.com/jcmoraisjr/haproxy-ingress)
 
 # Installing the chart
 First, you've to generate a new configuration of openBalena using the `quickstart`. This will generate the `docker-compose` values as well as a `kubernetes.yaml` file, which contains everything from the config but in the Chart format. Example of running the quickstart below.
@@ -16,9 +16,11 @@ First, you've to generate a new configuration of openBalena using the `quickstar
 $ ./scripts/quickstart -U <email@address> -P <password> -d mydomain.com
 ```
 
-Now that the configuration is generated, we can install the Helm chart, just like every other Helm chart. 
+Now that the configuration is generated, we can install the Helm chart, just like every other Helm chart.  
+You've to add the HAProxy Ingress repository to your Helm first, if you've done that yet.
 
 ```bash
+$ helm repo add haproxy-ingress https://haproxy-ingress.github.io/charts
 $ helm install openbalena ./kubernetes/helm -f ./config/kubernetes.yaml
 ```
 
