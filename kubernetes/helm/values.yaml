@@ -260,10 +260,3 @@ haproxy:
             acl is_ssl req.ssl_ver 2:3.4
             use_backend {{ .Release.Namespace }}_openbalena-vpn_443 if !is_ssl
             # END::Redirect to openBalena VPN
-
-    # Add TCP proxies for the VPN
-    # This option is deprecated in v0.13, but we need v0.13 of HAProxy in order for all to work
-    # So we rely on this until further notice
-    # This will cause port 3129 to be opened on the Load Balancer, so keep that in mind!
-    tcp:
-      3129: "{{ .Release.Namespace }}/openbalena-vpn:3128:::{{ .Release.Namespace }}/openbalena-tunnel-tls"

@@ -7,7 +7,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ include "openbalena.fullname" . }}-tunnel
+  name: {{ include "openbalena.fullname" . }}-internal-tunnel
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "openbalena.labels" . | nindent 4 }}
@@ -15,23 +15,20 @@ metadata:
     {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
-    ingress.kubernetes.io/ssl-passthrough: "true"
+    ingress.kubernetes.io/tcp-service-port: "3128"
     {{- with .Values.ingress.tunnel.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   tls:
-  - hosts:
-    - tunnel.{{ .Values.global.hostname }}
-    secretName: {{ include "openbalena.fullname" . }}-tunnel-tls
+  - secretName: {{ include "openbalena.fullname" . }}-tunnel-tls
   rules:
-  - host: tunnel.{{ .Values.global.hostname }}
-    http:
+  - http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: {{ include "openbalena.fullname" . }}-internal-tunnel
+            name: {{ include "openbalena.fullname" . }}-vpn
             port:
               number: 3128
