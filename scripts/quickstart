@@ -126,7 +126,7 @@ cp "${BASE_DIR}/compose/template.yml" "${CONFIG_DIR}/docker-compose.yml"
 echo_bold "==> Adding default Kubernetes Helm file..."
 source "${CONFIG_DIR}/activate";
 source "${COMPOSE_DIR}/versions";
-envsubst < "${BASE_DIR}/compose/kubernetes.template.yaml" > "${CONFIG_DIR}/kubernetes.yaml"
+envsubst < "${BASE_DIR}/kubernetes/values.template.yaml" > "${CONFIG_DIR}/kubernetes.yaml"
 
 if [ "${patch_hosts}" = "true" ]; then
   echo_bold "==> Patching /etc/hosts..."
