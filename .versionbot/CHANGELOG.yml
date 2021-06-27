@@ -1,4 +1,2146 @@
 - commits:
+    - subject: 'Update API, registry and VPN services'
+      hash: 1180bb3462bb9502b5c8fec6e800841acdcb4e1e
+      body: |
+        Update open-balena-api from 0.119.5 to 0.139.0
+        Update open-balena-registry from 2.16.0 to 2.16.1
+        Update open-balena-vpn from 9.17.4 to 9.17.11
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Bart Versluijs
+      nested:
+        - commits:
+            - subject: Require public apps to be of a non-legacy type
+              hash: f61c60a0efb4929d768bec2265b2b620d3f46aae
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                See: 'https://github.com/balena-io/balena-api/issues/3129'
+                see: 'https://github.com/balena-io/balena-api/issues/3129'
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.139.0
+          date: 2021-05-11T17:22:39.270Z
+        - commits:
+            - subject: 'hostapps: unset a target hostapp when changing device types'
+              hash: ed9f3fed6a92832e103e4c6e768c2adfda09f4b7
+              body: ''
+              footer:
+                Connects-to: 'https://github.com/balena-io/open-balena-api/issues/668'
+                connects-to: 'https://github.com/balena-io/open-balena-api/issues/668'
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.138.11
+          date: 2021-05-11T14:55:41.826Z
+        - commits:
+            - subject: >-
+                Use `true = false` rather than `1 = 2` for generating a false
+                result
+              hash: 1fc20cf371d01f12110042da6bfa088e8a9b17d2
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.138.10
+          date: 2021-05-07T14:47:13.413Z
+        - commits:
+            - subject: >-
+                supervisor-apps: allow provisioning directly to a logstream
+                edition
+              hash: 2f58677e999de7cc6a6655775e17d20ef81d3742
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Connects-to: 'https://github.com/balena-io/open-balena-api/issues/665'
+                connects-to: 'https://github.com/balena-io/open-balena-api/issues/665'
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.138.9
+          date: 2021-05-06T16:54:21.866Z
+        - commits:
+            - subject: >-
+                hostapps: test that devices can still PATCH after provisioning
+                to an invalidated release
+              hash: 89b49ec2b887d4bde4d52b16f92657e2565920da
+              body: ''
+              footer:
+                Connects-to: 'https://github.com/balena-io/balena-api/issues/3117'
+                connects-to: 'https://github.com/balena-io/balena-api/issues/3117'
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.138.8
+          date: 2021-05-05T14:18:11.532Z
+        - commits:
+            - subject: >-
+                supervisor-releases: copy across all relevant modeling from
+                closed API
+              hash: 91eb4c29e6df232a337e007b1889a1180edd4f9b
+              body: ''
+              footer:
+                Connects-to: 'https://github.com/balena-io/open-balena-api/pull/504'
+                connects-to: 'https://github.com/balena-io/open-balena-api/pull/504'
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.138.7
+          date: 2021-05-04T17:26:08.436Z
+        - commits:
+            - subject: Remove unnecessary async/await from state endpoint
+              hash: 64135e7b595276fef2cb61e592419d544f98f00d
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.138.6
+          date: 2021-05-04T15:14:32.247Z
+        - commits:
+            - subject: >-
+                hostapps: ensure that preprovisioned devices aren't downgraded
+                after check in
+              hash: cf7b203d8a937eaf28cd81cd33a8306119d7ca10
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.138.5
+          date: 2021-05-04T13:26:35.317Z
+        - commits:
+            - subject: 'hostapps: remove rule enforcing valid hostapp releases'
+              hash: b8594fa08de2533b01d3a3f52b6dca001aef6e42
+              body: >
+                We already enforce this in the hook itself, and this rule
+                prevents
+
+                devices that have provisioned with an invalidated hostapp
+                release from
+
+                ever PATCHing/updating after the fact. we ideally only want to
+                enforce
+
+                this rule at upgrade time, rather than always
+              footer:
+                Connects-to: 'https://github.com/balena-io/balena-api/issues/3117'
+                connects-to: 'https://github.com/balena-io/balena-api/issues/3117'
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.138.4
+          date: 2021-05-03T22:09:29.530Z
+        - commits:
+            - subject: 'fixtures: reuse variable rather than hardcode the value'
+              hash: d3032d2efb83da3b016162fea827ec4d1b8e9b9f
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.138.3
+          date: 2021-05-03T21:45:00.573Z
+        - commits:
+            - subject: 'fixtures: drop unnecessary state patch value'
+              hash: 9e7bfb87beab131ecc066d6bedc447efb7788536
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.138.2
+          date: 2021-05-03T21:17:41.986Z
+        - commits:
+            - subject: Fix 'dependents' on state not being returned
+              hash: 80d52e8af04d5b5582d74fc68b336a0e9c19909f
+              body: ''
+              footer:
+                Signed-off-by: PJ <pj@balena.io>
+                signed-off-by: PJ <pj@balena.io>
+                Change-type: patch
+                change-type: patch
+              author: toochevere
+              nested: []
+          version: open-balena-api-0.138.1
+          date: 2021-04-30T17:13:02.415Z
+        - commits:
+            - subject: >-
+                Revert "Expose the RPi family config vars to
+                raspberrypi3-unipi-neuron"
+              hash: f6cf55cec496c97905f4801d8be08d6b56f1fdb0
+              body: >
+                This reverts commit db990479be2611f24b6262e12e1dfa092473cea0.
+
+
+                OpenBalena is not the place to do the config vars change for the
+                private
+
+                device types such as the UniPi Neuron so we revert this commit
+                here.
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Florin Sarbu
+              nested: []
+          version: open-balena-api-0.138.0
+          date: 2021-04-30T12:49:22.990Z
+        - commits:
+            - subject: Add missing foreign key indexes
+              hash: 2efdf0e94aeb94ca81bb925b4675a40589e7ea72
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.137.1
+          date: 2021-04-30T11:33:55.873Z
+        - commits:
+            - subject: Expose the RPi family config vars to raspberrypi3-unipi-neuron
+              hash: db990479be2611f24b6262e12e1dfa092473cea0
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                Signed-off-by: Florin Sarbu <florin@balena.io>
+                signed-off-by: Florin Sarbu <florin@balena.io>
+              author: Florin Sarbu
+              nested: []
+          version: open-balena-api-0.137.0
+          date: 2021-04-30T08:42:31.591Z
+        - commits:
+            - subject: Refactoring to get ready for v3 state endpoint changes
+              hash: 0576685ca16e9a19bfb6ea113f86e7398beb0345
+              body: ''
+              footer:
+                Signed-off-by: PJ <pj@balena.io>
+                signed-off-by: PJ <pj@balena.io>
+                Change-type: patch
+                change-type: patch
+              author: toochevere
+              nested: []
+          version: open-balena-api-0.136.4
+          date: 2021-04-29T17:08:18.908Z
+        - commits:
+            - subject: Remove unnecessary delete hook for env var validation
+              hash: eb75eeb0bb7c9c0622fe3e5f9e35e93a37ca9a10
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.136.3
+          date: 2021-04-29T14:55:41.811Z
+        - commits:
+            - subject: >-
+                Accept additional fields during provisioning if they are
+                provided
+              hash: 9f7d3498da331a7586a47960691a3656849c15bc
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Akis Kesoglou
+              nested: []
+          version: open-balena-api-0.136.2
+          date: 2021-04-29T12:21:52.469Z
+        - commits:
+            - subject: Update dependencies
+              hash: ff6b4fbb05175d0d475a47acb5643703c45577c9
+              body: |
+                Update pinejs from 14.22.1 to 14.22.2
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: >-
+                        Enable strict options by default and only disable
+                        specific ones
+                      hash: 748e7459458a8c0aad3f491c96cea47b33195447
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.22.2
+                  date: 2021-03-22T18:20:22.166Z
+          version: open-balena-api-0.136.1
+          date: 2021-04-29T11:59:32.763Z
+        - commits:
+            - subject: 'hostapps: basic implementation of target hostapp release'
+              hash: 85f72890c99d3e86f91bbc4d3fc0a1184650f60f
+              body: >
+                including a hook to set devices to a hostapp release at
+                provision time
+              footer:
+                Change-type: minor
+                change-type: minor
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.136.0
+          date: 2021-04-28T16:51:45.049Z
+        - commits:
+            - subject: 'auth: remove unnecessary brackets'
+              hash: 55bcd667c5ceb77c40c95e4747429107eb34f964
+              body: >
+                i missed pulling this change out from the code review of my
+                related PR
+              footer:
+                Connects-to: 'https://github.com/balena-io/open-balena-api/pull/634'
+                connects-to: 'https://github.com/balena-io/open-balena-api/pull/634'
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.135.3
+          date: 2021-04-26T17:03:41.933Z
+        - commits:
+            - subject: 'model: regenerate types to pick up changes'
+              hash: 682d189cb2e1dcff71163d7c621a7ec9630b18a9
+              body: ''
+              footer:
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+                Change-type: patch
+                change-type: patch
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.135.2
+          date: 2021-04-26T13:37:53.521Z
+        - commits:
+            - subject: 'applications: allow apps to be marked as public'
+              hash: 95376cfd85a0cbd163210cb934e657b11e1f0e89
+              body: |
+                include some shared fixtures extensions
+              footer:
+                Connects-to: 'https://github.com/balena-io/open-balena-api/pull/634'
+                connects-to: 'https://github.com/balena-io/open-balena-api/pull/634'
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.135.1
+          date: 2021-04-26T13:10:53.553Z
+        - commits:
+            - subject: Stop allowing cache clearing for multi-level cache
+              hash: 091863ebed83d587e08db9889bef647f21326393
+              body: >
+                This causes problems with the redis level of the cache because
+                clearing
+
+                the cache requires clearing the entire redis database which is
+                far more
+
+                aggressive than we want to support
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.135.0
+          date: 2021-04-15T13:18:37.793Z
+        - commits:
+            - subject: Add support for the `normalizer` option to the multi-level cache
+              hash: be35944fef5dafbff36bd272cc0a67ad870994ae
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.134.3
+          date: 2021-04-13T16:27:41.861Z
+        - commits:
+            - subject: Update open-balena-base to 11.1.2
+              hash: 270b17fa8c873c284eba92536cacc78c05bf310c
+              body: |
+                Update open-balena-base from 11.1.0 to 11.1.2
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.16.1 and npm to 6.14.12
+                      hash: 602c54358898ca38005824c748a0682df814d5a8
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.1.2
+                  date: 2021-04-08T16:53:39.920Z
+                - commits:
+                    - subject: Drop CircleCI
+                      hash: 35e8f707fac5767b1d85c30d3ad9244caef1efd1
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: ab77
+                      nested: []
+                  version: open-balena-base-11.1.1
+                  date: 2021-03-17T18:24:28.365Z
+          version: open-balena-api-0.134.2
+          date: 2021-04-09T13:38:16.829Z
+        - commits:
+            - subject: Support caching of undefined in the multi-level cache
+              hash: 9febb035eebcf6633d4f79da7ebc8fd243efa72c
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.134.1
+          date: 2021-04-08T16:36:31.785Z
+        - commits:
+            - subject: >-
+                Support/use multi-level caching that can share cache between
+                instances
+              hash: 225148a311ab57e761bee74cbc3aedf9e8689dad
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.134.0
+          date: 2021-04-06T17:23:23.865Z
+        - commits:
+            - subject: Simplify ignored device types handling
+              hash: e30a4e6db72d325abeeefd751f0ab454e5541706
+              body: >
+                By handling ignored device types transparently at the point of
+                fetching
+
+                it allows us to avoid duplicating that code and guarantees the
+                ignoring
+
+                is always applied
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.133.7
+          date: 2021-04-01T15:22:22.405Z
+        - commits:
+            - subject: >-
+                Fix contracts sync job to run every 5 minutes instead of 5
+                seconds
+              hash: 60961bb15d6d5bb30a146ea68ea24f57d75074e0
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.133.6
+          date: 2021-03-26T16:34:26.968Z
+        - commits:
+            - subject: Use primitive memoization mode for build-info-facade
+              hash: 6f6ce395b57258e43df6b49b88194e6920af1f51
+              body: >
+                This can give better performance but requires all arguments to
+                generate
+
+                unique strings when stringified
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.133.5
+          date: 2021-03-26T14:55:21.071Z
+        - commits:
+            - subject: Add scheduler mechanism and use it to synchronize contracts
+              hash: 245f2e2160b2fc625bee5762509164220c1d8593
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.133.4
+          date: 2021-03-23T17:54:12.562Z
+        - commits:
+            - subject: >-
+                Optimize getting the list of service installs to create per
+                device
+              hash: 6d6d796787d9471063aae555b72d14bad54840eb
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.133.3
+          date: 2021-03-23T14:29:11.693Z
+        - commits:
+            - subject: Enable strict options by default and only disable specific ones
+              hash: 9ce6cb5e0ca690a34dcb64dfecb3aac2364d0d3b
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.133.2
+          date: 2021-03-22T16:32:11.984Z
+        - commits:
+            - subject: Fix typing for partial rate limiter key fns
+              hash: d1fb7cb6350ad80b93454875faf7d98a136acc06
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.133.1
+          date: 2021-03-16T17:56:32.446Z
+        - commits:
+            - subject: Prefetch api keys in the background rather than blocking
+              hash: c50306ccb5ac9758856eb7520861b2fd17633660
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested: []
+            - subject: Avoid the need to delete `req.apiKey` in prefetch middleware
+              hash: 876c390882ea9b040959310fcd1d2444c3a25742
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.133.0
+          date: 2021-03-16T17:07:11.922Z
+        - commits:
+            - subject: >-
+                Add support for async functions when generating rate limiter
+                keys
+              hash: 2e8623e84873ec56e47dd047eaf799d63a0af4e0
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.132.5
+          date: 2021-03-16T16:45:56.812Z
+        - commits:
+            - subject: Update pinejs to 14.22.1
+              hash: f58dd1db9a99b4b80ebf7260e2c4307af347c33b
+              body: |
+                Update pinejs from 14.21.1 to 14.22.1
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Only use the api key if we successfully resolved one
+                      hash: b95a263781843300e4bd6331951eda5ba686e161
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.22.1
+                  date: 2021-03-16T16:13:35.275Z
+                - commits:
+                    - subject: >-
+                        Expose methods to resolve api keys without immediately
+                        using them
+                      hash: 9a0144f881f635568784e3ef9f6c8fdbb40dce77
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.22.0
+                  date: 2021-03-16T15:35:10.795Z
+          version: open-balena-api-0.132.4
+          date: 2021-03-16T16:35:11.625Z
+        - commits:
+            - subject: Allow PATCHing the same username/email on a given user
+              hash: 97da01eaac1d45c0d933289c93efb1e66a5f1a0a
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.132.3
+          date: 2021-03-16T12:20:43.156Z
+        - commits:
+            - subject: Fix username & email uniqueness check for batch PATCHes
+              hash: 53e7546009ffc364fb3f562fa0a2058a55ec111a
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.132.2
+          date: 2021-03-16T11:57:12.226Z
+        - commits:
+            - subject: Update dependencies
+              hash: 7fca8fc7e8519e17b9cc3012e0ba04016511c313
+              body: |
+                Update pinejs from 14.20.0 to 14.21.1
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update dependencies
+                      hash: d60b7ad14b45ce2d351a85336ddbfcdd79d7f22b
+                      body: |
+                        Update odata-parser from 2.2.2 to 2.2.3
+                        Update pinejs-client-core from 6.9.3 to 6.9.4
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: >-
+                                Optimize `QuotedText` for the common case of
+                                few/no apostrophes
+                              hash: d28bd7a207b37f23a43e140ed6f508d93a698b97
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: odata-parser-2.2.3
+                          date: 2021-03-15T15:27:31.695Z
+                        - commits:
+                            - subject: Update dependencies
+                              hash: 764a29ab100601362e2018c8867be7e66ea10c71
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-6.9.4
+                          date: 2021-03-10T20:28:20.915Z
+                  version: pinejs-14.21.1
+                  date: 2021-03-15T15:39:22.620Z
+                - commits:
+                    - subject: >-
+                        Support postgres exclusion constraints as 409s instead
+                        of 500s
+                      hash: a9584a4cc17888a59146432430fea4e6467f4d80
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.21.0
+                  date: 2021-03-12T15:51:21.367Z
+                - commits:
+                    - subject: >-
+                        Block eagerly fetching affected ids in cases it is not
+                        possible to do
+                      hash: 413257bd23a32d90678cd9b224529a89e328afe9
+                      body: >
+                        This fixes an issue where trying to eagerly fetch
+                        affected ids for
+
+                        equests that can create entries would return ids for
+                        existing entries
+
+                        that you could have created rather than giving the ids
+                        for the entries
+
+                        that you will create
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.20.1
+                  date: 2021-03-12T15:39:41.495Z
+          version: open-balena-api-0.132.1
+          date: 2021-03-15T16:02:26.291Z
+        - commits:
+            - subject: >-
+                Added optional environment variable configuration for contact
+                repository branch
+              hash: 419cfa908a22b7019815d69e593a2de02e9d68d6
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                Signed-off-by: Micah Halter <micah@balena.io>
+                signed-off-by: Micah Halter <micah@balena.io>
+              author: Micah Halter
+              nested: []
+          version: open-balena-api-0.132.0
+          date: 2021-03-15T15:50:43.432Z
+        - commits:
+            - subject: Add missing `await`
+              hash: 2ac6b07d5f9df24ddbecf6881ae7d65035e282ea
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.131.5
+          date: 2021-03-15T15:09:45.129Z
+        - commits:
+            - subject: Simplify `toUuid` slightly
+              hash: c2b1883d92782f8b1258c370f8d990edb30ab3a2
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.131.4
+          date: 2021-03-15T13:26:05.645Z
+        - commits:
+            - subject: Fix device existence check to be true when the device does exist
+              hash: 342df08ab0011d4e25662caa0fbda2d02b49af99
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.131.3
+          date: 2021-03-15T12:54:41.192Z
+        - commits:
+            - subject: >-
+                Emit an error on the request stream for non-200s rather than
+                throwing
+              hash: 9f9d50e2ce82b35553e19bdc6d01a41f92f2cb39
+              body: >
+                The throw was in an asynchronous callback and throwing there
+                causes the
+
+                process to exit
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.131.2
+          date: 2021-03-12T19:42:20.242Z
+        - commits:
+            - subject: Use primitive mode memoization for device existence cache
+              hash: 96caf2cf483eee200bef39f7cfba5ec476f78156
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.131.1
+          date: 2021-03-12T19:00:49.497Z
+        - commits:
+            - subject: 'Switch application slug to using `${orgHandle}/${appName}`'
+              hash: 74845521aa2505680ece49de1c3feb1db52d8bc4
+              body: |
+                Previously it was using just `${appName}`
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested: []
+            - subject: Fix automatic slug renaming on app rename
+              hash: 4237ddcb4345fae4e5e61727ccefc59690d5c8ad
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.131.0
+          date: 2021-03-12T16:59:14.087Z
+        - commits:
+            - subject: Expose the RPi family config vars to raspberrypicm4-ioboard
+              hash: ed00627c077abef7ea578e4dfebcd0807ee16239
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.130.0
+          date: 2021-03-12T14:20:26.903Z
+        - commits:
+            - subject: Cache device existence check for 5 minutes
+              hash: 72eb4bfbad725d406eb7a0236ada31b0da8e47ca
+              body: >
+                This will reduce the load for the common case where active
+                devices are
+
+                not regularly deleted with the potential to briefly respond with
+                a 401
+
+                when a device is first deleted. There may also be a slight delay
+                for
+
+                restored devices to be able to communicate again however again
+                that is
+
+                a very rare case.
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.129.9
+          date: 2021-03-12T13:07:30.818Z
+        - commits:
+            - subject: Only try to validate username/email if they are present
+              hash: f1da633c9c745258b5dbb2bc0c775af428910446
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.129.8
+          date: 2021-03-10T20:14:01.127Z
+        - commits:
+            - subject: Add organization handle validation
+              hash: 1b15c3e9192b8af05f13c4fe6c0572163fb19ad9
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.129.7
+          date: 2021-03-10T19:47:32.098Z
+        - commits:
+            - subject: Add username normalization
+              hash: 7c416b41d8921d03dea0ee9a49bbc7d5a2ca5d89
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.129.6
+          date: 2021-03-10T19:30:22.728Z
+        - commits:
+            - subject: Validate username/email on PATCH as well as POST
+              hash: 6a2f59a0d6b65fbd918454b8cd44032ce490feda
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.129.5
+          date: 2021-03-10T18:23:52.498Z
+        - commits:
+            - subject: Update pinejs to pick up rule optimizations for inserts
+              hash: 44e3007ee0cf216c0b7d48efed602c937d0ffea4
+              body: |
+                Update pinejs from 14.19.0 to 14.20.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: >-
+                        Update abstract-sql-compiler bring more rules
+                        optimizations
+                      hash: da152af1496fd18b53a2108d9be5c77469b76e7a
+                      body: |
+                        Update abstract-sql-compiler from 7.11.0 to 7.12.0
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: >-
+                                Enable narrowing down create/delete referenced
+                                fields for nested exists
+                              hash: 5dbc3ddf05701e5b4188bfa8db64d0a12e3b8298
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.12.0
+                          date: 2021-03-05T20:34:11.366Z
+                  version: pinejs-14.20.0
+                  date: 2021-03-08T11:57:21.141Z
+          version: open-balena-api-0.129.4
+          date: 2021-03-08T12:57:53.357Z
+        - commits:
+            - subject: >-
+                Ensure service installs exist at the point of pinning an
+                application
+              hash: 7ac88e4852436a8876e709f20948d1382174cb12
+              body: >
+                This avoids issues where you pin an application to a release for
+                which
+
+                some devices are missing service installs. It also allows
+                simplifying
+
+                the "should track latest release" implementation as it no longer
+                needs
+
+                to care about creating service installs itself
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.129.3
+          date: 2021-03-08T12:45:41.181Z
+        - commits:
+            - subject: >-
+                Fixed JSON serialization of device-type contracts going into the
+                database.
+              hash: c53c3d3bb8ef955963df2c658cbd54821de22482
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Micah Halter <micah@balena.io>
+                signed-off-by: Micah Halter <micah@balena.io>
+              author: Micah Halter
+              nested: []
+          version: open-balena-api-0.129.2
+          date: 2021-03-05T20:06:00.598Z
+        - commits:
+            - subject: Fix release tracking of concurrent builds
+              hash: dcdcc0defbf39f6f889f9dbf92c63a5fcee026ce
+              body: ''
+              footer:
+                Resolves: '#591'
+                resolves: '#591'
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+            - subject: Test new service install creation for pinned applications
+              hash: 69475158ae1d3e5e87aeb690876832da70e3cfc1
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+            - subject: Test release tracking of concurrent builds
+              hash: ca3268e51f02b3b98d3aa45ec1a9ba52d648cb3f
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.129.1
+          date: 2021-03-05T15:01:01.103Z
+        - commits:
+            - subject: >-
+                Added contract to device type and update database
+                synchronization
+              hash: befd9c14d93deb088e3a325fbfba473126632c34
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                Signed-off-by: Micah Halter <micah@balena.io>
+                signed-off-by: Micah Halter <micah@balena.io>
+              author: Micah Halter
+              nested: []
+          version: open-balena-api-0.129.0
+          date: 2021-03-05T14:02:18.048Z
+        - commits:
+            - subject: Update pinejs to pick up rule optimizations for deletes
+              hash: 9c24c85fac1f988c81bd1f8bd148ce35f7a90ec8
+              body: |
+                Update pinejs from 14.18.3 to 14.19.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: >-
+                        Update abstract-sql-compiler bring more rules
+                        optimizations
+                      hash: 47b9459a43daa05b3ce1440144fea222fa628786
+                      body: |
+                        Update abstract-sql-compiler from 7.10.2 7.11.0
+                        Update lf-to-abstract-sql from 4.2.0 to 4.2.1
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: >-
+                                Correctly use the native name result in the
+                                generated abstract sql
+                              hash: 94ec88b994d5e924da272cf473ac59f5e9916bc6
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: lf-to-abstract-sql-4.2.1
+                          date: 2021-02-17T13:52:36.025Z
+                  version: pinejs-14.19.0
+                  date: 2021-03-01T19:49:51.320Z
+                - commits:
+                    - subject: Remove some unnecessary bluebird usage
+                      hash: b204499cd25590f884ed669299e12ac8bd0a742c
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.18.4
+                  date: 2021-03-01T19:40:10.913Z
+          version: open-balena-api-0.128.9
+          date: 2021-03-05T13:12:11.184Z
+        - commits:
+            - subject: 'State-patch: Optimize noop gateway download updates'
+              hash: c6620ee8737fe33dc9a8075a7b83a4c8266eb235
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+            - subject: Separate marking old image installs deleted to a function
+              hash: 510dd434cb4efb812a98bd7ac8ad270f57b7c685
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+            - subject: >-
+                State-patch: Use 1 GET for updating any number of gateway
+                downloads
+              hash: b80a9891e61178a00d0a117bd1afbc515655865a
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+            - subject: 'State-patch: Use 1 GET for updating any number of image installs'
+              hash: f92c4ba2f0e51a10b491625be30980e15ef319ff
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.128.8
+          date: 2021-03-05T12:49:51.997Z
+        - commits:
+            - subject: Use already available primary key values in device state-patch
+              hash: 3c380cf12a396c505168bf3a890ab2a8954344b1
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.128.7
+          date: 2021-03-03T15:24:32.171Z
+        - commits:
+            - subject: Update dependencies
+              hash: c8db6b18772ec75b6b9a5bc8b915de871b411dd0
+              body: |
+                Update pinejs from 14.18.1 to 14.18.3
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: >-
+                        Warn when setting a `request.values` property that will
+                        not take effect
+                      hash: 480a319358f6638b4bb4b243690139a06667627a
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.18.3
+                  date: 2021-02-26T18:55:15.910Z
+                - commits:
+                    - subject: Gracefully handle `HttpError` thrown from PREPARSE hooks
+                      hash: 5149b8ed53f66d441a21ce6608e898300384e6ec
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.18.2
+                  date: 2021-02-15T19:04:51.251Z
+          version: open-balena-api-0.128.6
+          date: 2021-03-01T16:42:46.447Z
+        - commits:
+            - subject: Add device type is default for application
+              hash: fb52e32f106f8d6acdd16edd9acb65166e2dcc1a
+              body: |
+                Add device type is default for application synonymous form
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Andrea Rosci <andrear@balena.io>
+                signed-off-by: Andrea Rosci <andrear@balena.io>
+              author: JSReds
+              nested: []
+          version: open-balena-api-0.128.5
+          date: 2021-03-01T09:15:41.997Z
+        - commits:
+            - subject: >-
+                Allow pinejs to enforce the at most one app with a given name
+                rule
+              hash: 410e6e8efc0858882950463f8483e7e503072a7c
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.128.4
+          date: 2021-02-26T19:43:12.104Z
+        - commits:
+            - subject: 'fixtures: autogenerate commit if not provided'
+              hash: 8b27482fb158f449684f0ca0783a0cb3e3b29dd9
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.128.3
+          date: 2021-02-25T18:34:41.443Z
+        - commits:
+            - subject: Update open-balena-base to 11.1.0
+              hash: 6e004dc027715b980a684b5f2793bf11a56206b7
+              body: |
+                Update open-balena-base from 11.0.5 to 11.1.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.16.0
+                      hash: ed8a58f5db73244f75d2e10b6b8df9d883247558
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.1.0
+                  date: 2021-02-24T14:22:42.656Z
+          version: open-balena-api-0.128.2
+          date: 2021-02-24T15:48:34.724Z
+        - commits:
+            - subject: Update open-balena-base to 11.0.5
+              hash: f5ac8a3865b2b2a346ab15940fcdf38f029caddb
+              body: |
+                Update open-balena-base from 11.0.4 to 11.0.5
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.15.5 and npm to 6.14.11
+                      hash: 2e812ae8993ad13b1ac0d7a760e4c45ab8b8bd9d
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.5
+                  date: 2021-02-15T15:06:34.842Z
+          version: open-balena-api-0.128.1
+          date: 2021-02-17T15:48:32.969Z
+        - commits:
+            - subject: Stop exposing `/resin/`
+              hash: dfc621f326462a8399ab1b2f53e282fa7cb2bcbe
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.128.0
+          date: 2021-02-17T12:39:37.195Z
+        - commits:
+            - subject: >-
+                Add a `boolVar` helper for config to standardize boolean config
+                vars
+              hash: 8041b9696a6b91bc9ef76e8f19c870c8a139f00e
+              body: >
+                This now requires boolean config vars must be `true` or `false`,
+                or
+
+                not set if they're optional, previously we compared against just
+                `true`
+
+                so any other values would be treated as `false` which could be
+
+                confusing in the case of eg `1`/`on`
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.127.0
+          date: 2021-02-15T18:01:47.325Z
+        - commits:
+            - subject: Run tests against the exposed api version rather than internal
+              hash: 78db18affa76835b5f49d97516fe855b5ad41e63
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.126.5
+          date: 2021-02-15T17:19:37.552Z
+        - commits:
+            - subject: Update pinejs to 14.18.1
+              hash: 4bd0018eda0c7ae5e0c8bcec8d8774cea49a2def
+              body: |
+                Update pinejs from 14.15.0 to 14.18.1
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: >-
+                        Update abstract-sql-compiler  fix modified fields for
+                        upsert queries
+                      hash: 1cf94e975f25cfc1ec394e72a4215db8b8fb132e
+                      body: |
+                        Update abstract-sql-compiler from 7.10.1 to 7.10.2
+                        Update sbvr-types from 3.4.0 to 3.4.1
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: Fix `getModifiedFields` for `UpsertQuery`s
+                              hash: c19c902f1a6e268952540cd19960f6752a303f65
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.10.2
+                          date: 2021-02-12T19:36:19.259Z
+                        - commits:
+                            - subject: >-
+                                Remove unnecessary native fact type entries for
+                                synonymous forms
+                              hash: 64e889f7bda6f3dcf4c539248e737fef26b5686c
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: sbvr-types-3.4.1
+                          date: 2021-02-10T18:13:49.610Z
+                  version: pinejs-14.18.1
+                  date: 2021-02-12T19:54:40.437Z
+                - commits:
+                    - subject: >-
+                        Add support for sbvr date comparison and allow
+                        referencing current time
+                      hash: f011242d85dd5016947e881da27dec8705c233c0
+                      body: |
+                        Update lf-to-abstract-sql from 4.1.1 to 4.2.0
+                        Update sbvr-parser from 1.1.1 to 1.2.2
+                        Update sbvr-types from 3.2.0 to 3.4.0
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: Add support for native `Name`s from sbvr-types
+                              hash: 542bfaa5bfce17b01817cee3930c5da4d087a6ab
+                              body: |
+                                Update sbvr-parser from 1.1.1 to 1.2.0
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested:
+                                - commits:
+                                    - subject: >-
+                                        Add support for a `Name` role binding in
+                                        the lf validator
+                                      hash: 5d84fe2abf2b6a34fa35e9d985443eb71f87a1d9
+                                      body: ''
+                                      footer:
+                                        Change-type: minor
+                                        change-type: minor
+                                      author: Pagan Gazzard
+                                  version: sbvr-parser-1.2.0
+                                  date: 2021-02-05T20:28:39.791Z
+                          version: lf-to-abstract-sql-4.2.0
+                          date: 2021-02-05T20:42:19.505Z
+                        - commits:
+                            - subject: Optimize `StartX` rules
+                              hash: df251a17063d038e142dc7013c24a84158f33efa
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                            - subject: >-
+                                Optimize `Identifier` when branch tracking is
+                                disabled (the default)
+                              hash: f32e75c391fc060d6cd6396667e0ed1714a4c105
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                            - subject: Optimize `IdentifierPart` rule
+                              hash: 5f390ce4b4317a824acfa13fee7c114ac69ca1ac
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: sbvr-parser-1.2.2
+                          date: 2021-02-08T21:21:29.705Z
+                        - commits:
+                            - subject: Update dependencies
+                              hash: 7b79ecf9de0fac908a4063c90050e8a9879241f9
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: sbvr-parser-1.2.1
+                          date: 2021-02-08T19:44:38.524Z
+                        - commits:
+                            - subject: >-
+                                Add support for a `Name` role binding in the lf
+                                validator
+                              hash: 5d84fe2abf2b6a34fa35e9d985443eb71f87a1d9
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                          version: sbvr-parser-1.2.0
+                          date: 2021-02-05T20:28:39.791Z
+                        - commits:
+                            - subject: >-
+                                Add a `Current Time` name that can be used to
+                                refer to the current time
+                              hash: 83d20325939d0e5f9922f57a36e0932ba71ebad4
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                          version: sbvr-types-3.4.0
+                          date: 2021-02-08T13:54:15.848Z
+                        - commits:
+                            - subject: >-
+                                Add `is before` & `is after` verbs to the Date &
+                                DateTime types
+                              hash: 9d4414558d16821e485e08fc4a0504ef1d6c617f
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                              author: Thodoris Greasidis
+                          version: sbvr-types-3.3.0
+                          date: 2021-02-05T20:43:59.350Z
+                  version: pinejs-14.18.0
+                  date: 2021-02-08T21:42:46.201Z
+                - commits:
+                    - subject: Fix .sbvr bundling in webpack
+                      hash: ad8558afdbb24a7ee5cb900321d6e6e25901f87d
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                    - subject: Fix extended-sbvr-parser export
+                      hash: 23c3c429b68e4dbfe0f10716fe931d30d62798b9
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.17.1
+                  date: 2021-02-08T15:30:40.032Z
+                - commits:
+                    - subject: Export extended-sbvr-parser from server-glue/server
+                      hash: 5f6adc0bbc9315e79637a49a08a941a981255865
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.17.0
+                  date: 2021-02-08T14:09:09.957Z
+                - commits:
+                    - subject: Simplify server-glue/server exports
+                      hash: e39ad5b22fa6cd145e04167746e0f5c2015b6813
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: pinejs-14.16.1
+                  date: 2021-02-08T13:55:30.305Z
+                - commits:
+                    - subject: >-
+                        Update sbvr-types to 3.2.0, adding support for more
+                        `Text (Type)` verbs
+                      hash: 0dfaca632831caa6545d0b81f299b5c723f675a1
+                      body: |
+                        Update abstract-sql-compiler from 7.10.0 to 7.10.1
+                        Update sbvr-types from 3.1.3 to 3.2.0
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: >-
+                                Separate code relating to referenced fields out
+                                of the main file
+                              hash: 7ca7b5cfad4e8833293426235667cc59245f427a
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.10.1
+                          date: 2021-01-29T18:35:19.430Z
+                        - commits:
+                            - subject: >-
+                                Add support for the `contains` verb to the text
+                                type
+                              hash: 8e074867c7b94f99664b14caaebeddb5e9f1fe9c
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Thodoris Greasidis
+                            - subject: >-
+                                Add support for the`ends with` verb to the text
+                                type
+                              hash: 4e233bffa0800a9601e80aebf86d70cd518c2901
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Thodoris Greasidis
+                            - subject: >-
+                                Add support for the `starts with` verb to the
+                                text type
+                              hash: 1b5652a57bbad48f9b9b18c88f8b4ad9e6b01441
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Thodoris Greasidis
+                          version: sbvr-types-3.2.0
+                          date: 2021-01-29T19:15:49.140Z
+                  version: pinejs-14.16.0
+                  date: 2021-02-01T14:20:08.537Z
+          version: open-balena-api-0.126.4
+          date: 2021-02-12T20:26:05.819Z
+        - commits:
+            - subject: Export `getDeviceTypesRoute`
+              hash: 4280972afdecb7e520c423fc213dc919ae3e1c0b
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.126.3
+          date: 2021-02-10T17:00:59.889Z
+        - commits:
+            - subject: Minor typing improvements
+              hash: c9d14e0514c6283f9f254ff0d5f465dd153dbbeb
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.126.2
+          date: 2021-02-10T16:39:00.841Z
+        - commits:
+            - subject: Fix missing field in migration for device family
+              hash: 302dc254999bc21c8ecb35a5d82c794b868fd628
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                Signed-off-by: Stevche Radevski <stevche@balena.io>
+                signed-off-by: Stevche Radevski <stevche@balena.io>
+              author: Stevche Radevski
+              nested: []
+          version: open-balena-api-0.126.1
+          date: 2021-02-09T11:46:44.997Z
+        - commits:
+            - subject: Add synonymous form to device family manufacturer
+              hash: bff125b4bc02b284cfdea7ead8cd1d1984f3a850
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                Signed-off-by: Stevche Radevski <stevche@balena.io>
+                signed-off-by: Stevche Radevski <stevche@balena.io>
+              author: Stevche Radevski
+              nested: []
+          version: open-balena-api-0.126.0
+          date: 2021-02-08T17:24:00.622Z
+        - commits:
+            - subject: Add device family and manufacturer resources
+              hash: 9c78ada68f3c4bbac84f7f76e78c303cc29e2163
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                Signed-off-by: Stevche Radevski <stevche@balena.io>
+                signed-off-by: Stevche Radevski <stevche@balena.io>
+              author: Stevche Radevski
+              nested: []
+          version: open-balena-api-0.125.0
+          date: 2021-02-08T12:58:41.237Z
+        - commits:
+            - subject: 'releases: add new metadata to release model'
+              hash: ec66920ee984640dc3078e8ae7422b64d5b2bdd1
+              body: |
+                filter non-final/untested releases from the state endpoint
+              footer:
+                Connects-to: 'https://github.com/balena-io/balena-io/issues/2335'
+                connects-to: 'https://github.com/balena-io/balena-io/issues/2335'
+                Change-type: minor
+                change-type: minor
+                Signed-off-by: Matthew McGinn <matthew@balena.io>
+                signed-off-by: Matthew McGinn <matthew@balena.io>
+              author: Matthew McGinn
+              nested: []
+          version: open-balena-api-0.124.0
+          date: 2021-02-05T15:21:45.625Z
+        - commits:
+            - subject: Add permission checking to the supervisor proxy
+              hash: 7a11888204b10546b124b4ceefedce67d2302041
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+                See: 'https://github.com/balena-io/balena-api/issues/2966'
+                see: 'https://github.com/balena-io/balena-api/issues/2966'
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.123.1
+          date: 2021-02-03T12:45:50.107Z
+        - commits:
+            - subject: >-
+                Add a maximum file size for the BALENA_HOST_SPLASH_IMAGE config
+                var
+              hash: 44f8745317768bf486a80fc5fa3469f83c8918b9
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                See: >-
+                  https://www.flowdock.com/app/rulemotion/r-etcherprv/threads/uBhQEVeU3r8gmPdHIzpfffbhSGM
+                see: >-
+                  https://www.flowdock.com/app/rulemotion/r-etcherprv/threads/uBhQEVeU3r8gmPdHIzpfffbhSGM
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.123.0
+          date: 2021-02-02T17:10:40.811Z
+        - commits:
+            - subject: Move tag key and device uuid length validation into SBVR rules
+              hash: 8d97541e63017265235bcfc42e016b1057cb06a8
+              body: |
+                Update pinejs from 14.10.0 to 14.10.1
+              footer:
+                Change-type: minor
+                change-type: minor
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update dependencies
+                      hash: bd869af9c98efac5524350c88ee1f9db19747e9c
+                      body: |
+                        Update abstract-sql-compiler from 7.8.1 to 7.8.2
+                        Update abstract-sql-to-typescript from 1.1.0 to 1.1.1
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: >-
+                                Fix schema optimizations when table and resource
+                                names are different
+                              hash: 46704031fbde45fd0e36b0963f8cf524df53398b
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.8.2
+                          date: 2021-01-15T20:38:59.313Z
+                        - commits:
+                            - subject: Fix PickExpanded/PickDeferred type helpers
+                              hash: ab7a898e7d55c50f0702560d4df1f2b29a775b90
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-to-typescript-1.1.1
+                          date: 2021-01-04T15:25:29.186Z
+                  version: pinejs-14.10.1
+                  date: 2021-01-15T21:03:14.810Z
+          version: open-balena-api-0.122.0
+          date: 2021-02-01T16:01:30.077Z
+        - commits:
+            - subject: >-
+                vars-schema: Add HOST_CONFIG HDMI config definitions for the RPi
+                family
+              hash: 077df7f0e098cbb2f526825e5b7fdcfcf79c855a
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                See: >-
+                  https://www.raspberrypi.org/documentation/configuration/config-txt/video.md
+                see: >-
+                  https://www.raspberrypi.org/documentation/configuration/config-txt/video.md
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.121.0
+          date: 2021-02-01T14:39:00.989Z
+        - commits:
+            - subject: >-
+                Support setting pg statement/query timeouts, defaulting to
+                60s/61s
+              hash: 1e457bd50e6676e685b87d51c0bfdcd69f5f4e04
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-api-0.120.3
+          date: 2021-02-01T14:12:06.656Z
+        - commits:
+            - subject: >-
+                Update pinejs to 14.15.0, reducing the cases we need to run
+                rules
+              hash: 9b99197d8585201d493d7a3520af9876d178a155
+              body: |
+                Update pinejs from 14.14.3 to 14.15.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: >-
+                        Make use of rule specific referenced fields to run rules
+                        in less cases
+                      hash: 652aadc293ca6b946babfbffde95920a9d0d024c
+                      body: |
+                        Update abstract-sql-compiler from 7.8.2 to 7.10.0
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: >-
+                                Add an `action` property to modified fields of
+                                create/update/delete
+                              hash: 8f071b8724bdae5574d5fea6c9f20e6e77daf3e6
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                            - subject: >-
+                                Automatically add `ruleReferencedFields` to
+                                `SqlRule`s
+                              hash: f49548828fd75957290b6fdec166abf7bb0a53bf
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                            - subject: >-
+                                Add a `getRuleReferencedFields` which is
+                                tailored for rules
+                              hash: 256c36de4a1efb7a46eb9833e1c3228d17194015
+                              body: >
+                                This works on the assumption that it is a rule
+                                query that should always
+
+                                return true and allows ignoring more
+                                modification cases where they
+
+                                cannot change the result from true to false
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.10.0
+                          date: 2021-01-29T16:30:19.410Z
+                        - commits:
+                            - subject: Add test for optimizeSchema optimizing rules
+                              hash: 4e94ee4961e98305c927734ce85067d409f90e18
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.9.1
+                          date: 2021-01-29T13:01:10.504Z
+                        - commits:
+                            - subject: >-
+                                Optimize the abstract sql of rules when running
+                                `optimizeSchema`
+                              hash: 2ed97849674acb76f498c346b28d2861d1827ba5
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                              nested: []
+                          version: abstract-sql-compiler-7.9.0
+                          date: 2021-01-25T17:48:56.215Z
+                  version: pinejs-14.15.0
+                  date: 2021-01-29T18:03:50.494Z
+          version: open-balena-api-0.120.2
+          date: 2021-01-29T19:02:13.573Z
+        - commits:
+            - subject: 'CODEOWNERS: Use the balena-api dev team'
+              hash: f58f76334e32640b934447a069aa6f5cb26b76d8
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.120.1
+          date: 2021-01-29T15:37:50.022Z
+        - commits:
+            - subject: Optimize the unique commit per successful release per app rule
+              hash: 8e92f57aa696922d4da0d63c360cdf7d594554a1
+              body: ''
+              footer:
+                Change-type: minor
+                change-type: minor
+                See: >-
+                  https://www.flowdock.com/app/rulemotion/resin-devops/threads/pltS7zNp3oKdJ7TKUymKfRXE1Nq
+                see: >-
+                  https://www.flowdock.com/app/rulemotion/resin-devops/threads/pltS7zNp3oKdJ7TKUymKfRXE1Nq
+                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+              author: Thodoris Greasidis
+              nested: []
+          version: open-balena-api-0.120.0
+          date: 2021-01-29T13:05:30.681Z
+        - commits:
+            - subject: Update open-balena-base to 11.2.0
+              hash: 94a5b8cf954e9f460045dcfa98ca3095e795308b
+              body: |
+                Update open-balena-base from 11.1.2 to 11.2.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.17.0 and npm to 6.14.13
+                      hash: d4a35f84c95db475b972aab4ed7781ce47515f39
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.2.0
+                  date: 2021-05-14T15:14:39.729Z
+          version: open-balena-vpn-9.17.11
+          date: 2021-05-14T15:37:07.883Z
+        - commits:
+            - subject: Update open-balena-base to 11.1.2
+              hash: 6a010a804e01986f9fad941eff905b94aef6e2f6
+              body: |
+                Update open-balena-base from 11.1.0 to 11.1.2
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.16.1 and npm to 6.14.12
+                      hash: 602c54358898ca38005824c748a0682df814d5a8
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.1.2
+                  date: 2021-04-08T16:53:39.920Z
+                - commits:
+                    - subject: Drop CircleCI
+                      hash: 35e8f707fac5767b1d85c30d3ad9244caef1efd1
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: ab77
+                      nested: []
+                  version: open-balena-base-11.1.1
+                  date: 2021-03-17T18:24:28.365Z
+          version: open-balena-vpn-9.17.10
+          date: 2021-04-09T12:34:10.364Z
+        - commits:
+            - subject: Remove linting on prepush as it's already handled on commit
+              hash: 76e330fc790d07b9f874150550fa2116892bb32c
+              body: >
+                Also the linting on prepush works very poorly on windows due to
+
+                complaints around line endings even if the committed line
+                endings are
+
+                fine
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-vpn-9.17.9
+          date: 2021-03-29T14:47:20.774Z
+        - commits:
+            - subject: Make more use of native promises and async/await
+              hash: 7c9ea783420216ee4877a2c8ab2b1bfeeb518bb3
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested: []
+          version: open-balena-vpn-9.17.8
+          date: 2021-03-29T14:36:10.131Z
+        - commits:
+            - subject: Update dependencies
+              hash: 09c8aac7845800a3b0bfa77146638f179ac25205
+              body: |
+                Update pinejs-client-request from 7.2.2 to 7.3.1
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Enable typescript strict mode
+                      hash: 23d43e8d6974f87745d7c7ef04084223c4a9556f
+                      body: |
+                        Update pinejs-client-core from 6.9.3 to 6.9.5
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: Enable strict tsconfig options by default
+                              hash: 8ad51e0af76b9e6c1676a0e4069d851f7b3c5211
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-6.9.5
+                          date: 2021-03-22T14:28:40.467Z
+                        - commits:
+                            - subject: Update dependencies
+                              hash: 764a29ab100601362e2018c8867be7e66ea10c71
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-6.9.4
+                          date: 2021-03-10T20:28:20.915Z
+                  version: pinejs-client-request-7.3.1
+                  date: 2021-03-22T15:00:22.209Z
+                - commits:
+                    - subject: Update dependencies
+                      hash: 0ed7686c1efca57f95034dd084e070859d7955b9
+                      body: |
+                        Update pinejs-client-core from 6.7.2 to 6.9.3
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested:
+                        - commits:
+                            - subject: >-
+                                Explicitly specify return types for all
+                                functions
+                              hash: d53b6cef4ba00527b889d49a6567b8964457025e
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-6.9.3
+                          date: 2020-11-20T14:26:20.412Z
+                        - commits:
+                            - subject: Update dev dependencies
+                              hash: 0af301426da52e51d50789394b19d7af205fc735
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-6.9.2
+                          date: 2020-10-23T12:21:29.017Z
+                        - commits:
+                            - subject: Improve typings
+                              hash: c8cd644f5e9d8eb43895086cd9ca453b9d651fd6
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-6.9.1
+                          date: 2020-09-17T18:15:44.916Z
+                        - commits:
+                            - subject: Add 'getOrCreate' method supporting natural keys
+                              hash: 5aa39b34fef7c7a4bbb27c2c81bb1c8ee4ee2c94
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                                Signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                                signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+                              author: Thodoris Greasidis
+                          version: pinejs-client-js-6.9.0
+                          date: 2020-09-07T10:54:14.786Z
+                        - commits:
+                            - subject: Add support for $format
+                              hash: aa85327cb7910c74b1bed5323f7ae708aeb2d2b9
+                              body: ''
+                              footer:
+                                Change-type: minor
+                                change-type: minor
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-6.8.0
+                          date: 2020-09-03T15:46:49.095Z
+                        - commits:
+                            - subject: >-
+                                Improve $orderby typing to allow `[{a: 'desc'},
+                                {b: 'asc'}]`
+                              hash: 3f66006790c0ace813dd902125b22cf79f2a3095
+                              body: ''
+                              footer:
+                                Change-type: patch
+                                change-type: patch
+                              author: Pagan Gazzard
+                          version: pinejs-client-js-6.7.3
+                          date: 2020-08-26T15:41:19.488Z
+                  version: pinejs-client-request-7.3.0
+                  date: 2020-11-20T14:46:49.312Z
+          version: open-balena-vpn-9.17.7
+          date: 2021-03-29T12:40:00.914Z
+        - commits:
+            - subject: Update open-balena-base to 11.1.0
+              hash: 5eff2c700bcaa429c5d738ab600d55e295333de6
+              body: |
+                Update open-balena-base from 11.0.5 to 11.1.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.16.0
+                      hash: ed8a58f5db73244f75d2e10b6b8df9d883247558
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.1.0
+                  date: 2021-02-24T14:22:42.656Z
+          version: open-balena-vpn-9.17.6
+          date: 2021-02-24T15:23:24.710Z
+        - commits:
+            - subject: Update open-balena-base to 11.0.5
+              hash: 5adf695afd2ddecb420564271fc9eea272e0426f
+              body: |
+                Update open-balena-base from 11.0.4 to 11.0.5
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.15.5 and npm to 6.14.11
+                      hash: 2e812ae8993ad13b1ac0d7a760e4c45ab8b8bd9d
+                      body: ''
+                      footer:
+                        Change-type: patch
+                        change-type: patch
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.0.5
+                  date: 2021-02-15T15:06:34.842Z
+          version: open-balena-vpn-9.17.5
+          date: 2021-02-17T15:50:17.825Z
+        - commits:
+            - subject: Update open-balena-base to 11.2.0
+              hash: 7430397219bd751d3cbfcc22e99497b28d21fe4e
+              body: |
+                Update open-balena-base from 11.1.2 to 11.2.0
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+              nested:
+                - commits:
+                    - subject: Update nodejs to 14.17.0 and npm to 6.14.13
+                      hash: d4a35f84c95db475b972aab4ed7781ce47515f39
+                      body: ''
+                      footer:
+                        Change-type: minor
+                        change-type: minor
+                      author: Pagan Gazzard
+                      nested: []
+                  version: open-balena-base-11.2.0
+                  date: 2021-05-14T15:14:39.729Z
+          version: open-balena-registry-2.16.1
+          date: 2021-05-14T15:37:11.193Z
+  version: 3.4.0
+  date: 2021-06-25T10:53:26.506Z
+- commits:
     - subject: Auto-install required Vagrant plugins instead of erroring out
       hash: d71a90c1efcf75e6e33e0f63c9b49803ddafd3fd
       body: ''
