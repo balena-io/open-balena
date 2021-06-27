@@ -42,7 +42,6 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      hostNetwork: {{ .Values.vpn.hostNetwork }}
       containers:
       - name: {{ .Chart.Name }}-api
         image: {{ .Values.vpn.image.repository }}:{{ .Values.vpn.image.tag }}
@@ -54,7 +53,6 @@ spec:
         ports:
         - name: vpn
           containerPort: 443
-          hostPort: 443
         - name: tunnel
           containerPort: 3128
         securityContext:

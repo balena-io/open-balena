@@ -137,11 +137,6 @@ vpn:
   resources: {}
   nodeSelector: {}
 
-  # The hostNetwork is set to 'true', because the VPN container uses 'ifconfig' to determine it's remote IP
-  # When this is set to 'false', the local IP of the pod will be used
-  # This will cause issues with reaching the device's supervisor (for functions like 'reboot' using the SDK / CLI)
-  hostNetwork: true
-
   service:
     labels: {}
     annotations: {}
