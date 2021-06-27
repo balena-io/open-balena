@@ -88,6 +88,10 @@ spec:
           value: "{{ index .Values "global" "certificates" "vpn" "server-key" }}"
         - name: VPN_SERVICE_API_KEY
           value: "{{ index .Values "global" "keys" "service-api-key" }}"
+
+        # Use the 'eth0' interface, so the VPN will register itself via the Cluster IP of the pod
+        - name: VPN_SERVICE_REGISTER_INTERFACE
+          value: "eth0"
         volumeMounts:
         - mountPath: /run
           name: run
