@@ -107,7 +107,7 @@ api:
   replicas: 1
   image:
     repository: balena/open-balena-api
-    tag: "v0.119.5"
+    tag: "v0.139.0"
     pullPolicy: IfNotPresent
 
   labels: {}
@@ -128,7 +128,7 @@ vpn:
   replicas: 1
   image:
     repository: balena/open-balena-vpn
-    tag: "v9.17.4"
+    tag: "v9.17.11"
     pullPolicy: IfNotPresent
 
   labels: {}
@@ -154,7 +154,7 @@ registry:
   replicas: 1
   image:
     repository: balena/open-balena-registry
-    tag: "v2.16.0"
+    tag: "v2.16.1"
     pullPolicy: IfNotPresent
 
   disableRedirect: false
