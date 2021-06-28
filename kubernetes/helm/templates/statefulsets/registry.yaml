@@ -28,9 +28,7 @@ spec:
       {{- with .Values.registry.labels }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
-  {{- if .Values.registry.replicas  }}
   replicas: {{ .Values.registry.replicas }}
-  {{- end }}
   template:
     metadata:
       labels:

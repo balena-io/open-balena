@@ -28,9 +28,7 @@ spec:
       {{- with .Values.db.labels }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
-  {{- if .Values.db.replicas  }}
   replicas: {{ .Values.db.replicas }}
-  {{- end }}
   template:
     metadata:
       labels:

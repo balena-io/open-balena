@@ -19,9 +19,7 @@ spec:
   affinity:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- if .Values.vpn.replicas  }}
   replicas: {{ .Values.vpn.replicas }}
-  {{- end }}
   strategy:
     type: Recreate
   selector:

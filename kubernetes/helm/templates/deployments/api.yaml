@@ -27,9 +27,7 @@ spec:
       {{- with .Values.api.labels }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
-  {{- if .Values.api.replicas  }}
   replicas: {{ .Values.api.replicas }}
-  {{- end }}
   template:
     metadata:
       labels:
