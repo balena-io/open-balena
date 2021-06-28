@@ -21,6 +21,7 @@ You've to add the HAProxy Ingress repository to your Helm first, if you've done 
 
 ```bash
 $ helm repo add haproxy-ingress https://haproxy-ingress.github.io/charts
+$ helm dependency update ./kubernetes/helm
 $ helm install openbalena ./kubernetes/helm -f ./config/kubernetes.yaml
 ```
 
