@@ -1,0 +1,257 @@
+# Default values for chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# General configuration
+global:
+  # Hostname of open-balena instance
+  hostname: ""
+
+  # openBalena admin details
+  email: ""
+  password: ""
+
+  # Production mode for openBalena (will cause containers to restart when crashed)
+  production-mode: false
+
+  # Authorized SSH keys
+  ssh-authorized-keys: ""
+
+  # S3 settings
+  # If using other settings than the default settings, you can disable the S3 StatefulSet by setting '.s3.enabled' to false
+  s3:
+    bucket: ""
+    endpoint: ""
+    region: ""
+    accesskey: ""
+    secretkey: ""
+
+    storagePath: "/data"
+
+    cloudfront:
+      endpoint:
+      keypair:
+      privatekey:
+
+  # Keys
+  keys:
+    # OPENBALENA_COOKIE_SESSION_SECRET
+    cookie-secret:
+    # OPENBALENA_JWT_SECRET
+    jwt-secret:
+    # OPENBALENA_RESINOS_REGISTRY_CODE
+    registry-code:
+    # OPENBALENA_VPN_SERVICE_API_KEY
+    service-api-key:
+    # OPENBALENA_API_VPN_SERVICE_API_KEY
+    api-vpn-service-api-key:
+    # OPENBALENA_REGISTRY_SECRET_KEY
+    registry-secret-key:
+    # OPENBALENA_TOKEN_AUTH_BUILDER_TOKEN
+    token-auth-builder-token:
+    # OPENBALENA_TOKEN_AUTH_PUB
+    token-auth-pub:
+    # OPENBALENA_TOKEN_AUTH_KEY
+    token-auth-key:
+    # OPENBALENA_TOKEN_AUTH_KID
+    token-auth-kid:
+
+  # Certificates
+  certificates:
+    # Root certificates
+    root:
+      # OPENBALENA_ROOT_CA
+      ca:
+
+      # OPENBALENA_ROOT_CRT
+      crt:
+
+      # OPENBALENA_ROOT_KEY
+      key:
+
+    vpn:
+      # OPENBALENA_VPN_CA
+      ca:
+
+      # OPENBALENA_VPN_CA_CHAIN
+      ca-chain:
+
+      # OPENBALENA_VPN_SERVER_CRT
+      crt:
+
+      # OPENBALENA_VPN_SERVER_KEY
+      server-key:
+
+      # OPENBALENA_VPN_SERVER_DH
+      dh:
+
+ingress:
+  # Global ingress settings
+  annotations:
+    kubernetes.io/ingress.class: openbalena-haproxy
+
+  # HTTP ingress settings
+  http:
+    annotations: {}
+
+  # Tunnel ingress settings
+  tunnel:
+    annotations: {}
+
+  # VPN ingress settings
+  vpn:
+    annotations: {}
+
+# openBalena API
+api:
+  replicas: 1
+  image:
+    repository: balena/open-balena-api
+    tag: "v0.139.0"
+    pullPolicy: IfNotPresent
+
+  labels: {}
+  annotations: {}
+  affinity: {}
+  resources: {}
+  nodeSelector: {}
+
+  service:
+    labels: {}
+    annotations: {}
+    externalIPs: []
+
+  sentry-dsn: ""
+
+# openBalena VPN
+vpn:
+  replicas: 1
+  image:
+    repository: balena/open-balena-vpn
+    tag: "v9.17.11"
+    pullPolicy: IfNotPresent
+
+  labels: {}
+  annotations: {}
+  affinity: {}
+  resources: {}
+  nodeSelector: {}
+
+  service:
+    labels: {}
+    annotations: {}
+    externalIPs: []
+
+  sentry-dsn: ""
+
+# openBalena Registry
+registry:
+  replicas: 1
+  image:
+    repository: balena/open-balena-registry
+    tag: "v2.16.1"
+    pullPolicy: IfNotPresent
+
+  disableRedirect: false
+
+  labels: {}
+  annotations: {}
+  affinity: {}
+  resources: {}
+  nodeSelector: {}
+
+  service:
+    labels: {}
+    annotations: {}
+    externalIPs: []
+
+  storage: "10Gi"
+  storageClass:
+
+# openBalena S3
+s3:
+  # If disabled, please provide details in .config.s3
+  enabled: true
+
+  replicas: 1
+  image:
+    repository: balena/open-balena-s3
+    tag: "v2.9.9"
+    pullPolicy: IfNotPresent
+
+  labels: {}
+  annotations: {}
+  affinity: {}
+  resources: {}
+  nodeSelector: {}
+
+  service:
+    labels: {}
+    annotations: {}
+    externalIPs: []
+
+  storage: "25Gi"
+  storageClass:
+
+# openBalena Database
+db:
+  replicas: 1
+  image:
+    repository: balena/open-balena-db
+    tag: "v4.1.0"
+    pullPolicy: IfNotPresent
+
+  labels: {}
+  annotations: {}
+  affinity: {}
+  resources: {}
+  nodeSelector: {}
+
+  service:
+    labels: {}
+    annotations: {}
+    externalIPs: []
+
+  storage: "10Gi"
+  storageClass:
+
+# Redis instance
+redis:
+  replicas: 1
+  image:
+    repository: redis
+    tag: "alpine"
+    pullPolicy: IfNotPresent
+
+  labels: {}
+  annotations: {}
+  affinity: {}
+  resources: {}
+  nodeSelector: {}
+
+  service:
+    labels: {}
+    annotations: {}
+    externalIPs: []
+
+  storage: "10Gi"
+  storageClass:
+
+##
+## HAProxy Ingress Chart
+##
+## https://github.com/haproxy-ingress/charts/blob/master/haproxy-ingress/values.yaml
+##
+haproxy:
+  controller:
+    ingressClass: "openbalena-haproxy"
+
+    # Change config of HAProxy
+    # This will add a snippet for the VPN using port 443
+    config:
+      config-proxy: |-
+          _front__tls
+            # BEGIN::Redirect to openBalena VPN
+            acl is_ssl req.ssl_ver 2:3.4
+            use_backend {{ .Release.Namespace }}_openbalena-vpn_443 if !is_ssl
+            # END::Redirect to openBalena VPN

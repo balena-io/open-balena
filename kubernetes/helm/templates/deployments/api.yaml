@@ -1,0 +1,149 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openbalena.fullname" . }}-api
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openbalena.labels" . | nindent 4 }}
+    app.kubernetes.io/component: api
+
+    {{- with .Values.api.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.api.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.api.affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "openbalena.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: api
+
+      {{- with .Values.api.labels }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  replicas: {{ .Values.api.replicas }}
+  template:
+    metadata:
+      labels:
+        {{- include "openbalena.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: api
+
+        {{- with .Values.api.labels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-api
+        image: {{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}
+        imagePullPolicy: {{ .Values.api.image.pullPolicy }}
+        {{- with .Values.api.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        ports:
+          - name: http
+            containerPort: 80
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN", "SYS_RESOURCE"]
+        env:
+        - name: CONFD_BACKEND
+          value: "ENV"
+        - name: API_VPN_SERVICE_API_KEY
+          value: "{{ index .Values "global" "keys" "api-vpn-service-api-key" }}"
+        - name: BALENA_ROOT_CA
+          value: "{{ index .Values "global" "certificates" "root" "ca" }}"
+        - name: COOKIE_SESSION_SECRET
+          value: "{{ index .Values "global" "keys" "cookie-secret" }}"
+        - name: DB_HOST
+          value: "openbalena-db"
+        - name: DB_PASSWORD
+          value: "docker"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USER
+          value: "docker"
+        - name: DELTA_HOST
+          value: "delta.{{ .Values.global.hostname }}"
+        - name: DEVICE_CONFIG_OPENVPN_CA
+          value: "{{ index .Values "global" "certificates" "vpn" "ca-chain" }}"
+        - name: DEVICE_CONFIG_SSH_AUTHORIZED_KEYS
+          value: "{{ index .Values "global" "ssh-authorized-keys" }}"
+        - name: HOST
+          value: "api.{{ .Values.global.hostname }}"
+        - name: IMAGE_MAKER_URL
+          value: "img.{{ .Values.global.hostname }}"
+        - name: IMAGE_STORAGE_BUCKET
+          value: "resin-production-img-cloudformation"
+        - name: IMAGE_STORAGE_ENDPOINT
+          value: "s3.amazonaws.com"
+        - name: IMAGE_STORAGE_PREFIX
+          value: "resinos"
+        - name: JSON_WEB_TOKEN_EXPIRY_MINUTES
+          value: "10080"
+        - name: JSON_WEB_TOKEN_SECRET
+          value: "{{ index .Values "global" "keys" "jwt-secret" }}"
+        - name: MIXPANEL_TOKEN
+          value: "__unused__"
+        - name: PRODUCTION_MODE
+          value: "{{ index .Values "global" "production-mode" }}"
+        - name: PUBNUB_PUBLISH_KEY
+          value: "__unused__"
+        - name: PUBNUB_SUBSCRIBE_KEY
+          value: "__unused__"
+        - name: REDIS_HOST
+          value: "{{- include "openbalena.fullname" . }}-redis"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REGISTRY2_HOST
+          value: "registry.{{ .Values.global.hostname }}"
+        - name: REGISTRY_HOST
+          value: "registry.{{ .Values.global.hostname }}"
+        - name: SENTRY_DSN
+          value: "{{ index .Values "api" "sentry-dsn" }}"
+        - name: TOKEN_AUTH_BUILDER_TOKEN
+          value: "{{ index .Values "global" "keys" "token-auth-builder-token" }}"
+        - name: TOKEN_AUTH_CERT_ISSUER
+          value: "api.{{ .Values.global.hostname }}"
+        - name: TOKEN_AUTH_CERT_KEY
+          value: "{{ index .Values "global" "keys" "token-auth-key" }}"
+        - name: TOKEN_AUTH_CERT_KID
+          value: "{{ index .Values "global" "keys" "token-auth-kid" }}"
+        - name: TOKEN_AUTH_CERT_PUB
+          value: "{{ index .Values "global" "keys" "token-auth-pub" }}"
+        - name: TOKEN_AUTH_JWT_ALGO
+          value: "ES256"
+        - name: VPN_HOST
+          value: "vpn.{{ .Values.global.hostname }}"
+        - name: VPN_PORT
+          value: "443"
+        - name: VPN_SERVICE_API_KEY
+          value: "{{ index .Values "global" "keys" "service-api-key" }}"
+        - name: SUPERUSER_EMAIL
+          value: "{{ index .Values "global" "email" }}"
+        - name: SUPERUSER_PASSWORD
+          value: "{{ index .Values "global" "password" }}"
+        volumeMounts:
+        - mountPath: /run
+          name: run
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: run
+        emptyDir:
+          medium: Memory
+      - name: cgroup
+        emptyDir:
+          medium: Memory
+
+      {{- with .Values.api.nodeSelector  }}
+      nodeSelector:
+        {{- toYaml .Values.api.nodeSelector | nindent 8 }}
+      {{- end }}
