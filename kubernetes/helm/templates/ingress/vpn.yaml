@@ -17,7 +17,6 @@ metadata:
     {{- end }}
     ingress.kubernetes.io/ssl-redirect: "false"
     ingress.kubernetes.io/ssl-passthrough: "true"
-    ingress.kubernetes.io/proxy-protocol: "v2"
     ingress.kubernetes.io/server-alias: "vpn.{{ .Values.global.hostname }}"
     {{- with .Values.ingress.vpn.annotations }}
     {{- toYaml . | nindent 4 }}
