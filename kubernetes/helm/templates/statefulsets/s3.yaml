@@ -29,9 +29,7 @@ spec:
       {{- with .Values.s3.labels }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
-  {{- if .Values.s3.replicas  }}
   replicas: {{ .Values.s3.replicas }}
-  {{- end }}
   template:
     metadata:
       labels:
