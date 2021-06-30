@@ -1,4 +1,15 @@
 - commits:
+    - subject: Delete CODEOWNERS
+      hash: a328e8fc1d3b151b2066f8018c80655e60feef7f
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: dfunckt
+      nested: []
+  version: 3.4.1
+  date: 2021-06-30T21:10:50.537Z
+- commits:
     - subject: 'Update API, registry and VPN services'
       hash: 1180bb3462bb9502b5c8fec6e800841acdcb4e1e
       body: |
