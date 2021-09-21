@@ -1,13 +1,5 @@
 version: "2.0"
 
-volumes:
-  certs: {}
-  cert-provider: {}
-  db: {}
-  redis: {}
-  registry: {}
-  s3: {}
-
 services:
   api:
     extends:
@@ -66,7 +58,7 @@ services:
       - s3
       - redis
     volumes:
-      - registry:/data
+      - /root/open-balena/volumes/registry:/data
     environment:
       API_TOKENAUTH_CRT: ${OPENBALENA_TOKEN_AUTH_PUB}
       BALENA_REGISTRY2_HOST: registry.${OPENBALENA_HOST_NAME}
@@ -117,7 +109,7 @@ services:
       service: system
     image: balena/open-balena-db:${OPENBALENA_DB_VERSION_TAG}
     volumes:
-      - db:/var/lib/postgresql/data
+      - /root/open-balena/volumes/db:/var/lib/postgresql/data
 
   s3:
     extends:
@@ -125,7 +117,7 @@ services:
       service: component
     image: balena/open-balena-s3:${OPENBALENA_S3_VERSION_TAG}
     volumes:
-      - s3:/export
+      - /root/open-balena/volumes/s3:/export
     environment:
       S3_MINIO_ACCESS_KEY: ${OPENBALENA_S3_ACCESS_KEY}
       S3_MINIO_SECRET_KEY: ${OPENBALENA_S3_SECRET_KEY}
@@ -137,7 +129,7 @@ services:
       service: system
     image: redis:alpine
     volumes:
-      - redis:/data
+      - /root/open-balena/volumes/redis:/data
 
   haproxy:
     extends:
@@ -176,13 +168,13 @@ services:
       BALENA_ROOT_CA: ${OPENBALENA_ROOT_CA}
       HAPROXY_HOSTNAME: ${OPENBALENA_HOST_NAME}
     volumes:
-      - certs:/certs:ro
+      - /root/open-balena/volumes/certs:/certs:ro
 
   cert-provider:
     build: ../src/cert-provider
     volumes:
-      - certs:/certs
-      - cert-provider:/usr/src/app/certs
+      - /root/open-balena/volumes/certs:/certs
+      - /root/open-balena/volumes/cert-provider:/usr/src/app/certs
     environment:
       ACTIVE: ${OPENBALENA_ACME_CERT_ENABLED}
       DOMAINS: "api.${OPENBALENA_HOST_NAME},registry.${OPENBALENA_HOST_NAME},s3.${OPENBALENA_HOST_NAME},vpn.${OPENBALENA_HOST_NAME},tunnel.${OPENBALENA_HOST_NAME}"
