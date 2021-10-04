@@ -3,7 +3,7 @@ name: openbalena
 description: openBalena kubernetes Chart
 type: application
 version: 1.0.0
-appVersion: v3.4.0
+appVersion: v3.4.1
 keywords:
 - balena
 - openbalena
