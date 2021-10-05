@@ -159,7 +159,7 @@ acquireCertificate() {
     fi
 
     logInfo "Issuing certificates..."
-    "$ACME_BIN" --issue "${ACME_OPTS[@]}" "${ACME_DOMAIN_ARGS[@]}"
+    "$ACME_BIN" --server letsencrypt --issue "${ACME_OPTS[@]}" "${ACME_DOMAIN_ARGS[@]}"
 
     logInfo "Installing certificates..." && \
     "$ACME_BIN" --install-cert "${ACME_DOMAIN_ARGS[@]}" \
