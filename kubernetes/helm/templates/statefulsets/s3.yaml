@@ -84,7 +84,7 @@ spec:
 
       {{- with .Values.s3.nodeSelector  }}
       nodeSelector:
-        {{- toYaml .Values.s3.nodeSelector | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
   volumeClaimTemplates:
   - metadata:
