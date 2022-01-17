@@ -127,7 +127,7 @@ spec:
 
       {{- with .Values.registry.nodeSelector  }}
       nodeSelector:
-        {{- toYaml .Values.registry.nodeSelector | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
   volumeClaimTemplates:
   - metadata:

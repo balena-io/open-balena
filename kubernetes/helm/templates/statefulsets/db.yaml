@@ -61,7 +61,7 @@ spec:
 
       {{- with .Values.db.nodeSelector  }}
       nodeSelector:
-        {{- toYaml .Values.db.nodeSelector | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
   volumeClaimTemplates:
   - metadata:

@@ -145,5 +145,5 @@ spec:
 
       {{- with .Values.api.nodeSelector  }}
       nodeSelector:
-        {{- toYaml .Values.api.nodeSelector | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
