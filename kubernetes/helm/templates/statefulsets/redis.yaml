@@ -58,6 +58,11 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: data
+
+      {{- with .Values.redis.nodeSelector  }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
   volumeClaimTemplates:
   - metadata:
       name: data
