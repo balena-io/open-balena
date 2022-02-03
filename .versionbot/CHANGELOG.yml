@@ -1,4 +1,33 @@
 - commits:
+    - subject: Get cert-provider working again
+      hash: 7c4e9fdc0944b6bbaa95bbc1d72b06b4de353b0d
+      body: >
+        Need new version to use ACME v2 correctly.
+
+        Force using letsencrypt (didn't work otherwise, not totally sure why
+        not)
+
+        Update bundled staging certs, contents are from:
+
+        https://github.com/letsencrypt/website/blob/master/static/certs/staging/letsencrypt-stg-root-dst.pem
+
+        https://github.com/letsencrypt/website/blob/master/static/certs/staging/letsencrypt-stg-root-x1.pem
+
+        https://github.com/letsencrypt/website/blob/master/static/certs/staging/letsencrypt-stg-root-x2.pem
+
+        https://github.com/letsencrypt/website/blob/master/static/certs/staging/letsencrypt-stg-int-e1.pem
+
+        https://github.com/letsencrypt/website/blob/master/static/certs/staging/letsencrypt-stg-int-r3.pem
+
+        ref https://letsencrypt.org/docs/staging-environment/
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: dave
+      nested: []
+  version: 3.4.2
+  date: 2021-10-05T20:49:37.042Z
+- commits:
     - subject: Delete CODEOWNERS
       hash: a328e8fc1d3b151b2066f8018c80655e60feef7f
       body: ''
