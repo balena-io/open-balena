@@ -128,7 +128,7 @@ vpn:
   replicas: 1
   image:
     repository: balena/open-balena-vpn
-    tag: "v9.17.11"
+    tag: "v9.27.0"
     pullPolicy: IfNotPresent
 
   labels: {}
