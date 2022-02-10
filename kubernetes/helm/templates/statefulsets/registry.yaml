@@ -59,13 +59,13 @@ spec:
           value: "ENV"
         - name: API_TOKENAUTH_CRT
           value: "{{ index .Values "global" "keys" "token-auth-pub" }}"
-        - name: BALENA_REGISTRY2_HOST
+        - name: REGISTRY2_HOST
           value: "registry.{{ .Values.global.hostname }}"
-        - name: BALENA_ROOT_CA
+        - name: ROOT_CA
           value: "{{ index .Values "global" "certificates" "root" "ca" }}"
-        - name: BALENA_TOKEN_AUTH_ISSUER
+        - name: REGISTRY2_TOKEN_AUTH_ISSUER
           value: "api.{{ .Values.global.hostname }}"
-        - name: BALENA_TOKEN_AUTH_REALM
+        - name: REGISTRY2_TOKEN_AUTH_REALM
           value: "https://api.{{ .Values.global.hostname }}/auth/v1/token"
         - name: COMMON_REGION
           value: "{{ index .Values "global" "s3" "region" }}"

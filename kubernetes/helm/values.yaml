@@ -149,7 +149,7 @@ registry:
   replicas: 1
   image:
     repository: balena/open-balena-registry
-    tag: "v2.16.1"
+    tag: "v2.24.2"
     pullPolicy: IfNotPresent
 
   disableRedirect: false
