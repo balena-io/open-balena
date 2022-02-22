@@ -106,16 +106,11 @@ spec:
         {{- end }}
 
         volumeMounts:
-        - mountPath: /data
-          name: data
-          subPath: registry
         - mountPath: /run
           name: run
         - mountPath: /sys/fs/cgroup
           name: cgroup
       volumes:
-      - name: data
-        emptyDir: {}
       - name: run
         emptyDir:
           medium: Memory
