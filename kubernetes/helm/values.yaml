@@ -165,9 +165,6 @@ registry:
     annotations: {}
     externalIPs: []
 
-  storage: "10Gi"
-  storageClass:
-
 # openBalena S3
 s3:
   # If disabled, please provide details in .config.s3
