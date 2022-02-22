@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: {{ include "openbalena.fullname" . }}-registry
   namespace: {{ .Release.Namespace }}
@@ -19,7 +19,6 @@ spec:
   affinity:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  serviceName: {{ include "openbalena.fullname" . }}-registry
   selector:
     matchLabels:
       {{- include "openbalena.selectorLabels" . | nindent 6 }}
@@ -116,8 +115,7 @@ spec:
           name: cgroup
       volumes:
       - name: data
-        persistentVolumeClaim:
-          claimName: data
+        emptyDir: {}
       - name: run
         emptyDir:
           medium: Memory
@@ -129,14 +127,3 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      {{- if .Values.registry.storageClass }}
-      storageClassName: {{ .Values.registry.storageClass }}
-      {{- end }}
-      resources:
-        requests:
-          storage: {{ .Values.registry.storage }}
