@@ -5,7 +5,6 @@ volumes:
   cert-provider: {}
   db: {}
   redis: {}
-  registry: {}
   s3: {}
 
 services:
@@ -65,8 +64,6 @@ services:
     depends_on:
       - s3
       - redis
-    volumes:
-      - registry:/data
     environment:
       API_TOKENAUTH_CRT: ${OPENBALENA_TOKEN_AUTH_PUB}
       BALENA_REGISTRY2_HOST: registry.${OPENBALENA_HOST_NAME}
