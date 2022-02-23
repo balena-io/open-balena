@@ -212,6 +212,22 @@ db:
   storage: "10Gi"
   storageClass:
 
+  ## Start PostgreSQL pod without limitations on shm memory.
+  ## By default docker and containerd limit `/dev/shm` to `64M`
+  ## ref: https://github.com/docker-library/postgres/issues/416
+  ## ref: https://github.com/containerd/containerd/issues/3654
+  ##
+  shmVolume:
+    ## @param db.shmVolume.enabled Enable emptyDir volume for /dev/shm for PostgreSQL pod(s)
+    ##
+    enabled: true
+    ## @param db.shmVolume.sizeLimit Set this to enable a size limit on the shm tmpfs
+    ## Note: the size of the tmpfs counts against container's memory limit
+    ## e.g:
+    ## sizeLimit: 1Gi
+    ##
+    sizeLimit: ""
+
 # Redis instance
 redis:
   replicas: 1

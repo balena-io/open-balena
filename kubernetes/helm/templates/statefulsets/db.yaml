@@ -54,10 +54,22 @@ spec:
         - mountPath: /var/lib/postgresql/data
           name: data
           subPath: postgres
+        {{- if .Values.db.shmVolume.enabled }}
+        - name: dshm
+          mountPath: /dev/shm
+        {{- end }}
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: data
+      {{- if .Values.db.shmVolume.enabled }}
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          {{- if .Values.db.shmVolume.sizeLimit }}
+          sizeLimit: {{ .Values.db.shmVolume.sizeLimit }}
+          {{- end }}
+      {{- end }}
 
       {{- with .Values.db.nodeSelector  }}
       nodeSelector:
