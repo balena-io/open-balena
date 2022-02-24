@@ -1,7 +1,2 @@
 .DS_Store
-.project
-.vagrant/
-
-/config
-/docker-compose.yml
-/package-lock.json
+.balena

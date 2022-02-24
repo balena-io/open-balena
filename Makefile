@@ -1,4 +1,4 @@
 .PHONY: lint
 
 lint:
-	shellcheck scripts/*
+	find . -type f -name *.sh | xargs shellcheck

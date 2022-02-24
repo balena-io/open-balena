@@ -1,0 +1,3 @@
+[submodule "src/balena-tests"]
+	path = src/balena-tests
+	url = https://github.com/balena-io-playground/balenaVirt.git
