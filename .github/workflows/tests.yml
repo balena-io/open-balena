@@ -1,0 +1,676 @@
+---
+name: openBalena tests
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: "balenaCloud environment"
+        required: true
+        type: string
+      fleet:
+        description: "balenaCloud fleet"
+        required: true
+        type: string
+      dns_tld:
+        description: "domain name to use for issuing SSL certificates"
+        required: true
+        type: string
+
+# https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
+permissions:
+  actions: read
+  checks: read
+  contents: read
+  deployments: read
+  id-token: write # AWS GitHub OIDC required: write
+  issues: read
+  discussions: read
+  packages: read
+  pages: read
+  pull-requests: read
+  repository-projects: read
+  security-events: read
+  statuses: read
+
+env:
+  # Stack ID
+  # arn:aws:cloudformation:us-east-1:491725000532:stack/balena-tests-s3-certs/814dea60-404d-11ed-b06f-0a7d458f8ba5
+  AWS_S3_CERTS_BUCKET: balena-tests-certs
+  # (kvm) nested virtualisation not supported on AWS/EC2 instance types|classes other than X.metal
+  AWS_EC2_INSTANCE_TYPE: c6a.2xlarge
+  AWS_EC2_LAUNCH_TEMPLATE: lt-02e10a4f66261319d
+  AWS_EC2_LT_VERSION: 2
+  AWS_IAM_USERNAME: balena-tests-iam-User-1GXO3XP12N6LL
+  AWS_VPC_SECURITY_GROUP_IDS: sg-057937f4d89d9d51c
+  AWS_VPC_SUBNET_IDS: 'subnet-02d18a08ea4058574 subnet-0a026eae1df907a09'
+  # otherwise it tries to send data to an endpoint provided by a private project
+  # https://github.com/balena-io/analytics-backend
+  # .. which is not part of openBalena
+  BALENARC_NO_ANALYTICS: '1'  # https://github.com/balena-io/balena-cli/blob/master/lib/events.ts#L62-L70
+  DEBUG: '0'  # https://github.com/balena-io/balena-cli/issues/2447
+  RETRY: 3
+  SUBDOMAIN: auto
+
+jobs:
+  test:
+    runs-on: ["self-hosted", "X64", "distro:jammy"]  # tests require socat v1.7.4
+    timeout-minutes: 60
+    strategy:
+      fail-fast: true
+
+    steps:
+    - uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b
+      with:
+        # FIXME: remove once balenaBlocks/balenaVirt is a thing
+        submodules: true
+
+    - uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+      with:
+        aws-region: ${{ vars.AWS_REGION || 'us-east-1' }}
+        role-session-name: github-${{ github.job }}-${{ github.run_id }}-${{ github.run_attempt }}
+        # balena-io/environments-bases: aws/balenacloud/ephemeral-tests/balena-tests-iam.yml
+        role-to-assume: ${{ vars.AWS_IAM_ROLE }}
+
+    # https://github.com/pdcastro/ssh-uuid#why
+    # https://github.com/pdcastro/ssh-uuid#linux-debian-ubuntu-others
+    - name: install additional dependencies
+      shell: bash
+      run: |
+        set -ue
+        echo '::notice::install additional dependencies'
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
+
+        mkdir -p "${RUNNER_TEMP}/ssh-uuid"
+
+        wget -q -O "${RUNNER_TEMP}/ssh-uuid/ssh-uuid" https://raw.githubusercontent.com/pdcastro/ssh-uuid/master/ssh-uuid.sh \
+          && chmod +x "${RUNNER_TEMP}/ssh-uuid/ssh-uuid" \
+          && ln -s "${RUNNER_TEMP}/ssh-uuid/ssh-uuid" "${RUNNER_TEMP}/ssh-uuid/scp-uuid"
+
+        with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
+
+        balena version
+
+        "${RUNNER_TEMP}/ssh-uuid/scp-uuid" --help
+
+        grep -q "${RUNNER_TEMP}/ssh-uuid" "${GITHUB_PATH}" \
+          || echo "${RUNNER_TEMP}/ssh-uuid" >> "${GITHUB_PATH}"
+
+    - name: (pre)register test device
+      id: register-test-device
+      if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed'}}
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
+
+        with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
+
+        balena_device_uuid="$(openssl rand -hex 16)"
+
+        # https://www.balena.io/docs/learn/more/masterclasses/advanced-cli/#52-preregistering-a-device
+        balena device register '${{ inputs.fleet }}' --uuid "${balena_device_uuid}"
+
+        device_id="$(balena device "${balena_device_uuid}" | grep ^ID: | cut -c20-)"
+
+        # the actual version deployed depends on the AWS EC2/AMI, defined in AWS_EC2_LAUNCH_TEMPLATE
+        os_version="$(balena os versions ${{ vars.DEVICE_TYPE || 'generic-amd64' }} | head -n 1)"
+
+        balena config generate \
+          --version "${os_version}" \
+          --device "${balena_device_uuid}" \
+          --network ethernet \
+          --appUpdatePollInterval 10 \
+          $([[ '${{ vars.DEVELOPMENT_MODE || 'false' }}' =~ true ]] && echo '--dev') \
+          --output config.json
+
+        balena tag set balena ephemeral-test-device --device "${balena_device_uuid}"
+
+        github_vars=(GITHUB_ACTOR GITHUB_BASE_REF GITHUB_HEAD_REF GITHUB_JOB \
+          GITHUB_REF GITHUB_REF_NAME GITHUB_REF_TYPE GITHUB_REPOSITORY \
+          GITHUB_REPOSITORY_OWNER GITHUB_RUN_ATTEMPT GITHUB_RUN_ID GITHUB_RUN_NUMBER \
+          GITHUB_SHA GITHUB_WORKFLOW RUNNER_ARCH RUNNER_NAME RUNNER_OS)
+
+        for github_var in "${github_vars[@]}"; do
+            balena tag set ${github_var} "${!github_var}" --device "${balena_device_uuid}"
+        done
+
+        echo "balena_device_uuid=${balena_device_uuid}" >> "${GITHUB_OUTPUT}"
+        echo "balena_device_id=${device_id}" >> "${GITHUB_OUTPUT}"
+
+   # https://github.com/balena-io/balena-cli/issues/1543
+    - name: pin device to draft release
+      if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed'}}
+      run: |
+        set -uae
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
+
+        with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
+
+        pr_id='${{ github.event.pull_request.id }}'
+        head_sha='${{ github.event.pull_request.head.sha || github.event.head_commit.id }}'
+        release_id="$(with_backoff balena releases '${{ inputs.fleet }}' --json \
+          | jq -r --arg pr_id "${pr_id}" --arg head_sha "${head_sha}" '.[]
+          | select(.release_tag[].tag_key=="balena-ci-commit-sha")
+          | select(.release_tag[].value==$head_sha)
+          | select(.release_tag[].tag_key=="balena-ci-id")
+          | select(.release_tag[].value==$pr_id).commit')"
+
+        with_backoff balena device pin \
+          ${{ steps.register-test-device.outputs.balena_device_uuid }} \
+          "${release_id}"
+
+        with_backoff balena device ${{ steps.register-test-device.outputs.balena_device_uuid }}
+
+    - name: configure test device environment
+      if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed'}}
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
+
+        with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
+
+        with_backoff balena env add VERBOSE "${{ vars.VERBOSE || 'false' }}" \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add BALENARC_NO_ANALYTICS '1' \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add DNS_TLD '${{ env.SUBDOMAIN }}.${{ inputs.dns_tld }}' \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add DB_HOST db \
+          --service api \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add REDIS_HOST redis:6379 \
+          --service api \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+
+        # to allow devices running locally to communicate to the local API, we can route
+        # to the local Docker network aliases instead of public DNS, since (a) DNS_TLD is
+        # guestfwd(ed) in QEMU to a special internal IP 10.0.2.100; (b) is proxied to
+        # haproxy network alias on device; and (c) made public with a wildcard DNS record
+        # (e.g.)
+        #
+        # $ dig +short api.auto.balena-devices.com
+        # 10.0.2.100
+        #
+
+        with_backoff balena env add API_HOST 'api.${{ env.SUBDOMAIN }}.${{ inputs.dns_tld }}' \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        # not used but required for config.json to be valid
+        with_backoff balena env add DELTA_HOST 'delta.${{ env.SUBDOMAIN }}.${{ inputs.dns_tld }}' \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add REGISTRY2_HOST 'registry2.${{ env.SUBDOMAIN }}.${{ inputs.dns_tld }}' \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add VPN_HOST 'cloudlink.${{ env.SUBDOMAIN }}.${{ inputs.dns_tld }}' \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add HOST 'api.${{ env.SUBDOMAIN }}.${{ inputs.dns_tld }}' \
+          --service api \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add TOKEN_AUTH_CERT_ISSUER 'api.${{ env.SUBDOMAIN }}.${{ inputs.dns_tld }}' \
+          --service api \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add REGISTRY2_TOKEN_AUTH_ISSUER 'api.${{ env.SUBDOMAIN }}.${{ inputs.dns_tld }}' \
+          --service registry \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add REGISTRY2_TOKEN_AUTH_REALM 'https://api.${{ env.SUBDOMAIN }}.${{ inputs.dns_tld }}/auth/v1/token' \
+          --service registry \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add REGISTRY2_S3_REGION_ENDPOINT 's3.${{ env.SUBDOMAIN }}.${{ inputs.dns_tld }}' \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add WEBRESOURCES_S3_HOST 's3.${{ env.SUBDOMAIN }}.${{ inputs.dns_tld }}' \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        # https://github.com/balena-io/cert-manager/blob/master/entry.sh#L255-L278
+        # cert-manager will restore the last wildcard certificate from AWS/S3 to avoid
+        # being rate limited by LetsEncrypt/ACME
+        with_backoff balena env add AWS_S3_BUCKET '${{ env.AWS_S3_CERTS_BUCKET }}' \
+          --service cert-manager \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        # FIXME: still required?
+        with_backoff balena env add COMMON_REGION '${{ env.AWS_REGION }}' \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add SUPERUSER_EMAIL 'admin@${{ env.SUBDOMAIN }}.${{ inputs.dns_tld }}' \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add ORG_UNIT openBalena \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+
+        # unstable/unsupported functionality
+        with_backoff balena env add HIDE_UNVERSIONED_ENDPOINT 'false' \
+          --service api \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add RELEASE_ASSETS_TEST 'true' \
+          --service sut \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+    - name: configure test device secrets
+      if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed'}}
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
+
+        with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
+
+        # cert-manager requires it to get whoami information for the user
+        with_backoff balena env add API_TOKEN '${{ secrets.BALENA_API_KEY }}' \
+          --service cert-manager \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        # cert-manager requires is to request wildcard SSL certificate from LetsEncrypt
+        with_backoff balena env add CLOUDFLARE_API_TOKEN '${{ secrets.CLOUDFLARE_API_TOKEN }}' \
+          --service cert-manager \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        # AWS credentials to backup/restore PKI assets
+        with_backoff balena env add AWS_ACCESS_KEY_ID '${{ env.AWS_ACCESS_KEY_ID }}' \
+          --service cert-manager \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env add AWS_SECRET_ACCESS_KEY '${{ env.AWS_SECRET_ACCESS_KEY }}' \
+          --service cert-manager \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+    - name: provision ephemeral test device
+      id: provision-test-device
+      if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed'}}
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        for subnet_id in ${{ env.AWS_VPC_SUBNET_IDS }}; do
+            # spot, on-demand
+            for market_type in ${{ vars.MARKET_TYPES || 'spot' }}; do
+                # https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html
+                response="$(aws ec2 run-instances \
+                  --launch-template 'LaunchTemplateId=${{ env.AWS_EC2_LAUNCH_TEMPLATE }},Version=${{ env.AWS_EC2_LT_VERSION }}' \
+                  --instance-type '${{ env.AWS_EC2_INSTANCE_TYPE }}' \
+                  $([[ $market_type =~ spot ]] && echo '--instance-market-options MarketType=spot') \
+                  --security-group-ids '${{ env.AWS_VPC_SECURITY_GROUP_IDS }}' \
+                  --subnet-id "${subnet_id}" \
+                  --associate-public-ip-address \
+                  --user-data file://config.json \
+                  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=balena-tests},{Key=MarketType,Value=${market_type}},{Key=Owner,Value=${{ env.AWS_IAM_USERNAME }}},{Key=GITHUB_SHA,Value=${GITHUB_SHA}-tests}]" || true)"
+
+                [[ -n $response ]] && break
+            done
+            [[ -n $response ]] && break
+        done
+
+        [[ -z $response ]] && exit 1
+
+        instance_id="$(echo "${response}" | jq -r '.Instances[].InstanceId')"
+
+        aws ec2 wait instance-running --instance-ids "${instance_id}"
+
+        aws ec2 wait instance-status-ok --instance-ids "${instance_id}"
+
+        echo "instance_id=${instance_id}" >> "${GITHUB_OUTPUT}"
+
+      env:
+        AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
+
+    - name: provision SSH key
+      id: provision-ssh-key
+      # wait for cloud-config
+      # https://github.com/balena-os/cloud-config
+      timeout-minutes: 5
+      if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed'}}
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
+
+        with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
+
+        if ! [[ -e "${HOME}/.ssh/id_rsa" ]]; then
+            ssh-keygen -N '' \
+              -C "$(balena whoami | grep EMAIL | cut -c11-)" \
+              -f "${HOME}/.ssh/id_rsa"
+        fi
+
+        echo "::notice::check $(balena keys | wc -l) keys"
+
+        match=''
+        for key in $(balena keys | grep -v ID | awk '{print $1}'); do
+            fp=$(balena key ${key} | tail -n 1 | ssh-keygen -E md5 -lf /dev/stdin | awk '{print $2}')
+            if [[ $fp =~ $(ssh-keygen -E md5 -lf "${HOME}/.ssh/id_rsa" | awk '{print $2}') ]]; then
+                match="${key}"
+                break
+            fi
+        done
+
+        if [[ -z $match ]]; then
+            balena key add "${GITHUB_SHA}" "${HOME}/.ssh/id_rsa.pub"
+        else
+            balena keys
+        fi
+
+        pgrep ssh-agent || ssh-agent -a "${SSH_AUTH_SOCK}"
+
+        ssh-add "${HOME}/.ssh/id_rsa"
+
+        while ! [[ "$(ssh-uuid -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+          ${{ steps.register-test-device.outputs.balena_device_uuid }}.balena \
+          cat /mnt/boot/config.json | jq -r .uuid)" =~ ${{ steps.register-test-device.outputs.balena_device_uuid }} ]]; do
+
+            echo "::warning::Still working..."
+            sleep "$(( (RANDOM % 5) + 5 ))s"
+        done
+
+        echo "key_id=${GITHUB_SHA}" >> "${GITHUB_OUTPUT}"
+
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+
+    - name: wait for application
+      timeout-minutes: 10
+      if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed'}}
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
+
+        with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
+
+        balena whoami && ssh-add -l
+
+        while [[ "$(curl -X POST --silent --retry ${{ env.RETRY }} --fail \
+          'https://api.${{ inputs.environment }}/supervisor/v1/device' \
+          --header 'authorization: Bearer ${{ secrets.BALENA_API_KEY }}' \
+          --header 'Content-Type:application/json' \
+          --data '{"uuid": "${{ steps.register-test-device.outputs.balena_device_uuid }}", "method": "GET"}' \
+          --compressed | jq -r '.update_pending')" =~ ^true$ ]]; do
+
+            sleep "$(( ( RANDOM % ${{ env.RETRY }} ) + ${{ env.RETRY }} ))s"
+        done
+
+        # wait for services to start running
+        while with_backoff ssh-uuid -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+          ${{ steps.register-test-device.outputs.balena_device_uuid }}.balena \
+          'balena ps -q | xargs balena inspect | jq -r .[].State.Status' \
+          | grep -E 'created|restarting|removing|paused|exited|dead'; do
+
+            echo "::warning::Still working..."
+            sleep "$(( (RANDOM % 30) + 30 ))s"
+        done
+
+        # wait for Docker healthchecks
+        while with_backoff ssh-uuid -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+          ${{ steps.register-test-device.outputs.balena_device_uuid }}.balena \
+          'balena ps -q | xargs balena inspect \
+          | jq -r ".[] | select(.State.Health.Status!=null).Name + \":\" + .State.Health.Status"' \
+          | grep -E ':starting|:unhealthy'; do
+
+            echo "::warning::Still working..."
+            sleep "$(( (RANDOM % 30) + 30 ))s"
+        done
+
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+
+    # (TBC) https://www.balena.io/docs/reference/supervisor/docker-compose/
+    # due to lack of long form depends_on support in compositions, restart to ensure all
+    # components are running with the latest configuration; preferred over restart via
+    # Supervisor API restart due to potential HTTP [timeouts](https://github.com/balena-os/balena-supervisor/issues/1157)
+    - name: restart components
+      timeout-minutes: 10
+      if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed'}}
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
+
+        with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
+
+        balena whoami && ssh-add -l
+
+        with_backoff ssh-uuid -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+          ${{ steps.register-test-device.outputs.balena_device_uuid }}.balena \
+          "balena ps -aq | xargs balena inspect \
+          | jq -re '.[]
+          | select(.Name | contains(\"_supervisor\") | not).Id' \
+          | xargs balena restart"
+
+        # wait for Docker healthchecks
+        while with_backoff ssh-uuid -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+          ${{ steps.register-test-device.outputs.balena_device_uuid }}.balena \
+          'balena ps -q | xargs balena inspect \
+          | jq -r ".[] | select(.State.Health.Status!=null).Name + \":\" + .State.Health.Status"' \
+          | grep -E ':starting|:unhealthy'; do
+
+            echo "::warning::Still working..."
+            sleep "$(( (RANDOM % 30) + 30 ))s"
+        done
+
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+
+    - name: SUT&DUT
+      if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed'}}
+      timeout-minutes: 20
+      # https://giters.com/gfx/example-github-actions-with-tty
+      # https://github.com/actions/runner/issues/241#issuecomment-924327172
+      shell: 'script -q -e -c "bash {0}"'
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
+
+        with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
+
+        balena whoami && ssh-add -l
+
+        (with_backoff ssh-uuid -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+          ${{ steps.register-test-device.outputs.balena_device_uuid }}.balena \
+          "balena ps -aq | xargs balena inspect \
+          | jq -re '.[] | select(.Name | contains(\"sut_\")).Id' \
+          | xargs balena logs -f") &
+
+        # tests service is working while its status == running
+        status=''
+        while [[ "$status" =~ Running ]]; do
+            status="$(curl --silent --retry ${{ env.RETRY }} --fail \
+              'https://api.${{ inputs.environment }}/supervisor/v2/applications/state' \
+              --header 'authorization: Bearer ${{ secrets.BALENA_API_KEY }}' \
+              --header 'Content-Type:application/json' \
+              --data '{"uuid": "${{ steps.register-test-device.outputs.balena_device_uuid }}", "method": "GET"}' \
+              --compressed | jq -r '.[].services.sut.status')"
+
+            echo "::warning::Still working..."
+            sleep "$(( ( RANDOM % ${{ env.RETRY }} ) + ${{ env.RETRY }} ))s"
+        done
+
+        # .. once the service exits with status == exited, it is assumed to be finished
+        status=''
+        while ! [[ "$status" =~ exited ]]; do
+            echo "::warning::Still working..."
+            status="$(curl --silent --retry ${{ env.RETRY }} --fail \
+              'https://api.${{ inputs.environment }}/supervisor/v2/applications/state' \
+              --header 'authorization: Bearer ${{ secrets.BALENA_API_KEY }}' \
+              --header 'Content-Type:application/json' \
+              --data '{"uuid": "${{ steps.register-test-device.outputs.balena_device_uuid }}", "method": "GET"}' \
+              --compressed | jq -r '.[].services.sut.status')"
+
+            sleep "$(( ( RANDOM % ${{ env.RETRY }} ) + ${{ env.RETRY }} ))s"
+        done
+
+        # .. check its exit code
+        expected_exit_code=0
+        actual_exit_code="$(with_backoff ssh-uuid -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+          ${{ steps.register-test-device.outputs.balena_device_uuid }}.balena \
+          "balena ps -aq | xargs balena inspect \
+          | jq -re '.[] | select(.Name | contains(\"sut_\")).State.ExitCode'")"
+
+        [[ $expected_exit_code -eq $actual_exit_code ]] || false
+
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        ATTEMPTS: 2
+
+    - name: remove SSH key
+      if: always()
+      continue-on-error: true
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
+
+        with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
+
+        with_backoff balena keys | grep ${{ steps.provision-ssh-key.outputs.key_id }} \
+          | awk '{print $1}' | xargs balena key rm --yes
+
+        pgrep ssh-agent && (pgrep ssh-agent | xargs kill)
+
+        rm -f /tmp/ssh_agent.sock
+
+    - name: destroy balena test device
+      if: always()
+      continue-on-error: true
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
+
+        with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
+
+        with_backoff balena device rm ${{ steps.register-test-device.outputs.balena_device_uuid }} --yes
+
+      env:
+        AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
+
+    # always destroy test EC2 instances even if the workflow is cancelled
+    - name: destroy AWS test device
+      if: always()
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
+
+        if [[ -n '${{ steps.provision-test-device.outputs.instance_id }}' ]]; then
+            with_backoff aws ec2 terminate-instances \
+              --instance-ids ${{ steps.provision-test-device.outputs.instance_id }}
+        fi
+
+        with_backoff aws ec2 describe-instances --filters Name=tag:GITHUB_SHA,Values=${GITHUB_SHA}-tests \
+          | jq -r .Reservations[].Instances[].InstanceId \
+          | xargs aws ec2 terminate-instances --instance-ids
+
+        stale_instances=$(mktemp)
+        aws ec2 describe-instances --filters \
+          Name=tag:Name,Values=balena-tests \
+          Name=instance-state-name,Values=running \
+          | jq -re '.Reservations[].Instances[].InstanceId + " " + .Reservations[].Instances[].LaunchTime' > ${stale_instances} || true
+
+        if test -s "${stale_instances}"; then
+            while IFS= read -r line; do
+                instance_id=$(echo ${line} | awk '{print $1}')
+                launch_time=$(echo ${line} | awk '{print $2}')
+                now=$(date +%s)
+                then=$(date --date ${launch_time} +%s)
+                days_since_launch=$(( (now - then) / 86400 ))
+                if [[ -n $days_since_launch ]] && [[ $days_since_launch -ge 1 ]]; then
+                    with_backoff aws ec2 terminate-instances --instance-ids ${instance_id}
+                fi
+            done <${stale_instances}
+            rm -f ${stale_instances}
+        fi
+
+      env:
+        AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
+
+    # remove orphaned ACME DNS-01 validation records
+    # https://letsencrypt.org/docs/challenge-types/#dns-01-challenge
+    # FIXME: clean up older _acme-challenge.auto TXT records
+    - name: cleanup-dns-records
+      if: always()
+      continue-on-error: true
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE || 'false' }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        if [[ -n '${{ steps.register-test-device.outputs.balena_device_uuid }}' ]]; then
+            match="${{ steps.register-test-device.outputs.balena_device_uuid }}.${{ env.SUBDOMAIN }}"
+
+            zone_id="$(curl --silent --retry ${{ env.RETRY }} \
+              "https://api.cloudflare.com/client/v4/zones?name=${{ inputs.dns_tld }}" \
+              -H 'Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}' | jq -r '.result[].id')"
+
+            for record in "$(curl --silent --retry ${{ env.RETRY }} \
+              "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records" \
+              -H 'Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}' \
+              | jq -r --arg match "${match}" '.result[] | select(((.type=="TXT") and (.name | contains($match))))' \
+              | base64)"; do
+
+                json="$(echo "${record}" | base64 -d | jq -r)"
+                id="$(echo "${json}" | jq -r .id)"
+                name="$(echo "${json}" | jq -r .name)"
+
+                if [[ -n $id ]] && [[ -n $name ]]; then
+                    echo "::warning::Orphaned DNS record ${name} (${id})..."
+
+                    if [[ -z $DRY_RUN ]]; then
+                        curl -X DELETE --silent --retry ${{ env.RETRY }} \
+                          "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records/${id}" \
+                          -H 'Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}'
+                    fi
+                fi
+            done
+        fi
+
+      env:
+        DRY_RUN: true

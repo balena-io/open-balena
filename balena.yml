@@ -1,0 +1,26 @@
+name: openBalena
+type: sw.application
+description: https://www.balena.io/open
+post-provisioning: |
+  [![Flowzone](https://github.com/balena-io/open-balena/actions/workflows/flowzone.yml/badge.svg)](https://github.com/balena-io/open-balena/actions/workflows/flowzone.yml)
+
+  ## Getting Started
+
+  * https://open-balena.pages.dev/#getting-started
+
+assets:
+  repository:
+    type: blob.asset
+    data:
+      url: 'https://github.com/balena-io/open-balena'
+  logo:
+    type: blob.asset
+    data:
+      url: 'https://raw.githubusercontent.com/balena-io/open-balena/master/logo.png'
+data:
+  defaultDeviceType: generic-amd64
+  supportedDeviceTypes:
+    - generic-amd64
+    - genericx86-64-ext
+    - intel-nuc
+version: 3.7.1

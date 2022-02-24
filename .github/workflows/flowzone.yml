@@ -4,7 +4,6 @@ on:
   pull_request:
     types: [opened, synchronize, closed]
     branches: [main, master]
-  # allow external contributions to use secrets within trusted code
   pull_request_target:
     types: [opened, synchronize, closed]
     branches: [main, master]
@@ -24,4 +23,35 @@ jobs:
       )
     secrets: inherit
     with:
-      cloudflare_website: "open-balena"
+      jobs_timeout_minutes: 60
+      cloudflare_website: open-balena
+      custom_runs_on: |
+        [
+          [
+            "self-hosted",
+            "Linux",
+            "X64"
+          ]
+        ]
+
+      balena_slugs: |
+        balena/open-balena
+
+  tests:
+    name: openBalena tests
+    uses: ./.github/workflows/tests.yml
+    needs: [flowzone]
+    if: |
+      ((
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        github.event_name == 'pull_request'
+      ) || (
+        github.event.pull_request.head.repo.full_name != github.repository &&
+        github.event_name == 'pull_request_target'
+      )) && github.event.action != 'closed'
+    secrets: inherit
+    with:
+      environment: balena-cloud.com
+      fleet: balena/open-balena
+      # https://dash.cloudflare.com/001b3ed2352612aaa068aca1b0022736/balena-devices.com/dns
+      dns_tld: balena-devices.com
