@@ -2,7 +2,7 @@ apiVersion: v2
 name: openbalena
 description: openBalena kubernetes Chart
 type: application
-version: 1.1.1
+version: 1.1.2
 appVersion: v3.4.3
 keywords:
 - balena
@@ -13,7 +13,7 @@ maintainers:
 
 dependencies:
 - name: haproxy-ingress
-  version: 0.13.4
+  version: 0.13.6
   alias: haproxy
   repository: "https://haproxy-ingress.github.io/charts"
 

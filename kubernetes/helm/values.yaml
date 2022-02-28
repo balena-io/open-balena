@@ -237,7 +237,7 @@ redis:
 ##
 ## HAProxy Ingress Chart
 ##
-## https://github.com/haproxy-ingress/charts/blob/master/haproxy-ingress/values.yaml
+## https://github.com/haproxy-ingress/charts/blob/0.13.6/haproxy-ingress/values.yaml
 ##
 haproxy:
   controller:
