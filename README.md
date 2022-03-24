@@ -1,4 +1,4 @@
-![logo](https://raw.githubusercontent.com/balena-io/open-balena/docs/assets/openbalena-logo.svg)
+![logo](./docs/assets/openbalena-logo.svg)
 
 ---
 
