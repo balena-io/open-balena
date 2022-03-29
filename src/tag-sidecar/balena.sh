@@ -20,23 +20,25 @@ get_aws_meta() {
     fi
 }
 
-which curl || apk add curl --no-cache
-which jq || apk add jq --no-cache
+if [[ -n $BALENA_API_URL ]] && [ -n $BALENA_DEVICE_UUID ]] && [[ -n $BALENA_API_KEY ]]; then
+	which curl || apk add curl --no-cache
+	which jq || apk add jq --no-cache
 
-device_id="$(curl_with_opts \
-  "${BALENA_API_URL}/v6/device?\$filter=uuid%20eq%20'${BALENA_DEVICE_UUID}'" \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer ${BALENA_API_KEY}" | jq -r .d[].id)"
+	device_id="$(curl_with_opts \
+	  "${BALENA_API_URL}/v6/device?\$filter=uuid%20eq%20'${BALENA_DEVICE_UUID}'" \
+	  -H "Content-Type: application/json" \
+	  -H "Authorization: Bearer ${BALENA_API_KEY}" | jq -r .d[].id)"
 
-for key in $(curl_with_opts http://169.254.169.254/latest/meta-data \
-  | grep -Ev 'iam|metrics|identity-credentials|network|events'); do
-    for kv in $(get_aws_meta "http://169.254.169.254/latest/meta-data/${key}"); do
-        tag_key="$(echo "${kv}" | awk -F';' '{print $1}')"
-        value="$(echo "${kv}" | awk -F';' '{print $2}')"
+	for key in $(curl_with_opts http://169.254.169.254/latest/meta-data \
+	  | grep -Ev 'iam|metrics|identity-credentials|network|events'); do
+		for kv in $(get_aws_meta "http://169.254.169.254/latest/meta-data/${key}"); do
+			tag_key="$(echo "${kv}" | awk -F';' '{print $1}')"
+			value="$(echo "${kv}" | awk -F';' '{print $2}')"
 
-        curl_with_opts "${BALENA_API_URL}/v6/device_tag" \
-          -H "Content-Type: application/json" \
-          -H "Authorization: Bearer ${BALENA_API_KEY}" \
-          --data "{\"device\":\"${device_id}\",\"tag_key\":\"${tag_key}\",\"value\":\"${value}\"}"
-    done
-done
+			curl_with_opts "${BALENA_API_URL}/v6/device_tag" \
+			  -H "Content-Type: application/json" \
+			  -H "Authorization: Bearer ${BALENA_API_KEY}" \
+			  --data "{\"device\":\"${device_id}\",\"tag_key\":\"${tag_key}\",\"value\":\"${value}\"}"
+		done
+	done
+fi

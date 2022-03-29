@@ -7,7 +7,13 @@ set -ea
 which curl || apk add curl --no-cache
 which jq || apk add jq --no-cache
 
-network="${BALENA_APP_ID}_default"
+if docker inspect "${BALENA_APP_UUID}_default" --format "{{.ID}}"; then
+    network="${BALENA_APP_UUID}_default"
+elif docker inspect "${BALENA_APP_ID}_default" --format "{{.ID}}"; then
+    network="${BALENA_APP_ID}_default"
+else
+    network=open-balena_default
+fi
 
 # shellcheck disable=SC2153
 for alias in ${ALIASES//,/ }; do
@@ -16,28 +22,32 @@ for alias in ${ALIASES//,/ }; do
 done
 
 while true; do
-    while [ "$(curl --silent --retry 3 --fail \
-      "${BALENA_SUPERVISOR_ADDRESS}/v1/device?apikey=${BALENA_SUPERVISOR_API_KEY}" \
-      -H "Content-Type:application/json" | jq -r '.update_pending')" = 'true' ]; do
-        sleep "$(( (RANDOM % 3) + 3 ))s"
-    done
-    sleep "$(( (RANDOM % 5) + 5 ))s"
+    if [[ -n $BALENA_SUPERVISOR_ADDRESS ]] && [[ -n $BALENA_SUPERVISOR_API_KEY ]]; then
+        while [[ "$(curl --silent --retry 3 --fail \
+          "${BALENA_SUPERVISOR_ADDRESS}/v1/device?apikey=${BALENA_SUPERVISOR_API_KEY}" \
+          -H "Content-Type:application/json" | jq -r '.update_pending')" =~ true ]]; do
+            sleep "$(( (RANDOM % 3) + 3 ))s"
+        done
+        sleep "$(( (RANDOM % 5) + 5 ))s"
+    fi
 
-    while [ "$(docker ps \
-      --filter "name=haproxy_" \
+    while [[ "$(docker ps \
+      --filter "name=haproxy" \
+      --filter "expose=1936/tcp" \
       --filter "status=running" \
       --filter "network=${network}" \
-      --format "{{.ID}}")" = '' ]; do
+      --format "{{.ID}}")" == '' ]]; do
         sleep "$(( (RANDOM % 3) + 3 ))s"
     done
 
     haproxy="$(docker ps \
-      --filter "name=haproxy_" \
+      --filter "name=haproxy" \
+      --filter "expose=1936/tcp" \
       --filter "status=running" \
       --filter "network=${network}" \
       --format "{{.ID}}")"
 
-    if ! [ "${restarted}" = "${haproxy}" ]; then
+    if ! [[ $restarted == "${haproxy}" ]]; then
         docker network disconnect "${network}" "${haproxy}"
 
         # shellcheck disable=SC2086

@@ -20,16 +20,17 @@ x-default-healthcheck: &default-healthcheck
 
 # (TBC) source from somewhere
 x-default-environment: &default-environment
-  COMMON_REGION: us-east-1
-  COUNTRY: US
-  DNS_TLD: balena.local
-  LOCALITY_NAME: Seattle
-  MDNS_TLD: balena.local
-  ORG_UNIT: openBalena
-  ORG: balena
-  PRODUCTION_MODE: 'false'
-  STATE: Washington
-  SUPERUSER_EMAIL: admin@balena.local
+  COMMON_REGION: ${COMMON_REGION:-us-east-1}
+  COUNTRY: ${COUNTRY:-US}
+  DNS_TLD: ${DNS_TLD:-openbalena.local}
+  LOCALITY_NAME: ${LOCALITY_NAME:-Seattle}
+  MDNS_TLD: ${MDNS_TLD:-$DNS_TLD}
+  ORG_UNIT: ${ORG_UNIT:-openBalena}
+  ORG: ${ORG:-balena}
+  PRODUCTION_MODE: ${PRODUCTION_MODE:-false}
+  STATE: ${STATE:-Washington}
+  SUPERUSER_EMAIL: ${SUPERUSER_EMAIL:-admin@$DNS_TLD}
+  VERBOSE: ${VERBOSE:-true}
 
 x-default-healthcheck-trait: &with-default-healthcheck
   healthcheck:
@@ -63,8 +64,16 @@ x-network-privileges-trait: &with-network-privileges
 
 x-base-service-definition: &base-service
   restart: unless-stopped
+  extends:
+    service: base
 
 services:
+  # https://docs.docker.com/compose/extends/#extending-services
+  base:
+    build: src/alpine
+    env_file:
+      - .env
+
   # https://github.com/balena-io/open-balena-api
   api:
     <<: [
@@ -73,7 +82,7 @@ services:
       *with-default-privileges,
       *base-service,
     ]
-    image: balena/open-balena-api:build-ab77-open-balena
+    image: balena/open-balena-api:v0.204.1
     depends_on:
       - db
       - redis
@@ -100,6 +109,7 @@ services:
       OAUTH_CALLBACK_PROTOCOL: https
       PORT: 80
       REDIS_HOST: redis:6379
+      REDIS_IS_CLUSTER: 'false'
       SENTRY_CONFIG: ','
       TOKEN_AUTH_JWT_ALGO: ES256
       TOKENS_CONFIG: API_SERVICE_API_KEY:hex,AUTH_RESINOS_REGISTRY_CODE:hex,COOKIE_SESSION_SECRET:hex,JSON_WEB_TOKEN_SECRET:hex,MIXPANEL_TOKEN:hex,SUPERUSER_PASSWORD:hex,TOKEN_AUTH_BUILDER_TOKEN:hex,VPN_GUEST_API_KEY:hex,VPN_SERVICE_API_KEY:hex,API_VPN_SERVICE_API_KEY:API_SERVICE_API_KEY,REGISTRY2_TOKEN:TOKEN_AUTH_BUILDER_TOKEN
@@ -112,10 +122,13 @@ services:
       *with-default-privileges,
       *base-service,
     ]
-    image: balena/open-balena-registry:build-ab77-open-balena
+    image: balena/open-balena-registry:v2.24.4
     volumes:
       - certs-data:/certs
       - resin-data:/balena
+    depends_on:
+      - redis
+      - s3
     environment:
       <<: *default-environment
       HOSTS_CONFIG: REGISTRY2_HOST:registry,REGISTRY2_TOKEN_AUTH_ISSUER:api,REGISTRY2_TOKEN_AUTH_REALM:api
@@ -136,12 +149,12 @@ services:
       *with-default-privileges,
       *base-service,
     ]
-    image: balena/open-balena-vpn:v11.2.0
+    image: balena/open-balena-vpn:v11.2.5
     depends_on:
       - api
     environment:
       <<: *default-environment
-      HOSTS_CONFIG: VPN_HOST:vpn
+      HOSTS_CONFIG: VPN_HOST:cloudlink
       SENTRY_CONFIG: ','
       TOKENS_CONFIG: ','
       VPN_HAPROXY_USEPROXYPROTOCOL: 'true'
@@ -168,7 +181,7 @@ services:
       *with-default-privileges,
       *base-service,
     ]
-    image: balena/open-balena-s3:build-ab77-open-balena
+    image: balena/open-balena-s3:v2.13.5
     volumes:
       - s3-data:/export
       - certs-data:/certs
@@ -206,18 +219,17 @@ services:
       net.ipv4.ip_unprivileged_port_start: 0
     healthcheck:
       <<: *default-healthcheck
-      # (TBC) always succeeds
-      test: true | openssl s_client -connect localhost:443 -servername ${DNS_TLD}
+      test: true | openssl s_client -connect localhost:443
     ports:
       # haproxy/http
-      - 80
+      - "80:80/tcp"
       # haproxy/tcp-router
-      - 443
+      - "443:443/tcp"
       # haproxy/stats
-      - 1936
+      - "1936:1936/tcp"
       # postgresql/redis
-      - 5432
-      - 6379
+      - "5432:5432/tcp"
+      - "6379:6379/tcp"
     environment:
       <<: *default-environment
       LOGLEVEL: info
@@ -227,8 +239,13 @@ services:
   haproxy-sidecar:
     <<: *base-service
     build: src/haproxy-sidecar
+    volumes:
+      # FIXME: different on balenaOS
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       <<: *default-environment
+      # FIXME: different on balenaOS
+      DOCKER_HOST: unix:///var/run/docker.sock
       # resolved internally as {{service}}.{{dns-tld-without-balena-device-uuid}} to haproxy service
       ALIASES: api,db,delta,redis,registry,s3,stats,tunnel,vpn
     labels:
@@ -238,22 +255,26 @@ services:
   # https://github.com/balena-io/balena-mdns-publisher
   mdns:
     <<: [
-      *with-default-volumes,
       *with-default-healthcheck,
       *with-default-privileges,
       *base-service,
     ]
-    image: balena/balena-mdns-publisher:build-ab77-open-balena
+    image: balena/balena-mdns-publisher:v1.15.0
     network_mode: host
-    labels:
-      io.balena.features.dbus: 1
+    volumes:
+      - certs-data:/certs
+      - resin-data:/balena
+      - /var/run/dbus/system_bus_socket:/host/run/dbus/system_bus_socket
     environment:
       <<: *default-environment
+      DBUS_SESSION_BUS_ADDRESS: unix:path=/host/run/dbus/system_bus_socket
       HOSTS_CONFIG: ','
       # externally advertised mDNS names as {{service}}.{{mdns-tld}}
       MDNS_SUBDOMAINS: api,ca,db,delta,minio,ocsp,redis,registry,s3,stats,tunnel,vpn
       SENTRY_CONFIG: ','
       TOKENS_CONFIG: ','
+    labels:
+      io.balena.features.dbus: 1
 
   # https://github.com/balena-io/cert-manager
   # https://certbot.eff.org/docs/using.html
@@ -280,7 +301,7 @@ services:
   # https://github.com/cloudflare/cfssl/blob/master/doc/api/intro.txt
   balena-ca:
     <<: *base-service
-    image: balena/ca-private:v0.0.5
+    image: balena/ca-private:v0.0.6
     volumes:
       - pki-data:/pki
       - certs-data:/certs
@@ -300,21 +321,22 @@ services:
   # only relevant when running in AWS/EC2
   tag-sidecar:
     build: src/tag-sidecar
-    restart: no
+    restart: 'no'
     environment:
       <<: *default-environment
       ENABLED: 'true'
     labels:
       io.balena.features.balena-api: 1
 
-  # (WIP) https://github.com/balena-io-playground/balena-nested
+  # (WIP) https://github.com/balena-io-playground/balena-nested => balenaVirt
   balena-tests:
     <<: [
-      *with-default-volumes,
       *with-default-privileges,
       *base-service,
     ]
-    build: src/balena-tests
+    build:
+      context: src/balena-tests
+      dockerfile: Dockerfile.amd64
     command: /usr/sbin/balena.sh
     depends_on:
       - api
@@ -328,28 +350,30 @@ services:
       - certs-data:/certs
       - resin-data:/balena
       - builder-certs-client:/docker-pki/client
+      - /lib/modules:/lib/modules
     healthcheck:
       test: /usr/sbin/docker-hc
       interval: 60s
       timeout: 60s
       retries: 5
     devices:
-      # (TBC) not supported on AWS/EC2 unless using .metal instance classes|types
-      # only supported on AMIs built on AWS Nitro System
+      # Nested virtualisation support required on the host
+      # - not supported on AWS/EC2 unless using .metal instance classes|types
+      # - only supported on AMIs built on AWS Nitro System
+      # - otherwise run 'mknod /dev/kvm b 1 1' to create a dummy kvm device and endure
       - /dev/kvm:/dev/kvm
       - /dev/net/tun:/dev/net/tun
     labels:
       io.balena.features.balena-api: 1
       io.balena.features.kernel-modules: 1
       io.balena.features.supervisor-api: 1
-      io.balena.features.sysfs: 1
 
   # https://hub.docker.com/_/docker
+  # pseudo(builder) service
   docker:
     <<: [
       *with-extended-privileges,
       *with-network-privileges,
-      *with-default-volumes,
       *with-default-privileges,
       *base-service,
     ]
@@ -358,6 +382,7 @@ services:
       - builder-data:/var/lib/docker
       - builder-certs-ca:/docker-pki/ca
       - builder-certs-client:/docker-pki/client
+      - /sys:/sys
     environment:
       DOCKER_TLS_CERTDIR: /docker-pki
     healthcheck:
