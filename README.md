@@ -1,7 +1,6 @@
 ![logo](./docs/assets/openbalena-logo.svg)
 
----
-**openbalena is a platform that helps you deploy and manage connected devices. Devices run [balenaOS][balena-os-website], a host operating system designed for running containers on IoT devices, and are managed via the [balena CLI][balena-cli], which you can use to configure your application containers, push updates, check status, view logs, and more.**
+**openbalena is an open source platform to manage IoT and edge device fleets at scale.**
 
 ## Highlights
 - **Simple provisioning**: Adding devices to your fleet is a breeze
@@ -13,15 +12,15 @@
 
 ## Motivation
 
+openbalena is a platform that helps you deploy and manage connected devices. Devices run [balenaOS][balena-os-website], a host operating system designed for running containers on IoT devices, and are managed via the [balena CLI][balena-cli], which you can use to configure your application containers, push updates, check status, view logs, and more.
+
 openbalena’s backend services, composed of battle-tested components that we’ve run in production on [balenaCloud][balena-cloud-website] for years, can store device information securely and reliably, allow remote management via a built-in VPN service, and efficiently distribute container images to your devices.
 
 To learn more about openbalena, visit [balena.io/open][open-balena-website].
 
 ## Setup and Configuration
 
-Our [Getting Started guide][getting-started] is the most direct path to getting
-an openBalena installation up and running and successfully deploying your
-application to your device(s).
+Our [Getting Started guide][getting-started] is the most direct path to getting an openbalena installation up and running and successfully deploying your application to your device(s).
 
 ## Compatibility
 
@@ -33,7 +32,6 @@ The current release of openBalena has the following minimum version requirements
 If you are updating from previous openBalena versions, ensure you update the balena
 CLI and reprovision any devices to at least the minimum required versions in order
 for them to be fully compatible with this release, as some features may not work.
-
 
 ## Documentation
 
@@ -91,8 +89,12 @@ improvements and new functionality is planned:
 - Remote host OS updates
 - Support for custom device types
 
+## License
 
-## Differences between openBalena and balenaCloud
+OpenBalena is licensed under the terms of AGPL v3. See [LICENSE](LICENSE) for details.
+
+
+### Differences between openBalena and balenaCloud
 
 | openBalena                                          | balenaCloud                                                                                                                                                                                                                                                             |
 | -----                                               | ----                                                                                                                                                                                                                                                                    |
@@ -109,12 +111,6 @@ improvements and new functionality is planned:
 | Supported devices: Raspberry Pi family, the Intel NUC, the NVIDIA Jetson TX2, and the balenaFin | All the devices listed in balena's [reference documentation](https://www.balena.io/docs/reference/hardware/devices/)   |
 
 Additionally, refer back to the [roadmap](#roadmap) above for planned but not yet implemented features.
-
-
-## License
-
-OpenBalena is licensed under the terms of AGPL v3. See [LICENSE](LICENSE) for details.
-
 
 [balena-cli]: https://github.com/balena-io/balena-cli
 [balena-cloud-website]: https://balena.io/cloud
