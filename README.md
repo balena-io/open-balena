@@ -11,13 +11,13 @@
 - **Powerful API & SDK**: Extend openBalena to fit your needs
 - **Built-in VPN**: Access your devices regardless of their network environment
 
-## Field-ready fleet management
+## Motivation
 
 openbalena’s backend services, composed of battle-tested components that we’ve run in production on [balenaCloud][balena-cloud-website] for years, can store device information securely and reliably, allow remote management via a built-in VPN service, and efficiently distribute container images to your devices.
 
 To learn more about openbalena, visit [balena.io/open][open-balena-website].
 
-## Getting Started
+## Setup and Configuration
 
 Our [Getting Started guide][getting-started] is the most direct path to getting
 an openBalena installation up and running and successfully deploying your
