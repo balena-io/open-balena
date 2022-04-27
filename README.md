@@ -18,11 +18,11 @@ openbalena’s backend services, composed of battle-tested components that we’
 
 To learn more about openbalena, visit [balena.io/open][open-balena-website].
 
-## Setup and Configuration
+### Setup and Configuration
 
 Our [Getting Started guide][getting-started] is the most direct path to getting an openbalena installation up and running and successfully deploying your application to your device(s).
 
-## Compatibility
+### Compatibility
 
 The current release of openBalena has the following minimum version requirements:
 
@@ -33,7 +33,7 @@ If you are updating from previous openBalena versions, ensure you update the bal
 CLI and reprovision any devices to at least the minimum required versions in order
 for them to be fully compatible with this release, as some features may not work.
 
-## Documentation
+### Documentation
 
 While we're still working on the project documentation, please refer to the
 [balenaCloud documentation][documentation]. BalenaCloud is built on top of
@@ -52,7 +52,7 @@ sections are of particular interest:
 - [FAQ](https://balena.io/docs/faq/troubleshooting/faq)
 
 
-## Getting Help
+### Getting Help
 
 You are welcome to submit any questions, participate in discussions and request
 help with any issue in [openBalena forums][forums]. The balena team frequents
@@ -60,8 +60,7 @@ these forums and will be happy to help. You can also ask other community members
 for help, or contribute by answering questions posted by fellow openBalena users.
 Please do not use the issue tracker for support-related questions.
 
-
-## Contributing
+### Contributing
 
 Everyone is welcome to contribute to openBalena. There are many different ways
 to get involved apart from submitting pull requests, including helping other
@@ -74,8 +73,7 @@ which are the [API][open-balena-api], [VPN][open-balena-vpn], [Registry][open-ba
 are also welcome to its client-side software such as the [balena CLI][balena-cli],
 the [balena SDK][balena-sdk], [balenaOS][balena-os] and [balenaEngine][balena-engine].
 
-
-## Roadmap
+### Roadmap
 
 OpenBalena is currently in beta. While fully functional, it lacks features we
 consider important before we can comfortably call it production-ready. During
@@ -89,10 +87,9 @@ improvements and new functionality is planned:
 - Remote host OS updates
 - Support for custom device types
 
-## License
+### License
 
 OpenBalena is licensed under the terms of AGPL v3. See [LICENSE](LICENSE) for details.
-
 
 ### Differences between openBalena and balenaCloud
 
