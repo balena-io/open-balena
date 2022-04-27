@@ -16,7 +16,7 @@ This guide assumes a setup with two separate machines:
   application images can be built and deployed to your devices, although it is
   also possible to use balenaEngine on a balenaOS device instead of Docker.
 
-### Preparing a server for openBalena
+## Preparing a server for openBalena
 
 Login to the server via SSH and run the following commands.
 
@@ -43,7 +43,7 @@ Login to the server via SSH and run the following commands.
    usermod -aG docker balena
    ```
 
-#### Install openBalena on the server
+### Install openBalena on the server
 
 1. On the server still, login as the new user and change into the home directory:
 
@@ -109,7 +109,7 @@ git pull
 ./scripts/compose up -d
 ```
 
-#### Domain Configuration
+### Domain Configuration
 
 The following CNAME records must be configured to point to the openBalena server:
 
@@ -124,7 +124,7 @@ tunnel.mydomain.com
 Check with your internet domain name registrar for instructions on how to
 configure CNAME records.
 
-#### Test the openBalena server
+### Test the openBalena server
 
 To confirm that everything is running correctly, try a simple request from the
 local machine to the server:
@@ -138,7 +138,7 @@ Congratulations! The openBalena server is up and running. The next step is to
 setup the local machine to use the server, provision a device and deploy a
 small project.
 
-### Install self-signed certificates on the local machine
+## Install self-signed certificates on the local machine
 
 The installation of the openBalena server produces a few self-signed certificates
 that must be installed on the local machine, so that it can securely communicate
@@ -149,7 +149,7 @@ it to some folder on the local machine and keep a note the path -- it will be
 used later during the CLI installation. Follow the steps below for the specific
 platform of the local machine.
 
-#### Linux:
+### Linux:
 
 ```bash
 sudo cp ca.crt /usr/local/share/ca-certificates/ca.crt
@@ -157,14 +157,14 @@ sudo update-ca-certificates
 sudo systemctl restart docker
 ```
 
-#### macOS:
+### macOS:
 
 ```bash
 sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ca.crt
 osascript -e 'quit app "Docker"' && open -a Docker
 ```
 
-#### Windows:
+### Windows:
 
 ```bash
 certutil -addstore -f "ROOT" ca.crt
@@ -173,7 +173,7 @@ certutil -addstore -f "ROOT" ca.crt
 The Docker daemon on the local machine must then be restarted for Docker to
 pick up the new certificate.
 
-### Install the balena CLI on the local machine
+## Install the balena CLI on the local machine
 
 Follow the [balena CLI installation
 instructions](https://github.com/balena-io/balena-cli/blob/master/INSTALL.md)
@@ -205,14 +205,22 @@ the CLI can securely interact with the openBalena server.
 | Windows cmd.exe    | `set NODE_EXTRA_CA_CERTS=C:\path\to\ca.crt`    |
 | Windows PowerShell | `$Env:NODE_EXTRA_CA_CERTS="C:\path\to\ca.crt"` |
 
-### Deploy an application
+## Deploy an application
 
 The commands below should be run on a terminal on the local machine (where the
 balena CLI is installed). Ensure that the `NODE_EXTRA_CA_CERTS` environment
 variable is set, as discussed above.
 
-#### Login to openBalena
+### Login to openBalena
 
 Run `balena login`, select `Credentials` and use the email and password
 specified during quickstart to login to the openBalena server. At any time, the
 `balena whoami` command may be used to check which server the CLI is logged in to.
+
+## Getting Help
+
+You are welcome to submit any questions, participate in discussions and request
+help with any issue in [openBalena forums][forums]. The balena team frequents
+these forums and will be happy to help. You can also ask other community members
+for help, or contribute by answering questions posted by fellow openBalena users.
+Please do not use the issue tracker for support-related questions.
