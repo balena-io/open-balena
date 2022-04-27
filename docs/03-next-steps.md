@@ -1,4 +1,4 @@
-## Next steps
+# Next steps
 
 - Try out [local mode](https://www.balena.io/docs/learn/develop/local-mode),
   which allows you to build and sync code to your device locally for rapid

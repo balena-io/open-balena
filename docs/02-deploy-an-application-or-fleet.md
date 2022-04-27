@@ -1,4 +1,4 @@
-## Deploy an application
+# Deploy and provision an application
 
 The commands below should be run on a terminal on the local machine (where the
 balena CLI is installed). Ensure that the `NODE_EXTRA_CA_CERTS` environment
