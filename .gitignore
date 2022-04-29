@@ -2,6 +2,10 @@
 .project
 .vagrant/
 
+meta.json
+landr-dist
+*.traineddata
+
 /config
 /docker-compose.yml
 /package-lock.json
