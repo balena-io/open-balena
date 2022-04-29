@@ -1,4 +1,32 @@
 - commits:
+    - subject: Adding Landr test for openbalena
+      hash: 44c11d9d1665622b295eb349bb0ed7ba0d73b036
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Andrew Nhem
+      nested: []
+    - subject: Adding Landr test for openbalena
+      hash: e5bbfb833f50c551fa541f476c03bdb9dc1ff535
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Andrew Nhem
+      nested: []
+    - subject: Adding Landr test for openbalena
+      hash: a9107a1d6feb81ff74ec4a4c624cd1bac86ece4c
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Andrew Nhem
+      nested: []
+  version: 3.5.0
+  title: "'Adding Landr test for openbalena'"
+  date: 2022-04-27T21:20:18.524Z
+- commits:
     - subject: "chore(registry): removed data volume"
       hash: 3fed389090e18cb977416cafea8a87c0ed4e2b7f
       body: ""
