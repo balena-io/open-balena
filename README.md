@@ -1,4 +1,4 @@
-![logo](./docs/assets/openbalena-logo.svg)
+![logo](/docs/assets/openbalena-logo.svg)
 
 **openbalena is an open source platform to manage IoT and edge device fleets at scale.**
 
@@ -10,6 +10,10 @@
 - **Powerful API & SDK**: Extend openBalena to fit your needs
 - **Built-in VPN**: Access your devices regardless of their network environment
 
+## Setup and Configuration
+
+Our [Getting Started guide][getting-started] is the most direct path to getting an openbalena installation up and running and successfully deploying your application to your device(s).
+
 ## Motivation
 
 openbalena is a platform that helps you deploy and manage connected devices. Devices run [balenaOS][balena-os-website], a host operating system designed for running containers on IoT devices, and are managed via the [balena CLI][balena-cli], which you can use to configure your application containers, push updates, check status, view logs, and more.
@@ -18,27 +22,10 @@ openbalena’s backend services, composed of battle-tested components that we’
 
 To learn more about openbalena, visit [balena.io/open][open-balena-website].
 
-### Setup and Configuration
+## Documentation
 
-Our [Getting Started guide][getting-started] is the most direct path to getting an openbalena installation up and running and successfully deploying your application to your device(s).
-
-### Compatibility
-
-The current release of openBalena has the following minimum version requirements:
-
-- balenaOS v2.58.3
-- balena CLI v12.38.5
-
-If you are updating from previous openBalena versions, ensure you update the balena
-CLI and reprovision any devices to at least the minimum required versions in order
-for them to be fully compatible with this release, as some features may not work.
-
-### Documentation
-
-While we're still working on the project documentation, please refer to the
-[balenaCloud documentation][documentation]. BalenaCloud is built on top of
-openBalena, so the core concepts and functionality is identical. The following
-sections are of particular interest:
+balenaCloud is built on top of openBalena, so their core concepts and functionality are identical. This means you can refer to the
+[balenaCloud documentation][documentation]. The following sections are of particular interest:
 
 - [Overview / A balena primer](https://balena.io/docs/learn/welcome/primer)
 - [Overview / Core Concepts](https://balena.io/docs/learn/welcome/concepts)
@@ -51,7 +38,31 @@ sections are of particular interest:
 - [Reference](https://balena.io/docs/reference)
 - [FAQ](https://balena.io/docs/faq/troubleshooting/faq)
 
-### License
+## Compatibility
+
+The current release of openBalena has the following minimum version requirements:
+
+- balenaOS v2.58.3
+- balena CLI v12.38.5
+
+If you are updating from previous openBalena versions, ensure you update the balena
+CLI and reprovision any devices to at least the minimum required versions in order
+for them to be fully compatible with this release, as some features may not work.
+
+## Contributing to openbalena
+
+Everyone is welcome to contribute to openBalena. There are many different ways
+to get involved apart from submitting pull requests, including helping other
+users on the [forums][forums], reporting or triaging [issues][issue-tracker],
+reviewing and discussing [pull requests][pulls], or just spreading the word.
+
+All of openbalena is hosted on GitHub. Apart from its constituent components,
+which are the [API][open-balena-api], [VPN][open-balena-vpn], [Registry][open-balena-registry],
+[S3 storage service][open-balena-s3], and [Database][open-balena-db], contributions
+are also welcome to its client-side software such as the [balena CLI][balena-cli],
+the [balena SDK][balena-sdk], [balenaOS][balena-os] and [balenaEngine][balena-engine].
+
+## License
 
 openbalena is licensed under the terms of AGPL v3. See [LICENSE](LICENSE) for details.
 
