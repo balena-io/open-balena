@@ -58,7 +58,7 @@ spec:
           value: "ENV"
         - name: API_VPN_SERVICE_API_KEY
           value: "{{ index .Values "global" "keys" "api-vpn-service-api-key" }}"
-        - name: BALENA_ROOT_CA
+        - name: ROOT_CA
           value: "{{ index .Values "global" "certificates" "root" "ca" }}"
         - name: COOKIE_SESSION_SECRET
           value: "{{ index .Values "global" "keys" "cookie-secret" }}"

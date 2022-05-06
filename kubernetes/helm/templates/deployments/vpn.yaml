@@ -62,15 +62,15 @@ spec:
           value: "ENV"
         - name: API_SERVICE_API_KEY
           value: "{{ index .Values "global" "keys" "api-vpn-service-api-key" }}"
-        - name: BALENA_API_HOST
+        - name: API_HOST
           value: "api.{{ .Values.global.hostname }}"
-        - name: BALENA_ROOT_CA
+        - name: ROOT_CA
           value: "{{ index .Values "global" "certificates" "root" "ca" }}"
-        - name: BALENA_VPN_PORT
+        - name: VPN_PORT
           value: "443"
         - name: PRODUCTION_MODE
           value: "{{ index .Values "global" "production-mode" }}"
-        - name: RESIN_VPN_GATEWAY
+        - name: VPN_GATEWAY
           value: "10.2.0.1"
         - name: SENTRY_DSN
           value: "{{ index .Values "vpn" "sentry-dsn" }}"
