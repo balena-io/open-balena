@@ -107,7 +107,7 @@ api:
   replicas: 1
   image:
     repository: balena/open-balena-api
-    tag: "v0.139.0"
+    tag: "v0.192.4"
     pullPolicy: IfNotPresent
 
   labels: {}
@@ -128,7 +128,7 @@ vpn:
   replicas: 1
   image:
     repository: balena/open-balena-vpn
-    tag: "v9.17.11"
+    tag: "v9.27.0"
     pullPolicy: IfNotPresent
 
   labels: {}
@@ -149,7 +149,7 @@ registry:
   replicas: 1
   image:
     repository: balena/open-balena-registry
-    tag: "v2.16.1"
+    tag: "v2.24.2"
     pullPolicy: IfNotPresent
 
   disableRedirect: false
@@ -173,7 +173,7 @@ s3:
   replicas: 1
   image:
     repository: balena/open-balena-s3
-    tag: "v2.9.9"
+    tag: "v2.13.3"
     pullPolicy: IfNotPresent
 
   labels: {}
@@ -195,7 +195,7 @@ db:
   replicas: 1
   image:
     repository: balena/open-balena-db
-    tag: "v4.1.0"
+    tag: "v5.1.0"
     pullPolicy: IfNotPresent
 
   labels: {}
@@ -211,6 +211,22 @@ db:
 
   storage: "10Gi"
   storageClass:
+
+  ## Start PostgreSQL pod without limitations on shm memory.
+  ## By default docker and containerd limit `/dev/shm` to `64M`
+  ## ref: https://github.com/docker-library/postgres/issues/416
+  ## ref: https://github.com/containerd/containerd/issues/3654
+  ##
+  shmVolume:
+    ## @param db.shmVolume.enabled Enable emptyDir volume for /dev/shm for PostgreSQL pod(s)
+    ##
+    enabled: true
+    ## @param db.shmVolume.sizeLimit Set this to enable a size limit on the shm tmpfs
+    ## Note: the size of the tmpfs counts against container's memory limit
+    ## e.g:
+    ## sizeLimit: 1Gi
+    ##
+    sizeLimit: ""
 
 # Redis instance
 redis:
