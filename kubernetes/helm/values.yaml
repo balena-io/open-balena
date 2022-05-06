@@ -257,7 +257,11 @@ redis:
 ##
 haproxy:
   controller:
+    # Set the IngressClass name and enable the IngressClass resource
+    # Using a custom ingress class name enables the openBalena instance to use a scoped Ingress instance, this will prevent issues with the custom config as set below.
     ingressClass: "openbalena-haproxy"
+    ingressClassResource:
+      enabled: true
 
     # Change config of HAProxy
     # This will add a snippet for the VPN using port 443
