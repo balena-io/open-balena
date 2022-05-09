@@ -22,10 +22,9 @@ openbalena’s backend services, composed of battle-tested components that we’
 
 To learn more about openbalena, visit [balena.io/open][open-balena-website].
 
-## Documentation
+### Documentation
 
-balenaCloud is built on top of openBalena, so their core concepts and functionality are identical. This means you can refer to the
-[balenaCloud documentation][documentation]. The following sections are of particular interest:
+Check out our Getting Started guide in the [docs](/docs), as well as additional resources. Since balenaCloud is built on top of openbalena, their core concepts and functionality are identical. This means you can refer to the [balenaCloud documentation][documentation]. The following sections are of particular interest:
 
 - [Overview / A balena primer](https://balena.io/docs/learn/welcome/primer)
 - [Overview / Core Concepts](https://balena.io/docs/learn/welcome/concepts)
@@ -38,7 +37,7 @@ balenaCloud is built on top of openBalena, so their core concepts and functional
 - [Reference](https://balena.io/docs/reference)
 - [FAQ](https://balena.io/docs/faq/troubleshooting/faq)
 
-## Compatibility
+### Compatibility
 
 The current release of openBalena has the following minimum version requirements:
 
@@ -49,7 +48,7 @@ If you are updating from previous openBalena versions, ensure you update the bal
 CLI and reprovision any devices to at least the minimum required versions in order
 for them to be fully compatible with this release, as some features may not work.
 
-## Contributing to openbalena
+### Contributing to openbalena
 
 Everyone is welcome to contribute to openBalena. There are many different ways
 to get involved apart from submitting pull requests, including helping other
@@ -62,7 +61,7 @@ which are the [API][open-balena-api], [VPN][open-balena-vpn], [Registry][open-ba
 are also welcome to its client-side software such as the [balena CLI][balena-cli],
 the [balena SDK][balena-sdk], [balenaOS][balena-os] and [balenaEngine][balena-engine].
 
-## License
+### License
 
 openbalena is licensed under the terms of AGPL v3. See [LICENSE](LICENSE) for details.
 
