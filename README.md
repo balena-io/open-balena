@@ -24,7 +24,7 @@ To learn more about openbalena, visit [balena.io/open][open-balena-website].
 
 ### Documentation
 
-Check out our Getting Started guide in the [docs](/docs), as well as additional resources. Since balenaCloud is built on top of openbalena, their core concepts and functionality are identical. This means you can refer to the [balenaCloud documentation][documentation]. The following sections are of particular interest:
+Check out our Getting Started guide in the [docs](/docs), as well as additional resources. Since balenaCloud is built on top of openbalena, their core concepts and functionality are identical. This means you can refer to the [balenaCloud documentation][documentation]. The following sections are of particular interest, and can help you improve your usage and understanding of balena:
 
 - [Overview / A balena primer](https://balena.io/docs/learn/welcome/primer)
 - [Overview / Core Concepts](https://balena.io/docs/learn/welcome/concepts)
