@@ -39,8 +39,8 @@ services:
       PRODUCTION_MODE: "${OPENBALENA_PRODUCTION_MODE}"
       PUBNUB_PUBLISH_KEY: __unused__
       PUBNUB_SUBSCRIBE_KEY: __unused__
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
+      REDIS_HOST: "redis:6379"
+      REDIS_IS_CLUSTER: "false"
       REGISTRY2_HOST: registry.${OPENBALENA_HOST_NAME}
       REGISTRY_HOST: registry.${OPENBALENA_HOST_NAME}
       SENTRY_DSN: ""
