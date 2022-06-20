@@ -99,9 +99,9 @@ spec:
         - name: PUBNUB_SUBSCRIBE_KEY
           value: "__unused__"
         - name: REDIS_HOST
-          value: "{{- include "openbalena.fullname" . }}-redis"
-        - name: REDIS_PORT
-          value: "6379"
+          value: "{{- include "openbalena.fullname" . }}-redis:6379"
+        - name: REDIS_IS_CLUSTER
+          value: "false"
         - name: REGISTRY2_HOST
           value: "registry.{{ .Values.global.hostname }}"
         - name: REGISTRY_HOST
