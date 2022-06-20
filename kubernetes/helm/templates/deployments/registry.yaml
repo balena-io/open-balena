@@ -90,6 +90,8 @@ spec:
           value: "{{ index .Values "global" "keys" "registry-secret-key" }}"
         - name: REGISTRY2_STORAGEPATH
           value: "{{ .Values.global.s3.storagePath }}"
+        - name: REGISTRY2_DISABLE_UPLOAD_PURGING
+          value: "{{ .Values.registry.disableUploadPurging }}"
 
         {{- if .Values.registry.disableRedirect }}
         - name: REGISTRY2_DISABLE_REDIRECT
