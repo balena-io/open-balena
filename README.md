@@ -140,3 +140,9 @@ OpenBalena is licensed under the terms of AGPL v3. See [LICENSE](LICENSE) for de
 [open-balena-vpn]: https://github.com/balena-io/open-balena-vpn
 [open-balena-website]: https://balena.io/open
 [pulls]: https://github.com/balena-io/open-balena/pulls
+
+## FAQ
+
+### How is it different from balenaCloud?
+Whilst openBalena and balenaCloud share the same core technology, there are some key differences. First, openBalena is self-hosted, whereas balenaCloud is hosted by balena and therefore handles security, maintenance, scaling, and reliability of all the backend services. OpenBalena is also single user, whereas balenaCloud supports multiple users and organizations. OpenBalena also lacks some of the commercial features that define balenaCloud, such as the web-based dashboard and updates with binary container deltas.
+
