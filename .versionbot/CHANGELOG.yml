@@ -1,4 +1,40 @@
 - commits:
+    - subject: "chore(deps): updated open-balena-vpn to 11.4.6"
+      hash: bf2f2f902448f4f22987e54acb3118159b6879d6
+      body: ""
+      footer:
+        Change-Type: minor
+        change-type: minor
+      author: Bart Versluijs
+      nested: []
+    - subject: "chore(deps): updated open-balena-api to 0.209.2"
+      hash: f76b90fa143196835b7963966155da89297b2743
+      body: ""
+      footer:
+        Change-Type: minor
+        change-type: minor
+      author: Bart Versluijs
+      nested: []
+    - subject: "chore(deps): updated open-balena-registry to 2.25.3"
+      hash: 4eb2ba041fde9e68143c5dd6960116bab64587a8
+      body: ""
+      footer:
+        Change-Type: minor
+        change-type: minor
+      author: Bart Versluijs
+      nested: []
+    - subject: "chore(deps): updated open-balena-s3 to 2.13.8"
+      hash: c97620d665e5b9a21416c6d1380a6c0d01f85d95
+      body: ""
+      footer:
+        Change-Type: patch
+        change-type: patch
+      author: Bart Versluijs
+      nested: []
+  version: 3.7.0
+  title: "'Dependency upgrades (API v0.209.2)'"
+  date: 2022-06-20T14:38:09.261Z
+- commits:
     - subject: "chore(deps): updated open-balena-db to 5.1.0"
       hash: 84141027a19f201c71aaf20ce3d1a1839d0a1455
       body: |
