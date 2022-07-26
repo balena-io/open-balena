@@ -1,4 +1,16 @@
 - commits:
+    - subject: Remove misleading entry from balenaCloud comparison table
+      hash: 701d620a8e59fded2731fc7aadfa008f85b05a61
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: dfunckt
+      nested: []
+  version: 3.7.3
+  title: "'Remove misleading entry from balenaCloud comparison table'"
+  date: 2022-07-26T15:35:52.340Z
+- commits:
     - subject: "chore(deps): updated open-balena-db to 5.1.2"
       hash: 765795ed709422fe4744880658c99bed98274225
       body: |
