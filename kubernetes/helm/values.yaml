@@ -196,7 +196,7 @@ db:
   replicas: 1
   image:
     repository: balena/open-balena-db
-    tag: "v5.1.0"
+    tag: "v5.1.2"
     pullPolicy: IfNotPresent
 
   labels: {}

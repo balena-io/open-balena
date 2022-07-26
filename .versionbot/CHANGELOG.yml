@@ -1,4 +1,29 @@
 - commits:
+    - subject: "chore(deps): updated open-balena-db to 5.1.2"
+      hash: 765795ed709422fe4744880658c99bed98274225
+      body: |
+        Updated open-balena-db from 5.1.0 to 5.1.2
+      footer:
+        Change-Type: patch
+        change-type: patch
+      author: Bart Versluijs
+      nested: []
+  version: 3.7.2
+  title: "'Updated open-balena-db to 5.1.2'"
+  date: 2022-07-26T13:45:11.625Z
+- commits:
+    - subject: "patch: Update differences table with bC"
+      hash: b6a01bed5aaa3b9d39574cf2a37060f65e82c8ad
+      body: Added a line to the table with the differences between oB and bC about the
+        unavailability of host OS updates in oB. It is mentioned in the Roadmap
+        section, but this makes it more clear and more visible.
+      footer: {}
+      author: rmorillo24
+      nested: []
+  version: 3.7.1
+  title: "'patch: Update differences table with bC'"
+  date: 2022-07-05T07:57:39.156Z
+- commits:
     - subject: "chore(deps): updated open-balena-vpn to 11.4.6"
       hash: bf2f2f902448f4f22987e54acb3118159b6879d6
       body: ""
