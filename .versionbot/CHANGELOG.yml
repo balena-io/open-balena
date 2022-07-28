@@ -1,4 +1,17 @@
 - commits:
+    - subject: "chore(deps): updated open-balena-s3 to 2.13.10"
+      hash: ca7696fa183390c51a7a052b8c1c0458959b15e2
+      body: |
+        Updated open-balena-s3 from 2.13.8 to 2.13.10
+      footer:
+        Change-Type: patch
+        change-type: patch
+      author: Bart Versluijs
+      nested: []
+  version: 3.7.5
+  title: "'Update open-balena-s3 to 2.13.10'"
+  date: 2022-07-28T10:58:38.140Z
+- commits:
     - subject: Improve balenaCloud comparison table
       hash: 31c9fc342414c29c38c266bab6a0902b01c8fce6
       body: ""
