@@ -41,8 +41,8 @@ logErrorAndStop() {
 }
 
 retryWithDelay() {
-    RETRIES=${2:-3}
-    DELAY=${3:-5}
+    RETRIES=${2:-6}
+    DELAY=${3:-6}
 
     local ATTEMPT=0
     while [ "$RETRIES" -gt "$ATTEMPT" ]; do
@@ -117,7 +117,7 @@ pre-flight() {
 
 waitToSeeStagingCert() {
     logInfo "Waiting for ${ACME_DOMAINS[0]} to use a staging certificate..."
-    retryWithDelay "isUsingStagingCert ${ACME_DOMAINS[0]}" 3 5
+    retryWithDelay "isUsingStagingCert ${ACME_DOMAINS[0]}" 6 7
 }
 
 lastAcquiredCertFor() {
@@ -179,8 +179,8 @@ while ! waitForOnline "${ACME_DOMAINS[0]}"; do
 done
 
 if ! lastAcquiredCertFor "production"; then
-    acquireCertificate "staging" || logErrorAndStop "Unable to acquire a staging certificate."
-    waitToSeeStagingCert || logErrorAndStop "Unable to detect certificate change over. Cannot issue a production certificate."
+    #acquireCertificate "staging" || logErrorAndStop "Unable to acquire a staging certificate."
+    #waitToSeeStagingCert || logErrorAndStop "Unable to detect certificate change over. Cannot issue a production certificate."
     acquireCertificate "production" "true" || logErrorAndStop "Unable to acquire a production certificate."
 fi
 
