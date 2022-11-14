@@ -1,8 +1,3 @@
----
-description: Getting started for openbalena 
-slug: /
----
-
 # Openbalena Getting Started Guide
 
 This guide will walk you through the steps of deploying an openBalena server,

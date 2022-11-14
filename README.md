@@ -1,4 +1,4 @@
-<img alt="openBalena" src="docs/static/img/openbalena-logo.svg" height="82">
+<img alt="openBalena" src="./docs/images/openbalena-logo.svg" height="82">
 
 ---
 
