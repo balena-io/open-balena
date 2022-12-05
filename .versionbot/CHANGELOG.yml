@@ -1,4 +1,28 @@
 - commits:
+    - subject: "patch: Add flowzone"
+      hash: 4f185dbbc3d6dba22289e95d04cebbd496a082d2
+      body: ""
+      footer:
+        Signed-off-by: Vipul Gupta (@vipulgupta2048) <vipul@balena.io>
+        signed-off-by: Vipul Gupta (@vipulgupta2048) <vipul@balena.io>
+      author: Vipul Gupta (@vipulgupta2048)
+      nested: []
+    - subject: "patch: Changes to FAQ"
+      hash: b9764d1fa1aeff1ee8b65989971130f7e71b30a7
+      body: Moved a FAQ to the introduction of oB vs. bC; added a few other FAQs
+      footer: {}
+      author: rmorillo24
+      nested: []
+    - subject: "patch: Added FAQ section"
+      hash: 2def9d736e0fb84238e4ff497c671349581fdd50
+      body: Added FAQ section to be fed with interesting questions from users
+      footer: {}
+      author: rmorillo24
+      nested: []
+  version: 3.7.6
+  title: ""
+  date: 2022-12-05T22:05:17.930Z
+- commits:
     - subject: "chore(deps): updated open-balena-s3 to 2.13.10"
       hash: ca7696fa183390c51a7a052b8c1c0458959b15e2
       body: |
@@ -110,9 +134,9 @@
             - subject: Extend migrator to support upgrading between versioned data directories
               hash: a569d60ceba85f65664ac48e165c295f7627dbf0
               body: >
-                The migrator previously would only migrate data stored directly
-                under PGDATA (as was the case in previous versions of this
-                project before switching to versioned directories).
+                The migrator previously would only migrate data stored directly under
+                PGDATA (as was the case in previous versions of this project
+                before switching to versioned directories).
 
 
                 This adds support for upgrading between versioned data directories as well.
@@ -368,10 +392,9 @@
                     - subject: Fix configuration for non-BoB deployments
                       hash: be5d9722d47b65ca511cfb66ab13ed1f3ddff372
                       body: >
-                        The default value on the BALENA_DEVICE_UUID variable
-                        forced all code paths that used to run optionally
-                        depending on whether deployment was on a balenaOS device
-                        to run.
+                        The default value on the BALENA_DEVICE_UUID variable forced all code paths
+                        that used to run optionally depending on whether
+                        deployment was on a balenaOS device to run.
                       footer:
                         Change-type: patch
                         change-type: patch
@@ -397,8 +420,8 @@
                     - subject: Auto-configure balenaMachine(bob)
                       hash: efb8da155b7bedec44558dfcd55cb6b535099c01
                       body: >
-                        + allows balenaMachine(s)/BoB(s) to automatically
-                        configure itself (without bob-cli)
+                        + allows balenaMachine(s)/BoB(s) to automatically configure itself
+                        (without bob-cli)
 
                         + auto-configuration requires balena-ca and cert-manager to do the heavy lifting prior
 
@@ -692,9 +715,8 @@
                     - subject: Add parallel HOSTs and env vars
                       hash: 7ef7a8e470f195afec8a104e837f901c9f0d1044
                       body: >
-                        * allows removal of BALENA_ prefixes across all products
-                        and services (aside from reserved within
-                        balenaOS/Supervisor)
+                        * allows removal of BALENA_ prefixes across all products and services
+                        (aside from reserved within balenaOS/Supervisor)
 
                         * made balena-root-ca service a dependency of confd.service
                       footer:
@@ -1246,10 +1268,9 @@
                     - subject: Fix configuration for non-BoB deployments
                       hash: be5d9722d47b65ca511cfb66ab13ed1f3ddff372
                       body: >
-                        The default value on the BALENA_DEVICE_UUID variable
-                        forced all code paths that used to run optionally
-                        depending on whether deployment was on a balenaOS device
-                        to run.
+                        The default value on the BALENA_DEVICE_UUID variable forced all code paths
+                        that used to run optionally depending on whether
+                        deployment was on a balenaOS device to run.
                       footer:
                         Change-type: patch
                         change-type: patch
@@ -1263,8 +1284,7 @@
             - subject: Update open-balena-base to 12.1.0
               hash: 432ca3b725e69bdb3927ebf2d0524dba19ece143
               body: >
-                * refactor CERT_FILE handling and location to prevent notify
-                collisions
+                * refactor CERT_FILE handling and location to prevent notify collisions
 
                 * add Docker healthcheck
 
@@ -1279,8 +1299,8 @@
                     - subject: Auto-configure balenaMachine(bob)
                       hash: efb8da155b7bedec44558dfcd55cb6b535099c01
                       body: >
-                        + allows balenaMachine(s)/BoB(s) to automatically
-                        configure itself (without bob-cli)
+                        + allows balenaMachine(s)/BoB(s) to automatically configure itself
+                        (without bob-cli)
 
                         + auto-configuration requires balena-ca and cert-manager to do the heavy lifting prior
 
@@ -1594,9 +1614,8 @@
                     - subject: Add parallel HOSTs and env vars
                       hash: 7ef7a8e470f195afec8a104e837f901c9f0d1044
                       body: >
-                        * allows removal of BALENA_ prefixes across all products
-                        and services (aside from reserved within
-                        balenaOS/Supervisor)
+                        * allows removal of BALENA_ prefixes across all products and services
+                        (aside from reserved within balenaOS/Supervisor)
 
                         * made balena-root-ca service a dependency of confd.service
                       footer:
@@ -1765,8 +1784,7 @@
             - subject: Manually specify ulimit in haproxy.cfg
               hash: 501e5e4d31781b3536255e7dd105a3b9aec473f4
               body: >
-                This avoids issues where it's auto-calculated from max
-                connections but
+                This avoids issues where it's auto-calculated from max connections but
 
                 ends up too small in practice and causes problems with the soft limit
 
@@ -1992,10 +2010,9 @@
                     - subject: Fix configuration for non-BoB deployments
                       hash: be5d9722d47b65ca511cfb66ab13ed1f3ddff372
                       body: >
-                        The default value on the BALENA_DEVICE_UUID variable
-                        forced all code paths that used to run optionally
-                        depending on whether deployment was on a balenaOS device
-                        to run.
+                        The default value on the BALENA_DEVICE_UUID variable forced all code paths
+                        that used to run optionally depending on whether
+                        deployment was on a balenaOS device to run.
                       footer:
                         Change-type: patch
                         change-type: patch
@@ -2024,8 +2041,8 @@
                     - subject: Auto-configure balenaMachine(bob)
                       hash: efb8da155b7bedec44558dfcd55cb6b535099c01
                       body: >
-                        + allows balenaMachine(s)/BoB(s) to automatically
-                        configure itself (without bob-cli)
+                        + allows balenaMachine(s)/BoB(s) to automatically configure itself
+                        (without bob-cli)
 
                         + auto-configuration requires balena-ca and cert-manager to do the heavy lifting prior
 
@@ -2068,8 +2085,7 @@
                     - subject: Attempt to load root CA certificate bundle from file
                       hash: 493bb446e99fc7a5b6ecaa4e796942aa65ad03d0
                       body: >
-                        * allows dynamic certificate generation and loading
-                        within the stack
+                        * allows dynamic certificate generation and loading within the stack
 
                         * if a (volume|directory) /certs exists, set up a notification to watch
                           for /certs/ca-bundle.pem and update CA certificates/restart confd
@@ -2377,9 +2393,8 @@
                     - subject: Add parallel HOSTs and env vars
                       hash: 7ef7a8e470f195afec8a104e837f901c9f0d1044
                       body: >
-                        * allows removal of BALENA_ prefixes across all products
-                        and services (aside from reserved within
-                        balenaOS/Supervisor)
+                        * allows removal of BALENA_ prefixes across all products and services
+                        (aside from reserved within balenaOS/Supervisor)
 
                         * made balena-root-ca service a dependency of confd.service
                       footer:
@@ -2621,8 +2636,7 @@
             - subject: add database name env variable
               hash: 9589ea0fa504995cb456fb27499bb1fcfe3dd7b6
               body: >
-                Makes the database name configurable, with "resin" being the
-                default
+                Makes the database name configurable, with "resin" being the default
               footer:
                 Change-type: minor
                 change-type: minor
@@ -2710,8 +2724,7 @@
                     - subject: Update dependencies
                       hash: 88c9d877e6a0a4edd337f4d33971a5d57789d933
                       body: >
-                        Update @balena/abstract-sql-compiler from 7.17.0 to
-                        7.17.1
+                        Update @balena/abstract-sql-compiler from 7.17.0 to 7.17.1
 
                         Update pinejs-client-core from 6.9.6 to 6.10.0
                       footer:
@@ -2723,8 +2736,7 @@
                             - subject: Avoid the operation type optimization for HAVING clauses
                               hash: 3fcf08bc02c21d9f49b78787ed516fa9a403f021
                               body: >
-                                Since it's possible for them to behave in a way
-                                that violates the
+                                Since it's possible for them to behave in a way that violates the
 
                                 safety checks we'll disable them until we can add specific checks
 
@@ -3515,8 +3527,7 @@
             - subject: "patch: Add required_reboot properties to config variables"
               hash: c8ca80a78986f79f647e4fa8f62ad17821ed040b
               body: >
-                1. Added required_reboot and warning message properties to the
-                schema
+                1. Added required_reboot and warning message properties to the schema
 
                 2. Default to false and empty string respectively
 
@@ -3757,8 +3768,7 @@
                     - subject: Add support for circular `canAccess` permissions using a depth argument
                       hash: fa0164119e212a0e1c0a3d2a4fe23271c3034032
                       body: >
-                        eg using `resource/canAccess(2)` will allow recursing
-                        twice before
+                        eg using `resource/canAccess(2)` will allow recursing twice before
 
                         bailing on that branch and considering it falsey
 
@@ -3898,8 +3908,7 @@
             - subject: Allow device api keys to query their state as root
               hash: c43d2a91eec5799c548e9107e45aa06df646cf26
               body: >
-                This omits all the permissions checks and results in a more
-                efficient
+                This omits all the permissions checks and results in a more efficient
 
                 query but with the downside that it requires us to manually check that
 
@@ -3923,8 +3932,7 @@
             - subject: Add an option to disable cache invalidation based upon version
               hash: 7b3797f6d4ef371417a9565bce8d7cb1783ae64e
               body: >
-                This allows certain caches to handle cache invalidation manually
-                and
+                This allows certain caches to handle cache invalidation manually and
 
                 therefore persist across versions
               footer:
@@ -4270,8 +4278,7 @@
             - subject: Remove the cache for device write context as it's no longer beneficial
               hash: 67612963f5bef3e8a2f99b2c8edba5a40c849098
               body: >
-                Since reducing the query it is now fast enough (from ~130ms to
-                ~1ms)
+                Since reducing the query it is now fast enough (from ~130ms to ~1ms)
 
                 that the trade off for memory usage for the cache along with argument
 
@@ -4313,8 +4320,7 @@
             - subject: Explicitly remove support for old supervisor log format
               hash: eae3444f7f664cafccb012bfcb09495fbc4755c3
               body: >
-                It has been broken since August 2018 so this just formalizes
-                that
+                It has been broken since August 2018 so this just formalizes that
 
                 removed support and removes unnecessary work that was being done in an
 
@@ -4780,8 +4786,7 @@
             - subject: Improve types for device logs, catching an issue reading from loki
               hash: 615d7a11113923e4fbb65ecd1f8967ce7ba7e949
               body: >
-                Loki used the belongs_to__application as part of it's key but it
-                would
+                Loki used the belongs_to__application as part of it's key but it would
 
                 have been undefined previously
               footer:
@@ -4865,8 +4870,7 @@
             - subject: Cache resolution of repository path to image id
               hash: a1b0ca15e092f0197f35b20561e1fa9b6fbbe666
               body: >
-                This is a fairly expensive lookup on a string and allows us to
-                cache
+                This is a fairly expensive lookup on a string and allows us to cache
 
                 that expensive lookup and use a less expensive id based lookup with
 
@@ -5075,10 +5079,9 @@
                     - subject: Fix configuration for non-BoB deployments
                       hash: be5d9722d47b65ca511cfb66ab13ed1f3ddff372
                       body: >
-                        The default value on the BALENA_DEVICE_UUID variable
-                        forced all code paths that used to run optionally
-                        depending on whether deployment was on a balenaOS device
-                        to run.
+                        The default value on the BALENA_DEVICE_UUID variable forced all code paths
+                        that used to run optionally depending on whether
+                        deployment was on a balenaOS device to run.
                       footer:
                         Change-type: patch
                         change-type: patch
@@ -5090,8 +5093,8 @@
                     - subject: Auto-configure balenaMachine(bob)
                       hash: efb8da155b7bedec44558dfcd55cb6b535099c01
                       body: >
-                        + allows balenaMachine(s)/BoB(s) to automatically
-                        configure itself (without bob-cli)
+                        + allows balenaMachine(s)/BoB(s) to automatically configure itself
+                        (without bob-cli)
 
                         + auto-configuration requires balena-ca and cert-manager to do the heavy lifting prior
 
@@ -5134,8 +5137,7 @@
                     - subject: Attempt to load root CA certificate bundle from file
                       hash: 493bb446e99fc7a5b6ecaa4e796942aa65ad03d0
                       body: >
-                        * allows dynamic certificate generation and loading
-                        within the stack
+                        * allows dynamic certificate generation and loading within the stack
 
                         * if a (volume|directory) /certs exists, set up a notification to watch
                           for /certs/ca-bundle.pem and update CA certificates/restart confd
@@ -5225,8 +5227,7 @@
                     - subject: Allow passing a function as the cache params to enable custom caching
                       hash: 3e790d9961a0d7f666021248668241264b453743
                       body: >
-                        This allows using a different cache than the default of
-                        memoizee
+                        This allows using a different cache than the default of memoizee
                       footer:
                         Change-type: minor
                         change-type: minor
@@ -5260,8 +5261,7 @@
                     - subject: Add support for a `PINEJS_DEBUG` env var that is more strictly checked
                       hash: 4b591eefae812a10f43d98e440d11bbfdded69c0
                       body: >
-                        This means we can warn on/ignore invalid values rather
-                        than giving a
+                        This means we can warn on/ignore invalid values rather than giving a
 
                         potentially surprising result, eg `'0'` being truthy
                       footer:
@@ -5413,8 +5413,7 @@
             - subject: Only schedule publishing logs when we have some in the buffer
               hash: 861483540cc9a5e0223e0d5d43162fcfcd674440
               body: >
-                This avoids idle connections from polling for new logs and
-                instead are
+                This avoids idle connections from polling for new logs and instead are
 
                 scheduled automatically once a log comes in
               footer:
@@ -5720,8 +5719,7 @@
                                     - subject: Revert "Remove now unnecessary hack for casting SERIAL types"
                                       hash: 60a56423de9262b5b454ff4cd83c1d1fd39d071e
                                       body: >
-                                        This reverts commit
-                                        187bc075d237a2ced731d0a026ca25aa3e0f5540.
+                                        This reverts commit 187bc075d237a2ced731d0a026ca25aa3e0f5540.
                                       footer:
                                         Change-type: patch
                                         change-type: patch
@@ -5733,8 +5731,7 @@
                                     - subject: Remove now unnecessary hack for casting SERIAL types
                                       hash: 187bc075d237a2ced731d0a026ca25aa3e0f5540
                                       body: >
-                                        This became unnecessary when
-                                        @balena/sbvr-types added the concept of
+                                        This became unnecessary when @balena/sbvr-types added the concept of
 
                                         cast types since that now specifies how to cast a SERIAL type
                                       footer:
@@ -5848,8 +5845,7 @@
                                     - subject: Generalize/share the referenced fields code and cover more cases
                                       hash: 3e77ac1aed9f3fb596f6a01a08a1800fead1e860
                                       body: >
-                                        This now allows detecting deletes that
-                                        are
+                                        This now allows detecting deletes that are
                                       footer:
                                         Change-type: minor
                                         change-type: minor
@@ -5899,8 +5895,7 @@
                                     - subject: Add a `getRuleReferencedFields` which is tailored for rules
                                       hash: 256c36de4a1efb7a46eb9833e1c3228d17194015
                                       body: >
-                                        This works on the assumption that it is
-                                        a rule query that should always
+                                        This works on the assumption that it is a rule query that should always
 
                                         return true and allows ignoring more modification cases where they
 
@@ -6590,9 +6585,8 @@
                     - subject: Add parallel HOSTs and env vars
                       hash: 7ef7a8e470f195afec8a104e837f901c9f0d1044
                       body: >
-                        * allows removal of BALENA_ prefixes across all products
-                        and services (aside from reserved within
-                        balenaOS/Supervisor)
+                        * allows removal of BALENA_ prefixes across all products and services
+                        (aside from reserved within balenaOS/Supervisor)
 
                         * made balena-root-ca service a dependency of confd.service
                       footer:
@@ -6948,8 +6942,7 @@
                     - subject: Avoid concat/_.uniq calls in getReqPermissions
                       hash: 9cd074a5c810ba66130695758ccbf9cc6d7b46d1
                       body: >
-                        These are relatively expensive considering it is a
-                        fairly hot function
+                        These are relatively expensive considering it is a fairly hot function
                       footer:
                         Change-type: patch
                         change-type: patch
@@ -7115,8 +7108,7 @@
             - subject: Avoid unnecessary `getAffectedIds` calls when updating devices
               hash: 69518683f9d479113cceabe2b837ac6984c0e2fc
               body: >
-                We only need the call if the device is moving between
-                applications
+                We only need the call if the device is moving between applications
 
                 which is a tiny minority of the cases in which we patch devices
               footer:
@@ -7142,8 +7134,8 @@
             - subject: Add Build Stat to Release
               hash: 7aa26a44848cc825d7202571072d4c7533fc35f7
               body: >
-                This change is part of the larger change to add build statistics
-                from the Builder to Releases.
+                This change is part of the larger change to add build statistics from the
+                Builder to Releases.
               footer:
                 Signed-off-by: Paul Jonathan Zoulin <pj@balena.io>
                 signed-off-by: Paul Jonathan Zoulin <pj@balena.io>
@@ -7474,8 +7466,7 @@
                             - subject: Revert "Remove now unnecessary hack for casting SERIAL types"
                               hash: 60a56423de9262b5b454ff4cd83c1d1fd39d071e
                               body: >
-                                This reverts commit
-                                187bc075d237a2ced731d0a026ca25aa3e0f5540.
+                                This reverts commit 187bc075d237a2ced731d0a026ca25aa3e0f5540.
                               footer:
                                 Change-type: patch
                                 change-type: patch
@@ -7487,8 +7478,7 @@
                             - subject: Remove now unnecessary hack for casting SERIAL types
                               hash: 187bc075d237a2ced731d0a026ca25aa3e0f5540
                               body: >
-                                This became unnecessary when @balena/sbvr-types
-                                added the concept of
+                                This became unnecessary when @balena/sbvr-types added the concept of
 
                                 cast types since that now specifies how to cast a SERIAL type
                               footer:
@@ -7920,8 +7910,7 @@
             - subject: "hostapps: remove rule enforcing valid hostapp releases"
               hash: b8594fa08de2533b01d3a3f52b6dca001aef6e42
               body: >
-                We already enforce this in the hook itself, and this rule
-                prevents
+                We already enforce this in the hook itself, and this rule prevents
 
                 devices that have provisioned with an invalidated hostapp release from
 
@@ -8081,8 +8070,7 @@
             - subject: "hostapps: basic implementation of target hostapp release"
               hash: 85f72890c99d3e86f91bbc4d3fc0a1184650f60f
               body: >
-                including a hook to set devices to a hostapp release at
-                provision time
+                including a hook to set devices to a hostapp release at provision time
               footer:
                 Change-type: minor
                 change-type: minor
@@ -8096,8 +8084,7 @@
             - subject: "auth: remove unnecessary brackets"
               hash: 55bcd667c5ceb77c40c95e4747429107eb34f964
               body: >
-                i missed pulling this change out from the code review of my
-                related PR
+                i missed pulling this change out from the code review of my related PR
               footer:
                 Connects-to: https://github.com/balena-io/open-balena-api/pull/634
                 connects-to: https://github.com/balena-io/open-balena-api/pull/634
@@ -8142,8 +8129,7 @@
             - subject: Stop allowing cache clearing for multi-level cache
               hash: 091863ebed83d587e08db9889bef647f21326393
               body: >
-                This causes problems with the redis level of the cache because
-                clearing
+                This causes problems with the redis level of the cache because clearing
 
                 the cache requires clearing the entire redis database which is far more
 
@@ -8226,8 +8212,7 @@
             - subject: Simplify ignored device types handling
               hash: e30a4e6db72d325abeeefd751f0ab454e5541706
               body: >
-                By handling ignored device types transparently at the point of
-                fetching
+                By handling ignored device types transparently at the point of fetching
 
                 it allows us to avoid duplicating that code and guarantees the ignoring
 
@@ -8254,8 +8239,7 @@
             - subject: Use primitive memoization mode for build-info-facade
               hash: 6f6ce395b57258e43df6b49b88194e6920af1f51
               body: >
-                This can give better performance but requires all arguments to
-                generate
+                This can give better performance but requires all arguments to generate
 
                 unique strings when stringified
               footer:
@@ -8457,8 +8441,7 @@
                     - subject: Block eagerly fetching affected ids in cases it is not possible to do
                       hash: 413257bd23a32d90678cd9b224529a89e328afe9
                       body: >
-                        This fixes an issue where trying to eagerly fetch
-                        affected ids for
+                        This fixes an issue where trying to eagerly fetch affected ids for
 
                         equests that can create entries would return ids for existing entries
 
@@ -8525,8 +8508,7 @@
             - subject: Emit an error on the request stream for non-200s rather than throwing
               hash: 9f9d50e2ce82b35553e19bdc6d01a41f92f2cb39
               body: >
-                The throw was in an asynchronous callback and throwing there
-                causes the
+                The throw was in an asynchronous callback and throwing there causes the
 
                 process to exit
               footer:
@@ -8584,8 +8566,7 @@
             - subject: Cache device existence check for 5 minutes
               hash: 72eb4bfbad725d406eb7a0236ada31b0da8e47ca
               body: >
-                This will reduce the load for the common case where active
-                devices are
+                This will reduce the load for the common case where active devices are
 
                 not regularly deleted with the potential to briefly respond with a 401
 
@@ -8684,8 +8665,7 @@
             - subject: Ensure service installs exist at the point of pinning an application
               hash: 7ac88e4852436a8876e709f20948d1382174cb12
               body: >
-                This avoids issues where you pin an application to a release for
-                which
+                This avoids issues where you pin an application to a release for which
 
                 some devices are missing service installs. It also allows simplifying
 
@@ -8987,8 +8967,7 @@
             - subject: Add a `boolVar` helper for config to standardize boolean config vars
               hash: 8041b9696a6b91bc9ef76e8f19c870c8a139f00e
               body: >
-                This now requires boolean config vars must be `true` or `false`,
-                or
+                This now requires boolean config vars must be `true` or `false`, or
 
                 not set if they're optional, previously we compared against just `true`
 
@@ -9471,8 +9450,7 @@
                             - subject: Add a `getRuleReferencedFields` which is tailored for rules
                               hash: 256c36de4a1efb7a46eb9833e1c3228d17194015
                               body: >
-                                This works on the assumption that it is a rule
-                                query that should always
+                                This works on the assumption that it is a rule query that should always
 
                                 return true and allows ignoring more modification cases where they
 
@@ -10084,8 +10062,7 @@
                     - subject: Add a timeout for pg rollbacks after which the connection is terminated
                       hash: e67830dc6f3a9b6c73f20e6c71f14dcbacadca21
                       body: >
-                        This avoids issues where a postgres connection can hang
-                        and the
+                        This avoids issues where a postgres connection can hang and the
 
                         rollback never finishes and the client is never released from the pool
                       footer:
@@ -10124,8 +10101,7 @@
                     - subject: Optimize generating constrained abstract sql model
                       hash: b176abf77bf4f550ea7728fee52b5d6746ec7d22
                       body: >
-                        Instantiating an `OData2AbstractSQL` instance can be
-                        relatively costly
+                        Instantiating an `OData2AbstractSQL` instance can be relatively costly
 
                         and as such reusing a memoized instance can provide a reasonable
 
@@ -10158,8 +10134,7 @@
             - subject: Separate application delete hook components into individual hooks
               hash: e1a5ffa9af59f5c67766bfd999b6a3b2632b7506
               body: >
-                This allows them to be isolated from each other and also allows
-                them to
+                This allows them to be isolated from each other and also allows them to
 
                 be executed in parallel
               footer:
@@ -10525,8 +10500,7 @@
                     - subject: Add support for more input types to abstract-sql-compiler
                       hash: 431f3dbcb2177c602042e01c46eac45b185c555c
                       body: >
-                        We now support support passing an SBVR file or a model
-                        specification
+                        We now support support passing an SBVR file or a model specification
 
                         as well as an abstract sql model, and we also accept any file type that
 
@@ -10763,8 +10737,7 @@
                             - subject: Add support for table definitions
                               hash: 2939656834c374e35af8867d6337b119b58cd198
                               body: >
-                                Static definitions will be converted to views
-                                and dynamic definitions
+                                Static definitions will be converted to views and dynamic definitions
 
                                 will be ignored
                               footer:
@@ -10810,8 +10783,7 @@
                                     - subject: Add support for table definitions
                                       hash: 2939656834c374e35af8867d6337b119b58cd198
                                       body: >
-                                        Static definitions will be converted to
-                                        views and dynamic definitions
+                                        Static definitions will be converted to views and dynamic definitions
 
                                         will be ignored
                                       footer:
@@ -10847,8 +10819,7 @@
                                     - subject: Add an `optimizeSchema` function
                                       hash: 43a3c0eac0ed0c57a79fbc62d025c058ab8dbb1c
                                       body: >
-                                        Currently this can optimize certain
-                                        rules into check constraints
+                                        Currently this can optimize certain rules into check constraints
                                       footer:
                                         Change-type: minor
                                         change-type: minor
@@ -10973,8 +10944,7 @@
                             - subject: Add an `optimizeSchema` function
                               hash: 43a3c0eac0ed0c57a79fbc62d025c058ab8dbb1c
                               body: >
-                                Currently this can optimize certain rules into
-                                check constraints
+                                Currently this can optimize certain rules into check constraints
                               footer:
                                 Change-type: minor
                                 change-type: minor
@@ -11146,8 +11116,7 @@
                                     - subject: Add a `castType` property to type functions
                                       hash: 409077eb9d6c0315779ddd877220280c251b4eb5
                                       body: >
-                                        This allows specifying the correct type
-                                        to cast to when necessary
+                                        This allows specifying the correct type to cast to when necessary
 
                                         rather than relying on the fact the currently all type functions happen
 
@@ -11205,8 +11174,7 @@
                                     - subject: Add a `castType` property to type functions
                                       hash: 409077eb9d6c0315779ddd877220280c251b4eb5
                                       body: >
-                                        This allows specifying the correct type
-                                        to cast to when necessary
+                                        This allows specifying the correct type to cast to when necessary
 
                                         rather than relying on the fact the currently all type functions happen
 
@@ -11274,9 +11242,7 @@
                                             - subject: Add a `castType` property to type functions
                                               hash: 409077eb9d6c0315779ddd877220280c251b4eb5
                                               body: >
-                                                This allows specifying the
-                                                correct type to cast to when
-                                                necessary
+                                                This allows specifying the correct type to cast to when necessary
 
                                                 rather than relying on the fact the currently all type functions happen
 
@@ -11356,8 +11322,7 @@
                             - subject: Add a `castType` property to type functions
                               hash: 409077eb9d6c0315779ddd877220280c251b4eb5
                               body: >
-                                This allows specifying the correct type to cast
-                                to when necessary
+                                This allows specifying the correct type to cast to when necessary
 
                                 rather than relying on the fact the currently all type functions happen
 
@@ -12145,8 +12110,8 @@
     - subject: "cert-provider: Update to support ACMEv2 on staging provider"
       hash: d67e29223ff314b40fd745ce78301e550c2c9148
       body: >
-        Acquiring a staging certificiate from LetsEncrypt was failing, so
-        acme.sh was
+        Acquiring a staging certificiate from LetsEncrypt was failing, so acme.sh
+        was
 
         updated to version 2.8.5, which includes support for using ACMEv2 on the
 
@@ -12694,8 +12659,7 @@
                     - subject: Expose odata-compiler as a bin script
                       hash: cf86826e0d6653c456057d4de8d849d00ffc023f
                       body: >
-                        This means that it will now match the module
-                        dependencies of the
+                        This means that it will now match the module dependencies of the
 
                         installed pinejs
                       footer:
@@ -12708,8 +12672,7 @@
                     - subject: Expose sbvr-compiler as a bin script
                       hash: e6718ffe901b4d711f47493ff907ee1fe2f947e0
                       body: >
-                        This means that it will now match the module
-                        dependencies of the
+                        This means that it will now match the module dependencies of the
 
                         installed pinejs
                       footer:
@@ -12893,8 +12856,7 @@
         - commits:
             - author: Will Boyce
               body: >-
-                Allowing the server to dictate when keys are renegotiated allows
-                us to
+                Allowing the server to dictate when keys are renegotiated allows us to
 
                 control load spikes more effectively.
               footers:
