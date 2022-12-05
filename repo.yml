@@ -1,15 +1,1 @@
-type: "generic"
-reviewers: 1
-upstream:
-  - repo: open-balena-api
-    url: https://github.com/balena-io/open-balena-api
-  - repo: open-balena-vpn
-    url: https://github.com/balena-io/open-balena-vpn
-  - repo: open-balena-registry
-    url: https://github.com/balena-io/open-balena-registry
-  - repo: open-balena-db
-    url: https://github.com/balena-io/open-balena-db
-  - repo: open-balena-s3
-    url: https://github.com/balena-io/open-balena-s3
-  - repo: balena-mdns-publisher
-    url: https://github.com/balena-io/balena-mdns-publisher
+type: generic

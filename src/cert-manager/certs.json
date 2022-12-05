@@ -1,0 +1,63 @@
+[
+  {
+    "request": {
+      "key": {
+        "algo": "${key_algo}",
+        "size": ${key_size}
+      },
+      "hosts": ${hosts},
+      "names": [
+        {
+          "C": "${country}",
+          "L": "${locality_name}",
+          "O": "${org}",
+          "OU": "${org_unit}",
+          "ST": "${state}"
+        }
+      ],
+      "CN": "${TLD}"
+    }
+  },
+  {
+    "request": {
+      "key": {
+        "algo": "${key_algo}",
+        "size": ${key_size}
+      },
+      "hosts": [
+        "vpn.${TLD}"
+      ],
+      "names": [
+        {
+          "C": "${country}",
+          "L": "${locality_name}",
+          "O": "${org}",
+          "OU": "${org_unit}",
+          "ST": "${state}"
+        }
+      ],
+      "CN": "vpn.${TLD}"
+    }
+  },
+  {
+	"request": {
+	  "key": {
+		"algo": "${key_algo}",
+		"size": ${key_size}
+	  },
+	  "hosts": [
+		"api.${TLD}"
+	  ],
+	  "names": [
+		{
+		  "C": "${country}",
+		  "L": "${locality_name}",
+		  "O": "${org}",
+		  "OU": "${org_unit}",
+		  "ST": "${state}"
+		}
+	  ],
+	  "CN": "api.${TLD}"
+	}
+  }
+]

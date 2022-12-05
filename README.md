@@ -27,9 +27,9 @@ To learn more about openBalena, visit [balena.io/open][open-balena-website].
 
 ## Getting Started
 
-Our [Getting Started guide][getting-started] is the most direct path to getting
-an openBalena installation up and running and successfully deploying your
-application to your device(s).
+~~Our [Getting Started guide][getting-started] is the most direct path to getting~~
+~~an openBalena installation up and running and successfully deploying your~~
+~~application to your device(s).~~
 
 
 ## Compatibility
