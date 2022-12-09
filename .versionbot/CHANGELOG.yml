@@ -1,4 +1,16 @@
 - commits:
+    - subject: "minor: Add openbalena documentation"
+      hash: 8aaac9229df6f367cc3ebd0a78f342336cba8121
+      body: ""
+      footer:
+        Signed-off-by: Vipul Gupta (@vipulgupta2048) <vipul@balena.io>
+        signed-off-by: Vipul Gupta (@vipulgupta2048) <vipul@balena.io>
+      author: Vipul Gupta (@vipulgupta2048)
+      nested: []
+  version: 3.8.0
+  title: ""
+  date: 2022-12-09T08:52:04.889Z
+- commits:
     - subject: "patch: Add flowzone"
       hash: 4f185dbbc3d6dba22289e95d04cebbd496a082d2
       body: ""
