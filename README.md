@@ -1,6 +1,4 @@
-<img alt="openBalena" src="docs/assets/openbalena-logo.svg" height="82">
-
----
+![](./docs/images/openbalena-logo.svg)
 
 OpenBalena is a platform to deploy and manage connected devices. Devices run
 [balenaOS][balena-os-website], a host operating system designed for running
@@ -17,7 +15,7 @@ To learn more about openBalena, visit [balena.io/open][open-balena-website].
 
 ## Features
 
-- **Simple provisioning**: Adding devices to your fleet is a breeze
+- **Simple provisioning**: Adding deviceu to your fleet is a breeze
 - **Easy updates**: Remotely update the software on your devices with a single command
 - **Container-based**: Benefit from the power of virtualization, optimized for the edge
 - **Scalable**: Deploy and manage one device, or one million
@@ -124,7 +122,7 @@ Additionally, refer back to the [roadmap](#roadmap) above for planned but not ye
 
 ## License
 
-OpenBalena is licensed under the terms of AGPL v3. See [LICENSE](LICENSE) for details.
+OpenBalena is licensed under the terms of AGPL v3. See [LICENSE](https://github.com/balena-io/open-balena/blob/master/LICENSE) for details.
 
 
 [balena-cli]: https://github.com/balena-io/balena-cli
@@ -163,4 +161,3 @@ Technically “yes”, but in a supported or balena-recommended fashion, “no�
 Yes! Here are a few:
 - [open-balena-admin / open-balena-ui](https://github.com/dcaputo-harmoni/open-balena-admin) by user [dcaputo-harmoni](https://github.com/dcaputo-harmoni) who first posted about [here](https://forums.balena.io/t/open-balena-admin-an-admin-interface-for-openbalena/355324) in our Forums :)
 - [open-balena-dashboard](https://github.com/Razikus/open-balena-dashboard) by user [Razikus](https://github.com/Razikus)
-
