@@ -1,6 +1,6 @@
 #!/bin/sh
 
-migrate_data_to_s3 () {
+migrate_data_to_local_s3 () {
   BUCKET="${1:-registry-data}"
 
   if [ -z "${BUCKET}" ]; then return 1; fi
@@ -26,4 +26,41 @@ migrate_data_to_s3 () {
       -v "${S3_VOLUME}:/s3" \
       --name "migrate-registry" alpine \
       sh -c "mkdir -p /s3/${BUCKET}/data && cp -r /data/docker /s3/${BUCKET}/data/"
+}
+
+migrate_data_to_remote_s3() {
+    BUCKET="${1:-registry-data}"
+    ENDPOINT="${2}"
+    ACCESS_KEY="${3}"
+    SECRET_KEY="${4}"
+
+    if [ -z "${BUCKET}" ] || [ -z "${ENDPOINT}" ] || [ -z "${ACCESS_KEY}" ] || [ -z "${SECRET_KEY}" ]; then exit 1; fi
+
+    if [ -n "${DOCKER_HOST}" ]; then
+        log "Using docker host: ${DOCKER_HOST}"
+        export DOCKER_HOST="${DOCKER_HOST}"
+    fi
+
+    REGISTRY_CONTAINER="$(docker ps | grep registry_ | awk '{print $1}')"
+
+    if [ -z "${REGISTRY_CONTAINER}" ]; then exit 2; fi
+
+    REGISTRY_VOLUME="$(docker inspect "${REGISTRY_CONTAINER}" | jq -r '.[].Mounts | map(select(.Destination=="/data")) | .[0].Source')"
+
+    if [ -z "${REGISTRY_VOLUME}" ]; then exit 3; fi
+
+
+    # run the S3 container image, and copy data into s3 bucket
+    docker run -it --rm \
+        -v "${REGISTRY_VOLUME}:/data" \
+        -e AWS_ACCESS_KEY_ID="${ACCESS_KEY}" \
+        -e AWS_SECRET_ACCESS_KEY="${SECRET_KEY}" \
+        -e BUCKET="${BUCKET}" \
+        -e ENDPOINT="${ENDPOINT}" \
+        --name "migrate-registry" debian:buster \
+        sh -c "\
+        apt-get -y update && \
+        apt-get install -y awscli && \
+        aws --endpoint-url ${ENDPOINT} s3 sync /data/docker/ s3://${BUCKET}/data/docker/ \
+        "
 }

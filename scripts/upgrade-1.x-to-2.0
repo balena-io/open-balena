@@ -59,15 +59,55 @@ upsert_config () {
     fi
 }
 
-upsert_config "OPENBALENA_REGISTRY2_S3_BUCKET" "registry-data" || warn "Failed to update config value OPENBALENA_REGISTRY2_S3_BUCKET"
-upsert_config "OPENBALENA_S3_ACCESS_KEY" "$(randstr 32)" || warn "Failed to update config value OPENBALENA_S3_ACCESS_KEY"
-upsert_config "OPENBALENA_S3_ENDPOINT" "https://s3.${OPENBALENA_HOST_NAME}" || warn "Failed to update config value OPENBALENA_S3_ENDPOINT"
-upsert_config "OPENBALENA_S3_REGION" "us-east-1" || warn "Failed to update config value OPENBALENA_S3_REGION"
-upsert_config "OPENBALENA_S3_SECRET_KEY" "$(randstr 32)" || warn "Failed to update config value OPENBALENA_S3_SECRET_KEY"
+local_s3_storage() {
+    upsert_config "OPENBALENA_REGISTRY2_S3_BUCKET" "registry-data" || warn "Failed to update config value OPENBALENA_REGISTRY2_S3_BUCKET"
+    upsert_config "OPENBALENA_S3_ACCESS_KEY" "$(randstr 32)" || warn "Failed to update config value OPENBALENA_S3_ACCESS_KEY"
+    upsert_config "OPENBALENA_S3_ENDPOINT" "https://s3.${OPENBALENA_HOST_NAME}" || warn "Failed to update config value OPENBALENA_S3_ENDPOINT"
+    upsert_config "OPENBALENA_S3_REGION" "us-east-1" || warn "Failed to update config value OPENBALENA_S3_REGION"
+    upsert_config "OPENBALENA_S3_SECRET_KEY" "$(randstr 32)" || warn "Failed to update config value OPENBALENA_S3_SECRET_KEY"
+
+}
+
+remote_s3_storage() {
+    info "Enter S3 Endpoint (e.g. https://s3.yourhost.com):"
+    read -r S3_ENDPOINT
+
+    info "Enter S3 Region (e.g. us-east-1):"
+    read -r S3_REGION
+
+    info "Enter S3 Bucket name (e.g. registry-data):"
+    read -r S3_BUCKET
+
+    info "Enter S3 Access Key:"
+    read -r S3_ACCESS_KEY
+
+    info "Enter S3 Secret Key:"
+    read -r S3_SECRET_KEY
+
+    upsert_config "OPENBALENA_REGISTRY2_S3_BUCKET" "${S3_BUCKET}" || warn "Failed to update config value OPENBALENA_REGISTRY2_S3_BUCKET"
+    upsert_config "OPENBALENA_S3_ACCESS_KEY" "${S3_ACCESS_KEY})" || warn "Failed to update config value OPENBALENA_S3_ACCESS_KEY"
+    upsert_config "OPENBALENA_S3_ENDPOINT" "${S3_ENDPOINT}" || warn "Failed to update config value OPENBALENA_S3_ENDPOINT"
+    upsert_config "OPENBALENA_S3_REGION" "${S3_REGION}" || warn "Failed to update config value OPENBALENA_S3_REGION"
+    upsert_config "OPENBALENA_S3_SECRET_KEY" "${S3_SECRET_KEY}" || warn "Failed to update config value OPENBALENA_S3_SECRET_KEY"
+}
+
+while true; do
+    info "Do you wish to migrate registry data to local s3 bucket or to a remote bucket? (local | remote)"
+    read -r yn
+    case $yn in
+        local ) local_s3_storage; break;;
+        remote ) remote_s3_storage; break;;
+        * ) info "Please answer local or remote.";;
+    esac
+donew
 
 # Step 4. Migrate Registry data to S3...
-info "Copying data from the Registry volume to the S3 volume..."
-migrate_data_to_s3 "registry-data"
+if [ -z "${S3_BUCKET}" ] || [ -z "${S3_ENDPOINT}" ] || [ -z "${S3_ACCESS_KEY}" ] || [ -z "${S3_SECRET_KEY}" ]; then
+    info "Copying data from the Registry volume to the S3 volume..."
+    migrate_data_to_local_s3 "registry-data"
+else
+    migrate_data_to_local_s3 "${S3_BUCKET}" "${S3_ENDPOINT}" "${S3_ACCESS_KEY}" "${S3_SECRET_KEY}"
+fi
 case $? in
     1)  die "Invalid bucket name";;
     2)  die "Unable to find the running Registry or S3 containers";;
