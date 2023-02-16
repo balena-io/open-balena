@@ -3,9 +3,11 @@ name: Flowzone
 on:
   pull_request:
     types: [opened, synchronize, closed]
-    branches:
-      - "main"
-      - "master"
+    branches: [main, master]
+  # allow external contributions to use secrets within trusted code
+  pull_request_target:
+    types: [opened, synchronize, closed]
+    branches: [main, master]
 
 jobs:
   flowzone:
