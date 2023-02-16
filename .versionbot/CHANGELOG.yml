@@ -1,4 +1,18 @@
 - commits:
+    - subject: "docs: Fix typo in README"
+      hash: 5114f9615b771ef5b942b2376e859102e4d92e99
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: otkd <7527203+otkd@users.noreply.github.com>
+        signed-off-by: otkd <7527203+otkd@users.noreply.github.com>
+      author: otkd
+      nested: []
+  version: 3.8.2
+  title: ""
+  date: 2023-02-16T16:20:42.235Z
+- commits:
     - subject: Enable CI for external contributions
       hash: 2e69049c306160a39c3c47c6f7d284eb4c6e66b1
       body: ""
