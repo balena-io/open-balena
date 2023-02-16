@@ -11,6 +11,7 @@ services:
       - /run
       - /sys/fs/cgroup
     privileged: true
+    restart: always
 
   system:
     security_opt:

@@ -12,6 +12,7 @@ services:
     tmpfs:
         - /run
         - /sys/fs/cgroup
+    restart: always
     # balenaOS - Required for host DBus comms. Not required for standalone Linux
     labels:
         io.balena.features.dbus: '1'
