@@ -1,4 +1,16 @@
 - commits:
+    - subject: Enable CI for external contributions
+      hash: 2e69049c306160a39c3c47c6f7d284eb4c6e66b1
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: dfunckt
+      nested: []
+  version: 3.8.1
+  title: ""
+  date: 2023-02-16T14:00:46.301Z
+- commits:
     - subject: "minor: Add openbalena documentation"
       hash: 8aaac9229df6f367cc3ebd0a78f342336cba8121
       body: ""
