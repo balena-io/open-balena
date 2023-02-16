@@ -1,4 +1,4 @@
-FROM haproxy:1.9-alpine
+FROM haproxy:2.7-alpine
 
 VOLUME [ "/certs" ]
 
