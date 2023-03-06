@@ -24,9 +24,14 @@ spec:
     {{- toYaml . | nindent 4 }}
     {{- end }}
   ports:
-  - port: 80
+  - name: http
+    port: 80
     protocol: TCP
     targetPort: 80
+  - name: console
+    port: 43697
+    protocol: TCP
+    targetPort: 43697
   {{- with .Values.s3.service.externalIPs }}
   externalIPs:
     {{- toYaml . | nindent 4 }}
