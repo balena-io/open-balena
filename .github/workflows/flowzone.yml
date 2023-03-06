@@ -1,0 +1,18 @@
+name: Flowzone
+
+on:
+  pull_request:
+    types: [opened, synchronize, closed]
+    branches: [main, master]
+  # allow external contributions to use secrets within trusted code
+  pull_request_target:
+    types: [opened, synchronize, closed]
+    branches: [main, master]
+
+jobs:
+  flowzone:
+    name: Flowzone
+    uses: product-os/flowzone/.github/workflows/flowzone.yml@master
+    secrets: inherit
+    with:
+      cloudflare_website: "open-balena"

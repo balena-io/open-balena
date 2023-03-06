@@ -174,7 +174,7 @@ s3:
   replicas: 1
   image:
     repository: balena/open-balena-s3
-    tag: "v2.13.8"
+    tag: "v2.13.10"
     pullPolicy: IfNotPresent
 
   labels: {}
