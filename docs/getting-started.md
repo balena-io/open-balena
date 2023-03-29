@@ -145,7 +145,7 @@ that must be installed on the local machine, so that it can securely communicate
 with the server.
 
 The root certificate is found at `config/certs/root/ca.crt` on the server. Copy
-it to some folder on the local machine and keep a note the path -- it will be
+it to some folder on the local machine and keep a note to the path -- it will be
 used later during the CLI installation. Follow the steps below for the specific
 platform of the local machine.
 
