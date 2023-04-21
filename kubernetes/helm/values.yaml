@@ -271,5 +271,5 @@ haproxy:
           _front__tls
             # BEGIN::Redirect to openBalena VPN
             acl is_ssl req.ssl_ver 2:3.4
-            use_backend {{ .Release.Namespace }}_openbalena-vpn_443 if !is_ssl
+            use_backend {{ .Release.Namespace }}_{{ .Release.Name }}-vpn_443 if !is_ssl
             # END::Redirect to openBalena VPN
