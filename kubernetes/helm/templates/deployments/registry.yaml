@@ -1,0 +1,126 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openbalena.fullname" . }}-registry
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openbalena.labels" . | nindent 4 }}
+    app.kubernetes.io/component: registry
+
+    {{- with .Values.registry.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.registry.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.registry.affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "openbalena.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: registry
+
+      {{- with .Values.registry.labels }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  replicas: {{ .Values.registry.replicas }}
+  template:
+    metadata:
+      labels:
+        {{- include "openbalena.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: registry
+
+        {{- with .Values.registry.labels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-registry
+        image: {{ .Values.registry.image.repository }}:{{ .Values.registry.image.tag }}
+        imagePullPolicy: {{ .Values.registry.image.pullPolicy }}
+        {{- with .Values.registry.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        ports:
+          - name: http
+            containerPort: 80
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN", "SYS_RESOURCE"]
+        env:
+        - name: CONFD_BACKEND
+          value: "ENV"
+        - name: API_TOKENAUTH_CRT
+          value: "{{ index .Values "global" "keys" "token-auth-pub" }}"
+        - name: REGISTRY2_HOST
+          value: "registry.{{ .Values.global.hostname }}"
+        - name: ROOT_CA
+          value: "{{ index .Values "global" "certificates" "root" "ca" }}"
+        - name: REGISTRY2_TOKEN_AUTH_ISSUER
+          value: "api.{{ .Values.global.hostname }}"
+        - name: REGISTRY2_TOKEN_AUTH_REALM
+          value: "https://api.{{ .Values.global.hostname }}/auth/v1/token"
+        - name: COMMON_REGION
+          value: "{{ index .Values "global" "s3" "region" }}"
+        - name: REGISTRY2_CACHE_ENABLED
+          value: "false"
+        - name: REGISTRY2_CACHE_ADDR
+          value: "127.0.0.1:6379"
+        - name: REGISTRY2_CACHE_DB
+          value: "0"
+        - name: REGISTRY2_CACHE_MAXMEMORY_MB
+          value: "1024" # Megabytes
+        - name: REGISTRY2_CACHE_MAXMEMORY_POLICY
+          value: "allkeys-lru"
+        - name: REGISTRY2_S3_REGION_ENDPOINT
+          value: "{{ index .Values "global" "s3" "endpoint" }}"
+        - name: REGISTRY2_S3_BUCKET
+          value: "{{ index .Values "global" "s3" "bucket" }}"
+        - name: REGISTRY2_S3_KEY
+          value: "{{ index .Values "global" "s3" "accesskey" }}"
+        - name: REGISTRY2_S3_SECRET
+          value: "{{ index .Values "global" "s3" "secretkey" }}"
+        - name: REGISTRY2_SECRETKEY
+          value: "{{ index .Values "global" "keys" "registry-secret-key" }}"
+        - name: REGISTRY2_STORAGEPATH
+          value: "{{ .Values.global.s3.storagePath }}"
+        - name: REGISTRY2_DISABLE_UPLOAD_PURGING
+          value: "{{ .Values.registry.disableUploadPurging }}"
+
+        {{- if .Values.registry.disableRedirect }}
+        - name: REGISTRY2_DISABLE_REDIRECT
+          value: "true"
+        {{- end }}
+
+        {{- if .Values.global.s3.cloudfront.endpoint }}
+        - name: REGISTRY2_S3_CLOUDFRONT_ENDPOINT
+          value: "{{ .Values.global.s3.cloudfront.endpoint }}"
+        - name: REGISTRY2_S3_CLOUDFRONT_KEYPAIR_ID
+          value: "{{ .Values.global.s3.cloudfront.keypair }}"
+        - name: REGISTRY2_S3_CLOUDFRONT_PRIVATEKEY
+          value: "{{ .Values.global.s3.cloudfront.privatekey }}"
+        {{- end }}
+
+        volumeMounts:
+        - mountPath: /run
+          name: run
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: run
+        emptyDir:
+          medium: Memory
+      - name: cgroup
+        emptyDir:
+          medium: Memory
+
+      {{- with .Values.registry.nodeSelector  }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

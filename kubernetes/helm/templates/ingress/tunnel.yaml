@@ -1,0 +1,37 @@
+{{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+apiVersion: networking.k8s.io/v1
+{{- else if .Capabilities.APIVersions.Has "networking.k8s.io/v1beta1/Ingress" }}
+apiVersion: networking.k8s.io/v1beta1
+{{- else }}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ include "openbalena.fullname" . }}-tunnel
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openbalena.labels" . | nindent 4 }}
+  annotations:
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    ingress.kubernetes.io/ssl-passthrough: "true"
+    {{- with .Values.ingress.tunnel.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  tls:
+  - hosts:
+    - tunnel.{{ .Values.global.hostname }}
+    secretName: {{ include "openbalena.fullname" . }}-tunnel-tls
+  rules:
+  - host: tunnel.{{ .Values.global.hostname }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ include "openbalena.fullname" . }}-internal-tunnel
+            port:
+              number: 3128

@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "openbalena.fullname" . }}-redis
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openbalena.labels" . | nindent 4 }}
+    app.kubernetes.io/component: redis
+
+    {{- with .Values.redis.service.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.redis.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  selector:
+    {{- include "openbalena.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: redis
+
+    {{- with .Values.redis.service.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  ports:
+  - port: 6379
+    protocol: TCP
+    targetPort: 6379
+  {{- with .Values.redis.service.externalIPs }}
+  externalIPs:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}

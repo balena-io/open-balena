@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "openbalena.fullname" . }}-internal-tunnel
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openbalena.labels" . | nindent 4 }}
+spec:
+  selector:
+    app.kubernetes.io/name: haproxy # Use 'haproxy' here, because it's another chart
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  ports:
+  - name: tcp-3128
+    port: 3128
+    protocol: TCP
+    targetPort: 3128
