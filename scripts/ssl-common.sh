@@ -6,7 +6,7 @@ if [ -z "${easyrsa_bin-}" ] || [ ! -x "${easyrsa_bin}" ]; then
     easyrsa_bin="$(command -v easyrsa 2>/dev/null || true)"
     if [ -z "${easyrsa_bin}" ]; then
         easyrsa_dir="$(mktemp -dt easyrsa.XXXXXXXX)"
-        easyrsa_url="https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.5/EasyRSA-nix-3.0.5.tgz"
+        easyrsa_url="https://github.com/OpenVPN/easy-rsa/releases/download/v3.1.3/EasyRSA-3.1.3.tgz"
         echo "  - Downloading easy-rsa..."
         (cd "${easyrsa_dir}"; curl -sL "${easyrsa_url}" | tar xz --strip-components=1)
         easyrsa_bin="${easyrsa_dir}/easyrsa"
