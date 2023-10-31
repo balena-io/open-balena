@@ -9,7 +9,7 @@ with cloud providers like AWS, Google Cloud, Digital Ocean and others.
 This guide assumes a setup with two separate machines:
 
 - The openBalena _server_, running Linux. These instructions were tested with an
-  Ubuntu 18.04 x64 server.
+  Ubuntu 22.04 x64 server.
 - The _local machine_, running Linux, Windows or macOS where the balena CLI runs
   (as a client to the openBalena server). The local machine should also have a
   working installation of [Docker](https://docs.docker.com/get-docker/) so that
@@ -41,6 +41,14 @@ Login to the server via SSH and run the following commands.
    adduser balena
    usermod -aG sudo balena
    usermod -aG docker balena
+   ```
+
+4. Enable cgroup v1. The balena containers want to start systemd inside the container but this is not possible with just cgroups2.
+
+   ```bash
+   echo 'GRUB_CMDLINE_LINUX=systemd.unified_cgroup_hierarchy=false' | tee /etc/default/grub.d/cgroup.cfg
+   update-grub
+   reboot
    ```
 
 #### Install openBalena on the server
@@ -205,7 +213,7 @@ the CLI can securely interact with the openBalena server.
 | Windows cmd.exe    | `set NODE_EXTRA_CA_CERTS=C:\path\to\ca.crt`    |
 | Windows PowerShell | `$Env:NODE_EXTRA_CA_CERTS="C:\path\to\ca.crt"` |
 
-### Deploy an application
+### Deploy a fleet
 
 The commands below should be run on a terminal on the local machine (where the
 balena CLI is installed). Ensure that the `NODE_EXTRA_CA_CERTS` environment
@@ -217,37 +225,38 @@ Run `balena login`, select `Credentials` and use the email and password
 specified during quickstart to login to the openBalena server. At any time, the
 `balena whoami` command may be used to check which server the CLI is logged in to.
 
-#### Create an application
+#### Create a fleet
 
-Create a new application with `balena app create myApp`. Select the application's
+Create a new fleet with `balena fleet create myApp`. Select the fleet's
 default device type with the interactive prompt. The examples in this guide assume
 a Raspberry Pi 3.
 
-An application contains devices that share the same architecture (such as ARM
+A fleet contains devices that share the same architecture (such as ARM
 or Intel i386), and also contains code releases that are deployed to the devices.
-When a device is provisioned, it is added to an application, but can be migrated
-to another application at any time. There is no limit to the number of applications
+When a device is provisioned, it is added to a fleet, but can be migrated
+to another fleets at any time. There is no limit to the number of fleets
 that can be created or to the number of devices that can be provisioned.
 
-At any time, the server can be queried for all the applications it knows about
+At any time, the server can be queried for all the fleets it knows about
 with the following command:
 
 ```bash
-balena apps
-ID APP NAME DEVICE TYPE  ONLINE DEVICES DEVICE COUNT
-1  myApp    raspberrypi3
+balena fleets
+ Id App name Slug        Device type  Device count Online devices 
+ ── ──────── ─────────── ──────────── ──────────── ────────────── 
+ 1  myApp    admin/myapp raspberrypi3 0            0              
 ```
 
 #### Provision a new device
 
-Once we have an application, it’s time to start provisioning devices. To do this,
+Once we have a fleet, it’s time to start provisioning devices. To do this,
 first download a balenaOS image from [balena.io](https://balena.io/os/#download).
 Pick the development image that is appropriate for your device.
 
 Unzip the downloaded image and use the balena CLI to configure it:
 
 ```bash
-balena os configure ~/Downloads/balena-cloud-raspberrypi3-2.58.3+rev1-dev-v11.14.0.img --app myApp
+balena os configure ~/Downloads/raspberrypi3-4.1.1-v14.13.13.img --fleet myApp
 ```
 
 Flash the configured image to an SD card using [Etcher](https://balena.io/etcher).
@@ -256,20 +265,35 @@ the openBalena server and after about two minutes will be inspectable:
 
 ```bash
 balena devices
-ID UUID    DEVICE NAME  DEVICE TYPE  APPLICATION NAME STATUS IS ONLINE SUPERVISOR VERSION OS VERSION
-4  59d7700 winter-tree  raspberrypi3 myApp            Idle   true      11.14.0            balenaOS 2.58.3+rev1
+ID UUID    DEVICE NAME DEVICE TYPE  FLEET       STATUS IS ONLINE SUPERVISOR VERSION OS VERSION     DASHBOARD URL
+1  81c1fb6 sleek-dream raspberrypi3 admin/myapp Idle   true      14.13.13           balenaOS 4.1.1 https://dashboard.openbalena.flux-dev.cloud/devices/81c1fb61b7882b5cc59b33bc22d18023/summary
 
-balena device 59d7700
-== WINTER TREE
-ID:                 4
-DEVICE TYPE:        raspberrypi3
-STATUS:             online
-IS ONLINE:          true
-IP ADDRESS:         192.168.43.247
-APPLICATION NAME:   myApp
-UUID:               59d7700755ec5de06783eda8034c9d3d
-SUPERVISOR VERSION: 11.14.0
-OS VERSION:         balenaOS 2.58.3+rev1
+balena device 81c1fb6
+== SLEEK DREAM
+ID:                    1
+DEVICE TYPE:           raspberrypi3
+STATUS:                idle
+IS ONLINE:             true
+IP ADDRESS:            192.168.178.58 2a02:a463:2679:1:2153:866c:4b2e:3aac
+MAC ADDRESS:           B8:27:EB:0A:15:34 B8:27:EB:5F:40:61
+FLEET:                 admin/myapp
+LAST SEEN:             2023-10-31T09:49:45.965Z
+UUID:                  81c1fb61b7882b5cc59b33bc22d18023
+COMMIT:                N/a
+SUPERVISOR VERSION:    14.13.13
+IS WEB ACCESSIBLE:     false
+OS VERSION:            balenaOS 4.1.1
+DASHBOARD URL:         https://dashboard.openbalena.flux-dev.cloud/devices/81c1fb61b7882b5cc59b33bc22d18023/summary
+CPU USAGE PERCENT:     48
+CPU TEMP C:            59
+CPU ID:                000000008c0a1534
+MEMORY USAGE MB:       144
+MEMORY TOTAL MB:       971
+MEMORY USAGE PERCENT:  15
+STORAGE BLOCK DEVICE:  /dev/mmcblk0p6
+STORAGE USAGE MB:      75
+STORAGE TOTAL MB:      13741
+STORAGE USAGE PERCENT: 1
 ```
 
 It's time to deploy code to the device.
@@ -292,20 +316,20 @@ CMD [ "balena-idle" ]
 Then build and deploy the project with:
 
 ```bash
-balena deploy myApp --logs
+balena deploy myApp
 ```
 
 The project will have been successfully built when a friendly unicorn appears in
 the terminal:
 
 ```bash
-[Info]    Compose file detected
+[Info]    No "docker-compose.yml" file found at ...
 ...
 [Info]    Creating release...
 [Info]    Pushing images to registry...
 [Info]    Saving release...
 [Success] Deploy succeeded!
-[Success] Release: f62a74c220b92949ec78761c74366046
+[Success] Release: 821e084db0730de5a0e4005ed4c4a331
 
 			    \
 			     \
@@ -338,13 +362,13 @@ all provisioned devices and within a couple of minutes, they will all run the
 new release. Logs can be viewed with:
 
 ```bash
-balena logs 59d7700 --tail
-[Logs]    [10/28/2020, 11:40:16 AM] Supervisor starting
-[Logs]    [10/28/2020, 11:40:50 AM] Creating network 'default'
-[Logs]    [10/28/2020, 11:42:38 AM] Creating volume 'resin-data'
-[Logs]    [10/28/2020, 11:42:40 AM] Downloading image …
-…
-[Logs]    [10/28/2020, 11:44:00 AM] [main] Idling...
+balena logs 81c1fb6 --tail
+[Logs]    [2023-10-31T09:49:38.094Z] Supervisor starting
+[Logs]    [2023-10-31T09:49:46.469Z] Creating network 'default'
+[Logs]    [2023-10-31T09:54:42.238Z] Creating volume 'resin-data'
+[Logs]    [2023-10-31T09:54:42.448Z] Downloading image ...
+...
+[Logs]    [2023-10-31T09:56:02.381Z] [main] Idling...
 ```
 
 Enjoy Balenafying All the Things!
