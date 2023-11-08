@@ -1,0 +1,108 @@
+#!/bin/bash -e
+
+source "${BASH_SOURCE%/*}/logger.sh"
+source "${BASH_SOURCE%/*}/_realpath"
+
+DIR="$(dirname "$(realpath "$0")")"
+BASE_DIR="$(dirname "${DIR}")"
+CONFIG_DIR="${BASE_DIR}/config"
+BACKUP_DIR="${BASE_DIR}/backups/config"
+TEMP_CONFIG_DIR="$(mktemp -dt balena_conf.XXXXXXXX)"
+CONFIG_FILE="${TEMP_CONFIG_DIR}/activate"
+CERTS_DIR="${TEMP_CONFIG_DIR}/certs"
+
+# Cleanup on EXIT
+# shellcheck disable=SC2064
+trap "rm -rf \"${TEMP_CONFIG_DIR}\"" EXIT
+
+# Create backup directory if not existing
+if [ ! -d "$BACKUP_DIR" ]; then
+  mkdir -p "$BACKUP_DIR"
+fi
+
+# Copy current Config to Temp dir
+cp -pr "$CONFIG_DIR/." "$TEMP_CONFIG_DIR"
+
+# Step 1. Make sure a config exists...
+[ -f "${CONFIG_FILE}" ] || die "Unable to find existing config!";
+
+info "Preparing to renew VPN certs..."
+# shellcheck disable=SC1090
+source "${CONFIG_FILE}"
+
+# Load EasyRSA
+source "${DIR}/ssl-common.sh"
+
+CN=$OPENBALENA_HOST_NAME
+VPN_PKI="$(realpath "${CERTS_DIR}/vpn")"
+VPN_CA="${VPN_PKI}/ca.crt"
+VPN_CRT="${VPN_PKI}/issued/vpn.${CN}.crt"
+VPN_KEY="${VPN_PKI}/private/vpn.${CN}.key"
+VPN_REQ="${VPN_PKI}/reqs/vpn.${CN}.req"
+VPN_DH="${VPN_PKI}/dh.pem"
+
+# remove old cert and keys so we generate a new one
+rm -f "$VPN_REQ" "$VPN_KEY" "$VPN_CRT"
+
+# Confirm that index.txt.attr exists and 'unique_subject = no'"
+if [ ! -f "$VPN_PKI/index.txt.attr" ] || grep -q 'unique_subject = yes' "$VPN_PKI/index.txt.attr"; then
+  printf "%s\n" "unique_subject = no" > "$VPN_PKI/index.txt.attr"
+  info "index.txt.attr updated"
+fi
+
+# generate and sign vpn server certificate
+"$easyrsa_bin" --pki-dir="${VPN_PKI}" --days="${CRT_EXPIRY_DAYS}" build-server-full "vpn.${CN}" nopass
+
+# generate vpn dhparams (keysize of 2048 will do, 4096 can wind up taking hours to generate)
+"$easyrsa_bin" --pki-dir="${VPN_PKI}" --keysize=2048 gen-dh
+
+# update indexes and generate CRLs
+"$easyrsa_bin" --pki-dir="${VPN_PKI}" update-db
+"$easyrsa_bin" --pki-dir="${VPN_PKI}" gen-crl
+
+b64encode() {
+  echo "$@" | base64 --wrap=0 2>/dev/null || echo "$@" | base64 --break=0 2>/dev/null
+}
+
+b64file() {
+  b64encode "$(cat "$@")"
+}
+
+# write new config
+cat <<STR > "${CONFIG_FILE}"
+export OPENBALENA_PRODUCTION_MODE=$OPENBALENA_PRODUCTION_MODE
+export OPENBALENA_COOKIE_SESSION_SECRET=$OPENBALENA_COOKIE_SESSION_SECRET
+export OPENBALENA_HOST_NAME=$OPENBALENA_HOST_NAME
+export OPENBALENA_JWT_SECRET=$OPENBALENA_JWT_SECRET
+export OPENBALENA_REGISTRY2_S3_BUCKET=$OPENBALENA_REGISTRY2_S3_BUCKET
+export OPENBALENA_RESINOS_REGISTRY_CODE=$OPENBALENA_RESINOS_REGISTRY_CODE
+export OPENBALENA_ROOT_CA=$OPENBALENA_ROOT_CA
+export OPENBALENA_ROOT_CRT=$OPENBALENA_ROOT_CRT
+export OPENBALENA_ROOT_KEY=$OPENBALENA_ROOT_KEY
+export OPENBALENA_TOKEN_AUTH_BUILDER_TOKEN=$OPENBALENA_TOKEN_AUTH_BUILDER_TOKEN
+export OPENBALENA_TOKEN_AUTH_PUB=$OPENBALENA_TOKEN_AUTH_PUB
+export OPENBALENA_TOKEN_AUTH_KEY=$OPENBALENA_TOKEN_AUTH_KEY
+export OPENBALENA_TOKEN_AUTH_KID=$OPENBALENA_TOKEN_AUTH_KID
+export OPENBALENA_VPN_CA=$(b64file "$VPN_CA")
+export OPENBALENA_VPN_CA_CHAIN=$(b64file "$VPN_CA")
+export OPENBALENA_VPN_SERVER_CRT=$(b64file "$VPN_CRT")
+export OPENBALENA_VPN_SERVER_KEY=$(b64file "$VPN_KEY")
+export OPENBALENA_VPN_SERVER_DH=$(b64file "$VPN_DH")
+export OPENBALENA_VPN_SERVICE_API_KEY=$OPENBALENA_VPN_SERVICE_API_KEY
+export OPENBALENA_API_VPN_SERVICE_API_KEY=$OPENBALENA_API_VPN_SERVICE_API_KEY
+export OPENBALENA_REGISTRY_SECRET_KEY=$OPENBALENA_REGISTRY_SECRET_KEY
+export OPENBALENA_S3_ACCESS_KEY=$OPENBALENA_S3_ACCESS_KEY
+export OPENBALENA_S3_BUCKETS="${OPENBALENA_S3_BUCKETS}"
+export OPENBALENA_S3_ENDPOINT="${OPENBALENA_S3_ENDPOINT}"
+export OPENBALENA_S3_REGION=$OPENBALENA_S3_REGION
+export OPENBALENA_S3_SECRET_KEY=$OPENBALENA_S3_SECRET_KEY
+export OPENBALENA_SSH_AUTHORIZED_KEYS=$OPENBALENA_SSH_AUTHORIZED_KEYS
+export OPENBALENA_SUPERUSER_EMAIL=$OPENBALENA_SUPERUSER_EMAIL
+export OPENBALENA_SUPERUSER_PASSWORD=$OPENBALENA_SUPERUSER_PASSWORD
+export OPENBALENA_ACME_CERT_ENABLED=$OPENBALENA_ACME_CERT_ENABLED
+STR
+
+# backup current config and move new config in place
+(mv "${CONFIG_DIR}" "${BACKUP_DIR}/config/$(date '+%Y-%m-%d_%s')" && mv "${TEMP_CONFIG_DIR}" "${CONFIG_DIR}") || die "Failed to copy new config"
+
+info "VPN certs renewed"

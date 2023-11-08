@@ -3,5 +3,6 @@
 .vagrant/
 
 /config
+/backups
 /docker-compose.yml
 /package-lock.json
