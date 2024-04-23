@@ -1,0 +1,19 @@
+apiVersion: v2
+name: openbalena
+description: openBalena kubernetes Chart
+type: application
+version: 1.3.4
+appVersion: v3.8.2
+keywords:
+- balena
+- openbalena
+maintainers:
+- name: bartversluijs
+  email: bartv@nexelit.io
+
+dependencies:
+- name: haproxy-ingress
+  version: 0.14.2
+  alias: haproxy
+  repository: "https://haproxy-ingress.github.io/charts"
+

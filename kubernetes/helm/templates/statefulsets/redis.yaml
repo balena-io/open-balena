@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "openbalena.fullname" . }}-redis
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openbalena.labels" . | nindent 4 }}
+    app.kubernetes.io/component: redis
+
+    {{- with .Values.redis.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.redis.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.redis.affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  serviceName: {{ include "openbalena.fullname" . }}-redis
+  selector:
+    matchLabels:
+      {{- include "openbalena.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: redis
+
+      {{- with .Values.redis.labels }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  replicas: {{ .Values.redis.replicas }}
+  template:
+    metadata:
+      labels:
+        {{- include "openbalena.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: redis
+
+        {{- with .Values.redis.labels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-redis
+        image: {{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}
+        imagePullPolicy: {{ .Values.redis.image.pullPolicy }}
+        {{- with .Values.redis.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        ports:
+          - name: redis
+            containerPort: 6379
+        volumeMounts:
+        - mountPath: /data
+          name: data
+          subPath: redis
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: data
+
+      {{- with .Values.redis.nodeSelector  }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      {{- if .Values.redis.storageClass }}
+      storageClassName: {{ .Values.redis.storageClass }}
+      {{- end }}
+      resources:
+        requests:
+          storage: {{ .Values.redis.storage }}

@@ -5,3 +5,7 @@
 /config
 /docker-compose.yml
 /package-lock.json
+
+# Kubernetes
+kubernetes/helm/charts
+kubernetes/helm/Chart.lock
