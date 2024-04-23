@@ -1,4 +1,15 @@
 - commits:
+    - subject: Fix typo
+      hash: 62afa3a0d14133d6585990a64c224e3856d27b2e
+      body: ""
+      footer:
+        change-type: patch
+      author: danclimasevschi
+      nested: []
+  version: 3.8.5
+  title: ""
+  date: 2024-04-23T17:55:19.796Z
+- commits:
     - subject: Update haproxy Docker tag to v2
       hash: 754f26077e02c7b671501f5e8870b2e6fe1f8c56
       body: |
