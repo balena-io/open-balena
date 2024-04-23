@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update haproxy Docker tag to v2
+      hash: 754f26077e02c7b671501f5e8870b2e6fe1f8c56
+      body: |
+        Update haproxy from 1.9 to 2.9
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 3.8.4
+  title: ""
+  date: 2024-04-23T17:05:00.468Z
+- commits:
     - subject: "flowzone.yml: Prevent duplicate workflow executions"
       hash: 8224f0826fcf44f5da1729af803de5e138fbcdc2
       body: ""
