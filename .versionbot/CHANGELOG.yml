@@ -1,4 +1,23 @@
 - commits:
+    - subject: openBalena 2024
+      hash: 35539999127fc636f06cf59c944af54115f71017
+      body: |
+        * integration/e2e tests
+        * automatic SSL/TLS PKI (wildcard cert.) generation via DNS-01 challenge
+        * update getting started guide
+        * remove unnecessary privileges (Redis)
+        * pin Redis to v7.2 (BSD license)
+        * enable trust proxy
+
+        Co-authored-by: Kyle Harding <kyle@balena.io>
+      footer:
+        change-type: major
+      author: ab77
+      nested: []
+  version: 4.0.0
+  title: ""
+  date: 2024-05-28T21:54:05.118Z
+- commits:
     - subject: Fix typo
       hash: 62afa3a0d14133d6585990a64c224e3856d27b2e
       body: ""
