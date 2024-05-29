@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-vpn Docker tag to v11.30.22
+      hash: 1ea77d38cac6d4de8cee20888c68d0657dc1d9af
+      body: |
+        Update balena/open-balena-vpn from 11.30.9 to 11.30.22
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.0.8
+  title: ""
+  date: 2024-05-29T05:57:12.761Z
+- commits:
     - subject: Update qemux/qemu-docker Docker tag to v4.28
       hash: 1c3b8dd38fadbf111ebe850d77bdca4f8cd0bb2d
       body: |
