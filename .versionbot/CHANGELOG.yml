@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update ubuntu Docker tag to v24
+      hash: 496a1d75ec7f5a3b8f499eeb49c595f25f63ce49
+      body: |
+        Update ubuntu from 22.04 to noble
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.0.13
+  title: ""
+  date: 2024-05-30T23:58:20.498Z
+- commits:
     - subject: Update qemux/qemu-docker Docker tag to v5
       hash: 5b835f3a8edbdd5575faa82c8d79d2b5d72fe27c
       body: |
