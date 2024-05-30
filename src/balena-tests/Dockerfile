@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # renovate: datasource=github-releases depName=balena-io/balena-cli
 ARG BALENA_CLI_VERSION=v18.2.2
