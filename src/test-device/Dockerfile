@@ -1,6 +1,6 @@
 # https://hub.docker.com/r/qemux/qemu-docker
 # https://github.com/qemus/qemu-docker
-FROM qemux/qemu-docker:4.28
+FROM qemux/qemu-docker:5.09
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	minicom \
