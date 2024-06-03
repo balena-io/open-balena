@@ -38,7 +38,7 @@ stages:
         dockerfile: Dockerfile
         image: gitlab.com:443/aivero/dependency_proxy/containers/amd64/docker:24
         arch: amd64
-        docker_image_name: tag-sidecar
+        docker_image_name: test-device
         gitlab_job_tag: saas-linux-large-amd64
 
 docker:
