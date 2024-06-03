@@ -1,0 +1,74 @@
+stages:
+  - build
+
+.docker-set:
+  parallel:
+    matrix:
+      - base_path: src/balena-tests
+        dockerfile: Dockerfile
+        image: gitlab.com:443/aivero/dependency_proxy/containers/amd64/docker:24
+        arch: amd64
+        docker_image_name: balena-tests
+        gitlab_job_tag: saas-linux-large-amd64
+      - base_path: src/cert-manager
+        dockerfile: Dockerfile
+        image: gitlab.com:443/aivero/dependency_proxy/containers/amd64/docker:24
+        arch: amd64
+        docker_image_name: cert-manager
+        gitlab_job_tag: saas-linux-large-amd64
+      - base_path: src/haproxy
+        dockerfile: Dockerfile
+        image: gitlab.com:443/aivero/dependency_proxy/containers/amd64/docker:24
+        arch: amd64
+        docker_image_name: haproxy
+        gitlab_job_tag: saas-linux-large-amd64
+      - base_path: src/haproxy-sidecar
+        dockerfile: Dockerfile
+        image: gitlab.com:443/aivero/dependency_proxy/containers/amd64/docker:24
+        arch: amd64
+        docker_image_name: haproxy-sidecar
+        gitlab_job_tag: saas-linux-large-amd64
+      - base_path: src/tag-sidecar
+        dockerfile: Dockerfile
+        image: gitlab.com:443/aivero/dependency_proxy/containers/amd64/docker:24
+        arch: amd64
+        docker_image_name: tag-sidecar
+        gitlab_job_tag: saas-linux-large-amd64
+      - base_path: src/test-device
+        dockerfile: Dockerfile
+        image: gitlab.com:443/aivero/dependency_proxy/containers/amd64/docker:24
+        arch: amd64
+        docker_image_name: tag-sidecar
+        gitlab_job_tag: saas-linux-large-amd64
+
+docker:
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+    GIT_SUBMODULE_STRATEGY: "recursive"
+    DOCKER_FROM_REFERENCE_BRANCH_OR_MASTER: $CI_COMMIT_REF_NAME
+    NIX_FROM_REFERENCE_BRANCH_OR_MASTER: $CI_COMMIT_REF_NAME
+  parallel: !reference [.docker-set, parallel]
+  stage: build
+  image: ${image}
+  tags:
+    - saas-linux-large-amd64
+  before_script:
+    # Overrride the before_script in the actual job. Note that arrays are not merged, yet: https://gitlab.com/gitlab-org/gitlab/-/issues/213050 The before_script on the job will simply override this.
+    # When using this snippet, make sure you descent into the relevant folder in the job that extends this snippet.
+    - cd $base_path
+    - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
+    - docker login --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD registry.gitlab.com
+  script:
+    - docker build . --file ${dockerfile} --platform linux/${arch} --cache-from registry.gitlab.com/aivero/open-source/open-balena/${docker_image_name}/${arch}:${CI_COMMIT_REF_NAME} --cache-from registry.gitlab.com/aivero/open-source/open-balena/${docker_image_name}/${arch}:latest --cache-from registry.gitlab.com/aivero/open-source/open-balena/${docker_image_name}/${arch}:${CI_DEFAULT_BRANCH} --tag registry.gitlab.com/aivero/open-source/open-balena/${docker_image_name}/${arch}:${CI_COMMIT_REF_NAME} --build-arg=NIX_FROM_REFERENCE_BRANCH_OR_MASTER=${NIX_FROM_REFERENCE_BRANCH_OR_MASTER} --build-arg=DOCKER_FROM_REFERENCE_BRANCH_OR_MASTER=${DOCKER_FROM_REFERENCE_BRANCH_OR_MASTER}
+    - docker push registry.gitlab.com/aivero/open-source/open-balena/${docker_image_name}/${arch}:${CI_COMMIT_REF_NAME}
+    - docker tag registry.gitlab.com/aivero/open-source/open-balena/${docker_image_name}/${arch}:${CI_COMMIT_REF_NAME} registry.gitlab.com/aivero/open-source/open-balena/${docker_image_name}/${arch}:latest
+    - docker push registry.gitlab.com/aivero/open-source/open-balena/${docker_image_name}/${arch}:latest
+  services:
+    - name: "docker:24-dind"
+  retry:
+    max: 2
+    when:
+      - "script_failure"
+      - "runner_system_failure"
+      - "stuck_or_timeout_failure"
+  interruptible: false
