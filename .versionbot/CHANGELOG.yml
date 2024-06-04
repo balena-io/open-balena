@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to bd07581
+      hash: 07e01297aae1d548ae51bfb2ae8acc0f66a1cef2
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.0.15
+  title: ""
+  date: 2024-06-04T04:00:00.889Z
+- commits:
     - subject: Update qemux/qemu-docker Docker tag to v5.10
       hash: af2ce80fd99cefd6cec3937dfd40331396042210
       body: |
