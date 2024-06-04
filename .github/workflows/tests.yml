@@ -66,7 +66,7 @@ jobs:
         # FIXME: remove once balenaBlocks/balenaVirt is a thing
         submodules: true
 
-    - uses: aws-actions/configure-aws-credentials@43c891271eabca0b34d95f2453e2fe354928b16d
+    - uses: aws-actions/configure-aws-credentials@bd0758102444af2a09b9e47a2c93d0f091c1252d
       with:
         aws-region: ${{ vars.AWS_REGION || 'us-east-1' }}
         role-session-name: github-${{ github.job }}-${{ github.run_id }}-${{ github.run_attempt }}
