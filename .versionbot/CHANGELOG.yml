@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v23.2.0
+      hash: 54d3cd3c1ca590d4c53b54b2fbcd9b4ad959ad4c
+      body: |
+        Update balena/open-balena-api from 23.1.0 to 23.2.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.0.19
+  title: ""
+  date: 2024-06-05T16:00:22.731Z
+- commits:
     - subject: Update qemux/qemu-docker Docker tag to v5.11
       hash: 4f8413e564cd984a7f17c9c249d7372f796bb117
       body: |
