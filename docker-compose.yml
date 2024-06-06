@@ -222,8 +222,8 @@ services:
       *base-service,
       *with-default-privileges,
     ]
-    # image: registry.gitlab.com/aivero/prop/workspace/openbalena-airgapped-devicetypes-aivero-see/linux-x86_64:master
-    image: openbalena-airgapped-devicetypes-aivero-see
+    image: registry.gitlab.com/aivero/prop/workspace/openbalena-airgapped-devicetypes-aivero-see/linux-x86_64:master
+    # image: openbalena-airgapped-devicetypes-aivero-see
     volumes:
       - resin-data:/balena
     depends_on:
@@ -261,7 +261,7 @@ services:
       test: true | openssl s_client -connect localhost:443
     ports:
       # haproxy/http
-      - "80:80/tcp"
+      # - "80:80/tcp"
       # haproxy/tcp-router
       - "443:443/tcp"
       # haproxy/stats
