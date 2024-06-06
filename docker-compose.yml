@@ -27,7 +27,7 @@ x-default-environment: &default-environment
   DB_PASSWORD: docker
   DB_USER: docker
   LOG_LEVEL: DEBUG
-  PRODUCTION_MODE: 'true'
+  PRODUCTION_MODE: 'false'
 
 x-default-healthcheck-trait: &with-default-healthcheck
   healthcheck:
@@ -37,7 +37,6 @@ x-default-volumes-trait: &with-default-volumes
   volumes:
     - certs-data:/certs
     - resin-data:/balena
-    - api-contracts:/tmp/contracts/${CONTRACTS_PRIVATE_REPO_OWNER:-balena-io}-${CONTRACTS_PRIVATE_REPO_NAME:-contracts-airgapped}:rw
 
 x-default-privileges-trait: &with-default-privileges
   cap_add:
@@ -79,7 +78,6 @@ services:
       *base-service,
       *with-default-healthcheck,
       *with-default-privileges,
-      *with-default-volumes,
     ]
     image: balena/open-balena-api:v25.1.5
     depends_on:
@@ -94,7 +92,7 @@ services:
     environment:
       <<: *default-environment
       CONTRACTS_PUBLIC_REPO_NAME: contracts
-      CONTRACTS_PUBLIC_REPO_OWNER: balena-io
+      CONTRACTS_PUBLIC_REPO_OWNER: balena-io-none
       CONTRACTS_PRIVATE_REPO_NAME: ${CONTRACTS_PRIVATE_REPO_NAME:-contracts-airgapped}
       CONTRACTS_PRIVATE_REPO_OWNER: ${CONTRACTS_PRIVATE_REPO_OWNER:-balena-io}
       CONTRACTS_PRIVATE_REPO_TOKEN: ${CONTRACTS_PRIVATE_REPO_TOKEN:-sometoken}
@@ -110,6 +108,7 @@ services:
       IMAGE_STORAGE_ENDPOINT: s3.$DNS_TLD
       IMAGE_STORAGE_PREFIX: images
       IMAGE_STORAGE_FORCE_PATH_STYLE: true
+      # The s3 service creates a set of credentials for s3/minio: `REGISTRY2_S3_KEY:hex,REGISTRY2_S3_SECRET:hex,` and then assigns it to a few vars: 
       # IMAGE_STORAGE_ACCESS_KEY: ${IMAGE_STORAGE_ACCESS_KEY}
       # IMAGE_STORAGE_SECRET_KEY: ${IMAGE_STORAGE_SECRET_KEY}
       JSON_WEB_TOKEN_EXPIRY_MINUTES: 10080
@@ -119,12 +118,13 @@ services:
       REDIS_HOST: redis:6379
       REDIS_IS_CLUSTER: 'false'
       TOKEN_AUTH_JWT_ALGO: ES256
-      TOKENS_CONFIG: API_SERVICE_API_KEY:hex,AUTH_RESINOS_REGISTRY_CODE:hex,COOKIE_SESSION_SECRET:hex,JSON_WEB_TOKEN_SECRET:hex,MIXPANEL_TOKEN:hex,SUPERUSER_PASSWORD:hex,TOKEN_AUTH_BUILDER_TOKEN:hex,VPN_GUEST_API_KEY:hex,VPN_SERVICE_API_KEY:hex,API_VPN_SERVICE_API_KEY:API_SERVICE_API_KEY,REGISTRY2_TOKEN:TOKEN_AUTH_BUILDER_TOKEN,IMAGE_STORAGE_ACCESS_KEY:S3_MINIO_ACCESS_KEY,IMAGE_STORAGE_SECRET_KEY:S3_MINIO_SECRET_KEY
+      TOKENS_CONFIG: API_SERVICE_API_KEY:hex,API_VPN_SERVICE_API_KEY:API_SERVICE_API_KEY,AUTH_RESINOS_REGISTRY_CODE:hex,COOKIE_SESSION_SECRET:hex,JSON_WEB_TOKEN_SECRET:hex,MIXPANEL_TOKEN:hex,SUPERUSER_PASSWORD:hex,TOKEN_AUTH_BUILDER_TOKEN:hex,VPN_GUEST_API_KEY:hex,VPN_SERVICE_API_KEY:hex,REGISTRY2_TOKEN:TOKEN_AUTH_BUILDER_TOKEN
       TRUST_PROXY: 172.16.0.0/12
       VPN_PORT: 443
       WEBRESOURCES_S3_BUCKET: web-resources
       WEBRESOURCES_S3_REGION: "us-east-1"  # this is required for minio
-
+      DEVICE_TYPES_CACHE_LOCAL_TIMEOUT: 1000
+      DEVICE_TYPES_CACHE_TIMEOUT: 1000
   # A container containing the balena-io-contracts for fully air-gapped installation. 
   # These are extracted and then volume-mounted into the dir created/used by prepareContractDirectory: https://github.com/balena-io/open-balena-api/blob/master/src/features/contracts/contracts-directory.ts#L112-L115
   # Relies on CONTRACTS_PRIVATE_REPO_OWNER: ${CONTRACTS_PRIVATE_REPO_OWNER:-balena-io} and CONTRACTS_PRIVATE_REPO_NAME: ${CONTRACTS_PRIVATE_REPO_NAME:-contracts-airgapped} being set (or default)
@@ -215,23 +215,23 @@ services:
       BUCKETS: registry-data;web-resources;${IMAGES_BUCKET:-images-data}
       IMAGES_BUCKET: ${IMAGES_BUCKET:-images-data}
       HOSTS_CONFIG: REGISTRY2_S3_REGION_ENDPOINT:s3,WEBRESOURCES_S3_HOST:s3
-      TOKENS_CONFIG: REGISTRY2_S3_KEY:hex,REGISTRY2_S3_SECRET:hex,S3_MINIO_ACCESS_KEY:REGISTRY2_S3_KEY,S3_MINIO_SECRET_KEY:REGISTRY2_S3_SECRET,WEBRESOURCES_S3_ACCESS_KEY:REGISTRY2_S3_KEY,WEBRESOURCES_S3_SECRET_KEY:REGISTRY2_S3_SECRET,S3_MINIO_IMAGES_BUCKET:IMAGES_BUCKET
+      TOKENS_CONFIG: REGISTRY2_S3_KEY:hex,REGISTRY2_S3_SECRET:hex,S3_MINIO_ACCESS_KEY:REGISTRY2_S3_KEY,S3_MINIO_SECRET_KEY:REGISTRY2_S3_SECRET,WEBRESOURCES_S3_ACCESS_KEY:REGISTRY2_S3_KEY,WEBRESOURCES_S3_SECRET_KEY:REGISTRY2_S3_SECRET,S3_MINIO_IMAGES_BUCKET:IMAGES_BUCKET,IMAGE_STORAGE_ACCESS_KEY:REGISTRY2_S3_KEY,IMAGE_STORAGE_SECRET_KEY:REGISTRY2_S3_SECRET
 
   s3-device-types:
     <<: [
       *base-service,
       *with-default-privileges,
     ]
-    image: registry.gitlab.com/aivero/prop/workspace/openbalena-airgapped-devicetypes-aivero-see/linux-x86_64:master
-    # image: openbalena-airgapped-devicetypes-aivero-see
+    # image: registry.gitlab.com/aivero/prop/workspace/openbalena-airgapped-devicetypes-aivero-see/linux-x86_64:master
+    image: openbalena-airgapped-devicetypes-aivero-see
     volumes:
       - resin-data:/balena
     depends_on:
       s3:
         condition: service_healthy
-    environment:
-      HOSTS_CONFIG: REGISTRY2_S3_REGION_ENDPOINT:s3,WEBRESOURCES_S3_HOST:s3
-      TOKENS_CONFIG: S3_MINIO_ACCESS_KEY:REGISTRY2_S3_KEY,S3_MINIO_SECRET_KEY:REGISTRY2_S3_SECRET,S3_MINIO_IMAGES_BUCKET:IMAGES_BUCKET
+    # environment:
+      # HOSTS_CONFIG: REGISTRY2_S3_REGION_ENDPOINT:s3,WEBRESOURCES_S3_HOST:s3
+      # TOKENS_CONFIG: S3_MINIO_ACCESS_KEY:REGISTRY2_S3_KEY,S3_MINIO_SECRET_KEY:REGISTRY2_S3_SECRET,S3_MINIO_IMAGES_BUCKET:IMAGES_BUCKET
 
   # https://hub.docker.com/_/redis
   redis:
