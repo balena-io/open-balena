@@ -115,7 +115,7 @@ jobs:
         balena_device_uuid="$(openssl rand -hex 16)"
 
         # https://www.balena.io/docs/learn/more/masterclasses/advanced-cli/#52-preregistering-a-device
-        balena device register '${{ inputs.fleet }}' --uuid "${balena_device_uuid}"
+        with_backoff balena device register '${{ inputs.fleet }}' --uuid "${balena_device_uuid}"
 
         device_id="$(balena device "${balena_device_uuid}" | grep ^ID: | cut -c20-)"
 
@@ -130,7 +130,7 @@ jobs:
           $([[ '${{ vars.DEVELOPMENT_MODE || 'false' }}' =~ true ]] && echo '--dev') \
           --output config.json
 
-        balena tag set balena ephemeral-test-device --device "${balena_device_uuid}"
+        with_backoff balena tag set balena ephemeral-test-device --device "${balena_device_uuid}"
 
         github_vars=(GITHUB_ACTOR GITHUB_BASE_REF GITHUB_HEAD_REF GITHUB_JOB \
           GITHUB_REF GITHUB_REF_NAME GITHUB_REF_TYPE GITHUB_REPOSITORY \
