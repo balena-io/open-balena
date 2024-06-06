@@ -79,7 +79,7 @@ services:
       *with-default-privileges,
       *with-default-volumes,
     ]
-    image: balena/open-balena-api:v23.3.0
+    image: balena/open-balena-api:v24.1.1
     depends_on:
       - db
       - redis
