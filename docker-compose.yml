@@ -1,6 +1,11 @@
 ---
 version: '2.4'
 
+networks:
+  default:
+  open-balena:
+    name: open-balena
+
 volumes:
   builder-certs-ca: {}
   builder-certs-client: {}
@@ -263,11 +268,17 @@ services:
       # haproxy/http
       # - "80:80/tcp"
       # haproxy/tcp-router
-      - "443:443/tcp"
+      - "8443:443/tcp"
       # haproxy/stats
       - "1936:1936/tcp"
     environment:
       LOGLEVEL: info
+    networks:
+      default:
+      open-balena:
+        aliases:
+          - openbalena
+
 
   # dynamically configure Docker network aliases based on DNS_TLD and ALIAS list
   # allows DNS resolution from systemd-less images on the Docker network
