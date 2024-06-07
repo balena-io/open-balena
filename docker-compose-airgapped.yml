@@ -5,6 +5,7 @@ networks:
   default:
   open-balena:
     name: openbalena
+    external: true
 
 volumes:
   builder-certs-ca: {}
@@ -84,7 +85,12 @@ services:
       *with-default-healthcheck,
       *with-default-privileges,
     ]
-    image: balena/open-balena-api:v25.1.5
+    image: balena/open-balena-api:v23.3.0
+    volumes:
+      - certs-data:/certs
+      - resin-data:/balena
+      - api-contracts:/tmp/contracts/${CONTRACTS_PRIVATE_REPO_OWNER:-balena-io}-${CONTRACTS_PRIVATE_REPO_NAME:-contracts-airgapped}:rw
+      - ./env.tmpl:/usr/src/app/config/confd/templates/env.tmpl
     depends_on:
       db:
         condition: service_healthy
@@ -92,6 +98,8 @@ services:
         condition: service_healthy
       s3:
         condition: service_healthy
+      s3-device-types:
+        condition: service_started
       api-contracts: # This loads the contracts from a container. Used for air-gapped systems
         condition: service_completed_successfully
     environment:
@@ -130,6 +138,10 @@ services:
       WEBRESOURCES_S3_REGION: "us-east-1"  # this is required for minio
       DEVICE_TYPES_CACHE_LOCAL_TIMEOUT: 1000
       DEVICE_TYPES_CACHE_TIMEOUT: 1000
+    labels:
+      autoheal: true
+
+
   # A container containing the balena-io-contracts for fully air-gapped installation. 
   # These are extracted and then volume-mounted into the dir created/used by prepareContractDirectory: https://github.com/balena-io/open-balena-api/blob/master/src/features/contracts/contracts-directory.ts#L112-L115
   # Relies on CONTRACTS_PRIVATE_REPO_OWNER: ${CONTRACTS_PRIVATE_REPO_OWNER:-balena-io} and CONTRACTS_PRIVATE_REPO_NAME: ${CONTRACTS_PRIVATE_REPO_NAME:-contracts-airgapped} being set (or default)
@@ -155,7 +167,7 @@ services:
       *with-default-healthcheck,
       *with-default-privileges,
     ]
-    image: balena/open-balena-registry:v2.39.58
+    image: balena/open-balena-registry:v2.39.57
     volumes:
       - certs-data:/certs
       - resin-data:/balena
@@ -171,6 +183,9 @@ services:
       REGISTRY2_S3_BUCKET: registry-data
       REGISTRY2_STORAGEPATH: /data
       TOKENS_CONFIG: REGISTRY2_SECRETKEY:hex
+    labels:
+      autoheal: true
+
 
   # https://github.com/balena-io/open-balena-vpn
   vpn:
@@ -184,19 +199,23 @@ services:
     ]
     image: balena/open-balena-vpn:v11.30.22
     depends_on:
-      - api
+      api:
+        condition: service_healthy
     environment:
       HOSTS_CONFIG: VPN_HOST:cloudlink
       TOKENS_CONFIG: ','
       VPN_HAPROXY_USEPROXYPROTOCOL: 'true'
       VPN_PORT: 443
       # ensure correct service instance IP is registered with the API
-      VPN_SERVICE_REGISTER_INTERFACE: eth0
+      VPN_SERVICE_REGISTER_INTERFACE: enp3s0
     networks:
       default:
       open-balena:
         aliases:
           - openbalena-vpn
+    labels:
+      autoheal: true
+
   # https://github.com/balena-io/open-balena-db
   db:
     <<: *base-service
@@ -207,6 +226,8 @@ services:
       <<: *default-environment
     healthcheck:
       test: pg_isready -U "$${DB_USER}" -d "$${DB_NAME}"
+    labels:
+      autoheal: true
 
   # https://github.com/balena-io/open-balena-s3
   s3:
@@ -215,7 +236,7 @@ services:
       *with-default-healthcheck,
       *with-default-privileges,
     ]
-    image: balena/open-balena-s3:v2.28.45
+    image: balena/open-balena-s3:v2.28.44
     volumes:
       - s3-data:/export
       - certs-data:/certs
@@ -225,6 +246,8 @@ services:
       IMAGES_BUCKET: ${IMAGES_BUCKET:-images-data}
       HOSTS_CONFIG: REGISTRY2_S3_REGION_ENDPOINT:s3,WEBRESOURCES_S3_HOST:s3
       TOKENS_CONFIG: REGISTRY2_S3_KEY:hex,REGISTRY2_S3_SECRET:hex,S3_MINIO_ACCESS_KEY:REGISTRY2_S3_KEY,S3_MINIO_SECRET_KEY:REGISTRY2_S3_SECRET,WEBRESOURCES_S3_ACCESS_KEY:REGISTRY2_S3_KEY,WEBRESOURCES_S3_SECRET_KEY:REGISTRY2_S3_SECRET,S3_MINIO_IMAGES_BUCKET:IMAGES_BUCKET,IMAGE_STORAGE_ACCESS_KEY:REGISTRY2_S3_KEY,IMAGE_STORAGE_SECRET_KEY:REGISTRY2_S3_SECRET
+    labels:
+      autoheal: true
 
   s3-device-types:
     <<: [
@@ -252,6 +275,8 @@ services:
     healthcheck:
       <<: *default-healthcheck
       test: echo INFO | redis-cli | grep redis_version
+    labels:
+      autoheal: true
 
   # https://github.com/balena-io/open-balena-haproxy
   haproxy:
@@ -272,7 +297,7 @@ services:
       # haproxy/http
       # - "80:80/tcp"
       # haproxy/tcp-router
-      - "8443:443/tcp"
+      - "8444:443/tcp"
       # haproxy/stats
       - "1936:1936/tcp"
     environment:
@@ -282,6 +307,8 @@ services:
       open-balena:
         aliases:
           - openbalena
+    labels:
+      autoheal: true
 
 
   # dynamically configure Docker network aliases based on DNS_TLD and ALIAS list
@@ -299,7 +326,6 @@ services:
     labels:
       io.balena.features.balena-socket: 1
       io.balena.features.supervisor-api	: 1
-
   # https://github.com/balena-io/cert-manager
   # https://certbot.eff.org/docs/using.html
   # https://certbot-dns-cloudflare.readthedocs.io/
@@ -313,14 +339,13 @@ services:
       - resin-data:/balena
     depends_on:
       - balena-ca
-    environment:
+    environment:  
       # wildcard certificate for reverse proxy
       SSH_KEY_NAMES: ','
       SUBJECT_ALTERNATE_NAMES: '*'
     labels:
       io.balena.features.balena-api: 1
       io.balena.features.supervisor-api: 1
-
   # https://github.com/balena-io/ca-private
   # https://github.com/cloudflare/cfssl/blob/master/doc/api/intro.txt
   balena-ca:
@@ -339,7 +364,7 @@ services:
       # future expansion
       io.balena.features.balena-api: 1
       io.balena.features.supervisor-api: 1
-
+      autoheal: true
 
 
   # --- the following are not required for runtime operation of openBalena
@@ -427,3 +452,11 @@ services:
       retries: 5
     labels:
       io.balena.features.sysfs: 1
+      autoheal: true
+
+  autoheal:
+    image: willfarrell/autoheal
+    volumes:
+      -  "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      - AUTOHEAL_START_PERIOD=180
