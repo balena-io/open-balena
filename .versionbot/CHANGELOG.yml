@@ -1,4 +1,15 @@
 - commits:
+    - subject: backoff retry device registrations and tagging
+      hash: 4e1e10501d443a5d7b014cfd948073a1efc34acf
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.0.24
+  title: ""
+  date: 2024-06-09T22:12:15.802Z
+- commits:
     - subject: Update qemux/qemu-docker Docker tag to v5.12
       hash: 7625d40d80b593d441d9500c12630c4abeb5acf1
       body: |
