@@ -82,7 +82,7 @@ name and configure records.
 
     ```bash
     sudo useradd -s /bin/bash -m -G docker,sudo balena
-    echo 'balena ALL=(ALL) NOPASSWD: ALL' | tee >/etc/sudoers.d/balena
+    echo 'balena ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/balena
     ```
 
 6. Switch user:
