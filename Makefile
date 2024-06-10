@@ -3,8 +3,8 @@ SHELL := bash
 # export all variables to child processes by default
 export
 
-# Include the .env file
-include .env
+# include the .env file
+-include .env
 
 DNS_TLD ?= $(error DNS_TLD not set)
 TMPKI := $(shell mktemp)
