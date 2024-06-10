@@ -1,4 +1,15 @@
 - commits:
+    - subject: ignore .env if it doesn't exist
+      hash: fb3b2211c13f7586437360c7773cf8983d21f23d
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.0.27
+  title: ""
+  date: 2024-06-10T15:28:41.175Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v24.2.0
       hash: b37c476f58ef07c8871fef385b9522d0e1a381b9
       body: |
