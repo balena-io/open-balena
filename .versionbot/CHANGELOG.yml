@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update qemux/qemu-docker Docker tag to v5.15
+      hash: ca910f88d126f00cf0e4d0c5193485e27b98457d
+      body: |
+        Update qemux/qemu-docker from 5.14 to 5.15
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.0.41
+  title: ""
+  date: 2024-06-12T20:57:38.623Z
+- commits:
     - subject: Update actions/checkout digest to 692973e
       hash: 6474a7a8b586d9aa354f01094d8bd01e495b7400
       body: |
