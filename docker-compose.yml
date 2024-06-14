@@ -1,11 +1,6 @@
 ---
 version: '2.4'
 
-networks:
-  default:
-  open-balena:
-    name: openbalena
-
 volumes:
   builder-certs-ca: {}
   builder-certs-client: {}
@@ -17,7 +12,6 @@ volumes:
   redis-data: {}
   resin-data: {}
   s3-data: {}
-  api-contracts: {}
 
 x-default-healthcheck: &default-healthcheck
   test: /usr/src/app/docker-hc
@@ -83,24 +77,17 @@ services:
       *base-service,
       *with-default-healthcheck,
       *with-default-privileges,
+      *with-default-volumes,
     ]
     image: balena/open-balena-api:v25.1.5
     depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-      s3:
-        condition: service_healthy
-      api-contracts: # This loads the contracts from a container. Used for air-gapped systems
-        condition: service_completed_successfully
+      - db
+      - redis
+      - s3
     environment:
       <<: *default-environment
       CONTRACTS_PUBLIC_REPO_NAME: contracts
-      CONTRACTS_PUBLIC_REPO_OWNER: balena-io-none
-      CONTRACTS_PRIVATE_REPO_NAME: ${CONTRACTS_PRIVATE_REPO_NAME:-contracts-airgapped}
-      CONTRACTS_PRIVATE_REPO_OWNER: ${CONTRACTS_PRIVATE_REPO_OWNER:-balena-io}
-      CONTRACTS_PRIVATE_REPO_TOKEN: ${CONTRACTS_PRIVATE_REPO_TOKEN:-sometoken}
+      CONTRACTS_PUBLIC_REPO_OWNER: balena-io
       DB_GENERAL_REPLICA_MAX_USES: 1000
       DB_GENERAL_REPLICA_PORT: 5432
       DB_HOST: db
@@ -109,13 +96,9 @@ services:
       DB_STATE_REPLICA_PORT: 5432
       DB_USER: docker
       HOSTS_CONFIG: API_HOST:api,DB_HOST:db,DELTA_HOST:delta,HOST:api,REDIS_HOST:redis,TOKEN_AUTH_CERT_ISSUER:api,VPN_HOST:cloudlink,REGISTRY2_HOST:registry2
-      IMAGE_STORAGE_BUCKET: ${IMAGES_BUCKET:-images-data}
-      IMAGE_STORAGE_ENDPOINT: s3.$DNS_TLD
+      IMAGE_STORAGE_BUCKET: resin-production-img-cloudformation
+      IMAGE_STORAGE_ENDPOINT: s3.amazonaws.com
       IMAGE_STORAGE_PREFIX: images
-      IMAGE_STORAGE_FORCE_PATH_STYLE: true
-      # The s3 service creates a set of credentials for s3/minio: `REGISTRY2_S3_KEY:hex,REGISTRY2_S3_SECRET:hex,` and then assigns it to a few vars: 
-      # IMAGE_STORAGE_ACCESS_KEY: ${IMAGE_STORAGE_ACCESS_KEY}
-      # IMAGE_STORAGE_SECRET_KEY: ${IMAGE_STORAGE_SECRET_KEY}
       JSON_WEB_TOKEN_EXPIRY_MINUTES: 10080
       NUM_WORKERS: 1
       OAUTH_CALLBACK_PROTOCOL: https
@@ -123,30 +106,11 @@ services:
       REDIS_HOST: redis:6379
       REDIS_IS_CLUSTER: 'false'
       TOKEN_AUTH_JWT_ALGO: ES256
-      TOKENS_CONFIG: API_SERVICE_API_KEY:hex,API_VPN_SERVICE_API_KEY:API_SERVICE_API_KEY,AUTH_RESINOS_REGISTRY_CODE:hex,COOKIE_SESSION_SECRET:hex,JSON_WEB_TOKEN_SECRET:hex,MIXPANEL_TOKEN:hex,SUPERUSER_PASSWORD:hex,TOKEN_AUTH_BUILDER_TOKEN:hex,VPN_GUEST_API_KEY:hex,VPN_SERVICE_API_KEY:hex,REGISTRY2_TOKEN:TOKEN_AUTH_BUILDER_TOKEN
+      TOKENS_CONFIG: API_SERVICE_API_KEY:hex,AUTH_RESINOS_REGISTRY_CODE:hex,COOKIE_SESSION_SECRET:hex,JSON_WEB_TOKEN_SECRET:hex,MIXPANEL_TOKEN:hex,SUPERUSER_PASSWORD:hex,TOKEN_AUTH_BUILDER_TOKEN:hex,VPN_GUEST_API_KEY:hex,VPN_SERVICE_API_KEY:hex,API_VPN_SERVICE_API_KEY:API_SERVICE_API_KEY,REGISTRY2_TOKEN:TOKEN_AUTH_BUILDER_TOKEN
       TRUST_PROXY: 172.16.0.0/12
       VPN_PORT: 443
       WEBRESOURCES_S3_BUCKET: web-resources
       WEBRESOURCES_S3_REGION: "us-east-1"  # this is required for minio
-      DEVICE_TYPES_CACHE_LOCAL_TIMEOUT: 1000
-      DEVICE_TYPES_CACHE_TIMEOUT: 1000
-  # A container containing the balena-io-contracts for fully air-gapped installation. 
-  # These are extracted and then volume-mounted into the dir created/used by prepareContractDirectory: https://github.com/balena-io/open-balena-api/blob/master/src/features/contracts/contracts-directory.ts#L112-L115
-  # Relies on CONTRACTS_PRIVATE_REPO_OWNER: ${CONTRACTS_PRIVATE_REPO_OWNER:-balena-io} and CONTRACTS_PRIVATE_REPO_NAME: ${CONTRACTS_PRIVATE_REPO_NAME:-contracts-airgapped} being set (or default)
-  # https://gitlab.com/aivero/open-source/contrib/-/blob/master/dockerfiles/alpine-x86_64-curl-balena-io-contracts.Dockerfile?ref_type=heads
-  api-contracts:
-    image: registry.gitlab.com/aivero/open-source/contrib/alpine-curl-balena-io-contracts/linux-x86_64:3.15-master  
-    volumes:
-    - api-contracts:/open-balena-contracts:rw
-    command: |
-      sh -c '
-        set -e && \
-        rm -rf /open-balena-contracts/* && \
-        mkdir -p /tmp/temporary-contracts-folder && \
-        unzip -q /contracts/balena-io-contracts-master.zip -d /tmp/temporary-contracts-folder && \
-        mv /tmp/temporary-contracts-folder/*/* /open-balena-contracts/ && \
-        rm -rf /tmp/temporary-contracts-folder
-      '
 
   # https://github.com/balena-io/open-balena-registry
   registry:
@@ -192,11 +156,7 @@ services:
       VPN_PORT: 443
       # ensure correct service instance IP is registered with the API
       VPN_SERVICE_REGISTER_INTERFACE: eth0
-    networks:
-      default:
-      open-balena:
-        aliases:
-          - openbalena-vpn
+
   # https://github.com/balena-io/open-balena-db
   db:
     <<: *base-service
@@ -221,26 +181,9 @@ services:
       - certs-data:/certs
       - resin-data:/balena
     environment:
-      BUCKETS: registry-data;web-resources;${IMAGES_BUCKET:-images-data}
-      IMAGES_BUCKET: ${IMAGES_BUCKET:-images-data}
+      BUCKETS: registry-data;web-resources
       HOSTS_CONFIG: REGISTRY2_S3_REGION_ENDPOINT:s3,WEBRESOURCES_S3_HOST:s3
-      TOKENS_CONFIG: REGISTRY2_S3_KEY:hex,REGISTRY2_S3_SECRET:hex,S3_MINIO_ACCESS_KEY:REGISTRY2_S3_KEY,S3_MINIO_SECRET_KEY:REGISTRY2_S3_SECRET,WEBRESOURCES_S3_ACCESS_KEY:REGISTRY2_S3_KEY,WEBRESOURCES_S3_SECRET_KEY:REGISTRY2_S3_SECRET,S3_MINIO_IMAGES_BUCKET:IMAGES_BUCKET,IMAGE_STORAGE_ACCESS_KEY:REGISTRY2_S3_KEY,IMAGE_STORAGE_SECRET_KEY:REGISTRY2_S3_SECRET
-
-  s3-device-types:
-    <<: [
-      *base-service,
-      *with-default-privileges,
-    ]
-    image: registry.gitlab.com/aivero/prop/workspace/openbalena-airgapped-devicetypes-aivero-see/linux-x86_64:master
-    # image: openbalena-airgapped-devicetypes-aivero-see
-    volumes:
-      - resin-data:/balena
-    depends_on:
-      s3:
-        condition: service_healthy
-    # environment:
-      # HOSTS_CONFIG: REGISTRY2_S3_REGION_ENDPOINT:s3,WEBRESOURCES_S3_HOST:s3
-      # TOKENS_CONFIG: S3_MINIO_ACCESS_KEY:REGISTRY2_S3_KEY,S3_MINIO_SECRET_KEY:REGISTRY2_S3_SECRET,S3_MINIO_IMAGES_BUCKET:IMAGES_BUCKET
+      TOKENS_CONFIG: REGISTRY2_S3_KEY:hex,REGISTRY2_S3_SECRET:hex,S3_MINIO_ACCESS_KEY:REGISTRY2_S3_KEY,S3_MINIO_SECRET_KEY:REGISTRY2_S3_SECRET,WEBRESOURCES_S3_ACCESS_KEY:REGISTRY2_S3_KEY,WEBRESOURCES_S3_SECRET_KEY:REGISTRY2_S3_SECRET
 
   # https://hub.docker.com/_/redis
   redis:
@@ -260,8 +203,7 @@ services:
       *with-default-privileges,
       *with-default-volumes,
     ]
-    # build: src/haproxy
-    image: registry.gitlab.com/aivero/open-source/open-balena/haproxy/amd64:latest
+    build: src/haproxy
     sysctls:
       # https://github.com/docker-library/haproxy/issues/160
       net.ipv4.ip_unprivileged_port_start: 0
@@ -270,26 +212,19 @@ services:
       test: true | openssl s_client -connect localhost:443
     ports:
       # haproxy/http
-      # - "80:80/tcp"
+      - "80:80/tcp"
       # haproxy/tcp-router
-      - "8443:443/tcp"
+      - "443:443/tcp"
       # haproxy/stats
       - "1936:1936/tcp"
     environment:
       LOGLEVEL: info
-    networks:
-      default:
-      open-balena:
-        aliases:
-          - openbalena
-
 
   # dynamically configure Docker network aliases based on DNS_TLD and ALIAS list
   # allows DNS resolution from systemd-less images on the Docker network
   haproxy-sidecar:
     <<: *base-service
-    # build: src/haproxy-sidecar
-    image: registry.gitlab.com/aivero/open-source/open-balena/haproxy-sidecar/amd64:latest
+    build: src/haproxy-sidecar
     volumes:
       - /var/run/docker.sock:/host/run/docker.sock
     environment:
@@ -305,8 +240,7 @@ services:
   # https://certbot-dns-cloudflare.readthedocs.io/
   cert-manager:
     <<: *base-service
-    # build: src/cert-manager
-    image: registry.gitlab.com/aivero/open-source/open-balena/cert-manager/amd64:latest
+    build: src/cert-manager
     volumes:
       - cert-manager-data:/etc/letsencrypt
       - certs-data:/certs
@@ -346,8 +280,7 @@ services:
 
   # only relevant when running in AWS/EC2
   tag-sidecar:
-    # build: src/tag-sidecar
-    image: registry.gitlab.com/aivero/open-source/open-balena/tag-sidecar/amd64:latest
+    build: src/tag-sidecar
     restart: no
     environment:
       ENABLED: 'true'
@@ -361,8 +294,7 @@ services:
       *with-extended-privileges,
       *with-network-privileges,
     ]
-    # build: src/balena-tests
-    image: registry.gitlab.com/aivero/open-source/open-balena/balena-tests/amd64:latest
+    build: src/balena-tests
     command: /usr/sbin/balena.sh
     environment:
       DOCKER_CERT_PATH: /docker-pki/client
@@ -387,8 +319,7 @@ services:
     ]
     # https://hub.docker.com/r/qemux/qemu-docker
     # https://github.com/qemus/qemu-docker
-    # build: src/test-device
-    image: registry.gitlab.com/aivero/open-source/open-balena/test-device/amd64:latest
+    build: src/test-device
     entrypoint:
       - /bin/sh
       - -c
