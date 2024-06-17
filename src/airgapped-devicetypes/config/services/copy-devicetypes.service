@@ -1,0 +1,15 @@
+[Unit]
+Description=copy-devicetypes
+Requires=confd.service
+After=confd.service
+StartLimitIntervalSec=0
+
+[Service]
+StandardOutput=journal+console
+StandardError=journal+console
+EnvironmentFile=/usr/src/app/config/env
+ExecStart=/bin/bash -c "mc mirror --overwrite --remove /s3images/ s3/$MINIO_IMAGES_S3_BUCKET"
+Restart=on-failure
+
+[Install]
+WantedBy=basic.target
