@@ -1,3 +1,7 @@
+# based on https://forums.balena.io/t/supported-devices-in-open-balena/357665/21
+# As of 04/June/2024 openbalena claims to requires at least v5.2.8: https://github.com/balena-io/open-balena?tab=readme-ov-file#compatibility.
+# However, this might not be 100% true, e.g. the jetson-tx2-nx-devkit have been tested to work with 2.113.
+
 import asyncio
 import boto3
 import os
@@ -6,30 +10,13 @@ import sys
 from packaging.version import Version
 from packaging.specifiers import SpecifierSet
 
-# AWS credentials are taken from ~/.aws/credentials or config file
+
+# AWS credentials are taken from $AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+# See https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html for options
 bucket_name = "resin-production-img-cloudformation"
 
 # Initialize AWS S3 client
 s3 = boto3.client("s3")
-# See https://peps.python.org/pep-0440/#compatible-release for versionspec syntax. e.g.
-# [
-# ("raspberrypi3-64", "~=5.2.8"),
-# ("raspberrypi4-64", "~=5.2.8"),
-# ("jetson-tx2", "~=5.2.8"),
-# ("jetson-nano", "~=5.2.8"),
-# ]
-# As if 04/June/2024 openbalena claims to requires at least v5.2.8: https://github.com/balena-io/open-balena?tab=readme-ov-file#compatibility.
-# However, the jetson-tx2-nx-devkit have been tested to work with 2.113.
-# To download all devices, use ("", "~=3.0") and set your version spec as needed
-devices_types_with_versionspec = [
-    ("raspberrypi3-64", "~=5.2.8"),
-    ("raspberrypi4-64", "~=5.2.8"),
-    ("jetson-tx2", "~=5.2.8"),
-    ("jetson-tx2-nx-devkit", ">=2.50.0"),
-    ("jetson-nano", "~=5.2.8"),
-    # ("", "~=5.2.8")
-]
-
 
 async def download_object(obj_key, download_path):
     dirpath = os.path.dirname(download_path)
@@ -83,7 +70,9 @@ async def main(json_input):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python script.py '<json_input>'")
+        print(
+            'Usage: \nexport AWS_ACCESS_KEY_ID=<your_key_id> && export AWS_SECRET_ACCESS_KEY=<your_access_key>\npython script.py \'[["raspberrypi3-64","~=5.2.8"], ["raspberrypi4-64","~=5.2.8"]]\'\nSee https://peps.python.org/pep-0440/#compatible-release for versionspec syntax '
+        )
         sys.exit(1)
     json_input = sys.argv[1]
     asyncio.run(main(json_input))

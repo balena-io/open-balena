@@ -1,15 +1,10 @@
 # usage:
-# docker build -t openbalena-airgapped-devicetypes --build-arg=AWS_ACCESS_KEY_ID=$BALENA_IMAGES_S3_ACCESS_KEY_ID --build-arg=AWS_SECRET_ACCESS_KEY=$BALENA_IMAGES_S3_SECRET_ACCESS_KEY --DEVICE_TO_BUILD='[["raspberrypi3-64","~=5.2.8"], ["raspberrypi4-64","~=5.2.8"], ["jetson-tx2","~=5.2.8"], ["jetson-tx2-nx-devkit",">=2.50.0"], ["jetson-nano","~=5.2.8"]]'.
+# docker build -t openbalena-airgapped-devicetypes --build-arg=AWS_ACCESS_KEY_ID=$BALENA_IMAGES_S3_ACCESS_KEY_ID --build-arg=AWS_SECRET_ACCESS_KEY=$BALENA_IMAGES_S3_SECRET_ACCESS_KEY --build-arg=DEVICES_TO_DOWNLOAD='[["raspberrypi3-64","~=5.2.8"], ["raspberrypi4-64","~=5.2.8"], ["jetson-tx2","~=5.2.8"], ["jetson-tx2-nx-devkit",">=2.50.0"], ["jetson-nano","~=5.2.8"]]' .
 
 FROM python:3-alpine as downloader
 RUN pip3 install --no-cache-dir --upgrade pipenv
 ARG AWS_ACCESS_KEY_ID=""
 ARG AWS_SECRET_ACCESS_KEY=""
-ARG AWS_CONFIG_FILE=/root/.aws/config
-
-
-WORKDIR /root/.aws
-RUN printf "[default]]\naws_access_key_id = %s\naws_secret_access_key = %s" $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY > $AWS_CONFIG_FILE
 
 WORKDIR /s3images
 COPY Pipfile .
