@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v25.1.2
+      hash: 252398e13003f3115aaada4526494d09be8f271d
+      body: |
+        Update balena/open-balena-api from 25.1.1 to 25.1.2
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.0.47
+  title: ""
+  date: 2024-06-19T13:57:45.166Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v25.1.1
       hash: 25e2346f2d557d8abe313ac0a27b1893c2681a4d
       body: |
