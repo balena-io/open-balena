@@ -470,14 +470,13 @@ services:
     restart: on-failure
     labels:
       autoheal: false
+
   ag-haproxy:
     extends:
       service: haproxy
     profiles:
       - airgapped
     image: registry.gitlab.com/aivero/open-source/contrib/openbalena-haproxy/master
-    ports:
-      - "443:443/tcp"
     networks:
       default:
       openbalena:
