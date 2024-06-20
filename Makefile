@@ -53,19 +53,18 @@ endif
 
 .PHONY: up
 up: config ## Start all services
-	@docker compose up --build -d
-	@until [[ $$(docker compose ps api --format json | jq -r '.Health') =~ healthy ]]; do printf '.'; sleep 3; done
-	@printf '\n'
-	@$(MAKE) showenv
-	@$(MAKE) showpass
-
-.PHONY: agup
-agup: config ## Start all services
-	@docker compose -f docker-compose-airgapped.yml up --build -d
-	@until [[ $$(docker compose ps api --format json | jq -r '.Health') =~ healthy ]]; do printf '.'; sleep 3; done
-	@printf '\n'
-	@$(MAKE) showenv
-	@$(MAKE) showpass
+	@export COMPOSE_PROFILES=$(if $(filter true,$(airgapped)),airgapped,balena); \
+	docker compose up --build -d; \
+	if [ "$(airgapped)" = "true" ]; then \
+		api_name=ag-api; \
+	else \
+		api_name=api; \
+	fi; \
+	echo "Using service name: $$api_name"; \
+	until [[ $$(docker compose ps $$api_name --format json | jq -r '.Health') == "healthy" ]]; do printf '.'; sleep 3; done; \
+	printf '\n'; \
+	$(MAKE) showenv; \
+	$(MAKE) showpass airgapped=$(airgapped)
 
 .PHONY: showenv
 showenv: ## Print the current contents of the .env config
@@ -78,45 +77,38 @@ printenv: ## Print the current environment variables
 
 .PHONY: showpass
 showpass: ## Print the superuser password
-	@docker compose exec api cat config/env | grep SUPERUSER_PASSWORD
+	@export COMPOSE_PROFILES=$(if $(filter true,$(airgapped)),airgapped,balena); \
+	if [ "$(airgapped)" = "true" ]; then \
+		api_name=ag-api; \
+	else \
+		api_name=api; \
+	fi; \
+	docker compose exec $$api_name cat config/env | grep SUPERUSER_PASSWORD
 	@printf '\n'
 
 .PHONY: down
 down: ## Stop all services
-	@docker compose stop
-
-.PHONY: agdown
-agdown: ## Stop all services
-	@docker compose -f docker-compose-airgapped.yml stop
+	@export COMPOSE_PROFILES=$(if $(filter true,$(airgapped)),airgapped,balena); \
+	docker compose stop
 
 .PHONY: stop
 stop: down ## Alias for 'make down'
 
 .PHONY: restart
 restart: ## Restart all services
-	@docker compose restart
-
-.PHONY: agrestart
-agrestart: ## Restart all services
-	@docker compose -f docker-compose-airgapped.yml restart
+	@export COMPOSE_PROFILES=$(if $(filter true,$(airgapped)),airgapped,balena); \
+	docker compose restart
 
 .PHONY: update
 update: # Pull and deploy latest changes from git
 	@git pull
-	@$(MAKE) up
+	@$(MAKE) up airgapped=$(airgapped)
 
-.PHONY: agupdate
-agupdate: # Pull and deploy latest changes from git
-	@git pull
-	@$(MAKE) agup
 
 .PHONY: destroy ## Stop and remove any existing containers and volumes
 destroy:
-	@docker compose down --volumes --remove-orphans
-
-.PHONY: agdestroy ## Stop and remove any existing containers and volumes
-agdestroy:
-	@docker compose -f docker-compose-airgapped.yml down --volumes --remove-orphans
+	@export COMPOSE_PROFILES=$(if $(filter true,$(airgapped)),airgapped,balena); \
+	docker compose down --volumes --remove-orphans
 
 .PHONY: clean
 clean: destroy ## Alias for 'make destroy'
