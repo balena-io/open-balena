@@ -9,6 +9,7 @@ StandardOutput=journal+console
 StandardError=journal+console
 EnvironmentFile=/usr/src/app/config/env
 ExecStart=/bin/bash -c "mc mirror --overwrite --remove /s3images/ s3/$MINIO_IMAGES_S3_BUCKET"
+ExecStartPost=/bin/bash -c "systemctl poweroff"
 Restart=on-failure
 
 [Install]
