@@ -1,4 +1,22 @@
 - commits:
+    - subject: test compose workflow
+      hash: 9a172b03f787a5194dc6ad79eb497196e8cac8f8
+      body: >
+        * docker-compose test workflow to broadly approximate the getting
+        started guide,
+
+        since testing on balenaCloud/balenaOS alone doesn't give us a high level
+        of
+
+        confidence the project boots/works on compose
+      footer:
+        change-type: minor
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.0
+  title: ""
+  date: 2024-06-24T20:01:42.546Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v25.1.7
       hash: 173a99d363396e25be84bbebd51fa8b3fcc01129
       body: |
