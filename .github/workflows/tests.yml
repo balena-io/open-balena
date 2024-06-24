@@ -469,6 +469,9 @@ jobs:
 
             echo "::warning::Still working..."
             sleep "$(( (RANDOM % 5) + 5 ))s"
+
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
         done
 
         echo "key_id=${GITHUB_SHA}" >> "${GITHUB_OUTPUT}"
@@ -505,6 +508,9 @@ jobs:
 
             echo "::warning::Still working..."
             sleep "$(( (RANDOM % 30) + 30 ))s"
+
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
         done
 
         # wait for Docker healthchecks
@@ -516,6 +522,9 @@ jobs:
 
             echo "::warning::Still working..."
             sleep "$(( (RANDOM % 30) + 30 ))s"
+
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
         done
 
     # (TBC) https://www.balena.io/docs/reference/supervisor/docker-compose/
@@ -547,11 +556,15 @@ jobs:
         while with_backoff ssh-uuid -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
           ${{ steps.register-test-device.outputs.balena_device_uuid }}.balena \
           'balena ps -q | xargs balena inspect \
-          | jq -r ".[] | select(.State.Health.Status!=null).Name + \":\" + .State.Health.Status"' \
+          | jq -r ".[]
+          | select(.State.Health.Status!=null).Name + \":\" + .State.Health.Status"' \
           | grep -E ':starting|:unhealthy'; do
 
             echo "::warning::Still working..."
             sleep "$(( (RANDOM % 30) + 30 ))s"
+
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
         done
 
     - name: SUT&DUT (balena)
