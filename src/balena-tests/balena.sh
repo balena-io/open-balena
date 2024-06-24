@@ -41,7 +41,7 @@ function shutdown_dut() {
 
     if [[ -n $balena_device_uuid ]]; then
         with_backoff balena device "${balena_device_uuid}"
-        balena device shutdown -f "${balena_device_uuid}" || true
+        with_backoff balena device shutdown -f "${balena_device_uuid}"
     fi
 }
 
@@ -248,7 +248,7 @@ function check_running_release() {
             running_release_id="$(balena device "${balena_device_uuid}" | grep -E ^COMMIT | awk '{print $2}')"
             printf 'please wait, device %s should be running %s, but is still running %s...\n' \
               "${balena_device_uuid}" \
-              "${1}" \
+              "${should_be_running_release}" \
               "${running_release_id}"
 
             sleep "$(( (RANDOM % 5) + 5 ))s"

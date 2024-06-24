@@ -3,15 +3,17 @@ SHELL := bash
 # export all variables to child processes by default
 export
 
-# include the .env file
+# include the .env file if it exists
 -include .env
 
+BALENARC_NO_ANALYTICS ?= 1
 DNS_TLD ?= $(error DNS_TLD not set)
-TMPKI := $(shell mktemp)
-STAGING_PKI ?= /usr/local/share/ca-certificates
-PRODUCTION_MODE ?= true
 ORG_UNIT ?= openBalena
+PRODUCTION_MODE ?= true
+STAGING_PKI ?= /usr/local/share/ca-certificates
 SUPERUSER_EMAIL ?= admin@$(DNS_TLD)
+TMPKI := $(shell mktemp)
+VERBOSE ?= false
 
 .NOTPARALLEL: $(DOCKERCOMPOSE)
 
@@ -39,23 +41,45 @@ ifneq ($(GANDI_API_TOKEN),)
 endif
 endif
 	@rm -f .env
+	@echo "BALENARC_NO_ANALYTICS=$(BALENARC_NO_ANALYTICS)" > .env
 	@echo "DNS_TLD=$(DNS_TLD)" >> .env
 	@echo "ORG_UNIT=$(ORG_UNIT)" >> .env
-	@echo "SUPERUSER_EMAIL=$(SUPERUSER_EMAIL)" >> .env
 	@echo "PRODUCTION_MODE=$(PRODUCTION_MODE)" >> .env
-	@echo "GANDI_API_TOKEN=$(GANDI_API_TOKEN)" >> .env
-	@echo "CLOUDFLARE_API_TOKEN=$(CLOUDFLARE_API_TOKEN)" >> .env
+	@echo "SUPERUSER_EMAIL=$(SUPERUSER_EMAIL)" >> .env
+	@echo "VERBOSE=$(VERBOSE)" >> .env
+ifneq ($(ACME_EMAIL),)
 	@echo "ACME_EMAIL=$(ACME_EMAIL)" >> .env
+endif
+ifneq ($(CLOUDFLARE_API_TOKEN),)
+	@echo "CLOUDFLARE_API_TOKEN=$(CLOUDFLARE_API_TOKEN)" >> .env
+endif
+ifneq ($(GANDI_API_TOKEN),)
+	@echo "GANDI_API_TOKEN=$(GANDI_API_TOKEN)" >> .env
+endif
+ifneq ($(HAPROXY_CRT),)
 	@echo "HAPROXY_CRT=$(HAPROXY_CRT)" >> .env
+endif
+ifneq ($(HAPROXY_KEY),)
 	@echo "HAPROXY_KEY=$(HAPROXY_KEY)" >> .env
+endif
+ifneq ($(ROOT_CA),)
 	@echo "ROOT_CA=$(ROOT_CA)" >> .env
+endif
 	@$(MAKE) showenv
+
+.PHONY: wait
+wait: ## Wait for service
+	@until [[ $$(docker compose ps $(SERVICE) --format json | jq -r '.Health') =~ ^healthy$$ ]]; do printf '.'; sleep 3; done
+	@printf '\n'
+
+.PHONY: waitlog
+waitlog: ## Wait for log line
+	@until docker compose logs $(SERVICE) | grep -Eq "$(LOG_STRING)"; do printf '.'; sleep 3; done
 
 .PHONY: up
 up: config ## Start all services
 	@docker compose up --build -d
-	@until [[ $$(docker compose ps api --format json | jq -r '.Health') =~ healthy ]]; do printf '.'; sleep 3; done
-	@printf '\n'
+	@$(MAKE) wait SERVICE=api
 	@$(MAKE) showenv
 	@$(MAKE) showpass
 
@@ -83,6 +107,7 @@ stop: down ## Alias for 'make down'
 .PHONY: restart
 restart: ## Restart all services
 	@docker compose restart
+	@$(MAKE) wait SERVICE=api
 
 .PHONY: update
 update: # Pull and deploy latest changes from git
@@ -118,11 +143,10 @@ self-signed: ## Install self-signed CA certificates
 auto-pki: config # Start all services using LetsEncrypt and ACME
 	@docker compose exec cert-manager rm -f /certs/export/chain.pem
 	@docker compose up -d
-	@until docker compose logs cert-manager | grep -Eq "/certs/export/chain.pem Certificate will not expire in [0-9] days"; do printf '.'; sleep 3; done
-	@until docker compose logs cert-manager | grep -q "subject=CN = ${DNS_TLD}"; do printf '.'; sleep 3; done
-	@until docker compose logs cert-manager | grep -q "issuer=C = US, O = Let's Encrypt, CN = R3"; do printf '.'; sleep 3; done
-	@until [[ $$(docker compose ps haproxy --format json | jq -r '.Health') =~ healthy ]]; do printf '.'; sleep 3; done
-	@printf '\n'
+	@$(MAKE) waitlog SERVICE=cert-manager LOG_STRING="/certs/export/chain.pem Certificate will not expire in [0-9] days"
+	@$(MAKE) waitlog SERVICE=cert-manager LOG_STRING="subject=CN = ${DNS_TLD}"
+	@$(MAKE) waitlog SERVICE=cert-manager LOG_STRING="issuer=C = US, O = Let's Encrypt, CN = R3"
+	@$(MAKE) wait SERVICE=haproxy
 	@$(MAKE) showenv
 	@$(MAKE) showpass
 

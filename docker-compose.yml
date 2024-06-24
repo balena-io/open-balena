@@ -64,11 +64,11 @@ x-network-privileges-trait: &with-network-privileges
     - SYS_RESOURCE
 
 x-base-service-definition: &base-service
-  restart: unless-stopped
+  restart: 'unless-stopped'
   # for docker-compose only, no effect on balenaCloud
   env_file:
     - .env
-  tty: 'true'  # send syastemd logs from containers to stdout
+  tty: true  # send syastemd logs from containers to stdout
 
 services:
   # https://github.com/balena-io/open-balena-api
@@ -110,7 +110,7 @@ services:
       TRUST_PROXY: 172.16.0.0/12
       VPN_PORT: 443
       WEBRESOURCES_S3_BUCKET: web-resources
-      WEBRESOURCES_S3_REGION: "us-east-1"  # this is required for minio
+      WEBRESOURCES_S3_REGION: 'us-east-1'  # this is required for minio
 
   # https://github.com/balena-io/open-balena-registry
   registry:
@@ -212,11 +212,11 @@ services:
       test: true | openssl s_client -connect localhost:443
     ports:
       # haproxy/http
-      - "80:80/tcp"
+      - '80:80/tcp'
       # haproxy/tcp-router
-      - "443:443/tcp"
+      - '443:443/tcp'
       # haproxy/stats
-      - "1936:1936/tcp"
+      - '1936:1936/tcp'
     environment:
       LOGLEVEL: info
 
@@ -281,7 +281,7 @@ services:
   # only relevant when running in AWS/EC2
   tag-sidecar:
     build: src/tag-sidecar
-    restart: no
+    restart: 'no'
     environment:
       ENABLED: 'true'
     labels:
@@ -308,7 +308,7 @@ services:
     labels:
       io.balena.features.balena-api: 1
       io.balena.features.supervisor-api: 1
-    restart: no
+    restart: 'no'
 
   # virtual Device Under Test (DUT)
   dut:
@@ -333,7 +333,7 @@ services:
       - resin-data:/balena
     devices:
       - /dev/net/tun
-    restart: no
+    restart: 'no'
 
   # https://hub.docker.com/_/docker
   # pseudo(builder) service for balena-tests
@@ -344,11 +344,23 @@ services:
       *with-network-privileges,
     ]
     image: docker:dind
+    entrypoint:
+      - /bin/sh
+      - -c
+    command:
+      - |
+        set -x
+
+        cp /certs/root-ca.pem /certs/server-ca.pem /usr/local/share/ca-certificates/ \
+          && update-ca-certificates
+
+        exec /usr/local/bin/dockerd-entrypoint.sh
     volumes:
-      - builder-data:/var/lib/docker
+      - /sys:/sys
       - builder-certs-ca:/docker-pki/ca
       - builder-certs-client:/docker-pki/client
-      - /sys:/sys
+      - builder-data:/var/lib/docker
+      - certs-data:/certs
     environment:
       DOCKER_TLS_CERTDIR: /docker-pki
     healthcheck:
