@@ -1,11 +1,8 @@
 ---
-version: '2.4'
-
 networks:
   default:
-  open-balena:
+  openbalena:
     name: openbalena
-    external: true
 
 volumes:
   builder-certs-ca: {}
@@ -99,7 +96,7 @@ services:
       s3:
         condition: service_healthy
       s3-device-types:
-        condition: service_started
+        condition: service_completed_successfully
       api-contracts: # This loads the contracts from a container. Used for air-gapped systems
         condition: service_completed_successfully
     environment:
@@ -147,9 +144,10 @@ services:
   # Relies on CONTRACTS_PRIVATE_REPO_OWNER: ${CONTRACTS_PRIVATE_REPO_OWNER:-balena-io} and CONTRACTS_PRIVATE_REPO_NAME: ${CONTRACTS_PRIVATE_REPO_NAME:-contracts-airgapped} being set (or default)
   # https://gitlab.com/aivero/open-source/contrib/-/blob/master/dockerfiles/alpine-x86_64-curl-balena-io-contracts.Dockerfile?ref_type=heads
   api-contracts:
-    image: registry.gitlab.com/aivero/open-source/contrib/alpine-curl-balena-io-contracts/linux-x86_64:3.15-master  
+    image: registry.gitlab.com/aivero/open-source/contrib/openbalena-airgapped-contracts:master
     volumes:
     - api-contracts:/open-balena-contracts:rw
+    restart: on-failure
     command: |
       sh -c '
         set -e && \
@@ -210,7 +208,7 @@ services:
       VPN_SERVICE_REGISTER_INTERFACE: enp3s0
     networks:
       default:
-      open-balena:
+      openbalena:
         aliases:
           - openbalena-vpn
     labels:
@@ -254,13 +252,14 @@ services:
       *base-service,
       *with-default-privileges,
     ]
-    image: registry.gitlab.com/aivero/prop/workspace/openbalena-airgapped-devicetypes-aivero-see/linux-x86_64:master
+    image: registry.gitlab.com/aivero/open-source/contrib/openbalena-airgapped-devicetypes-aivero-see:master
     # image: openbalena-airgapped-devicetypes-aivero-see
     volumes:
       - resin-data:/balena
     depends_on:
       s3:
         condition: service_healthy
+    restart: on-failure
     # environment:
       # HOSTS_CONFIG: REGISTRY2_S3_REGION_ENDPOINT:s3,WEBRESOURCES_S3_HOST:s3
       # TOKENS_CONFIG: S3_MINIO_ACCESS_KEY:REGISTRY2_S3_KEY,S3_MINIO_SECRET_KEY:REGISTRY2_S3_SECRET,S3_MINIO_IMAGES_BUCKET:IMAGES_BUCKET
@@ -286,7 +285,7 @@ services:
       *with-default-volumes,
     ]
     # build: src/haproxy
-    image: registry.gitlab.com/aivero/open-source/open-balena/haproxy/amd64:latest
+    image: registry.gitlab.com/aivero/open-source/contrib/openbalena-haproxy:master
     sysctls:
       # https://github.com/docker-library/haproxy/issues/160
       net.ipv4.ip_unprivileged_port_start: 0
@@ -295,28 +294,27 @@ services:
       test: true | openssl s_client -connect localhost:443
     ports:
       # haproxy/http
-      # - "80:80/tcp"
+      - "80:80/tcp"
       # haproxy/tcp-router
-      - "8444:443/tcp"
+      - "443:443/tcp"
       # haproxy/stats
       - "1936:1936/tcp"
     environment:
       LOGLEVEL: info
     networks:
       default:
-      open-balena:
+      openbalena:
         aliases:
           - openbalena
     labels:
       autoheal: true
-
 
   # dynamically configure Docker network aliases based on DNS_TLD and ALIAS list
   # allows DNS resolution from systemd-less images on the Docker network
   haproxy-sidecar:
     <<: *base-service
     # build: src/haproxy-sidecar
-    image: registry.gitlab.com/aivero/open-source/open-balena/haproxy-sidecar/amd64:latest
+    image: registry.gitlab.com/aivero/open-source/contrib/openbalena-haproxy-sidecar:master
     volumes:
       - /var/run/docker.sock:/host/run/docker.sock
     environment:
@@ -332,7 +330,7 @@ services:
   cert-manager:
     <<: *base-service
     # build: src/cert-manager
-    image: registry.gitlab.com/aivero/open-source/open-balena/cert-manager/amd64:latest
+    image: registry.gitlab.com/aivero/open-source/contrib/openbalena-cert-manager:master
     volumes:
       - cert-manager-data:/etc/letsencrypt
       - certs-data:/certs
@@ -370,89 +368,89 @@ services:
   # --- the following are not required for runtime operation of openBalena
 
   # only relevant when running in AWS/EC2
-  tag-sidecar:
-    # build: src/tag-sidecar
-    image: registry.gitlab.com/aivero/open-source/open-balena/tag-sidecar/amd64:latest
-    restart: no
-    environment:
-      ENABLED: 'true'
-    labels:
-      io.balena.features.balena-api: 1
+  # tag-sidecar:
+  #   # build: src/tag-sidecar
+  #   image: registry.gitlab.com/aivero/open-source/contrib/openbalena-tag-sidecar:master
+  #   restart: no
+  #   environment:
+  #     ENABLED: 'true'
+  #   labels:
+  #     io.balena.features.balena-api: 1
 
   # Software Under Test (SUT) tests orchestrator
-  sut:
-    <<: [
-      *base-service,
-      *with-extended-privileges,
-      *with-network-privileges,
-    ]
-    # build: src/balena-tests
-    image: registry.gitlab.com/aivero/open-source/open-balena/balena-tests/amd64:latest
-    command: /usr/sbin/balena.sh
-    environment:
-      DOCKER_CERT_PATH: /docker-pki/client
-      DOCKER_HOST: docker:2376
-      DOCKER_TLS_VERIFY: 'true'
-      GUEST_IMAGE: /balena/balena.img
-    volumes:
-      - builder-certs-client:/docker-pki/client
-      - certs-data:/certs
-      - resin-data:/balena
-    labels:
-      io.balena.features.balena-api: 1
-      io.balena.features.supervisor-api: 1
-    restart: no
+  # sut:
+  #   <<: [
+  #     *base-service,
+  #     *with-extended-privileges,
+  #     *with-network-privileges,
+  #   ]
+  #   # build: src/balena-tests
+  #   image: registry.gitlab.com/aivero/open-source/contrib/openbalena-balena-tests:master
+  #   command: /usr/sbin/balena.sh
+  #   environment:
+  #     DOCKER_CERT_PATH: /docker-pki/client
+  #     DOCKER_HOST: docker:2376
+  #     DOCKER_TLS_VERIFY: 'true'
+  #     GUEST_IMAGE: /balena/balena.img
+  #   volumes:
+  #     - builder-certs-client:/docker-pki/client
+  #     - certs-data:/certs
+  #     - resin-data:/balena
+  #   labels:
+  #     io.balena.features.balena-api: 1
+  #     io.balena.features.supervisor-api: 1
+  #   restart: no
 
   # virtual Device Under Test (DUT)
-  dut:
-    <<: [
-      *base-service,
-      *with-extended-privileges,
-      *with-network-privileges,
-    ]
-    # https://hub.docker.com/r/qemux/qemu-docker
-    # https://github.com/qemus/qemu-docker
-    # build: src/test-device
-    image: registry.gitlab.com/aivero/open-source/open-balena/test-device/amd64:latest
-    entrypoint:
-      - /bin/sh
-      - -c
-    command:
-      - /usr/sbin/balena.sh
-    environment:
-      GUEST_IMAGE: /balena/balena.img
-      MEMORY: 3072M
-      CPU: 4
-    volumes:
-      - resin-data:/balena
-    devices:
-      - /dev/net/tun
-    restart: no
+  # dut:
+  #   <<: [
+  #     *base-service,
+  #     *with-extended-privileges,
+  #     *with-network-privileges,
+  #   ]
+  #   # https://hub.docker.com/r/qemux/qemu-docker
+  #   # https://github.com/qemus/qemu-docker
+  #   # build: src/test-device
+  #   image: registry.gitlab.com/aivero/open-source/contrib/openbalena-test-device:master
+  #   entrypoint:
+  #     - /bin/sh
+  #     - -c
+  #   command:
+  #     - /usr/sbin/balena.sh
+  #   environment:
+  #     GUEST_IMAGE: /balena/balena.img
+  #     MEMORY: 3072M
+  #     CPU: 4
+  #   volumes:
+  #     - resin-data:/balena
+  #   devices:
+  #     - /dev/net/tun
+  #   restart: no
 
   # https://hub.docker.com/_/docker
   # pseudo(builder) service for balena-tests
-  docker:
-    <<: [
-      *base-service,
-      *with-extended-privileges,
-      *with-network-privileges,
-    ]
-    image: docker:dind
-    volumes:
-      - builder-data:/var/lib/docker
-      - builder-certs-ca:/docker-pki/ca
-      - builder-certs-client:/docker-pki/client
-      - /sys:/sys
-    environment:
-      DOCKER_TLS_CERTDIR: /docker-pki
-    healthcheck:
-      test: docker system info
-      interval: 60s
-      timeout: 60s
-      retries: 5
-    labels:
-      io.balena.features.sysfs: 1
-      autoheal: true
+  # docker:
+  #   <<: [
+  #     *base-service,
+  #     *with-extended-privileges,
+  #     *with-network-privileges,
+  #   ]
+  #   image: docker:dind
+  #   volumes:
+  #     - builder-data:/var/lib/docker
+  #     - builder-certs-ca:/docker-pki/ca
+  #     - builder-certs-client:/docker-pki/client
+  #     - /sys:/sys
+  #   environment:
+  #     DOCKER_TLS_CERTDIR: /docker-pki
+  #   healthcheck:
+  #     test: docker system info
+  #     interval: 60s
+  #     timeout: 60s
+  #     retries: 5
+  #   labels:
+  #     io.balena.features.sysfs: 1
+  #     autoheal: true
 
   autoheal:
     image: willfarrell/autoheal
@@ -460,3 +458,4 @@ services:
       -  "/var/run/docker.sock:/var/run/docker.sock"
     environment:
       - AUTOHEAL_START_PERIOD=300
+    restart: unless-stopped

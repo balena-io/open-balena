@@ -8,8 +8,7 @@ StartLimitIntervalSec=0
 StandardOutput=journal+console
 StandardError=journal+console
 EnvironmentFile=/usr/src/app/config/env
-ExecStart=/bin/bash -c "mc mirror --overwrite --remove /s3images/ s3/$MINIO_IMAGES_S3_BUCKET"
-ExecStartPost=/bin/bash -c "systemctl poweroff"
+ExecStart=/bin/bash -c "/usr/src/app/scripts/mirror_and_shutdown.sh"
 Restart=on-failure
 
 [Install]
