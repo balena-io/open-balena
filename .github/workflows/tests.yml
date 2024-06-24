@@ -77,7 +77,7 @@ jobs:
 
     # https://github.com/unfor19/install-aws-cli-action
     - name: Setup awscli
-      uses: unfor19/install-aws-cli-action@v1
+      uses: unfor19/install-aws-cli-action@e8b481e524a99f37fbd39fdc1dcb3341ab091367 # v1
 
     - uses: aws-actions/configure-aws-credentials@61a110527dcc9ccef6c109117050c80a00bec898
       with:
