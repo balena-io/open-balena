@@ -602,6 +602,9 @@ jobs:
 
             echo "::warning::Still working..."
             sleep "$(( ( RANDOM % ${{ env.RETRY }} ) + ${{ env.RETRY }} ))s"
+
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
         done
 
         # .. once the service exits with status == exited, it is assumed to be finished
@@ -892,6 +895,9 @@ jobs:
             echo '::info::waiting for composition...'
             with_backoff docker compose ls
             sleep $(((RANDOM%5) + 5))s
+
+            aws ec2 wait instance-running --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }}
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }}
         done
         echo '::info::composition started'
 
@@ -901,6 +907,9 @@ jobs:
             echo "::info::waiting for ${service}..."
             with_backoff docker compose ps
             sleep $(((RANDOM%5) + 5))s
+
+            aws ec2 wait instance-running --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }}
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }}
         done
         echo "::info::${service} started"
         done
@@ -914,6 +923,9 @@ jobs:
             with_backoff docker compose logs --follow --timestamps sut
             echo '::info::still running...'
             sleep $(((RANDOM%1) + 1))s
+
+            aws ec2 wait instance-running --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }}
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }}
         done
 
         aws ssm wait command-executed --command-id "${cid}" --instance-id "${iid}"
