@@ -1,4 +1,17 @@
 - commits:
+    - subject: Pin unfor19/install-aws-cli-action action to e8b481e
+      hash: fe3bc20a300412d0918d985fa249844fe94953d4
+      body: |
+        Update unfor19/install-aws-cli-action
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.1
+  title: ""
+  date: 2024-06-24T20:56:51.820Z
+- commits:
     - subject: test compose workflow
       hash: 9a172b03f787a5194dc6ad79eb497196e8cac8f8
       body: >
