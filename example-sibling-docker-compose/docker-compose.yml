@@ -21,7 +21,7 @@ services:
   haproxy:
     restart: unless-stopped
     # build: src/haproxy
-    image: registry.gitlab.com/aivero/open-source/open-balena/haproxy/amd64:latest
+    image: registry.gitlab.com/aivero/open-source/contrib/openbalena-haproxy:master
     cap_add:
       - SYS_ADMIN
       - SYS_RESOURCE
