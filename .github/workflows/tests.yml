@@ -619,6 +619,9 @@ jobs:
               --compressed | jq -r '.[].services.sut.status')"
 
             sleep "$(( ( RANDOM % ${{ env.RETRY }} ) + ${{ env.RETRY }} ))s"
+
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
         done
 
         # .. check its exit code
