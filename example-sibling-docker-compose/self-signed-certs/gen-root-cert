@@ -1,0 +1,49 @@
+#!/bin/bash -e
+
+usage() {
+  echo "usage: $0 COMMON_NAME [OUT]"
+  echo
+  echo "  COMMON_NAME   the domain name the certificate is valid for, eg. example.com"
+  echo "  OUT           path to output directory generated files will be placed in"
+  echo
+}
+
+if [ -z "$1" ]; then
+  usage
+  exit 1
+fi
+
+CMD="$(realpath "$0")"
+DIR="$(dirname "${CMD}")"
+
+CN="$1"
+OUT="$(realpath "${2:-.}")"
+ROOT_PKI="$OUT/root"
+
+
+SERVER_DOMAIN=$CN
+SERVER_DOMAIN_LOCAL="${CN%.*}.local"
+
+# shellcheck source=ssl-common.sh
+source "${DIR}/ssl-common.sh"
+
+# Generate the server certificate
+ROOT_CRT="${ROOT_PKI}/issued/${SERVER_DOMAIN}.crt"
+ROOT_KEY="${ROOT_PKI}/private/${SERVER_DOMAIN}.key"
+
+if [ ! -f "${ROOT_CRT}" ] || [ ! -f "${ROOT_KEY}" ]; then
+  rm -f "${ROOT_CRT}" "${ROOT_KEY}"
+
+  # Generate server key and CSR
+  $easyrsa_bin --pki-dir="${ROOT_PKI}" --subject-alt-name="DNS:${SERVER_DOMAIN_LOCAL},DNS:*.${SERVER_DOMAIN_LOCAL},DNS:${SERVER_DOMAIN},DNS:*.${SERVER_DOMAIN},DNS:openbalena.${SERVER_DOMAIN_LOCAL},DNS:*.openbalena.${SERVER_DOMAIN_LOCAL},DNS:openbalena.${SERVER_DOMAIN},DNS:*.openbalena.${SERVER_DOMAIN}" gen-req "${SERVER_DOMAIN}" nopass 2>/dev/null
+
+  # Sign the server CSR with the root CA
+  $easyrsa_bin --pki-dir="${ROOT_PKI}" --days="${CRT_EXPIRY_DAYS}" sign-req server "${SERVER_DOMAIN}" 2>/dev/null
+
+  # Update indexes and generate CRLs
+  $easyrsa_bin --pki-dir="${ROOT_PKI}" update-db 2>/dev/null
+  $easyrsa_bin --pki-dir="${ROOT_PKI}" gen-crl 2>/dev/null
+fi
+
+openssl x509 -in "${ROOT_PKI}/issued/${SERVER_DOMAIN}.crt" -noout -text | grep -A 1 "Authority Key Identifier"
+openssl x509 -in "${ROOT_PKI}/ca.crt" -noout -text | grep -A 1 "Subject Key Identifier"

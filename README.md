@@ -192,3 +192,21 @@ Yes! Here are a few:
 [open-balena-website]: https://balena.io/open
 [pulls]: https://github.com/balena-io/open-balena/pulls
 [device-types]: https://github.com/balena-io/contracts/blob/master/contracts/hw.device-type
+
+
+## Getting Started Airgapped
+
+To run open balena airgapped you need to 
+1. Ensure all docker containers are built
+2. Pull all images to your local machine: `docker compose --profile airgapped pull`
+3. Docker save all all docker containers: `docker save -o "docker-images-openbalena-airgapped.tar" $(docker compose --profile airgapped config | awk '{if ($1 == "image:") print $2;}' ORS=" ")`
+4. Transport this folder and the docker image tar from above to your airgapped machine
+5. Docker load the containers: `docker load -i docker-images-openbalena-airgapped.tar`
+6. Create TLS certificates linked to a rootCA.
+7. export it: 
+```bash
+export DNS_TLD=yourdomain.com
+export ROOT_CA=$(cat ./self-signed-certs/certs/rootCA.pem | openssl base64 -A)
+export HAPROXY_KEY=$(cat ./self-signed-certs/keys/cert-key.pem | openssl base64 -A)
+export HAPROXY_CRT=$(cat ./self-signed-certs/certs/cert.pem | openssl base64 -A)
+```

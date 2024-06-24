@@ -1,0 +1,57 @@
+x-default-healthcheck: &default-healthcheck
+  test: /usr/src/app/docker-hc
+  interval: 45s
+  timeout: 15s
+  retries: 3
+
+volumes:
+  nhost_postgres_data:
+  deepserver-cache:
+  loki:
+  os_images:
+  functions_node_modules:
+  project_node_modules:
+networks:
+  default:
+  openbalena:
+    name: openbalena
+
+services:
+  # https://github.com/balena-io/open-balena-haproxy
+  haproxy:
+    restart: unless-stopped
+    # build: src/haproxy
+    image: registry.gitlab.com/aivero/open-source/contrib/openbalena-haproxy:master
+    cap_add:
+      - SYS_ADMIN
+      - SYS_RESOURCE
+    security_opt:
+      - apparmor=unconfined
+    tmpfs:
+      - /run
+      - /sys/fs/cgroup
+    sysctls:
+      # https://github.com/docker-library/haproxy/issues/160
+      net.ipv4.ip_unprivileged_port_start: 0
+    volumes:
+      - "./self-signed-certs/certs:/certs/self-signed/certs:ro"
+      - "./self-signed-certs/keys:/certs/self-signed/keys:ro"
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - ./haproxy/export-certs.sh:/export-certs.sh
+    # command: ". /export-certs.sh"
+    command: ["/export-certs.sh"]
+    healthcheck:
+      <<: *default-healthcheck
+      test: true | openssl s_client -connect localhost:443
+    ports:
+      # haproxy/http
+      # - "80:80/tcp"
+      # haproxy/tcp-router
+      - "443:443/tcp"
+      # haproxy/stats
+      - "1937:1936/tcp"
+    environment:
+      LOGLEVEL: info
+    networks:
+      - default
+      - openbalena

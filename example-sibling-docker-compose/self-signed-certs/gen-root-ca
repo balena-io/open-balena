@@ -1,0 +1,38 @@
+#!/bin/bash -e
+
+usage() {
+  echo "usage: $0 COMMON_NAME [OUT]"
+  echo
+  echo "  COMMON_NAME   the domain name the certificate is valid for, eg. example.com"
+  echo "  OUT           path to output directory generated files will be placed in"
+  echo
+}
+
+if [ -z "$1" ]; then
+  usage
+  exit 1
+fi
+
+CMD="$(realpath "$0")"
+DIR="$(dirname "${CMD}")"
+
+CN="$1"
+OUT="$(realpath "${2:-.}")"
+echo $OUT
+# shellcheck source=scripts/ssl-common.sh
+source "${DIR}/ssl-common.sh"
+
+# Initialize the PKI
+if [ ! -d "${ROOT_PKI}" ]; then
+  $easyrsa_bin --pki-dir="${ROOT_PKI}" init-pki 2>/dev/null
+fi
+
+# Create the root CA if it does not exist
+ROOT_CA="${ROOT_PKI}/ca.crt"
+if [ ! -f "${ROOT_CA}" ]; then
+  $easyrsa_bin --pki-dir="${ROOT_PKI}" --days="${CA_EXPIRY_DAYS}" --req-cn="CA${CN}" build-ca nopass 2>/dev/null
+
+  # Update indexes and generate CRLs
+  $easyrsa_bin --pki-dir="${ROOT_PKI}" update-db 2>/dev/null
+  $easyrsa_bin --pki-dir="${ROOT_PKI}" gen-crl 2>/dev/null
+fi

@@ -1,0 +1,15 @@
+[Unit]
+Description=copy-devicetypes
+Requires=confd.service
+After=confd.service
+StartLimitIntervalSec=0
+
+[Service]
+StandardOutput=journal+console
+StandardError=journal+console
+EnvironmentFile=/usr/src/app/config/env
+ExecStart=/bin/bash -c "/usr/src/app/scripts/mirror_and_shutdown.sh"
+Restart=on-failure
+
+[Install]
+WantedBy=basic.target
