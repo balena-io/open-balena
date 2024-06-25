@@ -580,6 +580,12 @@ jobs:
 
         source src/balena-tests/functions
 
+        function cleanup() {
+            aws ec2 describe-instances --instance-ids ${{ steps.balena-sut.outputs.instance_id }} \
+              | jq -r .Reservations[].Instances[].StateReason
+        }
+        trap 'cleanup' EXIT
+
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
         balena whoami && ssh-add -l
@@ -836,6 +842,9 @@ jobs:
             aws logs put-retention-policy \
               --log-group-name open-balena-tests \
               --retention-in-days "${{ env.AWS_LOGS_RETENTION }}" || true
+
+            aws ec2 describe-instances --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} \
+              | jq -r .Reservations[].Instances[].StateReason
         }
         trap 'log_output' EXIT
 
