@@ -1,4 +1,15 @@
 - commits:
+    - subject: show EC2 instance termination status
+      hash: 538bcfe9593f3ad6fa406c820dfe71d92946c5f6
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.4
+  title: ""
+  date: 2024-06-25T18:27:13.520Z
+- commits:
     - subject: Update actions/checkout digest to 692973e
       hash: 422a34218c6955a5e65995961e3944b2c2f400b3
       body: |
