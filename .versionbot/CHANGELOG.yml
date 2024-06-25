@@ -1,4 +1,15 @@
 - commits:
+    - subject: check if AWS/EC2 instance is still running
+      hash: 331c952a1f1235ff224cec6913d79e9bcc3e7cac
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.6
+  title: ""
+  date: 2024-06-25T23:43:44.670Z
+- commits:
     - subject: break from wait loops if EC2 instance is terminated
       hash: 85fd15d7b3528eb1f6dc0cb1955f5b9495cc4b02
       body: ""
