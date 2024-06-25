@@ -498,6 +498,9 @@ jobs:
           --compressed | jq -r '.update_pending')" =~ ^true$ ]]; do
 
             sleep "$(( ( RANDOM % ${{ env.RETRY }} ) + ${{ env.RETRY }} ))s"
+
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
         done
 
         # wait for services to start running
@@ -900,6 +903,7 @@ jobs:
           --log-group-name open-balena-tests \
           --log-stream-name-prefix "${cid}" | jq -r '.logStreams|length') -le 0 ]]; do
             echo '::info::waiting for logs...'
+            sleep $(((RANDOM%5) + 5))s
         done
         echo '::info::logs started'
 
