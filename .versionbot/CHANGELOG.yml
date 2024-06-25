@@ -1,4 +1,15 @@
 - commits:
+    - subject: break from wait loops if EC2 instance is terminated
+      hash: 85fd15d7b3528eb1f6dc0cb1955f5b9495cc4b02
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.5
+  title: ""
+  date: 2024-06-25T19:09:58.663Z
+- commits:
     - subject: show EC2 instance termination status
       hash: 538bcfe9593f3ad6fa406c820dfe71d92946c5f6
       body: ""
