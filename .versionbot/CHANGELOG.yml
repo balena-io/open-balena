@@ -1,4 +1,15 @@
 - commits:
+    - subject: Renovate AWS/EC2 AMI(s)
+      hash: 5a3e2f1ac8cb4cd179c1d6b055e71ef447ddd227
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.7
+  title: ""
+  date: 2024-06-26T00:38:36.638Z
+- commits:
     - subject: check if AWS/EC2 instance is still running
       hash: 331c952a1f1235ff224cec6913d79e9bcc3e7cac
       body: ""
