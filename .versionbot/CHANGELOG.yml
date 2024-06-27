@@ -1,4 +1,15 @@
 - commits:
+    - subject: capture termination instance reason
+      hash: e54aae284624173d6e05b24f9dd0df7f13f0947e
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.9
+  title: ""
+  date: 2024-06-27T18:27:24.183Z
+- commits:
     - subject: Exit instead of breaking out of while loops
       hash: 6e4aae7a82aeedd57d3ace87de6702b8b267fada
       body: ""
