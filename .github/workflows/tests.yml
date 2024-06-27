@@ -470,8 +470,8 @@ jobs:
             echo "::warning::Still working..."
             sleep "$(( (RANDOM % 5) + 5 ))s"
 
-            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
-            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
         done
 
         echo "key_id=${GITHUB_SHA}" >> "${GITHUB_OUTPUT}"
@@ -499,8 +499,8 @@ jobs:
 
             sleep "$(( ( RANDOM % ${{ env.RETRY }} ) + ${{ env.RETRY }} ))s"
 
-            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
-            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
         done
 
         # wait for services to start running
@@ -512,8 +512,8 @@ jobs:
             echo "::warning::Still working..."
             sleep "$(( (RANDOM % 30) + 30 ))s"
 
-            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
-            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
         done
 
         # wait for Docker healthchecks
@@ -526,8 +526,8 @@ jobs:
             echo "::warning::Still working..."
             sleep "$(( (RANDOM % 30) + 30 ))s"
 
-            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
-            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
         done
 
     # (TBC) https://www.balena.io/docs/reference/supervisor/docker-compose/
@@ -566,8 +566,8 @@ jobs:
             echo "::warning::Still working..."
             sleep "$(( (RANDOM % 30) + 30 ))s"
 
-            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
-            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
         done
 
     - name: SUT&DUT (balena)
@@ -612,8 +612,8 @@ jobs:
             echo "::warning::Still working..."
             sleep "$(( ( RANDOM % ${{ env.RETRY }} ) + ${{ env.RETRY }} ))s"
 
-            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
-            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
         done
 
         # .. once the service exits with status == exited, it is assumed to be finished
@@ -629,8 +629,8 @@ jobs:
 
             sleep "$(( ( RANDOM % ${{ env.RETRY }} ) + ${{ env.RETRY }} ))s"
 
-            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
-            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || break
+            aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
         done
 
         # .. check its exit code
@@ -912,8 +912,8 @@ jobs:
             with_backoff docker compose ls
             sleep $(((RANDOM%5) + 5))s
 
-            aws ec2 wait instance-running --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || break
-            aws ec2 wait instance-status-ok --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || break
+            aws ec2 wait instance-running --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || exit 1
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || exit 1
         done
         echo '::info::composition started'
 
@@ -924,8 +924,8 @@ jobs:
             with_backoff docker compose ps
             sleep $(((RANDOM%5) + 5))s
 
-            aws ec2 wait instance-running --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || break
-            aws ec2 wait instance-status-ok --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || break
+            aws ec2 wait instance-running --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || exit 1
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || exit 1
         done
         echo "::info::${service} started"
         done
@@ -940,8 +940,8 @@ jobs:
             echo '::info::still running...'
             sleep $(((RANDOM%1) + 1))s
 
-            aws ec2 wait instance-running --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || break
-            aws ec2 wait instance-status-ok --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || break
+            aws ec2 wait instance-running --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || exit 1
+            aws ec2 wait instance-status-ok --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || exit 1
         done
 
         aws ssm wait command-executed --command-id "${cid}" --instance-id "${iid}"
