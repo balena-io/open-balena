@@ -439,6 +439,12 @@ jobs:
 
         source src/balena-tests/functions
 
+        function cleanup() {
+            aws ec2 describe-instances --instance-ids ${{ steps.balena-sut.outputs.instance_id }} \
+              | jq -r .Reservations[].Instances[].StateReason
+        }
+        trap 'cleanup' EXIT
+
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
         if ! [[ -e "${HOME}/.ssh/id_rsa" ]]; then
@@ -485,6 +491,12 @@ jobs:
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
+
+        function cleanup() {
+            aws ec2 describe-instances --instance-ids ${{ steps.balena-sut.outputs.instance_id }} \
+              | jq -r .Reservations[].Instances[].StateReason
+        }
+        trap 'cleanup' EXIT
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
@@ -543,6 +555,12 @@ jobs:
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
+
+        function cleanup() {
+            aws ec2 describe-instances --instance-ids ${{ steps.balena-sut.outputs.instance_id }} \
+              | jq -r .Reservations[].Instances[].StateReason
+        }
+        trap 'cleanup' EXIT
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
