@@ -1,4 +1,15 @@
 - commits:
+    - subject: Exit instead of breaking out of while loops
+      hash: 6e4aae7a82aeedd57d3ace87de6702b8b267fada
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.8
+  title: ""
+  date: 2024-06-27T15:41:50.733Z
+- commits:
     - subject: Renovate AWS/EC2 AMI(s)
       hash: 5a3e2f1ac8cb4cd179c1d6b055e71ef447ddd227
       body: ""
