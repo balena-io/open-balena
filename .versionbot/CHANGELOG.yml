@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to af7e7d4
+      hash: 5c790da01dbb4dadb2827937a71f5e432e26208c
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.10
+  title: ""
+  date: 2024-06-27T22:16:09.999Z
+- commits:
     - subject: capture termination instance reason
       hash: e54aae284624173d6e05b24f9dd0df7f13f0947e
       body: ""
