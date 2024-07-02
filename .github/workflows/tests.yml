@@ -1024,15 +1024,6 @@ jobs:
               --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
         fi
 
-        with_backoff aws ec2 describe-instances \
-          --filters Name=tag:GITHUB_SHA,Values=${GITHUB_SHA}-tests \
-          Name=tag:GITHUB_RUN_ID,Values=${GITHUB_RUN_ID}-tests \
-          Name=tag:GITHUB_RUN_NUMBER,Values=${GITHUB_RUN_NUMBER}-tests \
-          Name=tag:GITHUB_RUN_NUMBER,Values=${GITHUB_RUN_NUMBER}-tests \
-          Name=tag:GITHUB_RUN_ATTEMPT,Values=${GITHUB_RUN_ATTEMPT}-tests \
-          | jq -r .Reservations[].Instances[].InstanceId \
-          | xargs --no-run-if-empty aws ec2 terminate-instances --instance-ids
-
       env:
         AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
 
@@ -1050,15 +1041,6 @@ jobs:
             with_backoff aws ec2 terminate-instances \
               --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }}
         fi
-
-        with_backoff aws ec2 describe-instances \
-          --filters Name=tag:GITHUB_SHA,Values=${GITHUB_SHA}-tests \
-          Name=tag:GITHUB_RUN_ID,Values=${GITHUB_RUN_ID}-tests \
-          Name=tag:GITHUB_RUN_NUMBER,Values=${GITHUB_RUN_NUMBER}-tests \
-          Name=tag:GITHUB_RUN_NUMBER,Values=${GITHUB_RUN_NUMBER}-tests \
-          Name=tag:GITHUB_RUN_ATTEMPT,Values=${GITHUB_RUN_ATTEMPT}-tests \
-          | jq -r .Reservations[].Instances[].InstanceId \
-          | xargs --no-run-if-empty aws ec2 terminate-instances --instance-ids
 
       env:
         AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
