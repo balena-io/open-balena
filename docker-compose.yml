@@ -119,7 +119,7 @@ services:
       *with-default-healthcheck,
       *with-default-privileges,
     ]
-    image: balena/open-balena-registry:v2.39.58
+    image: balena/open-balena-registry:v2.39.60
     volumes:
       - certs-data:/certs
       - resin-data:/balena
