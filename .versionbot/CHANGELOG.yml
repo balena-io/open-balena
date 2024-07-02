@@ -1,4 +1,15 @@
 - commits:
+    - subject: Only delete your (matrix) own test instance
+      hash: 96d56178897f96d470d23e313b5555412cfb7f4e
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.12
+  title: ""
+  date: 2024-07-02T20:48:44.727Z
+- commits:
     - subject: Update balena/open-balena-s3 Docker tag to v2.28.47
       hash: 52d0eb6c4d3fe244ca231ffe9507586145376f02
       body: |
