@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v25.1.19
+      hash: 3e29f306972c9565574894d8a0d0a9d783d2df4b
+      body: |
+        Update balena/open-balena-api from 25.1.7 to 25.1.19
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.13
+  title: ""
+  date: 2024-07-02T21:17:06.373Z
+- commits:
     - subject: Only delete your (matrix) own test instance
       hash: 96d56178897f96d470d23e313b5555412cfb7f4e
       body: ""
