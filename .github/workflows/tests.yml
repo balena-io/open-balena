@@ -1011,7 +1011,7 @@ jobs:
 
     # always destroy test EC2 instances even if the workflow is cancelled
     - name: destroy AWS test device(s)
-      if: always()
+      if: always() && matrix.target == 'balena-public-pki'
       run: |
         set -ue
 
@@ -1024,14 +1024,36 @@ jobs:
               --instance-ids ${{ steps.balena-sut.outputs.instance_id }}
         fi
 
+      env:
+        AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+
+    # always destroy test EC2 instances even if the workflow is cancelled
+    - name: destroy AWS test device(s)
+      if: always() && matrix.target == 'compose-private-pki'
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
+
         if [[ -n '${{ steps.ubuntu-sut.outputs.instance_id }}' ]]; then
             with_backoff aws ec2 terminate-instances \
               --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }}
         fi
 
-        with_backoff aws ec2 describe-instances --filters Name=tag:GITHUB_SHA,Values=${GITHUB_SHA}-tests \
-          | jq -r .Reservations[].Instances[].InstanceId \
-          | xargs --no-run-if-empty aws ec2 terminate-instances --instance-ids
+      env:
+        AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+
+    # always destroy stale test EC2 instances
+    - name: destroy stale AWS test device(s)
+      if: always()
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        source src/balena-tests/functions
 
         stale_instances=$(mktemp)
         aws ec2 describe-instances --filters \
