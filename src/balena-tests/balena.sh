@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # shellcheck disable=SC2154,SC2034,SC1090
-set -ae
+set -aeu
 
 curl_opts="--retry 3 --fail"
 if [[ $VERBOSE =~ on|On|Yes|yes|true|True ]]; then
@@ -17,7 +17,7 @@ function remove_test_assets() {
     rm -rf /balena/config.json \
       "${GUEST_IMAGE}" \
       "${GUEST_IMAGE%.*}.ready" \
-      "${tmpbuild}" \
+      "${tmpbuild:-}" \
       /tmp/*.img
 }
 
@@ -39,14 +39,16 @@ function shutdown_dut() {
     local balena_device_uuid
     balena_device_uuid="$(cat </balena/config.json | jq -r .uuid)"
 
-    if [[ -n $balena_device_uuid ]]; then
+    if [[ -n "${balena_device_uuid:-}" ]]; then
         with_backoff balena device "${balena_device_uuid}"
-        with_backoff balena device shutdown -f "${balena_device_uuid}"
+        if ! with_backoff balena device shutdown -f "${balena_device_uuid}"; then
+            echo 'DUT failed to shutdown properly'
+        fi
     fi
 }
 
 function set_update_lock {
-    if [[ -n "$BALENA_SUPERVISOR_ADDRESS" ]] && [[ -n "$BALENA_SUPERVISOR_API_KEY" ]]; then
+    if [[ -n "${BALENA_SUPERVISOR_ADDRESS:-}" ]] && [[ -n "${BALENA_SUPERVISOR_API_KEY:-}" ]]; then
         while [[ $(curl ${curl_opts} "${BALENA_SUPERVISOR_ADDRESS}/v1/device?apikey=${BALENA_SUPERVISOR_API_KEY}" \
           -H "Content-Type: application/json" | jq -r '.update_pending') == 'true' ]]; do
 
@@ -88,6 +90,7 @@ function update_ca_certificates() {
 
 function wait_for_api() {
     while ! curl ${curl_opts} "https://api.${DNS_TLD}/ping"; do
+        echo 'waiting for API...'
         sleep "$(( (RANDOM % 5) + 5 ))s"
     done
 }
@@ -96,6 +99,7 @@ function open_balena_login() {
     while ! balena login --credentials \
       --email "${SUPERUSER_EMAIL}" \
       --password "${SUPERUSER_PASSWORD}"; do
+        echo 'waiting for auth...'
         sleep "$(( (RANDOM % 5) + 5 ))s"
     done
 }
@@ -104,6 +108,7 @@ function create_fleet() {
     if ! balena fleet "${TEST_FLEET}"; then
         # wait for API to load DT contracts
         while ! balena fleet create "${TEST_FLEET}" --type "${DEVICE_TYPE}"; do
+            echo 'waiting for device types...'
             sleep "$(( (RANDOM % 5) + 5 ))s"
         done
 
@@ -175,7 +180,7 @@ function wait_for_device() {
 }
 
 function registry_auth() {
-    if [[ -n $REGISTRY_USER ]] && [[ -n $REGISTRY_PASS ]]; then
+    if [[ -n "${REGISTRY_USER:-}" ]] && [[ -n "${REGISTRY_PASS:-}" ]]; then
         with_backoff docker login -u "${REGISTRY_USER}" -p "${REGISTRY_PASS}"
 
         printf '{"https://index.docker.io/v1/": {"username":"%s", "password":"$s"}}' \
@@ -224,7 +229,7 @@ function supervisor_update_target_state() {
     local balena_device_uuid
     balena_device_uuid="$(cat </balena/config.json | jq -r .uuid)"
 
-    if [[ -n $balena_device_uuid ]]; then
+    if [[ -n "${balena_device_uuid:-}" ]]; then
         while ! curl ${curl_opts} "https://api.${DNS_TLD}/supervisor/v1/update" \
           --header "Content-Type: application/json" \
           --header "Authorization: Bearer $(cat <~/.balena/token)" \
@@ -241,9 +246,9 @@ function check_running_release() {
 
     local should_be_running_release
     should_be_running_release="$(get_release_commit)"
-    [[ -z $should_be_running_release ]] && false
+    [[ -z "$should_be_running_release" ]] && false
 
-    if [[ -n $balena_device_uuid ]]; then
+    if [[ -n "${balena_device_uuid:-}" ]]; then
         while ! [[ $(balena device "${balena_device_uuid}" | grep -E ^COMMIT | awk '{print $2}') =~ ${should_be_running_release} ]]; do
             running_release_id="$(balena device "${balena_device_uuid}" | grep -E ^COMMIT | awk '{print $2}')"
             printf 'please wait, device %s should be running %s, but is still running %s...\n' \
@@ -266,7 +271,7 @@ function get_os_version() {
 }
 
 function upload_release_asset() {
-    if [[ "$RELEASE_ASSETS_TEST" =~ true ]]; then
+    if [[ "${RELEASE_ASSETS_T:-}" =~ true ]]; then
         local release_id
         release_id=${1:-1}
         release_asset="$(find / -type f -name '*.png' | head -n 1)"
@@ -282,11 +287,11 @@ function upload_release_asset() {
 }
 
 # --- main
-if [[ "$PRODUCTION_MODE" =~ true ]]; then
+if [[ "${PRODUCTION_MODE:-}" =~ true ]]; then
     exit
 fi
 
-if [[ -n "${BALENA_DEVICE_UUID}" ]]; then
+if [[ -n "${BALENA_DEVICE_UUID:-}" ]]; then
     # prepend the device UUID if running on balenaOS
     TLD="${BALENA_DEVICE_UUID}.${DNS_TLD}"
 else
@@ -303,7 +308,19 @@ GUEST_IMAGE=${GUEST_IMAGE:-/balena/balena.img}
 OS_VERSION="$(get_os_version)"
 TEST_FLEET=${TEST_FLEET:-test-fleet}
 
-[[ -f "$CONF" ]] && source "${CONF}"
+# wait here until global config is ready
+until [[ -s "$CONF" ]]; do
+    echo 'waiting for config...'
+    sleep "$(( (RANDOM % 5) + 5 ))s"
+done
+source "${CONF}"
+
+# wait her until we have valid login credentials
+until [[ -n "${SUPERUSER_EMAIL:-}" ]] && [[ -n "${SUPERUSER_PASSWORD:-}" ]]; do
+    echo 'waiting for credentials...'
+    sleep "$(( (RANDOM % 5) + 5 ))s"
+    source "${CONF}"
+done
 
 update_ca_certificates  # ensure self-signed root CA certificate(s) trust
 
