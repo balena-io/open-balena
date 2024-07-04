@@ -90,9 +90,10 @@ jobs:
     - name: install session-manager-plugin
       if: matrix.target == 'compose-private-pki'
       run: |
+        # shellcheck disable=SC2153
         runner_arch="$(echo "${RUNNER_ARCH}" | tr '[:upper:]' '[:lower:]' | sed 's/x64/64bit/g')"
 
-        session-manager-plugin || (curl -sSfo session-manager-plugin.deb https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_${runner_arch}/session-manager-plugin.deb \
+        session-manager-plugin || (curl -sSfo session-manager-plugin.deb "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_${runner_arch}/session-manager-plugin.deb" \
           && sudo dpkg -i session-manager-plugin.deb \
           && rm -f session-manager-plugin.deb)
 
@@ -144,7 +145,7 @@ jobs:
         set ${verbose}
 
         key_name="${{ matrix.target }}-${GITHUB_RUN_ID}-${GITHUB_RUN_NUMBER}-${GITHUB_RUN_ATTEMPT}"
-        echo "key_name=${key_name}" >> $GITHUB_OUTPUT
+        echo "key_name=${key_name}" >>"${GITHUB_OUTPUT}"
 
         set +x
         private_key_material="$(aws ec2 create-key-pair \
@@ -160,14 +161,13 @@ jobs:
         done <<< "${private_key_material}"
 
         ssh_private_key="$(cat << EOF
-        $(echo "${private_key_material}")
+        ${private_key_material}
         EOF
         )"
-        echo "ssh_private_key<<EOF" >> $GITHUB_OUTPUT
+        echo "ssh_private_key<<EOF" >>"${GITHUB_OUTPUT}"
         set ${verbose}
 
-        echo "${ssh_private_key}" >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
+        { echo "${ssh_private_key}"; echo "EOF"; } >>"${GITHUB_OUTPUT}"
 
         echo "ssh_public_key=${public_key}" >> "${GITHUB_OUTPUT}"
 
@@ -201,6 +201,7 @@ jobs:
         # the actual version deployed depends on the AWS EC2/AMI, defined in AWS_EC2_LAUNCH_TEMPLATE
         os_version="$(balena os versions ${{ vars.DEVICE_TYPE || 'generic-amd64' }} | head -n 1)"
 
+        # shellcheck disable=SC2046
         balena config generate \
           --version "${os_version}" \
           --device "${balena_device_uuid}" \
@@ -217,7 +218,7 @@ jobs:
           GITHUB_SHA GITHUB_WORKFLOW RUNNER_ARCH RUNNER_NAME RUNNER_OS)
 
         for github_var in "${github_vars[@]}"; do
-            balena tag set ${github_var} "${!github_var}" --device "${balena_device_uuid}"
+            balena tag set "${github_var}" "${!github_var}" --device "${balena_device_uuid}"
         done
 
         echo "balena_device_uuid=${balena_device_uuid}" >> "${GITHUB_OUTPUT}"
@@ -391,6 +392,7 @@ jobs:
 
         source src/balena-tests/functions
 
+        # shellcheck disable=SC2046,SC2043
         for subnet_id in ${{ env.AWS_VPC_SUBNET_IDS }}; do
             # spot, on-demand
             for market_type in ${{ vars.MARKET_TYPES || 'spot' }}; do
@@ -456,7 +458,7 @@ jobs:
 
         match=''
         for key in $(balena keys | grep -v ID | awk '{print $1}'); do
-            fp=$(balena key ${key} | tail -n 1 | ssh-keygen -E md5 -lf /dev/stdin | awk '{print $2}')
+            fp=$(balena key "${key}" | tail -n 1 | ssh-keygen -E md5 -lf /dev/stdin | awk '{print $2}')
             if [[ $fp =~ $(ssh-keygen -E md5 -lf "${HOME}/.ssh/id_rsa" | awk '{print $2}') ]]; then
                 match="${key}"
                 break
@@ -801,6 +803,7 @@ jobs:
 
         cloud-init schema -c user-data.yml
 
+        # shellcheck disable=SC2046,SC2043
         for subnet_id in ${{ env.AWS_VPC_SUBNET_IDS }}; do
             # spot, on-demand
             for market_type in ${{ vars.MARKET_TYPES || 'spot' }}; do
@@ -810,7 +813,7 @@ jobs:
                       $([[ -n '${{ matrix.ami }}' ]] && echo '--image-id ${{ matrix.ami }}') \
                       --launch-template 'LaunchTemplateId=${{ env.AWS_EC2_LAUNCH_TEMPLATE }},Version=${{ matrix.launch_template_version }}' \
                       --instance-type "${instance_type}" \
-                      $([[ $market_type =~ spot ]] && echo '--instance-market-options MarketType=spot') \
+                      $([[ "$market_type" =~ spot ]] && echo '--instance-market-options MarketType=spot') \
                       --security-group-ids '${{ env.AWS_VPC_SECURITY_GROUP_IDS }}' \
                       --subnet-id "${subnet_id}" \
                       --key-name '${{ steps.generate-key-pair.outputs.key_name }}' \
@@ -828,7 +831,7 @@ jobs:
         [[ -z $response ]] && exit 1
 
         instance_id="$(echo "${response}" | jq -r '.Instances[].InstanceId')"
-        echo "instance_id=${instance_id}" >> $GITHUB_OUTPUT
+        echo "instance_id=${instance_id}" >>"${GITHUB_OUTPUT}"
 
         aws ec2 wait instance-running --instance-ids "${instance_id}"
         with_backoff aws ec2 wait instance-status-ok --instance-ids "${instance_id}"
@@ -906,7 +909,7 @@ jobs:
         echo "${result}" | jq -re
         cid="$(echo "${result}" | jq -r .Command.CommandId)"
         iid="$(echo "${result}" | jq -r .Command.InstanceIds[0])"
-        ([[ -n "$cid" ]] && [[ -n "$iid" ]]) || false
+        { [[ -n "$cid" ]] && [[ -n "$iid" ]]; } || false
 
         # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#grouping-log-lines
         CYAN='\033[0;36m'; NC='\033[0m'; echo -e "::group::${CYAN}open-balena-tests${NC}"
@@ -937,7 +940,7 @@ jobs:
 
         touch .env
         for service in sut dut; do
-        until [[ "$(docker compose ps --services "${service}" --status running)" =~ "${service}" ]]; do
+        until [[ "$(docker compose ps --services "${service}" --status running)" =~ ${service} ]]; do
             echo "::info::waiting for ${service}..."
             with_backoff docker compose ps
             sleep $(((RANDOM%5) + 5))s
@@ -949,7 +952,7 @@ jobs:
         done
 
         echo '::info::settling down...'
-        sleep $(((RANDOM%30) + 15))s
+        sleep $(((RANDOM%15) + 15))s
 
         while [[ "$(aws ssm list-command-invocations --command-id "${cid}" \
           | jq -re '.CommandInvocations[].Status')" =~ InProgress ]]; do
@@ -1059,20 +1062,20 @@ jobs:
         aws ec2 describe-instances --filters \
           Name=tag:Name,Values=open-balena-tests \
           Name=instance-state-name,Values=running \
-          | jq -re '.Reservations[].Instances[].InstanceId + " " + .Reservations[].Instances[].LaunchTime' > ${stale_instances} || true
+          | jq -re '.Reservations[].Instances[].InstanceId + " " + .Reservations[].Instances[].LaunchTime' > "${stale_instances}" || true
 
         if test -s "${stale_instances}"; then
             while IFS= read -r line; do
-                instance_id=$(echo ${line} | awk '{print $1}')
-                launch_time=$(echo ${line} | awk '{print $2}')
-                now=$(date +%s)
-                then=$(date --date ${launch_time} +%s)
-                days_since_launch=$(( (now - then) / 86400 ))
-                if [[ -n $days_since_launch ]] && [[ $days_since_launch -ge 1 ]]; then
-                    with_backoff aws ec2 terminate-instances --instance-ids ${instance_id}
+                instance_id="$(echo "${line}" | awk '{print $1}')"
+                launch_time="$(echo "${line}" | awk '{print $2}')"
+                now="$(date +%s)"
+                then="$(date --date "${launch_time}" +%s)"
+                days_since_launch="$(( (now - then) / 86400 ))"
+                if [[ -n "$days_since_launch" ]] && [[ $days_since_launch -ge 1 ]]; then
+                    with_backoff aws ec2 terminate-instances --instance-ids "${instance_id}"
                 fi
-            done <${stale_instances}
-            rm -f ${stale_instances}
+            done <"${stale_instances}"
+            rm -f "${stale_instances}"
         fi
 
       env:
@@ -1096,11 +1099,11 @@ jobs:
               "https://api.cloudflare.com/client/v4/zones?name=${{ matrix.dns_tld }}" \
               -H 'Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}' | jq -r '.result[].id')"
 
-            for record in "$(curl --silent --retry ${{ env.RETRY }} \
+            for record in $(curl --silent --retry ${{ env.RETRY }} \
               "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records" \
               -H 'Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}' \
               | jq -r --arg match "${match}" '.result[] | select(((.type=="TXT") and (.name | contains($match))))' \
-              | base64)"; do
+              | base64); do
 
                 json="$(echo "${record}" | base64 -d | jq -r)"
                 id="$(echo "${json}" | jq -r .id)"
