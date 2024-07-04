@@ -1,4 +1,15 @@
 - commits:
+    - subject: pin balena-cli version
+      hash: 7ddb50c19fb470aa3cc975ce7a0afc2f6d47ba2f
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.15
+  title: ""
+  date: 2024-07-04T21:54:28.567Z
+- commits:
     - subject: shellcheck/lint workflow(s)
       hash: 0328960ecca2bd99cd5456392095e70227ccbcd0
       body: ""
