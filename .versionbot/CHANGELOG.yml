@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to febab93
+      hash: 7fd045814c95f4566d38e53f7738dd67440f0115
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.16
+  title: ""
+  date: 2024-07-04T22:17:01.050Z
+- commits:
     - subject: pin balena-cli version
       hash: 7ddb50c19fb470aa3cc975ce7a0afc2f6d47ba2f
       body: ""
