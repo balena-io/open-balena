@@ -1,4 +1,15 @@
 - commits:
+    - subject: shellcheck/lint workflow(s)
+      hash: 0328960ecca2bd99cd5456392095e70227ccbcd0
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.14
+  title: ""
+  date: 2024-07-04T21:33:41.784Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v25.1.19
       hash: 3e29f306972c9565574894d8a0d0a9d783d2df4b
       body: |
