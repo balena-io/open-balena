@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-registry Docker tag to v2.39.60
+      hash: b023d3a47002823e18926b231aeadc104f4c0094
+      body: |
+        Update balena/open-balena-registry from 2.39.58 to 2.39.60
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.17
+  title: ""
+  date: 2024-07-04T23:28:20.756Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to febab93
       hash: 7fd045814c95f4566d38e53f7738dd67440f0115
       body: |
