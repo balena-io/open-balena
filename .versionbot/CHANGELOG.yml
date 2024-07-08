@@ -1,4 +1,17 @@
 - commits:
+    - subject: Make tests more reliable
+      hash: b0f79a0d84742b0a96aaec934a2ad6ec72bb3d6e
+      body: |
+        * ensure config and creds are ready before attempting auth
+        * warn instead of error on DUT shutdown failures
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.21
+  title: ""
+  date: 2024-07-08T14:49:09.165Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v18.2.20
       hash: d4683c028ae10fcfaf67c4f68dc322aa6602a896
       body: |
