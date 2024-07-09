@@ -145,7 +145,7 @@ auto-pki: config # Start all services using LetsEncrypt and ACME
 	@docker compose up -d
 	@$(MAKE) waitlog SERVICE=cert-manager LOG_STRING="/certs/export/chain.pem Certificate will not expire in [0-9] days"
 	@$(MAKE) waitlog SERVICE=cert-manager LOG_STRING="subject=CN = ${DNS_TLD}"
-	@$(MAKE) waitlog SERVICE=cert-manager LOG_STRING="issuer=C = US, O = Let's Encrypt, CN = R3"
+	@$(MAKE) waitlog SERVICE=cert-manager LOG_STRING="issuer=C = US, O = Let's Encrypt, CN = .*"
 	@$(MAKE) wait SERVICE=haproxy
 	@$(MAKE) showenv
 	@$(MAKE) showpass
