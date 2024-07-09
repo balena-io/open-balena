@@ -881,6 +881,8 @@ jobs:
             StrictHostKeyChecking no
             UserKnownHostsFile /dev/null
             ProxyCommand sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
+            # QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, and DEBUG3
+            LogLevel ${{ vars.SSH_VERBOSE || 'ERROR' }}     
         EOF
 
         # docs/getting-started.md
