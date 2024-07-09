@@ -1,4 +1,15 @@
 - commits:
+    - subject: Relax regex to match all Let's Encrypt CNs
+      hash: 44b6e5a4c12f754aa2ed1b9a5ec9d3d7a01b5778
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.26
+  title: ""
+  date: 2024-07-09T19:15:06.632Z
+- commits:
     - subject: Update balena/open-balena-s3 Docker tag to v2.28.48
       hash: 7924ee920abca8caa0a499cd9a3af7efc6f06342
       body: |
