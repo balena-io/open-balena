@@ -1,4 +1,18 @@
 - commits:
+    - subject: Remove custom_runs_on instruction from flowzone.yml
+      hash: 33cce523a0a6091d0dce18c25c21d032e555e193
+      body: |
+        This project has no custom actions to run, and was using
+        the legacy input format for custom jobs that is being deprecated.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Kyle Harding
+      nested: []
+  version: 4.1.43
+  title: ""
+  date: 2024-07-16T18:34:53.997Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v18.2.32
       hash: c20c3c9b4799daddfb8b0d40c47b631ef5764ccd
       body: |
