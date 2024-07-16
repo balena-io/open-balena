@@ -25,15 +25,6 @@ jobs:
     with:
       jobs_timeout_minutes: 60
       cloudflare_website: open-balena
-      custom_runs_on: |
-        [
-          [
-            "self-hosted",
-            "Linux",
-            "X64"
-          ]
-        ]
-
       balena_slugs: |
         balena/open-balena
 
