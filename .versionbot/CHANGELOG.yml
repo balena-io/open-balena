@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency balena-io/balena-cli to v18.2.33
+      hash: 8e416c235bb659e55e10877efd4cf9c3fc076525
+      body: |
+        Update balena-io/balena-cli from 18.2.32 to 18.2.33
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.44
+  title: ""
+  date: 2024-07-17T09:22:09.080Z
+- commits:
     - subject: Remove custom_runs_on instruction from flowzone.yml
       hash: 33cce523a0a6091d0dce18c25c21d032e555e193
       body: |
