@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to 6116f2b
+      hash: 777aecb83ca294be1ff0eb03fb1072d8cb4b4632
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.45
+  title: ""
+  date: 2024-07-17T10:18:53.984Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v18.2.33
       hash: 8e416c235bb659e55e10877efd4cf9c3fc076525
       body: |
