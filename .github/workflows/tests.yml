@@ -880,6 +880,11 @@ jobs:
         host i-*
             StrictHostKeyChecking no
             UserKnownHostsFile /dev/null
+            TCPKeepAlive yes
+            ServerAliveInterval 5
+            ControlPath "${HOME}/.ssh/controlmasters/%r@%h:%p"
+            ControlMaster auto
+            ControlPersist 5m
             ProxyCommand sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
         EOF
 
