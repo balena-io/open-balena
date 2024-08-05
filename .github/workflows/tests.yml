@@ -876,6 +876,7 @@ jobs:
         trap 'log_output' EXIT
 
         # https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-enable-ssh-connections.html
+        mkdir -p "${HOME}/.ssh/controlmasters"
         cat << EOF > "${HOME}/.ssh/config"
         host i-*
             StrictHostKeyChecking no
