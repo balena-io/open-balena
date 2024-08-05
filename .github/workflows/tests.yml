@@ -73,7 +73,7 @@ jobs:
       name: ${{ matrix.target }}
 
     steps:
-    - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+    - uses: actions/checkout@9a9194f87191a7e9055e3e9b95b8cfb13023bb08
 
     # https://github.com/unfor19/install-aws-cli-action
     - name: Setup awscli
