@@ -37,7 +37,7 @@ env:
 
 jobs:
   test:
-    runs-on: ["self-hosted", "X64", "distro:jammy"]  # balenaOS (balena-public-pki) tests require socat v1.7.4
+    runs-on: ["ipsec-testing"]
     timeout-minutes: 60
     strategy:
       fail-fast: false
