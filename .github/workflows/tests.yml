@@ -37,7 +37,8 @@ env:
 
 jobs:
   test:
-    runs-on: ["ipsec-testing"]
+    runs-on:
+      group: ipsec-testing
     timeout-minutes: 60
     strategy:
       fail-fast: false
