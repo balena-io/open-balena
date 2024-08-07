@@ -839,6 +839,10 @@ jobs:
         aws ec2 wait instance-running --instance-ids "${instance_id}"
         with_backoff aws ec2 wait instance-status-ok --instance-ids "${instance_id}"
 
+        private_ip="$(aws ec2 describe-instances --instance-id "${instance_id}" \
+          | jq -r .Reservations[].Instances[].PrivateIpAddress)"
+        echo "private_ip=${private_ip}" >>"${GITHUB_OUTPUT}"
+
       env:
         ATTEMPTS: 2
         AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
@@ -878,6 +882,10 @@ jobs:
         # https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-enable-ssh-connections.html
         mkdir -p "${HOME}/.ssh/controlmasters"
         cat << EOF > "${HOME}/.ssh/config"
+        host *
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null
+
         host i-*
             StrictHostKeyChecking no
             UserKnownHostsFile /dev/null
@@ -986,7 +994,7 @@ jobs:
       env:
         ATTEMPTS: 2
         AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
-        DOCKER_HOST: ssh://ubuntu@${{ steps.ubuntu-sut.outputs.instance_id }}:22
+        DOCKER_HOST: ssh://ubuntu@${{ steps.ubuntu-sut.outputs.private_ip }}:22
         COMMIT: ${{ github.event.pull_request.head.sha || github.event.head_commit.id || github.event.pull_request.head.ref }}
 
     - name: remove balenaCloud SSH key
