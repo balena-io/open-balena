@@ -37,9 +37,7 @@ env:
 
 jobs:
   test:
-    runs-on:
-      group: ipsec-testing
-      labels: ["ipsec-testing"]  # balenaOS (balena-public-pki) tests require socat v1.7.4
+    runs-on: ["ipsec-testing"]  # balenaOS (balena-public-pki) tests require socat v1.7.4
     timeout-minutes: 60
     strategy:
       fail-fast: false
