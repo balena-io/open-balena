@@ -39,7 +39,7 @@ jobs:
   test:
     runs-on:
       group: ipsec-testing
-      labels: ["self-hosted", "X64", "distro:jammy"]  # balenaOS (balena-public-pki) tests require socat v1.7.4
+      labels: ["ipsec-testing"]  # balenaOS (balena-public-pki) tests require socat v1.7.4
     timeout-minutes: 60
     strategy:
       fail-fast: false
