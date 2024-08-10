@@ -189,7 +189,7 @@ services:
   redis:
     <<: *base-service
     # https://redis.io/blog/what-redis-license-change-means-for-our-managed-service-providers/
-    image: redis:7.2-alpine
+    image: redis:7.4-alpine
     volumes:
       - redis-data:/data
     healthcheck:
