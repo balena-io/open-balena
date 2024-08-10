@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update redis Docker tag to v7.4
+      hash: 24925320f84095ba6ade3f857718abb6a8b48205
+      body: |
+        Update redis from 7.2 to 7.4
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.60
+  title: ""
+  date: 2024-08-10T06:16:57.031Z
+- commits:
     - subject: Update balena/open-balena-s3 Docker tag to v2.28.52
       hash: 6b4682ece6e4c8b0c7519d5529421289512308e7
       body: |
