@@ -998,6 +998,16 @@ jobs:
         with_backoff balena keys | grep ${{ steps.provision-ssh-key.outputs.key_id }} \
           | awk '{print $1}' | xargs --no-run-if-empty balena key rm --yes
 
+    - name: remove AWS/EC2 key-pair
+      if: always() && matrix.target == 'compose-private-pki'
+      continue-on-error: true
+      run: |
+        set -ue
+
+        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        aws ec2 delete-key-pair --key-name ${{ steps.generate-key-pair.outputs.key_name }}
+
     - name: delete balenaOS test device
       if: always() && matrix.target == 'balena-public-pki'
       continue-on-error: true
