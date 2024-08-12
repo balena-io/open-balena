@@ -1,4 +1,15 @@
 - commits:
+    - subject: Cleanup AWS/EC2 key pairs
+      hash: b4efd6345448975b1871645b83546ab6bf2284d8
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.63
+  title: ""
+  date: 2024-08-12T17:47:56.854Z
+- commits:
     - subject: Update balena/open-balena-registry Docker tag to v2.41.1
       hash: b8717d5fbec46cf41cc748c98d83f850a9f1ad3d
       body: |
