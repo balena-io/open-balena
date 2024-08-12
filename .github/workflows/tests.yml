@@ -37,7 +37,7 @@ env:
 
 jobs:
   test:
-    runs-on: ["ipsec-testing"]  # balenaOS (balena-public-pki) tests require socat v1.7.4
+    runs-on: ["self-hosted", "X64", "distro:jammy"]  # balenaOS (balena-public-pki) tests require socat v1.7.4
     timeout-minutes: 60
     strategy:
       fail-fast: false
@@ -994,7 +994,7 @@ jobs:
       env:
         ATTEMPTS: 2
         AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
-        DOCKER_HOST: ssh://ubuntu@${{ steps.ubuntu-sut.outputs.private_ip }}:22
+        DOCKER_HOST: ssh://ubuntu@${{ steps.ubuntu-sut.outputs.instance_id }}:22
         COMMIT: ${{ github.event.pull_request.head.sha || github.event.head_commit.id || github.event.pull_request.head.ref }}
 
     - name: remove balenaCloud SSH key
