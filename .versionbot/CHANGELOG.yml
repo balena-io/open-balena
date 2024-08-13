@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to 55f725f
+      hash: 2f141a4e4e5f7e782bbecc12dab9ecd30f9fda0a
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.64
+  title: ""
+  date: 2024-08-13T16:51:55.472Z
+- commits:
     - subject: Cleanup AWS/EC2 key pairs
       hash: b4efd6345448975b1871645b83546ab6bf2284d8
       body: ""
