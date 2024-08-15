@@ -16,6 +16,23 @@ images to your devices.
 
 To learn more about openBalena, visit [balena.io/open][open-balena-website].
 
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Compatibility](#compatibility)
+- [Documentation](#documentation)
+- [Getting Help](#getting-help)
+- [Contributing](#contributing)
+- [Roadmap](#roadmap)
+- [Differences between openBalena and balenaCloud](#differences-between-openbalena-and-balenacloud)
+- [License](#license)
+- [FAQ](#faq)
+  - [How do you ensure continuity of openBalena? Are there security patches on openBalena?](#how-do-you-ensure-continuity-of-openbalena-are-there-security-patches-on-openbalena)
+  - [How do you ensure the "Join" command actually works between openBalena and](#how-do-you-ensure-the-join-command-actually-works-between-openbalena-and)
+  - [Is it "production ready"?](#is-it-production-ready)
+  - [Can a new device type be added to openBalena?](#can-a-new-device-type-be-added-to-openbalena)
+  - [Are there open-source UI dashboards from the community for openBalena?](#are-there-open-source-ui-dashboards-from-the-community-for-openbalena)
+
+
 
 ## Features
 
@@ -159,7 +176,7 @@ While we actually have some rather large fleets using openBalena, we consider it
 perpetually in "beta". This means potentially introducing breaking changes between
 releases.
 
-### Can new device type be added to openBalena?
+### Can a new device type be added to openBalena?
 openBalena imports the following public [device-types] "out of the box". You can specify
 your own contracts repository by overriding `CONTRACTS_PUBLIC_REPO_NAME`,
 `CONTRACTS_PUBLIC_REPO_OWNER` and `IMAGE_STORAGE_BUCKET` environment variables on the API
