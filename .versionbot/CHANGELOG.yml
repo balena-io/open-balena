@@ -1,4 +1,16 @@
 - commits:
+    - subject: "patch: Add Table of Contents"
+      hash: b414f262c0adae9014d1589be64276785efecbbd
+      body: ""
+      footer:
+        Signed-off-by: Vipul Gupta (@vipulgupta2048) <vipulgupta2048@gmail.com>
+        signed-off-by: Vipul Gupta (@vipulgupta2048) <vipulgupta2048@gmail.com>
+      author: Vipul Gupta (@vipulgupta2048)
+      nested: []
+  version: 4.1.65
+  title: ""
+  date: 2024-08-15T21:13:54.244Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to 55f725f
       hash: 2f141a4e4e5f7e782bbecc12dab9ecd30f9fda0a
       body: |
