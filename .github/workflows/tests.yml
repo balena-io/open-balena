@@ -798,6 +798,13 @@ jobs:
                 && rm -f "\${tmphosts}" \
                 && getent hosts api.${{ matrix.subdomain }}.${{ matrix.dns_tld }} | grep 127.0.1.1
 
+              service ssh restart
+
+          # https://forums.docker.com/t/docker-compose-through-ssh-failing-and-referring-to-docker-example-com/115165/18
+          - path: /etc/ssh/sshd_config.d/00-cloud-init
+            content: |
+              MaxStartups 100:0:100
+
         # cloud-init runs as root
         # (e.g.) https://cloudinit.readthedocs.io/en/latest/reference/merging.html#example-cloud-config
         runcmd:
