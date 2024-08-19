@@ -1,4 +1,48 @@
 - commits:
+    - subject: SSH reliability settings
+      hash: 539adade50241c6f9d20bcf08cb028c3026d8f37
+      body: >
+        * enable SSHD multiplexing, KeepAlive and relax throttling
+
+
+        Thank you for the hint:
+
+        https://forums.docker.com/t/docker-compose-through-ssh-failing-and-referring-to-docker-example-com/115165/18?u=ab77
+
+               MaxStartups
+                       Specifies the maximum number of concurrent
+                       unauthenticated connections to the SSH daemon.
+                       Additional connections will be dropped until
+                       authentication succeeds or the LoginGraceTime expires for
+                       a connection.  The default is 10:30:100.
+
+                       Alternatively, random early drop can be enabled by
+                       specifying the three colon separated values
+                       start:rate:full (e.g. "10:30:60").  sshd(8) will refuse
+                       connection attempts with a probability of rate/100 (30%)
+                       if there are currently start (10) unauthenticated
+                       connections.  The probability increases linearly and all
+                       connection attempts are refused if the number of
+                       unauthenticated connections reaches full (60).
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+    - subject: SSH reliability settings
+      hash: 758c52b7bab371d6f5d8abfe05927b7b18f90be0
+      body: >
+        SSH connections keep breaking between Hetzner EU DCs and AWS us-east-1
+        for no particular reason. Suspect Hetzner local network saturation
+        and/or a function of trans-atlantic routing/peering/time of day. Adding
+        connection multiplexing and keepalive to test this theory.
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.66
+  title: ""
+  date: 2024-08-19T18:22:02.557Z
+- commits:
     - subject: "patch: Add Table of Contents"
       hash: b414f262c0adae9014d1589be64276785efecbbd
       body: ""
