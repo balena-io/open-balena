@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to ead1e6a
+      hash: bda5063cb1ad4b82aa09bf198d2f4d7b6067834d
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.69
+  title: ""
+  date: 2024-08-20T05:14:24.801Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v26.3.0
       hash: 423418f11615760898dd7e9007e3c75f41b6a319
       body: |
