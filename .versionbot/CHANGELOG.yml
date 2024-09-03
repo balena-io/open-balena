@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-registry Docker tag to v2.41.6
+      hash: 15f6650c0dd059b13e7b7898d741717714b87ae2
+      body: |
+        Update balena/open-balena-registry from 2.41.4 to 2.41.6
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.91
+  title: ""
+  date: 2024-09-03T18:13:13.060Z
+- commits:
     - subject: Update balena/open-balena-s3 Docker tag to v2.28.55
       hash: 0a2196eb4f601989300c77acc9ea2efb3de1e6df
       body: |
