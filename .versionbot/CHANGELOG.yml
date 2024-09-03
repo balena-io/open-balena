@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v26.4.8
+      hash: e5c1359d746d888ed575b89ef421024fdd506392
+      body: |
+        Update balena/open-balena-api from 26.4.7 to 26.4.8
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.89
+  title: ""
+  date: 2024-09-03T16:16:21.090Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to e26e190
       hash: 247258f853c96019c788ace79531edd0d92ed0c1
       body: |
