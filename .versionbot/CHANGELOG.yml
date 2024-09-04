@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-vpn Docker tag to v11.30.34
+      hash: 8fb1fe1be3a67a020edd0c9d92cb48a5d4d0a6b1
+      body: |
+        Update balena/open-balena-vpn from 11.30.33 to 11.30.34
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.94
+  title: ""
+  date: 2024-09-04T16:32:07.958Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v19.0.2
       hash: 22a4ad9cb13235af83bba4c6934cf97953ba4f9f
       body: |
