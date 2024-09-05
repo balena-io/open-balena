@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update qemux/qemu-docker Docker tag to v6
+      hash: b949ffb15ff6589aa7a30c75076c9219ada63da9
+      body: |
+        Update qemux/qemu-docker from 5.18 to 6.00
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.101
+  title: ""
+  date: 2024-09-05T21:25:46.718Z
+- commits:
     - subject: Update actions/checkout digest to 6d193bf
       hash: 5ef6a6f2d826f207a9af4d5990a036d1f86b8eb5
       body: |
