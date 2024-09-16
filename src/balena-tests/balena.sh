@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2154,SC2034,SC1090
+# shellcheck disable=SC2034,SC1090
 set -aeu
 
-curl_opts="--retry 3 --fail"
+read -ra curl_opts <<<'--retry 3 --fail'
 if [[ $VERBOSE =~ on|On|Yes|yes|true|True ]]; then
     set -x
-    curl_opts="${curl_opts} --verbose"
+    curl_opts+=('--verbose')
 else
-    curl_opts="${curl_opts} --silent"
+    curl_opts+=('--silent')
 fi
 
+# shellcheck disable=SC1091
 source /usr/sbin/functions
 
 function remove_test_assets() {
@@ -49,10 +50,10 @@ function shutdown_dut() {
 
 function set_update_lock {
     if [[ -n "${BALENA_SUPERVISOR_ADDRESS:-}" ]] && [[ -n "${BALENA_SUPERVISOR_API_KEY:-}" ]]; then
-        while [[ $(curl ${curl_opts} "${BALENA_SUPERVISOR_ADDRESS}/v1/device?apikey=${BALENA_SUPERVISOR_API_KEY}" \
+        while [[ $(curl "${curl_opts[@]}" "${BALENA_SUPERVISOR_ADDRESS}/v1/device?apikey=${BALENA_SUPERVISOR_API_KEY}" \
           -H "Content-Type: application/json" | jq -r '.update_pending') == 'true' ]]; do
 
-            curl ${curl_opts} "${BALENA_SUPERVISOR_ADDRESS}/v1/device?apikey=${BALENA_SUPERVISOR_API_KEY}" \
+            curl "${curl_opts[@]}" "${BALENA_SUPERVISOR_ADDRESS}/v1/device?apikey=${BALENA_SUPERVISOR_API_KEY}" \
               -H "Content-Type: application/json" | jq -r
 
             sleep "$(( (RANDOM % 3) + 3 ))s"
@@ -89,7 +90,7 @@ function update_ca_certificates() {
 }
 
 function wait_for_api() {
-    while ! curl ${curl_opts} "https://api.${DNS_TLD}/ping"; do
+    while ! curl "${curl_opts[@]}" "https://api.${DNS_TLD}/ping"; do
         echo 'waiting for API...'
         sleep "$(( (RANDOM % 5) + 5 ))s"
     done
@@ -183,6 +184,7 @@ function registry_auth() {
     if [[ -n "${REGISTRY_USER:-}" ]] && [[ -n "${REGISTRY_PASS:-}" ]]; then
         with_backoff docker login -u "${REGISTRY_USER}" -p "${REGISTRY_PASS}"
 
+        # shellcheck disable=SC2016
         printf '{"https://index.docker.io/v1/": {"username":"%s", "password":"$s"}}' \
           "${REGISTRY_USER}" "${REGISTRY_PASS}" | jq -r > ~/.balena/secrets.json
     fi
@@ -210,7 +212,7 @@ function get_releases() {
 }
 
 function get_release_commit() {
-      echo "$(get_releases)" | jq -re \
+      get_releases | jq -re \
         'select((.[].status=="success")
         and (.[].is_invalidated==false)
         and (.[].is_final==true)
@@ -218,7 +220,7 @@ function get_release_commit() {
 }
 
 function get_release_id() {
-      echo "$(get_releases)" | jq -re \
+      get_releases | jq -re \
         'select((.[].status=="success")
         and (.[].is_invalidated==false)
         and (.[].is_final==true)
@@ -230,7 +232,7 @@ function supervisor_update_target_state() {
     balena_device_uuid="$(cat </balena/config.json | jq -r .uuid)"
 
     if [[ -n "${balena_device_uuid:-}" ]]; then
-        while ! curl ${curl_opts} "https://api.${DNS_TLD}/supervisor/v1/update" \
+        while ! curl "${curl_opts[@]}" "https://api.${DNS_TLD}/supervisor/v1/update" \
           --header "Content-Type: application/json" \
           --header "Authorization: Bearer $(cat <~/.balena/token)" \
           --data "{\"uuid\": \"${balena_device_uuid}\", \"data\": {\"force\": true}}"; do
@@ -263,7 +265,7 @@ function check_running_release() {
 
 function get_os_version() {
     local BALENARC_BALENA_URL
-    BALENARC_BALENA_URL="$(echo "${BALENA_API_URL}" | sed 's#https://api\.##g')"
+    BALENARC_BALENA_URL="${BALENA_API_URL//https:\/\/api\./}"
 
     local os_version
     os_version=${OS_VERSION:-$(with_backoff balena os versions "${DEVICE_TYPE}" | head -n 1)}
@@ -276,13 +278,13 @@ function upload_release_asset() {
         release_id=${1:-1}
         release_asset="$(find / -type f -name '*.png' | head -n 1)"
 
-        curl ${curl_opts} "https://api.${DNS_TLD}/resin/release_asset" \
+        curl "${curl_opts[@]}" "https://api.${DNS_TLD}/resin/release_asset" \
           --header "Authorization: Bearer $(cat <~/.balena/token)" \
           --form "asset=@${release_asset}" \
           --form "release=${release_id}" \
-          --form "asset_key=$((RANDOM))-$(basename ${release_asset})" \
+          --form "asset_key=$((RANDOM))-$(basename "${release_asset}")" \
           | jq -re .asset.href \
-          | xargs curl ${curl_opts} -o "/tmp/$((RANDOM))-$(basename ${release_asset})"
+          | xargs curl "${curl_opts[@]}" -o "/tmp/$((RANDOM))-$(basename "${release_asset}")"
     fi
 }
 
