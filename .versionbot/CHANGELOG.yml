@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v28.0.2
+      hash: 2d5cd4040f768761f64b45abf6f635bb47a8dd80
+      body: |
+        Update balena/open-balena-api from 28.0.1 to 28.0.2
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.124
+  title: ""
+  date: 2024-09-17T15:17:25.336Z
+- commits:
     - subject: Add pre-commit shellcheck hook
       hash: 5fe76cae23ef7bc11a7fd11fd4eed541e5cacf6a
       body: |
