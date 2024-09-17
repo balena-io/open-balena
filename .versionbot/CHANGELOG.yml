@@ -1,4 +1,16 @@
 - commits:
+    - subject: Add pre-commit shellcheck hook
+      hash: 5fe76cae23ef7bc11a7fd11fd4eed541e5cacf6a
+      body: |
+        * check existing script(s)
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.123
+  title: ""
+  date: 2024-09-17T14:07:06.969Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v28
       hash: cf0f56d3d722508164471d286ef2dbf14d6d02e5
       body: |
