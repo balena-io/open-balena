@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency balena-io/balena-cli to v19.0.12
+      hash: a1546cd39baf90714e7590bf873894ded6164641
+      body: |
+        Update balena-io/balena-cli from 19.0.11 to 19.0.12
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.134
+  title: ""
+  date: 2024-09-20T19:16:22.484Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v28.0.10
       hash: 90e78b93138bd76178050e43fe3045fc60d58db3
       body: |
