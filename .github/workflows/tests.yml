@@ -74,6 +74,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@6d193bf28034eafb982f37bd894289fe649468fc
+      with:
+        persist-credentials: false
 
     # https://github.com/unfor19/install-aws-cli-action
     - name: Setup awscli
