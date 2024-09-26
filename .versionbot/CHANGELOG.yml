@@ -1,4 +1,16 @@
 - commits:
+    - subject: "CI: Update checkout settings"
+      hash: bce7f324627557c5fd361d9845e8a0a1d5e6129d
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+      nested: []
+  version: 4.1.135
+  title: ""
+  date: 2024-09-26T20:17:26.131Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v19.0.12
       hash: a1546cd39baf90714e7590bf873894ded6164641
       body: |
