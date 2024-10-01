@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update qemux/qemu-docker Docker tag to v6.03
+      hash: d1b3baa9277ece797d24bd09f30d25215873ca9c
+      body: |
+        Update qemux/qemu-docker from 6.02 to 6.03
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.145
+  title: ""
+  date: 2024-10-01T22:18:35.727Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v29
       hash: 98a1db9dc4f97bba1ceb5b9e14311be17af9197a
       body: |
