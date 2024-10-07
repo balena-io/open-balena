@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update actions/checkout digest to eef6144
+      hash: 5db402163351c3c2906751319d7f875f7b690064
+      body: |
+        Update actions/checkout
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.153
+  title: ""
+  date: 2024-10-07T17:26:48.921Z
+- commits:
     - subject: Update qemux/qemu-docker Docker tag to v6.04
       hash: ef10b45fe498c54a8cc53f6dc0336fb59132743d
       body: |
