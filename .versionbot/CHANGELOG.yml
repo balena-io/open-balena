@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v29.0.3
+      hash: 1773225626ea3f051859150fcbe811dd37806178
+      body: |
+        Update balena/open-balena-api from 29.0.2 to 29.0.3
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.154
+  title: ""
+  date: 2024-10-07T18:22:08.350Z
+- commits:
     - subject: Update actions/checkout digest to eef6144
       hash: 5db402163351c3c2906751319d7f875f7b690064
       body: |
