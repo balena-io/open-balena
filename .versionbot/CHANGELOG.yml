@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update qemux/qemu-docker Docker tag to v6.05
+      hash: f3b03e4a5b48b8761a9ff6ae877cbf928b80026b
+      body: |
+        Update qemux/qemu-docker from 6.04 to 6.05
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.156
+  title: ""
+  date: 2024-10-08T13:46:36.696Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to a701637
       hash: d28d4323e264aa222aca2f3da885ebe5f776eb54
       body: |
