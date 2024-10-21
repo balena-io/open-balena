@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency balena-io/balena-cli to v19.12.1
+      hash: d420b6240d1fae6b163c0ac07ab882fe9a0173e1
+      body: |
+        Update balena-io/balena-cli from 19.11.1 to 19.12.1
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.181
+  title: ""
+  date: 2024-10-21T17:46:48.165Z
+- commits:
     - subject: Update qemux/qemu-docker Docker tag to v6.06
       hash: 722c323f8617ccaf52507aa5f407fe6764347fd3
       body: |
