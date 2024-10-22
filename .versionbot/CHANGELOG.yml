@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency balena-io/balena-cli to v19.14.0
+      hash: 212f69ae761f194d6501251d6269bc81db8740cf
+      body: |
+        Update balena-io/balena-cli from 19.13.1 to 19.14.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.186
+  title: ""
+  date: 2024-10-22T13:31:48.937Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to 132df16
       hash: 0b738382fddba92e3a65791c8d4ffdaafba86564
       body: |
