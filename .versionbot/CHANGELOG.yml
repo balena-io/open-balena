@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update actions/checkout digest to 11bd719
+      hash: 06bfec5debbbbad85a51d7da2dc2acebc0eff28f
+      body: |
+        Update actions/checkout
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 4.1.190
+  title: ""
+  date: 2024-10-23T16:23:13.589Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v30.0.16
       hash: 77f3281182a0bbe2592b6d6fd360fe87638e7b0f
       body: |
