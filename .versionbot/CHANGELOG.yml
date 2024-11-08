@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update actions/checkout digest to 3b9b8c8
+      hash: 679bd9d7e5d308cb351bdb35d3699a6f2e06de97
+      body: |
+        Update actions/checkout
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.218
+  title: ""
+  date: 2024-11-08T16:22:12.062Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to 97834a4
       hash: 5e9b6fc5f652f433b3e599582e58fb44d70c14dd
       body: |
