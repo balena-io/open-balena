@@ -164,7 +164,7 @@ function check_device_status() {
         balena_device_uuid="$(cat </balena/config.json | jq -r .uuid)"
 
         if [[ -n $balena_device_uuid ]]; then
-            is_online="$(balena devices --json --fleet "${TEST_FLEET}" \
+            is_online="$(balena device list --json --fleet "${TEST_FLEET}" \
               | jq -r --arg uuid "${balena_device_uuid}" '.[] | select(.uuid==$uuid).is_online == true')"
 
             if [[ $is_online =~ true ]]; then
@@ -208,23 +208,21 @@ function deploy_release() {
 }
 
 function get_releases() {
-      with_backoff balena releases --json "${TEST_FLEET}"
+      with_backoff balena release list --json "${TEST_FLEET}"
 }
 
 function get_release_commit() {
       get_releases | jq -re \
-        'select((.[].status=="success")
-        and (.[].is_invalidated==false)
-        and (.[].is_final==true)
-        and (.[].release_type=="final"))[0].commit'
+        '[.[] | select((.status=="success")
+        and (.is_invalidated==false)
+        and (.is_final==true))][0].commit'
 }
 
 function get_release_id() {
       get_releases | jq -re \
-        'select((.[].status=="success")
-        and (.[].is_invalidated==false)
-        and (.[].is_final==true)
-        and (.[].release_type=="final"))[0].id'
+        '[.[] | select((.status=="success")
+        and (.is_invalidated==false)
+        and (.is_final==true))][0].id'
 }
 
 function supervisor_update_target_state() {
