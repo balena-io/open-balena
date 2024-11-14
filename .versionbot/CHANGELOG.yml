@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update actions/checkout digest to cbb7224
+      hash: cef1f1a970b32c7f2d726a8a153629e3cbbda4ec
+      body: |
+        Update actions/checkout
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.225
+  title: ""
+  date: 2024-11-14T16:21:58.007Z
+- commits:
     - subject: Update qemux/qemu-docker Docker tag to v6.07
       hash: af081b0256b0f36918ee1b07861a28f748a69da9
       body: |
