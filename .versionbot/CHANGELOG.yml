@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update qemux/qemu-docker Docker tag to v6.08
+      hash: 7d07e16e7d8c6b39439dd479e4e7d761315ac408
+      body: |
+        Update qemux/qemu-docker from 6.07 to 6.08
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.226
+  title: ""
+  date: 2024-11-15T04:21:56.302Z
+- commits:
     - subject: Update actions/checkout digest to cbb7224
       hash: cef1f1a970b32c7f2d726a8a153629e3cbbda4ec
       body: |
