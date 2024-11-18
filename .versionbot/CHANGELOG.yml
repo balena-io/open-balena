@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/ca-private Docker tag to v0.0.15
+      hash: 6302c49970f992923458556bb013ccd4486e79b2
+      body: |
+        Update balena/ca-private from 0.0.14 to 0.0.15
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.230
+  title: ""
+  date: 2024-11-18T22:23:32.668Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v31.2.2
       hash: 13937dd74e791bc15fdc326f30e4fd5221d98417
       body: |
