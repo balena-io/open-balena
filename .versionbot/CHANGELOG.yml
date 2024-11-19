@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v31.2.5
+      hash: 9794e4de016d286c521d2bef4258efd10ab0f0d0
+      body: |
+        Update balena/open-balena-api from 31.2.4 to 31.2.5
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.235
+  title: ""
+  date: 2024-11-19T15:21:40.612Z
+- commits:
     - subject: Update balena/open-balena-registry Docker tag to v2.41.13
       hash: 14dfe50a1258f530644bacb73c398970ff200b49
       body: |
@@ -2183,12 +2196,10 @@
 - commits:
     - subject: SSH reliability settings
       hash: 539adade50241c6f9d20bcf08cb028c3026d8f37
-      body: >
+      body: |
         * enable SSHD multiplexing, KeepAlive and relax throttling
 
-
         Thank you for the hint:
-
         https://forums.docker.com/t/docker-compose-through-ssh-failing-and-referring-to-docker-example-com/115165/18?u=ab77
 
                MaxStartups
@@ -4316,43 +4327,22 @@
                 - commits:
                     - subject: Auto-configure balenaMachine(bob)
                       hash: efb8da155b7bedec44558dfcd55cb6b535099c01
-                      body: >
-                        + allows balenaMachine(s)/BoB(s) to automatically
-                        configure itself (without bob-cli)
+                      body: |
+                        + allows balenaMachine(s)/BoB(s) to automatically configure itself (without bob-cli)
+                        + auto-configuration requires balena-ca and cert-manager to do the heavy lifting prior
+                        + corresponding [balena-on-balena PR](https://github.com/balena-io/balena-on-balena/pull/261)
 
-                        + auto-configuration requires balena-ca and cert-manager
-                        to do the heavy lifting prior
-
-                        + corresponding [balena-on-balena
-                        PR](https://github.com/balena-io/balena-on-balena/pull/261)
-
-
-                        * refactor confd.service to include both root-ca and
-                        host-envvars handling
-
-                        * add systemd path watcher to restart confd if
-                        keys/certs change during runtime
-
-                        * store stack configuration available to all services in
-                        a persistent/shared volume (/balena)
-
-                        * change resolver order to dns => mdns (ipv4) => mdns
-                        (ipv6) => return
-
+                        * refactor confd.service to include both root-ca and host-envvars handling
+                        * add systemd path watcher to restart confd if keys/certs change during runtime
+                        * store stack configuration available to all services in a persistent/shared volume (/balena)
+                        * change resolver order to dns => mdns (ipv4) => mdns (ipv6) => return
                         * configure API key and JOSE/JWT key id
-
                         * configure open-balena-vpn (PKI) environment variables
-
                         * configure Sentry DSNs
-
                         * configure API keys/tokens
-
                         * configure proxy and devices SSH keys
-
                         * bundle Git SSH keys
-
                         * refactor environment handling in non-systemd variant
-
                         * deprecate BALENA_ prefixes from confd
                       footer:
                         Change-type: minor
@@ -5206,43 +5196,22 @@
                 - commits:
                     - subject: Auto-configure balenaMachine(bob)
                       hash: efb8da155b7bedec44558dfcd55cb6b535099c01
-                      body: >
-                        + allows balenaMachine(s)/BoB(s) to automatically
-                        configure itself (without bob-cli)
+                      body: |
+                        + allows balenaMachine(s)/BoB(s) to automatically configure itself (without bob-cli)
+                        + auto-configuration requires balena-ca and cert-manager to do the heavy lifting prior
+                        + corresponding [balena-on-balena PR](https://github.com/balena-io/balena-on-balena/pull/261)
 
-                        + auto-configuration requires balena-ca and cert-manager
-                        to do the heavy lifting prior
-
-                        + corresponding [balena-on-balena
-                        PR](https://github.com/balena-io/balena-on-balena/pull/261)
-
-
-                        * refactor confd.service to include both root-ca and
-                        host-envvars handling
-
-                        * add systemd path watcher to restart confd if
-                        keys/certs change during runtime
-
-                        * store stack configuration available to all services in
-                        a persistent/shared volume (/balena)
-
-                        * change resolver order to dns => mdns (ipv4) => mdns
-                        (ipv6) => return
-
+                        * refactor confd.service to include both root-ca and host-envvars handling
+                        * add systemd path watcher to restart confd if keys/certs change during runtime
+                        * store stack configuration available to all services in a persistent/shared volume (/balena)
+                        * change resolver order to dns => mdns (ipv4) => mdns (ipv6) => return
                         * configure API key and JOSE/JWT key id
-
                         * configure open-balena-vpn (PKI) environment variables
-
                         * configure Sentry DSNs
-
                         * configure API keys/tokens
-
                         * configure proxy and devices SSH keys
-
                         * bundle Git SSH keys
-
                         * refactor environment handling in non-systemd variant
-
                         * deprecate BALENA_ prefixes from confd
                       footer:
                         Change-type: minor
@@ -5960,43 +5929,22 @@
                 - commits:
                     - subject: Auto-configure balenaMachine(bob)
                       hash: efb8da155b7bedec44558dfcd55cb6b535099c01
-                      body: >
-                        + allows balenaMachine(s)/BoB(s) to automatically
-                        configure itself (without bob-cli)
+                      body: |
+                        + allows balenaMachine(s)/BoB(s) to automatically configure itself (without bob-cli)
+                        + auto-configuration requires balena-ca and cert-manager to do the heavy lifting prior
+                        + corresponding [balena-on-balena PR](https://github.com/balena-io/balena-on-balena/pull/261)
 
-                        + auto-configuration requires balena-ca and cert-manager
-                        to do the heavy lifting prior
-
-                        + corresponding [balena-on-balena
-                        PR](https://github.com/balena-io/balena-on-balena/pull/261)
-
-
-                        * refactor confd.service to include both root-ca and
-                        host-envvars handling
-
-                        * add systemd path watcher to restart confd if
-                        keys/certs change during runtime
-
-                        * store stack configuration available to all services in
-                        a persistent/shared volume (/balena)
-
-                        * change resolver order to dns => mdns (ipv4) => mdns
-                        (ipv6) => return
-
+                        * refactor confd.service to include both root-ca and host-envvars handling
+                        * add systemd path watcher to restart confd if keys/certs change during runtime
+                        * store stack configuration available to all services in a persistent/shared volume (/balena)
+                        * change resolver order to dns => mdns (ipv4) => mdns (ipv6) => return
                         * configure API key and JOSE/JWT key id
-
                         * configure open-balena-vpn (PKI) environment variables
-
                         * configure Sentry DSNs
-
                         * configure API keys/tokens
-
                         * configure proxy and devices SSH keys
-
                         * bundle Git SSH keys
-
                         * refactor environment handling in non-systemd variant
-
                         * deprecate BALENA_ prefixes from confd
                       footer:
                         Change-type: minor
@@ -9041,43 +8989,22 @@
                 - commits:
                     - subject: Auto-configure balenaMachine(bob)
                       hash: efb8da155b7bedec44558dfcd55cb6b535099c01
-                      body: >
-                        + allows balenaMachine(s)/BoB(s) to automatically
-                        configure itself (without bob-cli)
+                      body: |
+                        + allows balenaMachine(s)/BoB(s) to automatically configure itself (without bob-cli)
+                        + auto-configuration requires balena-ca and cert-manager to do the heavy lifting prior
+                        + corresponding [balena-on-balena PR](https://github.com/balena-io/balena-on-balena/pull/261)
 
-                        + auto-configuration requires balena-ca and cert-manager
-                        to do the heavy lifting prior
-
-                        + corresponding [balena-on-balena
-                        PR](https://github.com/balena-io/balena-on-balena/pull/261)
-
-
-                        * refactor confd.service to include both root-ca and
-                        host-envvars handling
-
-                        * add systemd path watcher to restart confd if
-                        keys/certs change during runtime
-
-                        * store stack configuration available to all services in
-                        a persistent/shared volume (/balena)
-
-                        * change resolver order to dns => mdns (ipv4) => mdns
-                        (ipv6) => return
-
+                        * refactor confd.service to include both root-ca and host-envvars handling
+                        * add systemd path watcher to restart confd if keys/certs change during runtime
+                        * store stack configuration available to all services in a persistent/shared volume (/balena)
+                        * change resolver order to dns => mdns (ipv4) => mdns (ipv6) => return
                         * configure API key and JOSE/JWT key id
-
                         * configure open-balena-vpn (PKI) environment variables
-
                         * configure Sentry DSNs
-
                         * configure API keys/tokens
-
                         * configure proxy and devices SSH keys
-
                         * bundle Git SSH keys
-
                         * refactor environment handling in non-systemd variant
-
                         * deprecate BALENA_ prefixes from confd
                       footer:
                         Change-type: minor
@@ -9678,9 +9605,8 @@
                                 - commits:
                                     - subject: Revert "Remove now unnecessary hack for casting SERIAL types"
                                       hash: 60a56423de9262b5b454ff4cd83c1d1fd39d071e
-                                      body: >
-                                        This reverts commit
-                                        187bc075d237a2ced731d0a026ca25aa3e0f5540.
+                                      body: |
+                                        This reverts commit 187bc075d237a2ced731d0a026ca25aa3e0f5540.
                                       footer:
                                         Change-type: patch
                                         change-type: patch
@@ -11720,24 +11646,15 @@
 - commits:
     - subject: Get cert-provider working again
       hash: 7c4e9fdc0944b6bbaa95bbc1d72b06b4de353b0d
-      body: >
+      body: |
         Need new version to use ACME v2 correctly.
-
-        Force using letsencrypt (didn't work otherwise, not totally sure why
-        not)
-
+        Force using letsencrypt (didn't work otherwise, not totally sure why not)
         Update bundled staging certs, contents are from:
-
         https://github.com/letsencrypt/website/blob/master/static/certs/staging/letsencrypt-stg-root-dst.pem
-
         https://github.com/letsencrypt/website/blob/master/static/certs/staging/letsencrypt-stg-root-x1.pem
-
         https://github.com/letsencrypt/website/blob/master/static/certs/staging/letsencrypt-stg-root-x2.pem
-
         https://github.com/letsencrypt/website/blob/master/static/certs/staging/letsencrypt-stg-int-e1.pem
-
         https://github.com/letsencrypt/website/blob/master/static/certs/staging/letsencrypt-stg-int-r3.pem
-
         ref https://letsencrypt.org/docs/staging-environment/
       footer:
         Change-type: patch
