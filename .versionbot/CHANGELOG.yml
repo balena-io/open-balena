@@ -1,4 +1,15 @@
 - commits:
+    - subject: 'Tests require permissions: id-token: "write"'
+      hash: c23c2f63730700c9d80462b099cad9108511778a
+      body: ""
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.256
+  title: ""
+  date: 2024-11-28T20:54:45.219Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v31.2.19
       hash: 2c5fb2f95a32bb42b06e6199bc623f1be69a51d7
       body: |
