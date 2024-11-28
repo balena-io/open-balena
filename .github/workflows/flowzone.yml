@@ -9,7 +9,9 @@ on:
     branches: [main, master]
 
 permissions:
-  id-token: "write"  # AWS GitHub OIDC required: write (tests)
+  contents: read
+  id-token: "write"  # AWS GitHub OIDC required: write
+  packages: read
 
 jobs:
   flowzone:
