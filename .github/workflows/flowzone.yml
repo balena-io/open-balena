@@ -8,6 +8,9 @@ on:
     types: [opened, synchronize, closed]
     branches: [main, master]
 
+permissions:
+  id-token: "write"  # AWS GitHub OIDC required: write (tests)
+
 jobs:
   flowzone:
     name: Flowzone
