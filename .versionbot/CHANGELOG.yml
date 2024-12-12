@@ -1,4 +1,18 @@
 - commits:
+    - subject: Update ami digest to
+        ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20241206
+      hash: 8e5fa7b64ef85e101ec334403c6a701128b7f47e
+      body: |
+        Update ami
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.261
+  title: ""
+  date: 2024-12-12T20:26:10.424Z
+- commits:
     - subject: Update balena/open-balena-vpn Docker tag to v11.30.70
       hash: d0638e42934e162abf11d8019df09541902d6ff1
       body: |
