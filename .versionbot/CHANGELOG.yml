@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-registry Docker tag to v2.41.16
+      hash: 4744edae83dea21609c99e76d52ec8253f617f06
+      body: |
+        Update balena/open-balena-registry from 2.41.14 to 2.41.16
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.262
+  title: ""
+  date: 2024-12-12T21:26:35.487Z
+- commits:
     - subject: Update ami digest to
         ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20241206
       hash: 8e5fa7b64ef85e101ec334403c6a701128b7f47e
