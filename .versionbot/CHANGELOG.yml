@@ -1,4 +1,17 @@
 - commits:
+    - subject: ignore versioning assets
+      hash: 3a3008697bc356d9b09f01a1ec60f7e9c6806ff6
+      body: |
+        * allow VPN access to /dev/net/tun
+        * Renovate AWS AMIs (Ubuntu)
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.259
+  title: ""
+  date: 2024-12-12T19:06:03.811Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v31.2.22
       hash: 1cb3f70370b5a317c092d91da6e46873f19b9379
       body: |
