@@ -156,6 +156,8 @@ services:
       VPN_PORT: 443
       # ensure correct service instance IP is registered with the API
       VPN_SERVICE_REGISTER_INTERFACE: eth0
+    devices:
+      - /dev/net/tun
 
   # https://github.com/balena-io/open-balena-db
   db:
