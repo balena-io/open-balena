@@ -1,4 +1,26 @@
 - commits:
+    - subject: Update pre-commit hook pre-commit/pre-commit-hooks to v5
+      hash: c03072d34d771b7642de6a79748400b45d842d22
+      body: |
+        Update pre-commit/pre-commit-hooks from 4.6.0 to 5.0.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+    - subject: Update balena/open-balena-api Docker tag to v34.3.11
+      hash: 8a1168f8e03289b124331fc0ec409db9e9dc1719
+      body: |
+        Update balena/open-balena-api from 34.3.10 to 34.3.11
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.294
+  title: ""
+  date: 2025-01-02T22:31:01.035Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v20.2.1
       hash: 27d9a3a4b6d58fccea9143f8a32734d2a13bbad4
       body: |
