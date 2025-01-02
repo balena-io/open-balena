@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency balena-io/balena-cli to v20.1.6
+      hash: ec7d2fc1445de3a12b0353fb7116f80908b2ea2d
+      body: |
+        Update balena-io/balena-cli from 20.1.5 to 20.1.6
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.292
+  title: ""
+  date: 2025-01-02T17:56:10.295Z
+- commits:
     - subject: Update pre-commit hook pre-commit/pre-commit-hooks to v4
       hash: 4ce6f760bb582e0a6fb50943ebf2e448231e6d40
       body: |
