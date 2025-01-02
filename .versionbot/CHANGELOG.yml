@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update pre-commit hook pre-commit/pre-commit-hooks to v4
+      hash: 4ce6f760bb582e0a6fb50943ebf2e448231e6d40
+      body: |
+        Update pre-commit/pre-commit-hooks from 3.2.0 to 4.6.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.291
+  title: ""
+  date: 2025-01-02T16:24:33.909Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v34.3.10
       hash: 601400107b6ea98ba1d57e324e1809fb7fee26cd
       body: |
