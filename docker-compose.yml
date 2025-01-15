@@ -79,7 +79,7 @@ services:
       *with-default-privileges,
       *with-default-volumes,
     ]
-    image: balena/open-balena-api:v34.3.14
+    image: balena/open-balena-api:34.3.17
     depends_on:
       - db
       - redis
@@ -119,7 +119,7 @@ services:
       *with-default-healthcheck,
       *with-default-privileges,
     ]
-    image: balena/open-balena-registry:2.41.18
+    image: balena/open-balena-registry:v2.41.19
     volumes:
       - certs-data:/certs
       - resin-data:/balena
@@ -146,7 +146,7 @@ services:
       *with-network-privileges,
       *with-default-privileges,
     ]
-    image: balena/open-balena-vpn:v11.30.78
+    image: balena/open-balena-vpn:v11.30.79
     depends_on:
       - api
     environment:
