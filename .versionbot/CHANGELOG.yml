@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update actions/checkout digest to 009b9ae
+      hash: 76ff81b748d37275dd03257f5c35c7610822cb2c
+      body: |
+        Update actions/checkout
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.315
+  title: ""
+  date: 2025-01-16T19:56:20.092Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v34.3.19
       hash: 0b81cafee42039acff1a6dcf87b15f7f7c3cd2cc
       body: |
