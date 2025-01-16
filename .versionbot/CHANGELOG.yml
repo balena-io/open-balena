@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update actions/checkout digest to 85e6279
+      hash: 9e78e0ca7b22aea19d9b6760e43e542dca0f2b04
+      body: |
+        Update actions/checkout
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.316
+  title: ""
+  date: 2025-01-16T22:16:14.191Z
+- commits:
     - subject: Update actions/checkout digest to 009b9ae
       hash: 76ff81b748d37275dd03257f5c35c7610822cb2c
       body: |
