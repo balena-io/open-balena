@@ -73,7 +73,7 @@ jobs:
       name: ${{ matrix.target }}
 
     steps:
-    - uses: actions/checkout@cbb722410c2e876e24abbe8de2cc27693e501dcb
+    - uses: actions/checkout@009b9ae9e446ad8d9b8c809870b0fbcc5e03573e
       with:
         persist-credentials: false
 
