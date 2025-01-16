@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency balena-io/balena-cli to v20.2.3
+      hash: bf91e25ff432af2795186b6293b4ef1d42b831af
+      body: |
+        Update balena-io/balena-cli from 20.2.2 to 20.2.3
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.317
+  title: ""
+  date: 2025-01-16T23:12:32.803Z
+- commits:
     - subject: Update actions/checkout digest to 85e6279
       hash: 9e78e0ca7b22aea19d9b6760e43e542dca0f2b04
       body: |
