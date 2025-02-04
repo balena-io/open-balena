@@ -26,7 +26,7 @@ x-default-environment: &default-environment
   DB_PASSWORD: docker
   DB_USER: docker
   LOG_LEVEL: DEBUG
-  PRODUCTION_MODE: 'false'
+  PRODUCTION_MODE: 'true'
 
 x-default-healthcheck-trait: &with-default-healthcheck
   healthcheck:
