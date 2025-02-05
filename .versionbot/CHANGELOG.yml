@@ -1,4 +1,18 @@
 - commits:
+    - subject: Set PRODUCTION_MODE true
+      hash: 2522cf6111588111b19922d3de906c7af1bfcd01
+      body: >
+        PRODUCTION_MODE is a legacy feature and required deprecation (we don't
+        fully understand what it does now and what it was originally intended to
+        do).
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.330
+  title: ""
+  date: 2025-02-05T07:59:02.740Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v34.3.26
       hash: 3bc2119c002efcf546adf1739c7e51617e9b84df
       body: |
