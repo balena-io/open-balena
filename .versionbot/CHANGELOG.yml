@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to 3478c15
+      hash: ec710c28698734c905896a8448133cbb2365350e
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.331
+  title: ""
+  date: 2025-02-05T09:17:33.779Z
+- commits:
     - subject: Set PRODUCTION_MODE true
       hash: 2522cf6111588111b19922d3de906c7af1bfcd01
       body: >
