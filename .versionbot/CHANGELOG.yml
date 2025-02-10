@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to 16fec60
+      hash: 71c347b08ea0799262fcf2322e2700a01ce600c4
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.335
+  title: ""
+  date: 2025-02-10T16:12:10.420Z
+- commits:
     - subject: Update qemux/qemu-docker Docker tag to v6.14
       hash: 09c046395ad8f31fbfdd212e138e9162bf3e9e80
       body: |
