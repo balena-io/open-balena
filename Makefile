@@ -69,7 +69,7 @@ endif
 
 .PHONY: wait
 wait: ## Wait for service
-	@until [[ $$(docker compose ps $(SERVICE) --format json | jq -r '.Health') =~ ^healthy$$ ]]; do printf '.'; sleep 3; done
+	@until [[ $$(docker compose ps $(SERVICE) --format json | jq -r '.[].Health') =~ ^healthy$$ ]]; do printf '.'; sleep 3; done
 	@printf '\n'
 
 .PHONY: waitlog
