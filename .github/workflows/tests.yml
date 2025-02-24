@@ -257,7 +257,7 @@ jobs:
         with_backoff balena device ${{ steps.register-test-device.outputs.balena_device_uuid }}
 
       env:
-        COMMIT: ${{ github.event.pull_request.head.sha || github.event.head_commit.id || github.event.pull_request.head.ref }}
+        COMMIT: ${{ github.event.pull_request.head.sha  }}
 
     - name: configure balenaOS test device environment
       if: matrix.target == 'balena-public-pki'
