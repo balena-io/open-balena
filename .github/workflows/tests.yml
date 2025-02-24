@@ -76,6 +76,7 @@ jobs:
     - uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
       with:
         persist-credentials: false
+        ref: ${{ github.event.pull_request.head.sha || github.event.head_commit.id || github.event.pull_request.head.ref }}
 
     # https://github.com/unfor19/install-aws-cli-action
     - name: Setup awscli
@@ -242,9 +243,8 @@ jobs:
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
         pr_id='${{ github.event.pull_request.id }}'
-        head_sha='${{ github.event.pull_request.head.sha || github.event.head_commit.id }}'
         release_id="$(with_backoff balena releases '${{ matrix.fleet }}' --json \
-          | jq -r --arg pr_id "${pr_id}" --arg head_sha "${head_sha}" '.[]
+          | jq -r --arg pr_id "${pr_id}" --arg head_sha "${COMMIT}" '.[]
           | select(.release_tag[].tag_key=="balena-ci-commit-sha")
           | select(.release_tag[].value==$head_sha)
           | select(.release_tag[].tag_key=="balena-ci-id")
@@ -255,6 +255,9 @@ jobs:
           "${release_id}"
 
         with_backoff balena device ${{ steps.register-test-device.outputs.balena_device_uuid }}
+
+      env:
+        COMMIT: ${{ github.event.pull_request.head.sha || github.event.head_commit.id || github.event.pull_request.head.ref }}
 
     - name: configure balenaOS test device environment
       if: matrix.target == 'balena-public-pki'
@@ -856,7 +859,6 @@ jobs:
       env:
         ATTEMPTS: 2
         AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
-        COMMIT: ${{ github.event.pull_request.head.sha || github.event.head_commit.id || github.event.pull_request.head.ref }}
 
     - name: SUT&DUT (Ubuntu/compose)
       if: matrix.target == 'compose-private-pki'
@@ -910,7 +912,7 @@ jobs:
         # docs/getting-started.md
         cmds="set -ax \
           && cloud-init status --wait --long && cat </var/log/cloud-init-output.log \
-          && sudo -u balena git clone https://token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git /home/balena/open-balena \
+          && sudo -u balena git clone https://token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.event.pull_request.head.repo.full_name }}.git /home/balena/open-balena \
           && sudo -u balena git config --global --add safe.directory /home/balena/open-balena \
           && cd /home/balena/open-balena \
           && sudo -u balena git checkout ${COMMIT} \
