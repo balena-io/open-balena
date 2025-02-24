@@ -1,4 +1,22 @@
 - commits:
+    - subject: Support testing external commits
+      hash: c1133d1f16f1cb55e42b6c2b3c591fa3c8cfe425
+      body: |
+        tests require cloning of GitHub repo outside of Flowzone on AWS runners`
+
+        * on pull_request_target (external contibutions)
+          github.event.pull_request.head.repo.full_name will resolve to
+          {{forked-repo}}/open-balena (e.g. MrMEEE/open-balena)
+
+        * on pull_request, it will resolve to {{ github.repository }}
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.356
+  title: ""
+  date: 2025-02-24T20:17:17.529Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v34.7.0
       hash: f2498f14e2f1a7c8b84ea69ce89b539fecccb5ef
       body: |
