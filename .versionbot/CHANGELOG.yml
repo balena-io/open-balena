@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update qemux/qemu-docker Docker tag to v6.17
+      hash: 7865349f2194064e7d337085e67601b16089a975
+      body: |
+        Update qemux/qemu-docker from 6.16 to 6.17
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.358
+  title: ""
+  date: 2025-02-25T15:27:26.827Z
+- commits:
     - subject: Tab was inserted incorrectly
       hash: 59ae072a922beb46607c6ae8e16fa7a589599473
       body: ""
