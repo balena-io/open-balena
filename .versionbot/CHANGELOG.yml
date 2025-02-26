@@ -1,4 +1,332 @@
 - commits:
+    - subject: Update dependency balena-io/balena-cli to v20.2.6
+      hash: 4d89e5a6e5022d5b7476522e4b791a72cb7d81ac
+      body: |
+        Update balena-io/balena-cli from 20.2.5 to 20.2.6
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.361
+  title: ""
+  date: 2025-02-25T20:32:23.753Z
+- commits:
+    - subject: Update dependency balena-io/balena-cli to v20.2.5
+      hash: 61e03444043f828247078094b59f1400ebe87f4f
+      body: |
+        Update balena-io/balena-cli from 20.2.3 to 20.2.5
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.360
+  title: ""
+  date: 2025-02-25T19:22:57.347Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.8.0
+      hash: bd9fa1140a4370b2467b3e95d5b353777b0085a5
+      body: |
+        Update balena/open-balena-api from 34.7.0 to 34.8.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.359
+  title: ""
+  date: 2025-02-25T18:17:22.350Z
+- commits:
+    - subject: Update qemux/qemu-docker Docker tag to v6.17
+      hash: 7865349f2194064e7d337085e67601b16089a975
+      body: |
+        Update qemux/qemu-docker from 6.16 to 6.17
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.358
+  title: ""
+  date: 2025-02-25T15:27:26.827Z
+- commits:
+    - subject: Tab was inserted incorrectly
+      hash: 59ae072a922beb46607c6ae8e16fa7a589599473
+      body: ""
+      footer:
+        change-type: patch
+      author: Martin Juhl
+      nested: []
+  version: 4.1.357
+  title: ""
+  date: 2025-02-24T21:18:58.404Z
+- commits:
+    - subject: Support testing external commits
+      hash: c1133d1f16f1cb55e42b6c2b3c591fa3c8cfe425
+      body: |
+        tests require cloning of GitHub repo outside of Flowzone on AWS runners`
+
+        * on pull_request_target (external contibutions)
+          github.event.pull_request.head.repo.full_name will resolve to
+          {{forked-repo}}/open-balena (e.g. MrMEEE/open-balena)
+
+        * on pull_request, it will resolve to {{ github.repository }}
+      footer:
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.356
+  title: ""
+  date: 2025-02-24T20:17:17.529Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.7.0
+      hash: f2498f14e2f1a7c8b84ea69ce89b539fecccb5ef
+      body: |
+        Update balena/open-balena-api from 34.6.1 to 34.7.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.355
+  title: ""
+  date: 2025-02-24T15:57:41.026Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.6.1
+      hash: 4cdaf0e43371ea1c4c6d93701f4bed20050bc1a2
+      body: |
+        Update balena/open-balena-api from 34.6.0 to 34.6.1
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.354
+  title: ""
+  date: 2025-02-24T15:22:14.738Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.6.0
+      hash: 1f5a6b4dc87e52023743c6074a575386bfdee62b
+      body: |
+        Update balena/open-balena-api from 34.5.1 to 34.6.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.353
+  title: ""
+  date: 2025-02-24T13:47:23.979Z
+- commits:
+    - subject: Update qemux/qemu-docker Docker tag to v6.16
+      hash: 59729f0ac23c90e5da520cc477eba75304161a89
+      body: |
+        Update qemux/qemu-docker from 6.15 to 6.16
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.352
+  title: ""
+  date: 2025-02-24T03:37:28.144Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.5.1
+      hash: d32699b7e4ae4ed63fcf3635ce029a6c620c81c8
+      body: |
+        Update balena/open-balena-api from 34.5.0 to 34.5.1
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.351
+  title: ""
+  date: 2025-02-20T06:17:42.810Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.5.0
+      hash: ffa5a965004569a0ed75db2e467bc80617a1df86
+      body: |
+        Update balena/open-balena-api from 34.4.12 to 34.5.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.350
+  title: ""
+  date: 2025-02-18T16:37:30.954Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.4.12
+      hash: 242c77188d61382e6c3125d05e78f8d77d8c115a
+      body: |
+        Update balena/open-balena-api from 34.4.11 to 34.4.12
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.349
+  title: ""
+  date: 2025-02-17T18:31:58.373Z
+- commits:
+    - subject: Update qemux/qemu-docker Docker tag to v6.15
+      hash: 9460a47069f36b85e36b209ade658ff576e9ef18
+      body: |
+        Update qemux/qemu-docker from 6.14 to 6.15
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.348
+  title: ""
+  date: 2025-02-17T17:22:14.241Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.4.11
+      hash: 12e4342acdee53385d65f03a756f78e7799a3417
+      body: |
+        Update balena/open-balena-api from 34.4.10 to 34.4.11
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.347
+  title: ""
+  date: 2025-02-17T16:42:30.127Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.4.10
+      hash: 20811fbe4514f140f523400b64c90b49f0736519
+      body: |
+        Update balena/open-balena-api from 34.4.8 to 34.4.10
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.346
+  title: ""
+  date: 2025-02-17T13:27:07.831Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.4.8
+      hash: 564964acbc8e86758cf6d0785f0d080fec894db8
+      body: |
+        Update balena/open-balena-api from 34.4.7 to 34.4.8
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.345
+  title: ""
+  date: 2025-02-14T19:20:09.356Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.4.7
+      hash: d331e224f55fd911e5469ba171f775556a0c0330
+      body: |
+        Update balena/open-balena-api from 34.4.4 to 34.4.7
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.344
+  title: ""
+  date: 2025-02-13T21:22:17.055Z
+- commits:
+    - subject: Update balena/open-balena-db Docker tag to v6
+      hash: 6f6a3820fcfe2bf22f571ddeff8e3036530eabcc
+      body: |
+        Update balena/open-balena-db from 5.2.2 to 6.0.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.343
+  title: ""
+  date: 2025-02-13T20:44:44.194Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.4.4
+      hash: df662ec3c3806c3d1b83babba2ba1a639a39d08e
+      body: |
+        Update balena/open-balena-api from 34.4.3 to 34.4.4
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.342
+  title: ""
+  date: 2025-02-13T20:12:36.828Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.4.3
+      hash: fc2f054f4b31fe146cd3e1cb87bc4040393a88f0
+      body: |
+        Update balena/open-balena-api from 34.4.2 to 34.4.3
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.341
+  title: ""
+  date: 2025-02-13T19:23:16.721Z
+- commits:
+    - subject: Update balena/open-balena-vpn Docker tag to v11.30.83
+      hash: 6524b64cf562c69509970162e65e46c1df27dde3
+      body: |
+        Update balena/open-balena-vpn from 11.30.82 to 11.30.83
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.340
+  title: ""
+  date: 2025-02-12T22:29:35.083Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.4.2
+      hash: 481daac1d67351f3fee0170947167afc3792bb0f
+      body: |
+        Update balena/open-balena-api from 34.4.1 to 34.4.2
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.339
+  title: ""
+  date: 2025-02-12T16:17:35.703Z
+- commits:
+    - subject: Update balena/open-balena-registry Docker tag to v2.41.23
+      hash: 0fbaa06b2085e5d98e4b9b83a0f4da23acad4642
+      body: |
+        Update balena/open-balena-registry from 2.41.22 to 2.41.23
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.338
+  title: ""
+  date: 2025-02-11T15:22:44.434Z
+- commits:
+    - subject: Update balena/open-balena-s3 Docker tag to v2.28.67
+      hash: 3b10e5cfa228f450d47a5ce2f180d7e7ee3e0e1d
+      body: |
+        Update balena/open-balena-s3 from 2.28.66 to 2.28.67
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.337
+  title: ""
+  date: 2025-02-11T14:27:14.147Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to ececac1
       hash: 33559ace10ad9d12e9e32368ca694e3732c7dccc
       body: |

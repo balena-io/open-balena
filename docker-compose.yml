@@ -77,7 +77,7 @@ services:
       *with-default-privileges,
       *with-default-volumes,
     ]
-    image: balena/open-balena-api:34.4.1
+    image: balena/open-balena-api:34.8.0
     depends_on:
       - db
       - redis
@@ -117,7 +117,7 @@ services:
       *with-default-healthcheck,
       *with-default-privileges,
     ]
-    image: balena/open-balena-registry:2.41.22
+    image: balena/open-balena-registry:2.41.23
     volumes:
       - certs-data:/certs
       - resin-data:/balena
@@ -144,7 +144,7 @@ services:
       *with-network-privileges,
       *with-default-privileges,
     ]
-    image: balena/open-balena-vpn:v11.30.82
+    image: balena/open-balena-vpn:v11.30.83
     depends_on:
       - api
     environment:
@@ -160,7 +160,7 @@ services:
   # https://github.com/balena-io/open-balena-db
   db:
     <<: *base-service
-    image: balena/open-balena-db:v5.2.2
+    image: balena/open-balena-db:6.0.0
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
@@ -175,7 +175,7 @@ services:
       *with-default-healthcheck,
       *with-default-privileges,
     ]
-    image: balena/open-balena-s3:2.28.66
+    image: balena/open-balena-s3:2.28.67
     volumes:
       - s3-data:/export
       - certs-data:/certs
@@ -233,7 +233,7 @@ services:
       ALIASES: api,ca,cloudlink,db,delta,logs,redis,registry2,s3,stats,tunnel
     labels:
       io.balena.features.balena-socket: 1
-      io.balena.features.supervisor-api	: 1
+      io.balena.features.supervisor-api: 1
 
   # https://github.com/balena-io/cert-manager
   # https://certbot.eff.org/docs/using.html
