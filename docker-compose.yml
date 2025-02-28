@@ -1,6 +1,4 @@
 ---
-version: '2.4'
-
 volumes:
   builder-certs-ca: {}
   builder-certs-client: {}
