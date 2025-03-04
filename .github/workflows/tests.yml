@@ -51,8 +51,8 @@ jobs:
             launch_template_version: ${{ vars.AWS_EC2_LT_VERSION || '6' }}
             # https://docs.renovatebot.com/modules/datasource/aws-machine-image/
             # amiFilter=[{"Name":"owner-id","Values":["099720109477"]},{"Name":"name","Values":["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]},{"region":"us-east-1"}]
-            # currentImageName=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20241206
-            ami: ami-00f3c44a2de45a590
+            # currentImageName=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20250228
+            ami: ami-0565c7ec71d5e8b8d
             subdomain:  ${{ vars.DNS_SUBDOMAIN || 'auto' }}
             dns_tld: ${{ vars.DNS_TLD || 'balena-devices.com' }}
 
@@ -61,8 +61,8 @@ jobs:
             launch_template_version: ${{ vars.AWS_EC2_LT_VERSION || '6' }}
             # https://docs.renovatebot.com/modules/datasource/aws-machine-image/
             # amiFilter=[{"Name":"owner-id","Values":["491725000532"]},{"Name":"name","Values":["balenaOS-installer-secureboot-*-generic-amd64"]},{"region":"us-east-1"}]
-            # currentImageName=unknown
-            ami: ami-03a3995797dee84fa
+            # currentImageName=balenaOS-installer-secureboot-6.0.24-rev1-generic-amd64
+            ami: ami-078d837eccf0f531d
             # https://dash.cloudflare.com/001b3ed2352612aaa068aca1b0022736/balena-devices.com/dns
             subdomain:  ${{ vars.DNS_SUBDOMAIN || 'auto' }}
             dns_tld: ${{ vars.DNS_TLD || 'balena-devices.com' }}
