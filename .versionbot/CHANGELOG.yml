@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update webfactory/ssh-agent action to v0.9.1
+      hash: 03e5ffc04ebca72051445a29a3385d825ffca638
+      body: |
+        Update webfactory/ssh-agent from 0.9.0 to 0.9.1
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.385
+  title: ""
+  date: 2025-03-17T15:22:25.396Z
+- commits:
     - subject: Update balena/cert-manager Docker tag to v0.3.1
       hash: a9fa9ed053276f5cae1bd1160355f6ab3ee4e6e5
       body: |
