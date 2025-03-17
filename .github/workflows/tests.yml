@@ -181,7 +181,7 @@ jobs:
         AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
 
     # https://github.com/webfactory/ssh-agent
-    - uses: webfactory/ssh-agent@dc588b651fe13675774614f8e6a936a468676387 # v0.9.0
+    - uses: webfactory/ssh-agent@a6f90b1f127823b31d4d4a8d96047790581349bd # v0.9.1
       with:
         ssh-private-key: ${{ steps.generate-key-pair.outputs.ssh_private_key }}
 
