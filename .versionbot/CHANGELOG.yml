@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v34.10.2
+      hash: 5c338566f2ac1785323fe571177e50881edbc00f
+      body: |
+        Update balena/open-balena-api from 34.10.1 to 34.10.2
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.386
+  title: ""
+  date: 2025-03-18T17:12:00.113Z
+- commits:
     - subject: Update webfactory/ssh-agent action to v0.9.1
       hash: 03e5ffc04ebca72051445a29a3385d825ffca638
       body: |
