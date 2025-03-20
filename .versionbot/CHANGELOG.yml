@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Add missing session token to use ephemeral AWS creds."
+      hash: 025e120ac809f656fd2c959553d95919830a1e54
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.388
+  title: ""
+  date: 2025-03-20T18:32:46.869Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v34.10.3
       hash: 4c1bef79f7ab948e95116d30a316a05d56d3ebcd
       body: |
