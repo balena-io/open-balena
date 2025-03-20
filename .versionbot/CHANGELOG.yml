@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-vpn Docker tag to v11.32.6
+      hash: 47f6fccc74f6ac74bfc42b5ff7ba61616ce29385
+      body: |
+        Update balena/open-balena-vpn from 11.32.5 to 11.32.6
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.389
+  title: ""
+  date: 2025-03-20T20:33:31.259Z
+- commits:
     - subject: "patch: Add missing session token to use ephemeral AWS creds."
       hash: 025e120ac809f656fd2c959553d95919830a1e54
       body: ""
