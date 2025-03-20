@@ -390,6 +390,10 @@ jobs:
           --service cert-manager \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
+        with_backoff balena env add AWS_SESSION_TOKEN '${{ env.AWS_SESSION_TOKEN }}' \
+          --service cert-manager \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
     - name: provision balenaOS ephemeral SUT
       id: balena-sut
       if: matrix.target == 'balena-public-pki'
