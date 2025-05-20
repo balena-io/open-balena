@@ -319,7 +319,7 @@ services:
       *with-extended-privileges,
       *with-network-privileges,
     ]
-    # https://hub.docker.com/r/qemux/qemu-docker
+    # https://hub.docker.com/r/qemux/qemu
     # https://github.com/qemus/qemu-docker
     build: src/test-device
     entrypoint:
