@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Update Renovate balenaOS AMI match"
+      hash: d6d8370e7a56f47e7d2bb0bf533ed742d3e64024
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.391
+  title: ""
+  date: 2025-05-20T18:49:40.831Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v35
       hash: 001975e72ab0d294acafe1f2c8e69eae7b85c8f5
       body: |
