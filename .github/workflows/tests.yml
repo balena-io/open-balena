@@ -60,9 +60,9 @@ jobs:
           - target: balena-public-pki
             launch_template_version: ${{ vars.AWS_EC2_LT_VERSION || '6' }}
             # https://docs.renovatebot.com/modules/datasource/aws-machine-image/
-            # amiFilter=[{"Name":"owner-id","Values":["491725000532"]},{"Name":"name","Values":["balenaOS-installer-secureboot-*-generic-amd64"]},{"region":"us-east-1"}]
+            # amiFilter=[{"Name":"owner-id","Values":["491725000532"]},{"Name":"name","Values":["balenaOS-*-generic-amd64"]},{"region":"us-east-1"}]
             # currentImageName=unknown
-            ami: ami-03a3995797dee84fa
+            ami: ami-0ffdbd60c5229c1e2
             # https://dash.cloudflare.com/001b3ed2352612aaa068aca1b0022736/balena-devices.com/dns
             subdomain:  ${{ vars.DNS_SUBDOMAIN || 'auto' }}
             dns_tld: ${{ vars.DNS_TLD || 'balena-devices.com' }}
