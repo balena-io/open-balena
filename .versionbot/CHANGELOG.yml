@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v35.0.6
+      hash: eabf9064a8ff9c6e0922d37ac10c5f132dff7931
+      body: |
+        Update balena/open-balena-api from 35.0.0 to 35.0.6
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.392
+  title: ""
+  date: 2025-05-20T19:36:50.736Z
+- commits:
     - subject: "patch: Update Renovate balenaOS AMI match"
       hash: d6d8370e7a56f47e7d2bb0bf533ed742d3e64024
       body: ""
