@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency balena-io/balena-cli to v21.1.14
+      hash: 6a62cae4821edfed173a344144a10400e0573271
+      body: |
+        Update balena-io/balena-cli from 21.1.0 to 21.1.14
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.400
+  title: ""
+  date: 2025-05-22T17:12:07.547Z
+- commits:
     - subject: Update balena/cert-manager Docker tag to v0.3.3
       hash: 0c67c7ed7ae5bd539bdb1de882b0fbbb3fdf6585
       body: |
