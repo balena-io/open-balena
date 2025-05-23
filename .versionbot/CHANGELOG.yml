@@ -1,4 +1,19 @@
 - commits:
+    - subject: Fix renovate actions regex match for balena-cli version
+      hash: f0edb192597c9afa372975b428f3b7c6c194c060
+      body: |
+        The actions regex expects an env var with the _VERSION suffix.
+      footer:
+        CHange-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+      nested: []
+  version: 4.1.408
+  title: ""
+  date: 2025-05-23T15:19:24.300Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v37
       hash: cbfe253eaa29fb8a4948f3b25f733724c5232b58
       body: |
