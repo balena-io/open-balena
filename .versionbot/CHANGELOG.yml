@@ -1,4 +1,17 @@
 - commits:
+    - subject: Pin balena-io-examples/setup-balena-action action to 41338eb
+      hash: 73c1b3c2c3108716f2bcb3ebedeed4aa67e4f04a
+      body: |
+        Update balena-io-examples/setup-balena-action
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.410
+  title: ""
+  date: 2025-05-23T20:17:29.886Z
+- commits:
     - subject: Update redis Docker tag to v8
       hash: a724766a079f06bb8be595c7e12f4b63f732f135
       body: |
