@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update redis Docker tag to v8
+      hash: a724766a079f06bb8be595c7e12f4b63f732f135
+      body: |
+        Update redis from 7.4 to 8.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.409
+  title: ""
+  date: 2025-05-23T19:36:54.551Z
+- commits:
     - subject: Fix renovate actions regex match for balena-cli version
       hash: f0edb192597c9afa372975b428f3b7c6c194c060
       body: |
