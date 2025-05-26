@@ -3,7 +3,8 @@
 FROM ghcr.io/qemus/qemu:7.12
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-	minicom \
+    minicom \
+    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
 COPY balena.sh /usr/sbin/
