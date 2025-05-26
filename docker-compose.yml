@@ -146,7 +146,7 @@ services:
       *with-network-privileges,
       *with-default-privileges,
     ]
-    image: balena/open-balena-vpn:11.32.24
+    image: balena/open-balena-vpn:11.32.25
     depends_on:
       - api
     environment:
