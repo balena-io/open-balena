@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-vpn Docker tag to v11.32.25
+      hash: 2ca255a67fa41c55c67277581a630764caaef82a
+      body: |
+        Update balena/open-balena-vpn from 11.32.24 to 11.32.25
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.413
+  title: ""
+  date: 2025-05-26T18:18:01.785Z
+- commits:
     - subject: Update ghcr.io/qemus/qemu Docker tag to v7
       hash: 8bd44321ec402ff8d91540f7a281081d2a286ceb
       body: |
