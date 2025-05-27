@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to b92d0d9
+      hash: a0a518da7964dd881ad7709a33558de5ee73b62f
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.418
+  title: ""
+  date: 2025-05-27T08:17:45.708Z
+- commits:
     - subject: "patch: Only match balenaOS (non secure-boot) images"
       hash: d4c0144829e002833985f3eeac96065e192cc1d0
       body: ""
