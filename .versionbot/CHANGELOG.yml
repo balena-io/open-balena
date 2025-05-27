@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency balena-io/balena-cli to v20
+      hash: e67bde8b0f66be17722937b2ba9b793666c220ed
+      body: |
+        Update balena-io/balena-cli from 18.2.34 to 20.2.10
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.419
+  title: ""
+  date: 2025-05-27T13:06:03.888Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to b92d0d9
       hash: a0a518da7964dd881ad7709a33558de5ee73b62f
       body: |
