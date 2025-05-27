@@ -82,7 +82,7 @@ jobs:
     - name: Setup awscli
       uses: unfor19/install-aws-cli-action@e8b481e524a99f37fbd39fdc1dcb3341ab091367 # v1
 
-    - uses: aws-actions/configure-aws-credentials@439a5297371c30b005c40e485f1de279f86df81e
+    - uses: aws-actions/configure-aws-credentials@b92d0d98bf51f5ecb0efd640be026492e58b5c36
       with:
         aws-region: ${{ vars.AWS_REGION || 'us-east-1' }}
         role-session-name: github-${{ github.job }}-${{ github.run_id }}-${{ github.run_attempt }}
