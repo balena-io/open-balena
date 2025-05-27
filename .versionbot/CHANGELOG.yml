@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Only match balenaOS (non secure-boot) images"
+      hash: d4c0144829e002833985f3eeac96065e192cc1d0
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.417
+  title: ""
+  date: 2025-05-27T07:52:09.722Z
+- commits:
     - subject: Update balena-io-examples/setup-balena-action action to v0.0.12
       hash: 10f109d299f684a64cf571a90486f15c1adee4e2
       body: |
