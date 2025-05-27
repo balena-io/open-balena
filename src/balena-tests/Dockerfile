@@ -23,7 +23,7 @@ WORKDIR /opt
 RUN set -x; arch=$(uname -m | sed 's/86_64/64/g') \
     && wget -qO- "https://github.com/balena-io/balena-cli/releases/download/${BALENA_CLI_VERSION}/balena-cli-${BALENA_CLI_VERSION}-linux-${arch}-standalone.tar.gz" | tar -xzf -
 
-ENV PATH=/opt/balena-cli:${PATH}
+ENV PATH=/opt/balena/bin:${PATH}
 
 COPY functions balena.sh /usr/sbin/
 
