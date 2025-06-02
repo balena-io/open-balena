@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-vpn Docker tag to v11.32.28
+      hash: 061f22e1d961639d50a637dcdf6272275f5f9305
+      body: |
+        Update balena/open-balena-vpn from 11.32.27 to 11.32.28
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.429
+  title: ""
+  date: 2025-06-02T15:46:59.607Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v22.0.5
       hash: 67f8a8477d8db52ef4d0e54641b2e700b093820d
       body: |
