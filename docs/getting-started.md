@@ -35,6 +35,7 @@ ocsp.mydomain.com
 registry2.mydomain.com
 s3.mydomain.com
 tunnel.mydomain.com
+data.mydomain.com
 ```
 
 Alternatively you may consider adding a single wildcard DNS record `*.mydomain.com`.
