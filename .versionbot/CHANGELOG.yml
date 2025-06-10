@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update actions/checkout digest to 09d2aca
+      hash: a14778918863c639e5edb24a0b4189ff55101c25
+      body: |
+        Update actions/checkout
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.439
+  title: ""
+  date: 2025-06-10T13:43:33.254Z
+- commits:
     - subject: Update dependency ami to ami-020cba7c55df1f615
       hash: 8a3c07dea6da25de1aaaa661aef9bb6dd9f660be
       body: |
