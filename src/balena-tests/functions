@@ -1,5 +1,6 @@
 # https://coderwall.com/p/--eiqg/exponential-backoff-in-bash
 function with_backoff() {
+    echo "Edwin was here"
     local max_attempts=${ATTEMPTS-5}
     local timeout=${TIMEOUT-1}
     local attempt=0
