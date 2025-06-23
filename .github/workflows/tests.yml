@@ -78,6 +78,45 @@ jobs:
         persist-credentials: false
         ref: ${{ github.event.pull_request.head.sha }}
 
+    - name: Setup with_backoff utility function
+      run: |
+        set -ue
+        # This used to come from src/balena-tests/functions, but that path is user-writable which had injection risks
+        # https://coderwall.com/p/--eiqg/exponential-backoff-in-bash
+        function with_backoff() {
+            local max_attempts=${ATTEMPTS-5}
+            local timeout=${TIMEOUT-1}
+            local attempt=0
+            local exitCode=0
+
+            set +e
+            while [[ $attempt < $max_attempts ]]
+            do
+                "$@"
+                exitCode=$?
+
+                if [[ $exitCode == 0 ]]
+                then
+                  break
+                fi
+
+                echo "Failure! Retrying in $timeout.." 1>&2
+                sleep "$timeout"
+                attempt=$(( attempt + 1 ))
+                timeout=$(( timeout * 2 ))
+            done
+
+            if [[ $exitCode != 0 ]]
+            then
+                echo "You've failed me for the last time! ($*)" 1>&2
+            fi
+
+            set -e
+            return $exitCode
+        }
+
+        echo "BASH_FUNC_with_backoff()=$(declare -f with_backoff)" >> $GITHUB_ENV
+
     # https://github.com/unfor19/install-aws-cli-action
     - name: Setup awscli
       uses: unfor19/install-aws-cli-action@e8b481e524a99f37fbd39fdc1dcb3341ab091367 # v1
@@ -118,8 +157,6 @@ jobs:
         set -ue
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
-        source src/balena-tests/functions
 
         mkdir -p "${RUNNER_TEMP}/ssh-uuid"
 
@@ -195,8 +232,6 @@ jobs:
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
-        source src/balena-tests/functions
-
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
         balena_device_uuid="$(openssl rand -hex 16)"
@@ -240,8 +275,6 @@ jobs:
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
-        source src/balena-tests/functions
-
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
         pr_id='${{ github.event.pull_request.id }}'
@@ -267,8 +300,6 @@ jobs:
         set -ue
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
-        source src/balena-tests/functions
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
@@ -369,8 +400,6 @@ jobs:
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
-        source src/balena-tests/functions
-
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
         # cert-manager requires it to get whoami information for the user
@@ -403,8 +432,6 @@ jobs:
         set -ue
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
-        source src/balena-tests/functions
 
         # shellcheck disable=SC2046,SC2043
         for subnet_id in ${{ env.AWS_VPC_SUBNET_IDS }}; do
@@ -452,8 +479,6 @@ jobs:
         set -ue
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
-        source src/balena-tests/functions
 
         function cleanup() {
             aws ec2 describe-instances --instance-ids ${{ steps.balena-sut.outputs.instance_id }} \
@@ -505,8 +530,6 @@ jobs:
         set -ue
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
-        source src/balena-tests/functions
 
         function cleanup() {
             aws ec2 describe-instances --instance-ids ${{ steps.balena-sut.outputs.instance_id }} \
@@ -570,8 +593,6 @@ jobs:
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
-        source src/balena-tests/functions
-
         function cleanup() {
             aws ec2 describe-instances --instance-ids ${{ steps.balena-sut.outputs.instance_id }} \
               | jq -r .Reservations[].Instances[].StateReason
@@ -614,8 +635,6 @@ jobs:
         set -ue
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
-        source src/balena-tests/functions
 
         function cleanup() {
             aws ec2 describe-instances --instance-ids ${{ steps.balena-sut.outputs.instance_id }} \
@@ -687,8 +706,6 @@ jobs:
         set -ue
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
-        source src/balena-tests/functions
 
         function cleanup() {
            rm -f user-data.yml
@@ -874,8 +891,6 @@ jobs:
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
-        source src/balena-tests/functions
-
         function log_output() {
             rm -f "{HOME}/.ssh/config"
 
@@ -1023,8 +1038,6 @@ jobs:
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
-        source src/balena-tests/functions
-
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
         with_backoff balena keys | grep ${{ steps.provision-ssh-key.outputs.key_id }} \
@@ -1048,8 +1061,6 @@ jobs:
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
-        source src/balena-tests/functions
-
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
         with_backoff balena device rm ${{ steps.register-test-device.outputs.balena_device_uuid }} --yes
@@ -1064,8 +1075,6 @@ jobs:
         set -ue
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
-        source src/balena-tests/functions
 
         if [[ -n '${{ steps.balena-sut.outputs.instance_id }}' ]]; then
             with_backoff aws ec2 terminate-instances \
@@ -1083,8 +1092,6 @@ jobs:
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
-        source src/balena-tests/functions
-
         if [[ -n '${{ steps.ubuntu-sut.outputs.instance_id }}' ]]; then
             with_backoff aws ec2 terminate-instances \
               --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }}
@@ -1100,8 +1107,6 @@ jobs:
         set -ue
 
         [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
-        source src/balena-tests/functions
 
         stale_instances=$(mktemp)
         aws ec2 describe-instances --filters \
