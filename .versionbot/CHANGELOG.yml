@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v38
+      hash: 97758e6bc0d97c8ca00dd1c6047181c19d9a3534
+      body: |
+        Update balena/open-balena-api from 37.3.5 to 38.0.2
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.457
+  title: ""
+  date: 2025-07-07T22:02:39.148Z
+- commits:
     - subject: Update dependency ami to ami-034568121cfdea9c3
       hash: 8bd01ec5da44fdaee42a484ced57a9bc7be23e89
       body: |
