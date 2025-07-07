@@ -51,8 +51,8 @@ jobs:
             launch_template_version: ${{ vars.AWS_EC2_LT_VERSION || '6' }}
             # https://docs.renovatebot.com/modules/datasource/aws-machine-image/
             # amiFilter=[{"Name":"owner-id","Values":["099720109477"]},{"Name":"name","Values":["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]},{"region":"us-east-1"}]
-            # currentImageName=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20250610
-            ami: ami-020cba7c55df1f615
+            # currentImageName=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20250627
+            ami: ami-034568121cfdea9c3
             subdomain:  ${{ vars.DNS_SUBDOMAIN || 'auto' }}
             dns_tld: ${{ vars.DNS_TLD || 'balena-devices.com' }}
 
