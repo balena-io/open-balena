@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena-io-examples/setup-balena-action action to v0.0.21
+      hash: ddb2b713698135c667b8741dde0ad8e0defdff68
+      body: |
+        Update balena-io-examples/setup-balena-action from 0.0.20 to 0.0.21
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.461
+  title: ""
+  date: 2025-07-15T16:27:33.997Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to a159d7b
       hash: f0dd6dde830e6ee5a552cd6b1845b3f390fdb7ed
       body: |
