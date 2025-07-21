@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-s3 Docker tag to v2.28.77
+      hash: 85d4486827c6d2bdbf46ae873db060885268bdac
+      body: |
+        Update balena/open-balena-s3 from 2.28.76 to 2.28.77
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.462
+  title: ""
+  date: 2025-07-21T18:38:33.769Z
+- commits:
     - subject: Update balena-io-examples/setup-balena-action action to v0.0.21
       hash: ddb2b713698135c667b8741dde0ad8e0defdff68
       body: |
