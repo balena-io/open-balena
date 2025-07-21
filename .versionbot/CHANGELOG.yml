@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update unfor19/install-aws-cli-action digest to f5b46b7
+      hash: 568627c6a3f12ef41ec6a17e91f79a85b5b452ac
+      body: |
+        Update unfor19/install-aws-cli-action
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.463
+  title: ""
+  date: 2025-07-21T19:33:26.761Z
+- commits:
     - subject: Update balena/open-balena-s3 Docker tag to v2.28.77
       hash: 85d4486827c6d2bdbf46ae873db060885268bdac
       body: |
