@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena-io-examples/setup-balena-action action to v0.0.22
+      hash: 7b556a493f2df14c2afa79d776420a9381eb889f
+      body: |
+        Update balena-io-examples/setup-balena-action from 0.0.21 to 0.0.22
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.464
+  title: ""
+  date: 2025-07-21T20:22:51.846Z
+- commits:
     - subject: Update unfor19/install-aws-cli-action digest to f5b46b7
       hash: 568627c6a3f12ef41ec6a17e91f79a85b5b452ac
       body: |
