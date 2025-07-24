@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update actions/checkout digest to 8edcb1b
+      hash: 64710f17f4961c690aed97fb3919290424e14227
+      body: |
+        Update actions/checkout
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.469
+  title: ""
+  date: 2025-07-24T16:32:47.523Z
+- commits:
     - subject: Update balena-io-examples/setup-balena-action action to v0.0.23
       hash: 92f8e1b7d6d52b19004b548a25f1c1d5c5eee5f8
       body: |
