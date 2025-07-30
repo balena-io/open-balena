@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency ami to ami-0a3286ed74ed8e108
+      hash: aac19b5d0f10c42adc8e10fc3836a419f4107547
+      body: |
+        Update ami from ami-0ffdbd60c5229c1e2 to ami-0a3286ed74ed8e108
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.481
+  title: ""
+  date: 2025-07-30T06:26:51.646Z
+- commits:
     - subject: "patch: Only match balenaOS (non secure-boot) images"
       hash: 554fa4f0c9eef62974f85b0739d106a064166669
       body: Same as https://github.com/balena-io/balena-cloud/pull/4605
