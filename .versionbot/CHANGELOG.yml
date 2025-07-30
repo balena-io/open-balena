@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Only match balenaOS (non secure-boot) images"
+      hash: 554fa4f0c9eef62974f85b0739d106a064166669
+      body: Same as https://github.com/balena-io/balena-cloud/pull/4605
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.480
+  title: ""
+  date: 2025-07-30T05:59:12.981Z
+- commits:
     - subject: Update balena/open-balena-vpn Docker tag to v11.32.33
       hash: 4d63e77e14f89dc168440b697e3fe57ee700a10e
       body: |
