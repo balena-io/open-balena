@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to 8128bbd
+      hash: ac4fa2c469e47ee31c18155ec1128b97eaf1c6e2
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.486
+  title: ""
+  date: 2025-07-31T20:27:03.642Z
+- commits:
     - subject: Update dependency ami to ami-0ca5a2f40c2601df6
       hash: 7535d2878a8f5e19a6fa29afa354acd6aa5fdcb2
       body: |
