@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Increase API rate limits"
+      hash: 401e5fb5860f66b27feafd715af9ad21ca2c38e2
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.487
+  title: ""
+  date: 2025-08-01T01:46:51.716Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to 8128bbd
       hash: ac4fa2c469e47ee31c18155ec1128b97eaf1c6e2
       body: |
