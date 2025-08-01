@@ -103,6 +103,7 @@ services:
       NUM_WORKERS: 1
       OAUTH_CALLBACK_PROTOCOL: https
       PORT: 80
+      RATE_LIMIT_FACTOR: 1000
       REDIS_HOST: redis:6379
       REDIS_IS_CLUSTER: 'false'
       TOKEN_AUTH_JWT_ALGO: ES256

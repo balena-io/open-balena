@@ -289,6 +289,10 @@ jobs:
           --service api \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
+        with_backoff balena env add RATE_LIMIT_FACTOR 1000 \
+          --service api \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
 
         # to allow devices running locally to communicate to the local API, we can route
         # to the local Docker network aliases instead of public DNS, since (a) DNS_TLD is
