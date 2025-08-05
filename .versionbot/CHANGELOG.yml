@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update redis Docker tag to v8.2
+      hash: 54974db3ef08b9a9e65570850cbcf5162377d0d8
+      body: |
+        Update redis from 8.0 to 8.2
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.494
+  title: ""
+  date: 2025-08-05T22:41:28.501Z
+- commits:
     - subject: Update balena/open-balena-vpn Docker tag to v11.32.36
       hash: 90760ad055b260d3489ddf1c16ecb550463e2764
       body: |
