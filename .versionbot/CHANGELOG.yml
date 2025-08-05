@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-s3 Docker tag to v2.28.81
+      hash: 2301790041f3389f791760efed8f54b27dd81f55
+      body: |
+        Update balena/open-balena-s3 from 2.28.80 to 2.28.81
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.490
+  title: ""
+  date: 2025-08-05T17:27:01.481Z
+- commits:
     - subject: "patch: Allow 45 minutes to run tests (token expiry)"
       hash: 9842886fedc8412cfc47667cc45f86ac29ba638f
       body: ""
