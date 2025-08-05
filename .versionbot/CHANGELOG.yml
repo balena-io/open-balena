@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v40.0.9
+      hash: 4ebd698cca8d49d72929c128f6f3d93e652da4af
+      body: |
+        Update balena/open-balena-api from 40.0.7 to 40.0.9
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.495
+  title: ""
+  date: 2025-08-05T23:21:44.536Z
+- commits:
     - subject: Update redis Docker tag to v8.2
       hash: 54974db3ef08b9a9e65570850cbcf5162377d0d8
       body: |
