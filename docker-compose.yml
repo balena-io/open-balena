@@ -192,7 +192,7 @@ services:
   redis:
     <<: *base-service
     # https://redis.io/blog/what-redis-license-change-means-for-our-managed-service-providers/
-    image: redis:8.0-alpine
+    image: redis:8.2-alpine
     volumes:
       - redis-data:/data
     healthcheck:
