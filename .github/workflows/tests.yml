@@ -38,7 +38,7 @@ env:
 jobs:
   test:
     runs-on: ["self-hosted", "X64", "distro:jammy"]  # balenaOS (balena-public-pki) tests require socat v1.7.4
-    timeout-minutes: 60
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
@@ -450,7 +450,6 @@ jobs:
       id: provision-ssh-key
       # wait for cloud-config
       # https://github.com/balena-os/cloud-config
-      timeout-minutes: 5
       if: matrix.target == 'balena-public-pki'
       run: |
         set -ue
@@ -503,7 +502,6 @@ jobs:
         echo "key_id=${GITHUB_SHA}" >> "${GITHUB_OUTPUT}"
 
     - name: wait for balenaCloud application
-      timeout-minutes: 10
       if: matrix.target == 'balena-public-pki'
       run: |
         set -ue
@@ -567,7 +565,6 @@ jobs:
     # components are running with the latest configuration; preferred over restart via
     # Supervisor API restart due to potential HTTP [timeouts](https://github.com/balena-os/balena-supervisor/issues/1157)
     - name: restart balenaEngine composition
-      timeout-minutes: 10
       if: matrix.target == 'balena-public-pki'
       run: |
         set -ue
@@ -610,7 +607,6 @@ jobs:
 
     - name: SUT&DUT (balena)
       if: matrix.target == 'balena-public-pki'
-      timeout-minutes: 20
       # https://giters.com/gfx/example-github-actions-with-tty
       # https://github.com/actions/runner/issues/241#issuecomment-924327172
       shell: 'script -q -e -c "bash {0}"'
@@ -685,7 +681,6 @@ jobs:
 
     - name: provision Ubuntu ephemeral SUT
       id: ubuntu-sut
-      timeout-minutes: 20
       if: matrix.target == 'compose-private-pki'
       run: |
         set -ue
@@ -872,7 +867,6 @@ jobs:
 
     - name: SUT&DUT (Ubuntu/compose)
       if: matrix.target == 'compose-private-pki'
-      timeout-minutes: 30
       run: |
         set -ue
 
