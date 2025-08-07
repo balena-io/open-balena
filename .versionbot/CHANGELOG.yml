@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v41
+      hash: 1429d8aaa102f724bd8dfe59e80633fc0de64279
+      body: |
+        Update balena/open-balena-api from 40.0.9 to 41.0.1
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.500
+  title: ""
+  date: 2025-08-07T04:51:59.165Z
+- commits:
     - subject: Update balena-io-examples/setup-balena-action action to v0.0.27
       hash: 32822efcc7f8c9e63e42185211cd092128c661a7
       body: |
