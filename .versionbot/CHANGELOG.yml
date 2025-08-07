@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Limit PRs to 1 per hour to avoid balenaCloud rate-limits"
+      hash: 2fe705e4939a27ca280e3f3e73c29ad70f9671a5
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.501
+  title: ""
+  date: 2025-08-07T17:02:33.043Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v41
       hash: 1429d8aaa102f724bd8dfe59e80633fc0de64279
       body: |
