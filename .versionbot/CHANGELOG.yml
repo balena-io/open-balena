@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena-io-examples/setup-balena-action action to v0.0.29
+      hash: c010f28a61fca3b4d9cc57026eb5f4ef5011a333
+      body: |
+        Update balena-io-examples/setup-balena-action from 0.0.27 to 0.0.29
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.502
+  title: ""
+  date: 2025-08-08T20:41:28.517Z
+- commits:
     - subject: "patch: Limit PRs to 1 per hour to avoid balenaCloud rate-limits"
       hash: 2fe705e4939a27ca280e3f3e73c29ad70f9671a5
       body: ""
