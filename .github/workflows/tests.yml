@@ -78,6 +78,19 @@ jobs:
         persist-credentials: false
         ref: ${{ github.event.pull_request.head.sha }}
 
+    # https://github.com/actions/create-github-app-token
+    - uses: actions/create-github-app-token@df432ceedc7162793a195dd1713ff69aefc7379e # v2
+      id: app-token
+      with:
+        app-id: ${{ vars.APP_ID }}
+        private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+        # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token
+        permission-contents: read
+        owner: ${{ github.repository_owner }}
+        repositories: |
+          ${{ github.event.pull_request.head.repo.name }}
+          contracts
+
     # https://github.com/unfor19/install-aws-cli-action
     - name: Setup awscli
       uses: unfor19/install-aws-cli-action@f5b46b7f32cf5e7ebd652656c5036bf83dd1e60c # v1
@@ -376,6 +389,11 @@ jobs:
         source src/balena-tests/functions
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
+
+        # otherwise rate limits!
+        with_backoff balena env add CONTRACTS_PRIVATE_REPO_TOKEN '${{ steps.app-token.outputs.token }}' \
+          --service api \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
         # cert-manager requires it to get whoami information for the user
         with_backoff balena env add API_TOKEN '${{ secrets.BALENA_API_KEY }}' \
@@ -716,6 +734,7 @@ jobs:
               DNS_TLD=${{ matrix.subdomain }}.${{ matrix.dns_tld }}
               PRODUCTION_MODE=false
               VERBOSE=${{ vars.VERBOSE }}
+              CONTRACTS_PRIVATE_REPO_TOKEN='${{ steps.app-token.outputs.token }}'
 
           - path: /root/functions
             permissions: "0777"
