@@ -86,14 +86,8 @@ services:
       - s3
     environment:
       <<: *default-environment
-      CONTRACTS_PUBLIC_REPO_NAME: contracts
-      CONTRACTS_PUBLIC_REPO_OWNER: balena-io
-      DB_GENERAL_REPLICA_MAX_USES: 1000
-      DB_GENERAL_REPLICA_PORT: 5432
       DB_HOST: db
       DB_PORT: 5432
-      DB_STATE_REPLICA_MAX_USES: 1000
-      DB_STATE_REPLICA_PORT: 5432
       DB_USER: docker
       HOSTS_CONFIG: API_HOST:api,DB_HOST:db,DELTA_HOST:delta,HOST:api,REDIS_HOST:redis,TOKEN_AUTH_CERT_ISSUER:api,VPN_HOST:cloudlink,REGISTRY2_HOST:registry2
       IMAGE_STORAGE_BUCKET: resin-production-img-cloudformation
@@ -101,8 +95,6 @@ services:
       IMAGE_STORAGE_PREFIX: images
       JSON_WEB_TOKEN_EXPIRY_MINUTES: 10080
       NUM_WORKERS: 1
-      OAUTH_CALLBACK_PROTOCOL: https
-      PORT: 80
       RATE_LIMIT_FACTOR: 1000
       REDIS_HOST: redis:6379
       REDIS_IS_CLUSTER: 'false'
