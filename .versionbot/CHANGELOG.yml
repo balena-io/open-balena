@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency ami
+      hash: 81858fca39f4d77fb43bf406949b6f51d0e69fa2
+      body: |
+        Update ami from ami-0a3286ed74ed8e108 to ami-01cfa612cf63a2eea
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.505
+  title: ""
+  date: 2025-08-25T18:43:00.890Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v42
       hash: 606e745ec9572c7864ab74afbb613d824beed8c8
       body: |
