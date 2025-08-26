@@ -1,4 +1,22 @@
 - commits:
+    - subject: "patch: Preserve test assets"
+      hash: 2a4fcdf1c01d66d949898d5e0f7fa299c3be3431
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+    - subject: Remove unnecessary env vars
+      hash: f14c0321ae56050c4beee414b4c3bf5217ab94fe
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+      nested: []
+  version: 4.1.512
+  title: ""
+  date: 2025-08-26T20:18:57.658Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v42.3.1
       hash: e82003f691122de6a4d14b0cc32440cbe602f941
       body: |
