@@ -140,7 +140,7 @@ jobs:
       run: sudo apt update && sudo apt install -y cloud-init
 
     # https://github.com/actions/create-github-app-token
-    - uses: actions/create-github-app-token@df432ceedc7162793a195dd1713ff69aefc7379e # v2
+    - uses: actions/create-github-app-token@a8d616148505b5069dccd32f177bb87d7f39123b # v2
       id: app-token
       with:
         app-id: ${{ vars.APP_ID }}
