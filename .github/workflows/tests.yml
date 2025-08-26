@@ -979,10 +979,11 @@ jobs:
 
         while [[ "$(aws ssm list-command-invocations --command-id "${cid}" \
           | jq -re '.CommandInvocations[].Status')" =~ InProgress ]]; do
+            sleep=$(((RANDOM%1) + 1))s
             with_backoff docker compose ls && with_backoff docker compose ps
-            with_backoff docker compose logs --follow --timestamps sut
+            with_backoff docker compose logs --since ${sleep} --timestamps sut
             echo '::info::still running...'
-            sleep $(((RANDOM%1) + 1))s
+            sleep ${sleep}
 
             aws ec2 wait instance-running --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || exit 1
             aws ec2 wait instance-status-ok --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || exit 1
