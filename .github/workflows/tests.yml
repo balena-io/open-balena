@@ -117,8 +117,6 @@ jobs:
       run: |
         set -ue
 
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
         source src/balena-tests/functions
 
         mkdir -p "${RUNNER_TEMP}/ssh-uuid"
@@ -141,16 +139,20 @@ jobs:
       shell: bash
       run: sudo apt update && sudo apt install -y cloud-init
 
+    # https://github.com/actions/create-github-app-token
+    - uses: actions/create-github-app-token@df432ceedc7162793a195dd1713ff69aefc7379e # v2
+      id: app-token
+      with:
+        app-id: ${{ vars.APP_ID }}
+        private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+        # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token
+        permission-contents: read
+        permission-pull-requests: write
+
     - name: generate SSH private key
       id: generate-key-pair
       run: |
         set -ue
-
-        verbose='+x'
-        if [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]]; then
-            verbose='-x'
-        fi
-        set ${verbose}
 
         key_name="${{ matrix.target }}-${GITHUB_RUN_ID}-${GITHUB_RUN_NUMBER}-${GITHUB_RUN_ATTEMPT}"
         echo "key_name=${key_name}" >>"${GITHUB_OUTPUT}"
@@ -173,7 +175,6 @@ jobs:
         EOF
         )"
         echo "ssh_private_key<<EOF" >>"${GITHUB_OUTPUT}"
-        set ${verbose}
 
         { echo "${ssh_private_key}"; echo "EOF"; } >>"${GITHUB_OUTPUT}"
 
@@ -192,8 +193,6 @@ jobs:
       if: matrix.target == 'balena-public-pki'
       run: |
         set -ue
-
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
 
@@ -238,8 +237,6 @@ jobs:
       run: |
         set -uae
 
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
         source src/balena-tests/functions
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
@@ -265,8 +262,6 @@ jobs:
       if: matrix.target == 'balena-public-pki'
       run: |
         set -ue
-
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
 
@@ -371,8 +366,6 @@ jobs:
       run: |
         set -ue
 
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
         source src/balena-tests/functions
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
@@ -405,8 +398,6 @@ jobs:
       if: matrix.target == 'balena-public-pki'
       run: |
         set -ue
-
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
 
@@ -453,8 +444,6 @@ jobs:
       if: matrix.target == 'balena-public-pki'
       run: |
         set -ue
-
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
 
@@ -505,8 +494,6 @@ jobs:
       if: matrix.target == 'balena-public-pki'
       run: |
         set -ue
-
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
 
@@ -569,8 +556,6 @@ jobs:
       run: |
         set -ue
 
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
         source src/balena-tests/functions
 
         function cleanup() {
@@ -612,8 +597,6 @@ jobs:
       shell: 'script -q -e -c "bash {0}"'
       run: |
         set -ue
-
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
 
@@ -684,8 +667,6 @@ jobs:
       if: matrix.target == 'compose-private-pki'
       run: |
         set -ue
-
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
 
@@ -758,9 +739,7 @@ jobs:
             content: |
               #!/usr/bin/env bash
 
-              set -ax
-
-              [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
+              set -a
 
               source /root/functions
 
@@ -854,6 +833,8 @@ jobs:
         instance_id="$(echo "${response}" | jq -r '.Instances[].InstanceId')"
         echo "instance_id=${instance_id}" >>"${GITHUB_OUTPUT}"
 
+        echo "::info::open https://${{ env.AWS_DEFAULT_REGION }}.console.aws.amazon.com/systems-manager/session-manager/${instance_id}?region=${{ env.AWS_DEFAULT_REGION }}#: to debug"
+
         aws ec2 wait instance-running --instance-ids "${instance_id}"
         with_backoff aws ec2 wait instance-status-ok --instance-ids "${instance_id}"
 
@@ -867,10 +848,9 @@ jobs:
 
     - name: SUT&DUT (Ubuntu/compose)
       if: matrix.target == 'compose-private-pki'
+      id: sut_dut
       run: |
         set -ue
-
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
 
@@ -943,6 +923,8 @@ jobs:
         cid="$(echo "${result}" | jq -r .Command.CommandId)"
         iid="$(echo "${result}" | jq -r .Command.InstanceIds[0])"
         { [[ -n "$cid" ]] && [[ -n "$iid" ]]; } || false
+        echo "cid=${cid}" >>"${GITHUB_OUTPUT}"
+        echo "iid=${iid}" >>"${GITHUB_OUTPUT}"
 
         # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#grouping-log-lines
         CYAN='\033[0;36m'; NC='\033[0m'; echo -e "::group::${CYAN}open-balena-tests${NC}"
@@ -960,6 +942,14 @@ jobs:
             sleep $(((RANDOM%5) + 5))s
         done
         echo '::info::logs started'
+
+        logs_stdout="https://${{ env.AWS_DEFAULT_REGION }}.console.aws.amazon.com/cloudwatch/home?region=${{ env.AWS_DEFAULT_REGION }}#logsV2:log-groups/log-group/open-balena-tests/log-events/${cid}\$252F${iid}\$252Faws-runShellScript\$252Fstdout"
+        logs_stderr="https://${{ env.AWS_DEFAULT_REGION }}.console.aws.amazon.com/cloudwatch/home?region=${{ env.AWS_DEFAULT_REGION }}#logsV2:log-groups/log-group/open-balena-tests/log-events/${cid}\$252F${iid}\$252Faws-runShellScript\$252Fstderr"
+        printf "::info::inspect logs with AWS Management Console\n\n* [stdout](%s)\n* [stderr](%s)\n" "${logs_stdout}" "${logs_stderr}"
+
+        tail_stdout="aws logs tail open-balena-tests --follow --log-stream-names ${cid}/${iid}/aws-runShellScript/stdout"
+        tail_stderr="aws logs tail open-balena-tests --follow --log-stream-names ${cid}/${iid}/aws-runShellScript/stderr"
+        printf "::info::tail logs with aws-cli\n\n\t# stdout\n\t%s\n\n\t# stderr\n\t%s\n" "${tail_stdout}" "${tail_stderr}"
 
         until [[ "$(docker compose ls --format json | jq -re '.[] | select(.Status | startswith("running")).Name')" =~ open-balena ]]; do
             echo '::info::waiting for composition...'
@@ -989,10 +979,11 @@ jobs:
 
         while [[ "$(aws ssm list-command-invocations --command-id "${cid}" \
           | jq -re '.CommandInvocations[].Status')" =~ InProgress ]]; do
+            sleep=$(((RANDOM % 15) + 15))s
             with_backoff docker compose ls && with_backoff docker compose ps
-            with_backoff docker compose logs --follow --timestamps sut
+            with_backoff docker compose logs --since ${sleep} --timestamps sut
             echo '::info::still running...'
-            sleep $(((RANDOM%1) + 1))s
+            sleep ${sleep}
 
             aws ec2 wait instance-running --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || exit 1
             aws ec2 wait instance-status-ok --instance-ids ${{ steps.ubuntu-sut.outputs.instance_id }} || exit 1
@@ -1013,13 +1004,45 @@ jobs:
         DOCKER_HOST: ssh://ubuntu@${{ steps.ubuntu-sut.outputs.instance_id }}:22
         COMMIT: ${{ github.event.pull_request.head.sha || github.event.head_commit.id || github.event.pull_request.head.ref }}
 
+    - name: preserve test assets
+      if: matrix.target == 'compose-private-pki' && always()
+      continue-on-error: true
+      run: |
+        set -a
+
+        source src/balena-tests/functions
+
+        reaction=hooray
+        emoji=🎉
+        outcome='${{ steps.sut_dut.outcome }}'
+        if ! [[ "$outcome" =~ success ]]; then
+            reaction=confused
+            emoji=🤔
+        fi
+
+        logs_stdout="https://${{ env.AWS_DEFAULT_REGION }}.console.aws.amazon.com/cloudwatch/home?region=${{ env.AWS_DEFAULT_REGION }}#logsV2:log-groups/log-group/open-balena-tests/log-events/${{ steps.sut_dut.outputs.cid }}\$252F${{ steps.sut_dut.outputs.iid }}\$252Faws-runShellScript\$252Fstdout"
+        logs_stderr="https://${{ env.AWS_DEFAULT_REGION }}.console.aws.amazon.com/cloudwatch/home?region=${{ env.AWS_DEFAULT_REGION }}#logsV2:log-groups/log-group/open-balena-tests/log-events/${{ steps.sut_dut.outputs.cid }}\$252F${{ steps.sut_dut.outputs.iid }}\$252Faws-runShellScript\$252Fstderr"
+        body="Logs (${{ matrix.target }})<br>* [stdout](${logs_stdout})<br>* [stderr](${logs_stderr})<br>"
+
+        if [[ -n '${{ github.event.pull_request.number }}' ]]; then
+            comment_url=$(with_backoff sudo -E gh pr comment ${{ github.event.pull_request.number }} --body "${body}")
+            comment_id="$(echo "${comment_url}" | awk -F'#' '{print $2}' | awk -F'-' '{print $2}')"
+            with_backoff sudo -E gh api --method POST \
+              -H "Accept: application/vnd.github+json" \
+              "/repos/${{ github.repository }}/issues/comments/${comment_id}/reactions" \
+              -f content="${reaction}"
+        fi
+        printf "%s\n\n%s %s\n" "${body}" "${outcome}" "${emoji}" >>"${GITHUB_STEP_SUMMARY}"
+
+      env:
+        AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+        GH_TOKEN: ${{ steps.app-token.outputs.token }}
+
     - name: remove balenaCloud SSH key
       if: always() && matrix.target == 'balena-public-pki'
       continue-on-error: true
       run: |
         set -ue
-
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
 
@@ -1034,8 +1057,6 @@ jobs:
       run: |
         set -ue
 
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
         aws ec2 delete-key-pair --key-name ${{ steps.generate-key-pair.outputs.key_name }}
 
     - name: delete balenaOS test device
@@ -1043,8 +1064,6 @@ jobs:
       continue-on-error: true
       run: |
         set -ue
-
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
 
@@ -1060,8 +1079,6 @@ jobs:
       if: always() && matrix.target == 'balena-public-pki'
       run: |
         set -ue
-
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
 
@@ -1079,8 +1096,6 @@ jobs:
       run: |
         set -ue
 
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
-
         source src/balena-tests/functions
 
         if [[ -n '${{ steps.ubuntu-sut.outputs.instance_id }}' ]]; then
@@ -1096,8 +1111,6 @@ jobs:
       if: always()
       run: |
         set -ue
-
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         source src/balena-tests/functions
 
@@ -1132,8 +1145,6 @@ jobs:
       continue-on-error: true
       run: |
         set -ue
-
-        [[ '${{ vars.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
 
         if [[ -n '${{ steps.register-test-device.outputs.balena_device_uuid }}' ]]; then
             match="${{ steps.register-test-device.outputs.balena_device_uuid }}.${{ matrix.subdomain }}"
