@@ -148,9 +148,8 @@ services:
       HOSTS_CONFIG: VPN_HOST:cloudlink
       TOKENS_CONFIG: ','
       VPN_HAPROXY_USEPROXYPROTOCOL: 'true'
-      # VPN_PORT: 443
-      # ensure correct service instance IP is registered with the API
-      VPN_SERVICE_REGISTER_INTERFACE: eth0
+      VPN_PORT: 443  # also used in balena-io/open-balena-vpn: config/confd/templates/haproxy.cfg.tmpl
+      VPN_SERVICE_REGISTER_INTERFACE: eth0  # ensure correct service instance IP is registered with the API
     devices:
       - /dev/net/tun
 
