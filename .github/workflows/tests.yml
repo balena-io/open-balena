@@ -73,7 +73,7 @@ jobs:
       name: ${{ matrix.target }}
 
     steps:
-    - uses: actions/checkout@8edcb1bdb4e267140fa742c62e395cd74f332709
+    - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
       with:
         persist-credentials: false
         ref: ${{ github.event.pull_request.head.sha }}
