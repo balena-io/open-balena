@@ -979,7 +979,7 @@ jobs:
 
         while [[ "$(aws ssm list-command-invocations --command-id "${cid}" \
           | jq -re '.CommandInvocations[].Status')" =~ InProgress ]]; do
-            sleep=$(((RANDOM%1) + 1))s
+            sleep=$(((RANDOM % 15) + 15))s
             with_backoff docker compose ls && with_backoff docker compose ps
             with_backoff docker compose logs --since ${sleep} --timestamps sut
             echo '::info::still running...'
