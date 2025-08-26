@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update actions/checkout digest to ff7abcd
+      hash: 6078e673a49c8a8ad84ab5c331dbd64c9fdd5687
+      body: |
+        Update actions/checkout
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.507
+  title: ""
+  date: 2025-08-26T02:56:30.133Z
+- commits:
     - subject: Update balena/open-balena-s3 Docker tag to v2.28.87
       hash: 799f45e4fef346481cc726c03f461420ace13cf5
       body: |
