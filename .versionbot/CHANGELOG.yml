@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v42.3.0
+      hash: 968c6aa4ae9f30f963bcd6ccb050aa06a1e8e325
+      body: |
+        Update balena/open-balena-api from 42.2.1 to 42.3.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.508
+  title: ""
+  date: 2025-08-26T04:33:35.125Z
+- commits:
     - subject: Update actions/checkout digest to ff7abcd
       hash: 6078e673a49c8a8ad84ab5c331dbd64c9fdd5687
       body: |
