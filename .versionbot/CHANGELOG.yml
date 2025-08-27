@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update pre-commit hook pre-commit/pre-commit-hooks to v6
+      hash: 88fd1d5ddcc2c83319f41d6bafdf7538db1fc4ea
+      body: |
+        Update pre-commit/pre-commit-hooks from 5.0.0 to 6.0.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.517
+  title: ""
+  date: 2025-08-27T15:03:12.313Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v22.2.4
       hash: 2743dc908b7c7eb5e923c01b9c11f5bd248fdbbc
       body: |
