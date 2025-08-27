@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to 1b2b73e
+      hash: 9e9cbfd4085432ac9d23bd4177175d67b719c48a
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.518
+  title: ""
+  date: 2025-08-27T19:18:18.501Z
+- commits:
     - subject: Update pre-commit hook pre-commit/pre-commit-hooks to v6
       hash: 88fd1d5ddcc2c83319f41d6bafdf7538db1fc4ea
       body: |
