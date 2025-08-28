@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-s3 Docker tag to v2.28.88
+      hash: e1caa31c5ad77d4a7eb2eace6694765c79ffe149
+      body: |
+        Update balena/open-balena-s3 from 2.28.87 to 2.28.88
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.519
+  title: ""
+  date: 2025-08-28T00:27:20.042Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to 1b2b73e
       hash: 9e9cbfd4085432ac9d23bd4177175d67b719c48a
       body: |
