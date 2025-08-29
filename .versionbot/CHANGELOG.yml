@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency balena-io/balena-cli to v22.3.0
+      hash: 8c98f80d500f1e83585dd840b55af76735d2a4ea
+      body: |
+        Update balena-io/balena-cli from 22.2.4 to 22.3.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.523
+  title: ""
+  date: 2025-08-29T16:22:04.838Z
+- commits:
     - subject: Update balena/open-balena-s3 Docker tag to v2.28.89
       hash: a1d575131777ef5b9b5517875e905ec649457244
       body: |
