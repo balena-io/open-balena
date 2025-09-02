@@ -102,7 +102,7 @@ jobs:
 
     # https://github.com/balena-io-examples/setup-balena-action
     - name: Setup balena CLI
-      uses: balena-io-examples/setup-balena-action@d3ab8f4a2c2878a2ec4725ea0f7f28aec09b7cc9 # v0.0.31
+      uses: balena-io-examples/setup-balena-action@404845031d42a976e6bba058f3393947c33eda18 # v0.0.32
       env:
         # renovate: datasource=github-releases depName=balena-io/balena-cli
         BALENA_CLI_VERSION: v22.3.1
