@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena-io-examples/setup-balena-action action to v0.0.37
+      hash: 72e57b847aad82c111b19c9739509b072d9bcdc3
+      body: |
+        Update balena-io-examples/setup-balena-action from 0.0.35 to 0.0.37
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.534
+  title: ""
+  date: 2025-09-09T19:22:45.144Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v22.3.4
       hash: 7c3e4a6414843e41eae851feba299f781ab570b8
       body: |
