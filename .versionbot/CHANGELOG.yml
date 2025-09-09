@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to 5ebd15a
+      hash: f530f4753f7f1ebcc35a18b8963158b3fc341526
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.535
+  title: ""
+  date: 2025-09-09T20:17:41.709Z
+- commits:
     - subject: Update balena-io-examples/setup-balena-action action to v0.0.37
       hash: 72e57b847aad82c111b19c9739509b072d9bcdc3
       body: |
