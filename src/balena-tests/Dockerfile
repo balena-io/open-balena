@@ -1,7 +1,7 @@
 FROM ubuntu:24.04
 
 # renovate: datasource=github-releases depName=balena-io/balena-cli
-ARG BALENA_CLI_VERSION=v22.3.4
+ARG BALENA_CLI_VERSION=v22.4.1
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	bash \
