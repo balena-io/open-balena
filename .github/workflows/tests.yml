@@ -48,31 +48,49 @@ jobs:
         include:
           # tests Docker (compose) flow using self-signed PKI
           - target: compose-private-pki
-            launch_template_version: ${{ vars.AWS_EC2_LT_VERSION || '6' }}
             # https://docs.renovatebot.com/modules/datasource/aws-machine-image/
             # amiFilter=[{"Name":"owner-id","Values":["099720109477"]},{"Name":"name","Values":["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]},{"region":"us-east-1"}]
             # currentImageName=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20250821
             ami: ami-0360c520857e3138f
-            subdomain:  ${{ vars.DNS_SUBDOMAIN || 'auto' }}
-            dns_tld: ${{ vars.DNS_TLD || 'balena-devices.com' }}
 
           # .. balenaCloud flow with Let's Encrypt (ACME) PKI
           - target: balena-public-pki
-            launch_template_version: ${{ vars.AWS_EC2_LT_VERSION || '6' }}
             # https://docs.renovatebot.com/modules/datasource/aws-machine-image/
             # amiFilter=[{"Name":"owner-id","Values":["491725000532"]},{"Name":"name","Values":["balenaOS-???.???.???-generic-amd64"]},{"region":"us-east-1"}]
             # currentImageName=balenaOS-6.5.50-generic-amd64
             ami: ami-01cfa612cf63a2eea
-            # https://dash.cloudflare.com/001b3ed2352612aaa068aca1b0022736/balena-devices.com/dns
-            subdomain:  ${{ vars.DNS_SUBDOMAIN || 'auto' }}
-            dns_tld: ${{ vars.DNS_TLD || 'balena-devices.com' }}
-            environment: ${{ vars.BALENARC_BALENA_URL || 'balena-cloud.com' }}
-            fleet: ${{ vars.BALENA_FLEET || 'balena/open-balena' }}
 
     environment:
       name: ${{ matrix.target }}
 
     steps:
+    - name: debug
+      env:
+        GITHUB: ${{ toJSON(github) }}
+        INPUTS: ${{ toJSON(inputs) }}
+        VARS: ${{ toJSON(vars) }}
+        MATRIX: ${{ toJSON(matrix) }}
+      run: |
+        echo ::group::context
+        echo ::debug::context
+        echo "${GITHUB}"
+        echo ::endgroup::
+
+        echo ::group::inputs
+        echo ::debug::inputs
+        echo "${INPUTS}"
+        echo ::endgroup::
+
+        echo ::group::variables
+        echo ::debug::variables
+        echo "${VARS}"
+        echo ::endgroup::
+
+        echo ::group::matrix
+        echo ::debug::matrix
+        echo "${MATRIX}"
+        echo ::endgroup::
+
     - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
       with:
         persist-credentials: false
@@ -201,7 +219,7 @@ jobs:
         balena_device_uuid="$(openssl rand -hex 16)"
 
         # https://www.balena.io/docs/learn/more/masterclasses/advanced-cli/#52-preregistering-a-device
-        with_backoff balena device register '${{ matrix.fleet }}' --uuid "${balena_device_uuid}"
+        with_backoff balena device register "${BALENA_FLEET}" --uuid "${balena_device_uuid}"
 
         device_id="$(balena device "${balena_device_uuid}" | grep ^ID: | cut -c20-)"
 
@@ -231,6 +249,9 @@ jobs:
         echo "balena_device_uuid=${balena_device_uuid}" >> "${GITHUB_OUTPUT}"
         echo "balena_device_id=${device_id}" >> "${GITHUB_OUTPUT}"
 
+      env:
+        BALENA_FLEET: ${{ vars.BALENA_FLEET || 'balena/open-balena' }}
+
     # https://github.com/balena-io/balena-cli/issues/1543
     - name: pin balenaOS test device to draft release
       if: matrix.target == 'balena-public-pki'
@@ -242,7 +263,7 @@ jobs:
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
         pr_id='${{ github.event.pull_request.id }}'
-        release_id="$(with_backoff balena releases '${{ matrix.fleet }}' --json \
+        release_id="$(with_backoff balena releases "${BALENA_FLEET}" --json \
           | jq -r --arg pr_id "${pr_id}" --arg head_sha "${COMMIT}" '.[]
           | select(.release_tag[].tag_key=="balena-ci-commit-sha")
           | select(.release_tag[].value==$head_sha)
@@ -257,6 +278,7 @@ jobs:
 
       env:
         COMMIT: ${{ github.event.pull_request.head.sha  }}
+        BALENA_FLEET: ${{ vars.BALENA_FLEET || 'balena/open-balena' }}
 
     - name: configure balenaOS test device environment
       if: matrix.target == 'balena-public-pki'
@@ -273,7 +295,7 @@ jobs:
         with_backoff balena env add BALENARC_NO_ANALYTICS '1' \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add DNS_TLD '${{ matrix.subdomain }}.${{ matrix.dns_tld }}' \
+        with_backoff balena env add DNS_TLD "${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
         with_backoff balena env add DB_HOST db \
@@ -299,39 +321,39 @@ jobs:
         # 10.0.2.100
         #
 
-        with_backoff balena env add API_HOST 'api.${{ matrix.subdomain }}.${{ matrix.dns_tld }}' \
+        with_backoff balena env add API_HOST "api.${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
         # not used but required for config.json to be valid
-        with_backoff balena env add DELTA_HOST 'delta.${{ matrix.subdomain }}.${{ matrix.dns_tld }}' \
+        with_backoff balena env add DELTA_HOST "delta.${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add REGISTRY2_HOST 'registry2.${{ matrix.subdomain }}.${{ matrix.dns_tld }}' \
+        with_backoff balena env add REGISTRY2_HOST "registry2.${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add VPN_HOST 'cloudlink.${{ matrix.subdomain }}.${{ matrix.dns_tld }}' \
+        with_backoff balena env add VPN_HOST "cloudlink.${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add HOST 'api.${{ matrix.subdomain }}.${{ matrix.dns_tld }}' \
+        with_backoff balena env add HOST "api.${SUBDOMAIN}.${DNS_TLD}" \
           --service api \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add TOKEN_AUTH_CERT_ISSUER 'api.${{ matrix.subdomain }}.${{ matrix.dns_tld }}' \
+        with_backoff balena env add TOKEN_AUTH_CERT_ISSUER "api.${SUBDOMAIN}.${DNS_TLD}" \
           --service api \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add REGISTRY2_TOKEN_AUTH_ISSUER 'api.${{ matrix.subdomain }}.${{ matrix.dns_tld }}' \
+        with_backoff balena env add REGISTRY2_TOKEN_AUTH_ISSUER "api.${SUBDOMAIN}.${DNS_TLD}" \
           --service registry \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add REGISTRY2_TOKEN_AUTH_REALM 'https://api.${{ matrix.subdomain }}.${{ matrix.dns_tld }}/auth/v1/token' \
+        with_backoff balena env add REGISTRY2_TOKEN_AUTH_REALM "https://api.${SUBDOMAIN}.${DNS_TLD}/auth/v1/token" \
           --service registry \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add REGISTRY2_S3_REGION_ENDPOINT 's3.${{ matrix.subdomain }}.${{ matrix.dns_tld }}' \
+        with_backoff balena env add REGISTRY2_S3_REGION_ENDPOINT "s3.${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add WEBRESOURCES_S3_HOST 's3.${{ matrix.subdomain }}.${{ matrix.dns_tld }}' \
+        with_backoff balena env add WEBRESOURCES_S3_HOST "s3.${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
         # https://github.com/balena-io/cert-manager/blob/master/entry.sh#L255-L278
@@ -345,7 +367,7 @@ jobs:
         with_backoff balena env add COMMON_REGION '${{ env.AWS_REGION }}' \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add SUPERUSER_EMAIL 'admin@${{ matrix.subdomain }}.${{ matrix.dns_tld }}' \
+        with_backoff balena env add SUPERUSER_EMAIL "admin@${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
         with_backoff balena env add ORG_UNIT openBalena \
@@ -360,6 +382,10 @@ jobs:
         with_backoff balena env add RELEASE_ASSETS_TEST 'true' \
           --service sut \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+      env:
+        SUBDOMAIN:  ${{ vars.DNS_SUBDOMAIN || 'auto' }}
+        DNS_TLD: ${{ vars.DNS_TLD || 'balena-devices.com' }}
 
     - name: configure balenaOS test device secrets
       if: matrix.target == 'balena-public-pki'
@@ -409,7 +435,7 @@ jobs:
                     # https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html
                     response="$(aws ec2 run-instances \
                       $([[ -n '${{ matrix.ami }}' ]] && echo '--image-id  ${{ matrix.ami }}') \
-                      --launch-template 'LaunchTemplateId=${{ env.AWS_EC2_LAUNCH_TEMPLATE }},Version=${{ matrix.launch_template_version }}' \
+                      --launch-template "LaunchTemplateId=${{ env.AWS_EC2_LAUNCH_TEMPLATE }},Version=${AWS_EC2_LT_VERSION}" \
                       --instance-type "${instance_type}" \
                       $([[ $market_type =~ spot ]] && echo '--instance-market-options MarketType=spot') \
                       --security-group-ids '${{ env.AWS_VPC_SECURITY_GROUP_IDS }}' \
@@ -436,6 +462,7 @@ jobs:
 
       env:
         AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+        AWS_EC2_LT_VERSION: ${{ vars.AWS_EC2_LT_VERSION || '6' }}
 
     - name: provision balenaCloud SSH key
       id: provision-ssh-key
@@ -508,7 +535,7 @@ jobs:
         balena whoami && ssh-add -l
 
         while [[ "$(curl -X POST --silent --retry ${{ env.RETRY }} --fail \
-          'https://api.${{ matrix.environment }}/supervisor/v1/device' \
+          "https://api.${BALENARC_BALENA_URL}/supervisor/v1/device" \
           --header 'authorization: Bearer ${{ secrets.BALENA_API_KEY }}' \
           --header 'Content-Type:application/json' \
           --data '{"uuid": "${{ steps.register-test-device.outputs.balena_device_uuid }}", "method": "GET"}' \
@@ -546,6 +573,9 @@ jobs:
             aws ec2 wait instance-running --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
             aws ec2 wait instance-status-ok --instance-ids ${{ steps.balena-sut.outputs.instance_id }} || exit 1
         done
+
+      env:
+        BALENARC_BALENA_URL: ${{ vars.BALENARC_BALENA_URL || 'balena-cloud.com' }}
 
     # (TBC) https://www.balena.io/docs/reference/supervisor/docker-compose/
     # due to lack of long form depends_on support in compositions, restart to ensure all
@@ -620,7 +650,7 @@ jobs:
         status=''
         while [[ "$status" =~ Running ]]; do
             status="$(curl --silent --retry ${{ env.RETRY }} --fail \
-              'https://api.${{ matrix.environment }}/supervisor/v2/applications/state' \
+              "https://api.${BALENARC_BALENA_URL}/supervisor/v2/applications/state" \
               --header 'authorization: Bearer ${{ secrets.BALENA_API_KEY }}' \
               --header 'Content-Type:application/json' \
               --data '{"uuid": "${{ steps.register-test-device.outputs.balena_device_uuid }}", "method": "GET"}' \
@@ -638,7 +668,7 @@ jobs:
         while ! [[ "$status" =~ exited ]]; do
             echo "::warning::Still working..."
             status="$(curl --silent --retry ${{ env.RETRY }} --fail \
-              'https://api.${{ matrix.environment }}/supervisor/v2/applications/state' \
+              "https://api.${BALENARC_BALENA_URL}/supervisor/v2/applications/state" \
               --header 'authorization: Bearer ${{ secrets.BALENA_API_KEY }}' \
               --header 'Content-Type:application/json' \
               --data '{"uuid": "${{ steps.register-test-device.outputs.balena_device_uuid }}", "method": "GET"}' \
@@ -661,6 +691,7 @@ jobs:
 
       env:
         ATTEMPTS: 2
+        BALENARC_BALENA_URL: ${{ vars.BALENARC_BALENA_URL || 'balena-cloud.com' }}
 
     - name: provision Ubuntu ephemeral SUT
       id: ubuntu-sut
@@ -694,7 +725,7 @@ jobs:
           - path: /root/.env
             permissions: "0766"
             content: |
-              DNS_TLD=${{ matrix.subdomain }}.${{ matrix.dns_tld }}
+              DNS_TLD=${SUBDOMAIN}.${DNS_TLD}
               PRODUCTION_MODE=false
               VERBOSE=${{ vars.VERBOSE }}
 
@@ -782,10 +813,10 @@ jobs:
               fi
 
               tmphosts="\$(mktemp)"
-              cat </etc/hosts | sed "s/\$(hostname)\$/\$(hostname) api.${{ matrix.subdomain }}.${{ matrix.dns_tld }}/g" >"\${tmphosts}" \
+              cat </etc/hosts | sed "s/\$(hostname)\$/\$(hostname) api.${SUBDOMAIN}.${DNS_TLD}/g" >"\${tmphosts}" \
                 && cat <"\${tmphosts}" >/etc/hosts \
                 && rm -f "\${tmphosts}" \
-                && getent hosts api.${{ matrix.subdomain }}.${{ matrix.dns_tld }} | grep 127.0.1.1
+                && getent hosts api.${SUBDOMAIN}.${DNS_TLD} | grep 127.0.1.1
 
               sshd -T
               service ssh restart
@@ -811,7 +842,7 @@ jobs:
                     # https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html
                     response="$(aws ec2 run-instances \
                       $([[ -n '${{ matrix.ami }}' ]] && echo '--image-id ${{ matrix.ami }}') \
-                      --launch-template 'LaunchTemplateId=${{ env.AWS_EC2_LAUNCH_TEMPLATE }},Version=${{ matrix.launch_template_version }}' \
+                      --launch-template "LaunchTemplateId=${{ env.AWS_EC2_LAUNCH_TEMPLATE }},Version=${AWS_EC2_LT_VERSION}" \
                       --instance-type "${instance_type}" \
                       $([[ "$market_type" =~ spot ]] && echo '--instance-market-options MarketType=spot') \
                       --security-group-ids '${{ env.AWS_VPC_SECURITY_GROUP_IDS }}' \
@@ -845,6 +876,9 @@ jobs:
       env:
         ATTEMPTS: 2
         AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+        SUBDOMAIN:  ${{ vars.DNS_SUBDOMAIN || 'auto' }}
+        DNS_TLD: ${{ vars.DNS_TLD || 'balena-devices.com' }}
+        AWS_EC2_LT_VERSION: ${{ vars.AWS_EC2_LT_VERSION || '6' }}
 
     - name: SUT&DUT (Ubuntu/compose)
       if: matrix.target == 'compose-private-pki'
@@ -1147,10 +1181,10 @@ jobs:
         set -ue
 
         if [[ -n '${{ steps.register-test-device.outputs.balena_device_uuid }}' ]]; then
-            match="${{ steps.register-test-device.outputs.balena_device_uuid }}.${{ matrix.subdomain }}"
+            match="${{ steps.register-test-device.outputs.balena_device_uuid }}.${SUBDOMAIN}"
 
             zone_id="$(curl --silent --retry ${{ env.RETRY }} \
-              "https://api.cloudflare.com/client/v4/zones?name=${{ matrix.dns_tld }}" \
+              "https://api.cloudflare.com/client/v4/zones?name=${DNS_TLD}" \
               -H 'Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}' | jq -r '.result[].id')"
 
             for record in $(curl --silent --retry ${{ env.RETRY }} \
@@ -1177,3 +1211,6 @@ jobs:
 
       env:
         DRY_RUN: false
+        # https://dash.cloudflare.com/001b3ed2352612aaa068aca1b0022736/balena-devices.com/dns
+        SUBDOMAIN:  ${{ vars.DNS_SUBDOMAIN || 'auto' }}
+        DNS_TLD: ${{ vars.DNS_TLD || 'balena-devices.com' }}
