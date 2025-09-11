@@ -73,6 +73,39 @@ jobs:
       name: ${{ matrix.target }}
 
     steps:
+    - name: debug
+      env:
+        GITHUB: ${{ toJSON(github) }}
+        INPUTS: ${{ toJSON(inputs) }}
+        SECRETS: ${{ toJSON(secrets) }}
+        VARS: ${{ toJSON(vars) }}
+        MATRIX: ${{ toJSON(matrix) }}
+      run: |
+        echo ::group::context
+        echo ::debug::context
+        echo "${GITHUB}"
+        echo ::endgroup::
+
+        echo ::group::inputs
+        echo ::debug::inputs
+        echo "${INPUTS}"
+        echo ::endgroup::
+
+        echo ::group::secrets
+        echo ::debug::secrets
+        echo "${SECRETS}"
+        echo ::endgroup::
+
+        echo ::group::variables
+        echo ::debug::variables
+        echo "${VARS}"
+        echo ::endgroup::
+
+        echo ::group::matrix
+        echo ::debug::matrix
+        echo "${MATRIX}"
+        echo ::endgroup::
+
     - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
       with:
         persist-credentials: false
