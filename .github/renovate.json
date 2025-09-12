@@ -1,8 +1,10 @@
 {
-  "extends": ["github>balena-io/renovate-config"],
-	"prConcurrentLimit": 1,
-	"prHourlyLimit": 1,
-	"rebaseWhen": "automerge",
+  "extends": [
+    "github>balena-io/renovate-config"
+  ],
+  "prConcurrentLimit": 1,
+  "prHourlyLimit": 1,
+  "rebaseWhen": "automerge",
   "ignorePaths": [
     "**/node_modules/**",
     "**/bower_components/**",
@@ -17,8 +19,8 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        ".*"
+      "managerFilePatterns": [
+        "/.*/"
       ],
       "matchStrings": [
         ".*amiFilter=(?<packageName>.*?)\n(.*currentImageName=(?<currentDigest>.*?)\n)?(.*\n)?.*?(?<depName>[a-zA-Z0-9-_:]*)[ ]*?[:|=][ ]*?[\"|']?(?<currentValue>ami-[a-z0-9]{17})[\"|']?.*"
