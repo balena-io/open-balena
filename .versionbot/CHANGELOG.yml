@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency balena-io/balena-cli to v22.4.6
+      hash: f69cad22136989013256a39e6e16183e9f9331a2
+      body: |
+        Update balena-io/balena-cli from 22.4.1 to 22.4.6
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.541
+  title: ""
+  date: 2025-09-18T06:26:47.300Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to 351d894
       hash: 429df446abc3c330976f0e29aa69d0ac93cb8c4f
       body: |
