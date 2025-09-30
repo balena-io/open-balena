@@ -82,7 +82,7 @@ jobs:
     - name: Setup awscli
       uses: unfor19/install-aws-cli-action@f5b46b7f32cf5e7ebd652656c5036bf83dd1e60c # v1
 
-    - uses: aws-actions/configure-aws-credentials@351d894493fd3289754a5471c0892ba92fa0abe2
+    - uses: aws-actions/configure-aws-credentials@f226b0540e0de24b4ff8b81fdd0524c71cde478f
       with:
         aws-region: ${{ vars.AWS_REGION || 'us-east-1' }}
         role-session-name: github-${{ github.job }}-${{ github.run_id }}-${{ github.run_attempt }}
@@ -140,7 +140,7 @@ jobs:
       run: sudo apt update && sudo apt install -y cloud-init
 
     # https://github.com/actions/create-github-app-token
-    - uses: actions/create-github-app-token@a8d616148505b5069dccd32f177bb87d7f39123b # v2
+    - uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2
       id: app-token
       with:
         app-id: ${{ vars.APP_ID }}
