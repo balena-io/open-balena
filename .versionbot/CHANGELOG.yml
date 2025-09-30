@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update GitHub Actions
+      hash: 567331f57f8493afd0eaf842d62b58314d4d394d
+      body: |
+        Update actions/create-github-app-token
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.542
+  title: ""
+  date: 2025-09-30T03:37:06.708Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v22.4.6
       hash: f69cad22136989013256a39e6e16183e9f9331a2
       body: |
