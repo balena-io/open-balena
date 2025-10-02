@@ -1,4 +1,15 @@
 - commits:
+    - subject: Migrate config .github/renovate.json
+      hash: 7cbd0c4a528716755013609e6c02a8c47988ebab
+      body: ""
+      footer:
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.545
+  title: ""
+  date: 2025-10-02T18:50:15.678Z
+- commits:
     - subject: Update balena-io-examples/setup-balena-action action to v0.0.46
       hash: 1d9b2c13d8190c6a02eaebf9b361b89976b8a876
       body: |
