@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Don't use vars in the matrix context"
+      hash: b49f643069325c8328d81e404c495d2f9ec7f554
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.543
+  title: ""
+  date: 2025-10-02T02:08:09.206Z
+- commits:
     - subject: Update GitHub Actions
       hash: 567331f57f8493afd0eaf842d62b58314d4d394d
       body: |
