@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena-io-examples/setup-balena-action action to v0.0.46
+      hash: 1d9b2c13d8190c6a02eaebf9b361b89976b8a876
+      body: |
+        Update balena-io-examples/setup-balena-action from 0.0.39 to 0.0.46
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.544
+  title: ""
+  date: 2025-10-02T16:12:19.052Z
+- commits:
     - subject: "patch: Don't use vars in the matrix context"
       hash: b49f643069325c8328d81e404c495d2f9ec7f554
       body: ""
