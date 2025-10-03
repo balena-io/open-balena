@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/cert-manager Docker tag to v0.3.6
+      hash: ece548815be1df500ae2798aadff3fa4a14d1652
+      body: |
+        Update balena/cert-manager from 0.3.3 to 0.3.6
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.546
+  title: ""
+  date: 2025-10-03T01:47:02.729Z
+- commits:
     - subject: Migrate config .github/renovate.json
       hash: 7cbd0c4a528716755013609e6c02a8c47988ebab
       body: ""
