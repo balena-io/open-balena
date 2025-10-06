@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to fb52c69
+      hash: db97c943205c7e1af0dec81566538ef4ab3cd3ae
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.551
+  title: ""
+  date: 2025-10-06T17:22:18.799Z
+- commits:
     - subject: Update ghcr.io/qemus/qemu Docker tag to v7.20
       hash: c0a84994d69743ccce904397c5cbb5ddd085a38a
       body: |
