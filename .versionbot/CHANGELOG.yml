@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/cert-manager Docker tag to v0.3.7
+      hash: 83ff32b8d0a203f6bf897cad5cd7e3b851ac8899
+      body: |
+        Update balena/cert-manager from 0.3.6 to 0.3.7
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.553
+  title: ""
+  date: 2025-10-06T19:42:23.976Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to 0094301
       hash: 39be95ea5d6aa950d92b8ac86ae818184139417a
       body: |
