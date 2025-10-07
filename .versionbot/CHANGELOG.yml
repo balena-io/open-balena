@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/cert-manager Docker tag to v0.3.8
+      hash: 06a8781b27a3d6cc389300127f235cd5dfb5f53e
+      body: |
+        Update balena/cert-manager from 0.3.7 to 0.3.8
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.554
+  title: ""
+  date: 2025-10-07T01:38:16.530Z
+- commits:
     - subject: Update balena/cert-manager Docker tag to v0.3.7
       hash: 83ff32b8d0a203f6bf897cad5cd7e3b851ac8899
       body: |
