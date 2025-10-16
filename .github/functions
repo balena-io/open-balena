@@ -6,12 +6,12 @@ function with_backoff() {
     local exitCode=0
 
     set +e
-    while [[ $attempt < $max_attempts ]]
+    while [[ $attempt -lt $max_attempts ]]
     do
         "$@"
         exitCode=$?
 
-        if [[ $exitCode == 0 ]]
+        if [[ $exitCode -eq 0 ]]
         then
           break
         fi

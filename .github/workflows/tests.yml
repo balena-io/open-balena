@@ -115,6 +115,7 @@ jobs:
         runner_arch="$(echo "${RUNNER_ARCH}" | tr '[:upper:]' '[:lower:]' | sed 's/x64/64bit/g')"
 
         session-manager-plugin || (curl -sSfo session-manager-plugin.deb "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_${runner_arch}/session-manager-plugin.deb" \
+          && echo "$(cat session-manager-plugin.deb.sha256)" | sha256sum --check --status \
           && sudo dpkg -i session-manager-plugin.deb \
           && rm -f session-manager-plugin.deb)
 
@@ -135,11 +136,12 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         mkdir -p "${RUNNER_TEMP}/ssh-uuid"
 
-        wget -q -O "${RUNNER_TEMP}/ssh-uuid/ssh-uuid" https://raw.githubusercontent.com/pdcastro/ssh-uuid/master/ssh-uuid.sh \
+        wget -q -O "${RUNNER_TEMP}/ssh-uuid/ssh-uuid" https://raw.githubusercontent.com/balena-io-modules/ssh-uuid/master/ssh-uuid.sh \
           && chmod +x "${RUNNER_TEMP}/ssh-uuid/ssh-uuid" \
           && ln -s "${RUNNER_TEMP}/ssh-uuid/ssh-uuid" "${RUNNER_TEMP}/ssh-uuid/scp-uuid"
 
@@ -212,7 +214,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
@@ -225,7 +228,6 @@ jobs:
 
         # the actual version deployed depends on the AWS EC2/AMI, defined in AWS_EC2_LAUNCH_TEMPLATE
         os_version="$(balena os versions ${{ vars.DEVICE_TYPE || 'generic-amd64' }} | head -n 1)"
-
         # shellcheck disable=SC2046
         balena config generate \
           --version "${os_version}" \
@@ -258,7 +260,8 @@ jobs:
       run: |
         set -uae
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
@@ -285,7 +288,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
@@ -392,7 +396,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
@@ -425,7 +430,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         # shellcheck disable=SC2046,SC2043
         for subnet_id in ${{ env.AWS_VPC_SUBNET_IDS }}; do
@@ -472,7 +478,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         function cleanup() {
             aws ec2 describe-instances --instance-ids ${{ steps.balena-sut.outputs.instance_id }} \
@@ -487,11 +494,11 @@ jobs:
             echo '${{ steps.generate-key-pair.outputs.ssh_public_key }}' > "${HOME}/.ssh/id_rsa.pub"
         fi
 
-        echo "::notice::check $(balena keys | wc -l) keys"
+        echo "::notice::check $(balena ssh-key list | wc -l) keys"
 
         match=''
-        for key in $(balena keys | grep -v ID | awk '{print $1}'); do
-            fp=$(balena key "${key}" | tail -n 1 | ssh-keygen -E md5 -lf /dev/stdin | awk '{print $2}')
+        for key in $(balena ssh-key list | grep -v ID | awk '{print $1}'); do
+            fp=$(balena ssh-key "${key}" | tail -n 1 | ssh-keygen -E md5 -lf /dev/stdin | awk '{print $2}')
             if [[ $fp =~ $(ssh-keygen -E md5 -lf "${HOME}/.ssh/id_rsa" | awk '{print $2}') ]]; then
                 match="${key}"
                 break
@@ -499,9 +506,9 @@ jobs:
         done
 
         if [[ -z $match ]]; then
-            balena key add "${GITHUB_SHA}" "${HOME}/.ssh/id_rsa.pub"
+            balena ssh-key add "${GITHUB_SHA}" "${HOME}/.ssh/id_rsa.pub"
         else
-            balena keys
+            balena ssh-key list
         fi
 
         while ! [[ "$(ssh-uuid -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
@@ -522,7 +529,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         function cleanup() {
             aws ec2 describe-instances --instance-ids ${{ steps.balena-sut.outputs.instance_id }} \
@@ -586,7 +594,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         function cleanup() {
             aws ec2 describe-instances --instance-ids ${{ steps.balena-sut.outputs.instance_id }} \
@@ -628,7 +637,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         function cleanup() {
             aws ec2 describe-instances --instance-ids ${{ steps.balena-sut.outputs.instance_id }} \
@@ -699,7 +709,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         function cleanup() {
            rm -f user-data.yml
@@ -886,7 +897,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         function log_output() {
             rm -f "{HOME}/.ssh/config"
@@ -1044,7 +1056,8 @@ jobs:
       run: |
         set -a
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         reaction=hooray
         emoji=🎉
@@ -1078,12 +1091,13 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
-        with_backoff balena keys | grep ${{ steps.provision-ssh-key.outputs.key_id }} \
-          | awk '{print $1}' | xargs --no-run-if-empty balena key rm --yes
+        with_backoff balena ssh-key list | grep ${{ steps.provision-ssh-key.outputs.key_id }} \
+          | awk '{print $1}' | xargs --no-run-if-empty balena ssh-key rm --yes
 
     - name: remove AWS/EC2 key-pair
       if: always() && matrix.target == 'compose-private-pki'
@@ -1099,7 +1113,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
@@ -1114,7 +1129,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         if [[ -n '${{ steps.balena-sut.outputs.instance_id }}' ]]; then
             with_backoff aws ec2 terminate-instances \
@@ -1130,7 +1146,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         if [[ -n '${{ steps.ubuntu-sut.outputs.instance_id }}' ]]; then
             with_backoff aws ec2 terminate-instances \
@@ -1146,7 +1163,8 @@ jobs:
       run: |
         set -ue
 
-        source src/balena-tests/functions
+        echo "02f134cc72be74a8a37d0750a42f667fa5da3d52ca9aa16912162f3b0ecf2724  .github/functions" \
+          | sha256sum --check --status && source .github/functions
 
         stale_instances=$(mktemp)
         aws ec2 describe-instances --filters \

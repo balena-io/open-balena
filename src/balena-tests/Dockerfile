@@ -25,7 +25,7 @@ RUN set -x; arch=$(uname -m | sed 's/86_64/64/g') \
 
 ENV PATH=/opt/balena/bin:${PATH}
 
-COPY functions balena.sh /usr/sbin/
+COPY balena.sh /usr/sbin/
 
 WORKDIR /balena
 
