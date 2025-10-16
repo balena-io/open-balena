@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: address CI secrets exposed to untrusted code"
+      hash: 327591ef82e0f769c9b3c78e64249d5fb8d8caf0
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.555
+  title: ""
+  date: 2025-10-16T17:03:03.479Z
+- commits:
     - subject: Update balena/cert-manager Docker tag to v0.3.8
       hash: 06a8781b27a3d6cc389300127f235cd5dfb5f53e
       body: |
