@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-s3 Docker tag to v3
+      hash: aae50913d6b6275b69aaac6bb6e1f8818b99b292
+      body: |
+        Update balena/open-balena-s3 from 2.28.92 to 3.0.14
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.556
+  title: ""
+  date: 2025-10-21T14:09:26.109Z
+- commits:
     - subject: "patch: address CI secrets exposed to untrusted code"
       hash: 327591ef82e0f769c9b3c78e64249d5fb8d8caf0
       body: ""
