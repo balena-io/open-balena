@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency ami to ami-0ecb62995f68bb549
+      hash: 652d8aa065def736072e2d1c38ec71929b50dd81
+      body: |
+        Update ami from ami-0e8459476fed2e23b to ami-0ecb62995f68bb549
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.561
+  title: ""
+  date: 2025-10-23T17:52:45.147Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v22.4.15
       hash: f043b7ea164251f3b2faaabb7a38fca3e950b3e7
       body: |
