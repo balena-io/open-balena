@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: VPN won't start otherwise"
+      hash: 03fbfa79485f0ef03842cabc5ab5c77f5493be37
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.564
+  title: ""
+  date: 2025-10-31T06:52:20.651Z
+- commits:
     - subject: Update ghcr.io/qemus/qemu Docker tag to v7.27
       hash: 2333eeada0550bcb37a542e951f63de27617b590
       body: |
