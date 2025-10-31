@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-vpn Docker tag to v12
+      hash: 1c452825df8778079e835fc992c7e7bde52859eb
+      body: |
+        Update balena/open-balena-vpn from 11.33.8 to 12.0.38
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.565
+  title: ""
+  date: 2025-10-31T13:55:43.455Z
+- commits:
     - subject: "patch: VPN won't start otherwise"
       hash: 03fbfa79485f0ef03842cabc5ab5c77f5493be37
       body: ""
