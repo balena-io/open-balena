@@ -172,7 +172,7 @@ services:
       *with-default-healthcheck,
       *with-default-privileges,
     ]
-    image: balena/open-balena-s3:3.0.14
+    image: balena/open-balena-s3:3.0.15
     volumes:
       - s3-data:/export
       - certs-data:/certs
