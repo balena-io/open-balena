@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update ghcr.io/qemus/qemu Docker tag to v7.28
+      hash: 4c685187d9d02dfde3355eaba7bdb64450c4b149
+      body: |
+        Update ghcr.io/qemus/qemu from 7.27 to 7.28
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.571
+  title: ""
+  date: 2025-10-31T22:37:23.264Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v43.1.4
       hash: ea9c8e3762ab24c3a331eb53e7510768ff6090a6
       body: |
