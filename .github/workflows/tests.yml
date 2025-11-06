@@ -812,17 +812,6 @@ jobs:
                 --username=token \
                 --password=${{ secrets.GITHUB_TOKEN }}
 
-              if [ ! -f /sys/fs/cgroup/cgroup.controllers ]; then
-                  echo "cgroups v2 is disabled"
-              else
-                  echo "cgroups v2 is enabled"
-                  source /etc/default/grub
-                  sed -i '/GRUB_CMDLINE_LINUX/d' /etc/default/grub
-                  echo GRUB_CMDLINE_LINUX=\$(printf '\"%s systemd.unified_cgroup_hierarchy=0\"\n' "\${GRUB_CMDLINE_LINUX}") > /etc/default/grub
-                  update-grub
-                  reboot
-              fi
-
               tmphosts="\$(mktemp)"
               cat </etc/hosts | sed "s/\$(hostname)\$/\$(hostname) api.${SUBDOMAIN}.${DNS_TLD}/g" >"\${tmphosts}" \
                 && cat <"\${tmphosts}" >/etc/hosts \
