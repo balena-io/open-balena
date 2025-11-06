@@ -818,6 +818,8 @@ jobs:
                 && rm -f "\${tmphosts}" \
                 && getent hosts api.${SUBDOMAIN}.${DNS_TLD} | grep 127.0.1.1
 
+              mkdir /var/run/sshd
+              chmod 0755 /var/run/sshd
               sshd -T
               service ssh restart
 
