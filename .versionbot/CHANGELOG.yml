@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Delete cgroups v2 handling from tests workflow"
+      hash: 860d250cf153b621349e6b9016f2550dc7af2ce8
+      body: All components are free of systemd now
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.578
+  title: ""
+  date: 2025-11-06T21:46:49.933Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to 2475ef7
       hash: 1212776ca7e04021c6b6a88969a7467d9e162445
       body: |
