@@ -1,4 +1,15 @@
 - commits:
+    - subject: "patch: Revise openBalena installation steps in documentation"
+      hash: 766ae0d7fb3c3e5f44c5cce25f91b6a4e0449502
+      body: Updated installation instructions for openBalena, consolidating steps and
+        improving clarity.
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.579
+  title: ""
+  date: 2025-11-06T22:26:57.884Z
+- commits:
     - subject: "patch: Delete cgroups v2 handling from tests workflow"
       hash: 860d250cf153b621349e6b9016f2550dc7af2ce8
       body: All components are free of systemd now
