@@ -44,61 +44,39 @@ name and configure records.
 
 ## Install openBalena on the server
 
-1. First [Change cgroup version] to v1 for compatibility with systemd in containers on
-   modern Linux distributions, where cgroups v2 are enabled by default:
-
-    ```bash
-    source /etc/default/grub
-    sudo sed -i '/GRUB_CMDLINE_LINUX/d' /etc/default/grub
-    echo GRUB_CMDLINE_LINUX=$(printf '\"%s systemd.unified_cgroup_hierarchy=0\"\n' "${GRUB_CMDLINE_LINUX}") \
-      | sudo tee -a /etc/default/grub
-    sudo update-grub
-    sudo reboot
-    ```
-
-2. Ensure cgroups v2 is disabled
-
-    ```bash
-    if [ ! -f /sys/fs/cgroup/cgroup.controllers ]; then
-        echo "cgroups v2 is disabled"
-    else
-        echo "cgroups v2 is enabled"
-    fi
-    ```
-
-3. Now, install or update essential software:
+1. Install or update essential software:
 
     ```bash
     sudo apt-get update && sudo apt-get install -y make openssl git jq
     ```
 
-4. Install Docker Engine
+2. Install Docker Engine
 
     ```bash
     which docker || curl -fsSL https://get.docker.com | sh -
     ```
 
-5. Create a new user with appropriate permissions:
+3. Create a new user with appropriate permissions:
 
     ```bash
     sudo useradd -s /bin/bash -m -G docker,sudo balena
     echo 'balena ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/balena
     ```
 
-6. Switch user:
+4. Switch user:
 
    ```bash
    sudo su balena
    ```
 
-7. Clone the openBalena repository and change directory:
+5. Clone the openBalena repository and change directory:
 
    ```bash
    git clone https://github.com/balena-io/open-balena.git ~/open-balena
    cd ~/open-balena
    ```
 
-8. Start the server on your domain name:
+6. Start the server on your domain name:
 
    ```bash
    export DNS_TLD=mydomain.com
@@ -107,7 +85,7 @@ name and configure records.
 
    Note down `SUPERUSER_EMAIL` and `SUPERUSER_PASSWORD` values to be used later.
 
-9. Tail the logs of the containers with:
+7. Tail the logs of the containers with:
 
    ```bash
    docker compose logs -f api
@@ -115,7 +93,7 @@ name and configure records.
 
    Replace `api` with the name of any one of the services from the [composition].
 
-10. The server can be stopped with:
+8. The server can be stopped with:
 
    ```bash
    make down
