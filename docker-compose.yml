@@ -43,9 +43,6 @@ x-default-privileges-trait: &with-default-privileges
     - SYS_RESOURCE
   security_opt:
     - apparmor=unconfined
-  tmpfs:
-    # - /run # We need the execute bit set for s6-overlay
-    - /sys/fs/cgroup
 
 x-extended-privileges-trait: &with-extended-privileges
   security_opt:
