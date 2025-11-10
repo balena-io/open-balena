@@ -302,6 +302,10 @@ jobs:
         with_backoff balena env add DNS_TLD "${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
+        # pin TLD to normalise cert-manager generated filenames
+        with_backoff balena env add TLD "${SUBDOMAIN}.${DNS_TLD}" \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
         with_backoff balena env add DB_HOST db \
           --service api \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
