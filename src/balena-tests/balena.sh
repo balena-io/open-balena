@@ -323,9 +323,9 @@ fi
 
 if [[ -n "${BALENA_DEVICE_UUID:-}" ]]; then
     # prepend the device UUID if running on balenaOS
-    TLD="${BALENA_DEVICE_UUID}.${DNS_TLD}"
+    TLD="${TLD:-${BALENA_DEVICE_UUID}.${DNS_TLD}}"
 else
-    TLD="${DNS_TLD}"
+    TLD="${TLD:-${DNS_TLD}}"
 fi
 
 BALENA_API_URL=${BALENA_API_URL:-https://api.balena-cloud.com}
