@@ -1,4 +1,29 @@
 - commits:
+    - subject: "patch: Ensure registry can find generated JWKS filename"
+      hash: 32dc4b772368dcffc763fbef2be1ae0d7dd9ce91
+      body: |-
+        Ensure /certs/private/${REGISTRY2_TOKEN_AUTH_ISSUER}.jwks.json
+        will be found when REGISTRY2_TOKEN_AUTH_ISSUER is set to
+        api.${SUBDOMAIN}.${DNS_TLD}.
+
+        Requires:
+        * https://github.com/balena-io/open-balena-registry/pull/358
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+    - subject: Update balena/open-balena-registry Docker tag to v3
+      hash: 07ae9458c70a3aa3d897c02b5a356b65579f64c9
+      body: |
+        Update balena/open-balena-registry from 2.42.0 to 3.0.47
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.581
+  title: ""
+  date: 2025-11-27T21:43:19.570Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v43.1.9
       hash: a276c3c37877c6a4af5845911cd5f423e2d639ed
       body: |
