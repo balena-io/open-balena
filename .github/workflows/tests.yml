@@ -371,10 +371,6 @@ jobs:
           --service cert-manager \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        # FIXME: still required?
-        with_backoff balena env add COMMON_REGION '${{ env.AWS_REGION }}' \
-          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
-
         with_backoff balena env add SUPERUSER_EMAIL "admin@${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
