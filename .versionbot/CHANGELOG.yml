@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update redis Docker tag to v8.4
+      hash: 117e368080bad2bce5bf5666656e322db3e5335b
+      body: |
+        Update redis from 8.2 to 8.4
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.583
+  title: ""
+  date: 2025-11-27T23:31:33.869Z
+- commits:
     - subject: Update balena-io-examples/setup-balena-action action to v0.0.61
       hash: b98f702df5de85e0d380d9c9b8988795ec8cd818
       body: |
