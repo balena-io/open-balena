@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena-io-examples/setup-balena-action action to v0.0.61
+      hash: b98f702df5de85e0d380d9c9b8988795ec8cd818
+      body: |
+        Update balena-io-examples/setup-balena-action from 0.0.53 to 0.0.61
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.582
+  title: ""
+  date: 2025-11-27T22:22:08.495Z
+- commits:
     - subject: "patch: Ensure registry can find generated JWKS filename"
       hash: 32dc4b772368dcffc763fbef2be1ae0d7dd9ce91
       body: |-
