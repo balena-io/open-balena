@@ -302,6 +302,10 @@ jobs:
         with_backoff balena env add DNS_TLD "${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
+        # pin TLD to normalise cert-manager generated filenames
+        with_backoff balena env add TLD "${SUBDOMAIN}.${DNS_TLD}" \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
         with_backoff balena env add DB_HOST db \
           --service api \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
@@ -365,10 +369,6 @@ jobs:
         # being rate limited by LetsEncrypt/ACME
         with_backoff balena env add AWS_S3_BUCKET '${{ env.AWS_S3_CERTS_BUCKET }}' \
           --service cert-manager \
-          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
-
-        # FIXME: still required?
-        with_backoff balena env add COMMON_REGION '${{ env.AWS_REGION }}' \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
         with_backoff balena env add SUPERUSER_EMAIL "admin@${SUBDOMAIN}.${DNS_TLD}" \

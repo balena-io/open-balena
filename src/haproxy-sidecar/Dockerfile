@@ -1,4 +1,4 @@
-FROM docker
+FROM docker:26.1.4-cli
 
 COPY balena.sh /usr/local/bin/balena.sh
 
