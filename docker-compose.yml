@@ -337,7 +337,7 @@ services:
       *with-extended-privileges,
       *with-network-privileges,
     ]
-    image: docker:dind
+    image: docker:26.1.4-dind
     entrypoint:
       - /bin/sh
       - -c
