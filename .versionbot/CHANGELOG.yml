@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update GitHub Actions
+      hash: 18fd87027609fa93bda9bbba7f2ea8267f820aa2
+      body: |
+        Update actions/checkout
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.584
+  title: ""
+  date: 2025-11-28T16:26:39.894Z
+- commits:
     - subject: Update redis Docker tag to v8.4
       hash: 117e368080bad2bce5bf5666656e322db3e5335b
       body: |
