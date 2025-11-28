@@ -91,7 +91,7 @@ jobs:
         echo "${MATRIX}"
         echo ::endgroup::
 
-    - uses: actions/checkout@71cf2267d89c5cb81562390fa70a37fa40b1305e
+    - uses: actions/checkout@c2d88d3ecc89a9ef08eebf45d9637801dcee7eb5
       with:
         persist-credentials: false
         ref: ${{ github.event.pull_request.head.sha }}
@@ -100,7 +100,7 @@ jobs:
     - name: Setup awscli
       uses: unfor19/install-aws-cli-action@f5b46b7f32cf5e7ebd652656c5036bf83dd1e60c # v1
 
-    - uses: aws-actions/configure-aws-credentials@2475ef7675c7f555fe065dad4cbebafc7f953779
+    - uses: aws-actions/configure-aws-credentials@259eac73d3898af00550394d11116c4a94c9b1dc
       with:
         aws-region: ${{ vars.AWS_REGION || 'us-east-1' }}
         role-session-name: github-${{ github.job }}-${{ github.run_id }}-${{ github.run_attempt }}
@@ -160,7 +160,7 @@ jobs:
       run: sudo apt update && sudo apt install -y cloud-init
 
     # https://github.com/actions/create-github-app-token
-    - uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2
+    - uses: actions/create-github-app-token@7e473efe3cb98aa54f8d4bac15400b15fad77d94 # v2
       id: app-token
       with:
         app-id: ${{ vars.APP_ID }}
