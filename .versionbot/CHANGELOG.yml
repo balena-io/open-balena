@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency ami
+      hash: b08a5bd5000441c26f7ce97c3478cfbabe8140b0
+      body: |
+        Update ami from ami-01cfa612cf63a2eea to ami-060ad2234602f4b95
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.585
+  title: ""
+  date: 2025-12-01T17:33:04.423Z
+- commits:
     - subject: Update GitHub Actions
       hash: 18fd87027609fa93bda9bbba7f2ea8267f820aa2
       body: |
