@@ -339,7 +339,7 @@ services:
       *with-extended-privileges,
       *with-network-privileges,
     ]
-    image: docker:26.1.4-dind
+    image: docker:28.5.2-dind
     entrypoint:
       - /bin/sh
       - -c
