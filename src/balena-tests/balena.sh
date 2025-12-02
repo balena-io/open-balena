@@ -181,7 +181,6 @@ function configure_virtual_device() {
     cat </balena/config.json | jq -re
 
     with_backoff balena os configure "${GUEST_IMAGE}" \
-      --fleet "${TEST_FLEET}" \
       --config-network ethernet \
       --config /balena/config.json
 
