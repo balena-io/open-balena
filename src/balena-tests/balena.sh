@@ -143,8 +143,8 @@ function create_fleet() {
             sleep "$(( (RANDOM % 5) + 5 ))s"
         done
 
-        # FIXME: on openBalena 'balena devices supported' always returns empty list
-        balena devices supported
+        # FIXME: on openBalena 'balena device-type list' always returns empty list
+        balena device-type list
     fi
 }
 
