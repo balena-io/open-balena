@@ -182,7 +182,6 @@ function configure_virtual_device() {
 
     with_backoff balena os configure "${GUEST_IMAGE}" \
       --fleet "${TEST_FLEET}" \
-      --version "${OS_VERSION#v}" \
       --config-network ethernet \
       --config /balena/config.json
 
