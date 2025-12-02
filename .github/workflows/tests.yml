@@ -266,12 +266,11 @@ jobs:
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
         pr_id='${{ github.event.pull_request.id }}'
-        release_id="$(with_backoff balena release list "${BALENA_FLEET}" --json \
-          | jq -r --arg pr_id "${pr_id}" --arg head_sha "${COMMIT}" '.[]
-          | select(.release_tag[].tag_key=="balena-ci-commit-sha")
-          | select(.release_tag[].value==$head_sha)
-          | select(.release_tag[].tag_key=="balena-ci-id")
-          | select(.release_tag[].value==$pr_id).commit')"
+        release_id="$(with_backoff curl --fail --silent \
+          "https://api.balena-cloud.com/v7/release?\$select=commit&\$filter=(belongs_to__application/any(a:a/slug%20eq%20%27${BALENA_FLEET}%27))%20and%20((release_tag/any(rt:(rt/tag_key%20eq%20%27balena-ci-commit-sha%27)%20and%20(rt/value%20eq%20%27${COMMIT}%27)))%20and%20(release_tag/any(rt:(rt/tag_key%20eq%20%27balena-ci-id%27)%20and%20(rt/value%20eq%20${pr_id}))))" \
+          --header 'authorization: Bearer ${{ secrets.BALENA_API_KEY }}' \
+          | jq -r '.d[0].commit')"
+        test "${release_id}"
 
         with_backoff balena device pin \
           ${{ steps.register-test-device.outputs.balena_device_uuid }} \
