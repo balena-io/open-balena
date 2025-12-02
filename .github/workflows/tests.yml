@@ -266,7 +266,7 @@ jobs:
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
         pr_id='${{ github.event.pull_request.id }}'
-        release_id="$(with_backoff balena releases "${BALENA_FLEET}" --json \
+        release_id="$(with_backoff balena release list "${BALENA_FLEET}" --json \
           | jq -r --arg pr_id "${pr_id}" --arg head_sha "${COMMIT}" '.[]
           | select(.release_tag[].tag_key=="balena-ci-commit-sha")
           | select(.release_tag[].value==$head_sha)
