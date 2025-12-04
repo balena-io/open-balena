@@ -147,7 +147,7 @@ jobs:
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
-        balena version
+        balena version && balena whoami
 
         "${RUNNER_TEMP}/ssh-uuid/scp-uuid" --help
 
