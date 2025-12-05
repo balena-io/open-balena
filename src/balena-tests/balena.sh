@@ -181,7 +181,8 @@ function configure_virtual_device() {
     cat </balena/config.json | jq -re
 
     with_backoff balena os configure "${GUEST_IMAGE}" \
-      --config /balena/config.json
+      --config /balena/config.json \
+      --config-network ethernet
 
     touch "${GUEST_IMAGE%.*}.ready"
 }
