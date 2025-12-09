@@ -1,4 +1,18 @@
 - commits:
+    - subject: Removed 'distro:jammy' from the runner specification.
+      hash: a3fc93c2527acdfc265b4ad074bd99a290e23c67
+      body: >
+        Focal runners were removed from the self-hosted fleet so both Noble and
+        Jammy runners should be used.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Kyle Harding
+      nested: []
+  version: 4.1.593
+  title: ""
+  date: 2025-12-09T18:25:52.001Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v22.5.5
       hash: 013bd303765873fd6176b99911e6ec31587325b2
       body: |
