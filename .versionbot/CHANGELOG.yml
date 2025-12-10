@@ -1,4 +1,26 @@
 - commits:
+    - subject: Update balena-io/balena-cli from 23.2.2 to 23.2.8
+      hash: d745acef557f9e02293a86918df3df7df8449276
+      body: |
+        Update balena-io/balena-cli from 23.2.2 to 23.2.8
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Anton Belodedenko
+      nested: []
+    - subject: Update dependency balena-io/balena-cli to v23
+      hash: 3b89a7264fc03a6bc31bf247f54e9ae741f1f59d
+      body: |
+        Update balena-io/balena-cli from 22.5.5 to 23.2.2
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.594
+  title: ""
+  date: 2025-12-10T07:57:08.599Z
+- commits:
     - subject: Removed 'distro:jammy' from the runner specification.
       hash: a3fc93c2527acdfc265b4ad074bd99a290e23c67
       body: >
