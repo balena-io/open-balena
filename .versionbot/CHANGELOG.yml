@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update GitHub Actions
+      hash: 6781512ca1018bb380c810887eb23b769199b0f1
+      body: |
+        Update actions/checkout
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.595
+  title: ""
+  date: 2025-12-10T08:26:58.158Z
+- commits:
     - subject: Update balena-io/balena-cli from 23.2.2 to 23.2.8
       hash: d745acef557f9e02293a86918df3df7df8449276
       body: |
