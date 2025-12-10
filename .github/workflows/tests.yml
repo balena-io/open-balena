@@ -124,7 +124,7 @@ jobs:
       uses: balena-io-examples/setup-balena-action@7bd1b61bd4165bac817cf0ba19ed53a25e8c66ca # v0.0.61
       env:
         # renovate: datasource=github-releases depName=balena-io/balena-cli
-        BALENA_CLI_VERSION: v22.5.5
+        BALENA_CLI_VERSION: v23.2.8
       with:
         cli-version: ${{ env.BALENA_CLI_VERSION }}
 
@@ -147,7 +147,7 @@ jobs:
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
-        balena version
+        balena version && balena whoami
 
         "${RUNNER_TEMP}/ssh-uuid/scp-uuid" --help
 
@@ -266,12 +266,11 @@ jobs:
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
         pr_id='${{ github.event.pull_request.id }}'
-        release_id="$(with_backoff balena releases "${BALENA_FLEET}" --json \
-          | jq -r --arg pr_id "${pr_id}" --arg head_sha "${COMMIT}" '.[]
-          | select(.release_tag[].tag_key=="balena-ci-commit-sha")
-          | select(.release_tag[].value==$head_sha)
-          | select(.release_tag[].tag_key=="balena-ci-id")
-          | select(.release_tag[].value==$pr_id).commit')"
+        release_id="$(with_backoff curl --fail --silent \
+          "https://api.balena-cloud.com/v7/release?\$select=commit&\$filter=(belongs_to__application/any(a:a/slug%20eq%20%27${BALENA_FLEET}%27))%20and%20((release_tag/any(rt:(rt/tag_key%20eq%20%27balena-ci-commit-sha%27)%20and%20(rt/value%20eq%20%27${COMMIT}%27)))%20and%20(release_tag/any(rt:(rt/tag_key%20eq%20%27balena-ci-id%27)%20and%20(rt/value%20eq%20${pr_id}))))" \
+          --header 'authorization: Bearer ${{ secrets.BALENA_API_KEY }}' \
+          | jq -r '.d[0].commit')"
+        test "${release_id}"
 
         with_backoff balena device pin \
           ${{ steps.register-test-device.outputs.balena_device_uuid }} \
@@ -293,28 +292,28 @@ jobs:
 
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
-        with_backoff balena env add VERBOSE "${{ vars.VERBOSE || 'false' }}" \
+        with_backoff balena env set VERBOSE "${{ vars.VERBOSE || 'false' }}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add BALENARC_NO_ANALYTICS '1' \
+        with_backoff balena env set BALENARC_NO_ANALYTICS '1' \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add DNS_TLD "${SUBDOMAIN}.${DNS_TLD}" \
+        with_backoff balena env set DNS_TLD "${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
         # pin TLD to normalise cert-manager generated filenames
-        with_backoff balena env add TLD "${SUBDOMAIN}.${DNS_TLD}" \
+        with_backoff balena env set TLD "${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add DB_HOST db \
+        with_backoff balena env set DB_HOST db \
           --service api \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add REDIS_HOST redis:6379 \
+        with_backoff balena env set REDIS_HOST redis:6379 \
           --service api \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add RATE_LIMIT_FACTOR 1000 \
+        with_backoff balena env set RATE_LIMIT_FACTOR 1000 \
           --service api \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
@@ -329,61 +328,61 @@ jobs:
         # 10.0.2.100
         #
 
-        with_backoff balena env add API_HOST "api.${SUBDOMAIN}.${DNS_TLD}" \
+        with_backoff balena env set API_HOST "api.${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
         # not used but required for config.json to be valid
-        with_backoff balena env add DELTA_HOST "delta.${SUBDOMAIN}.${DNS_TLD}" \
+        with_backoff balena env set DELTA_HOST "delta.${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add REGISTRY2_HOST "registry2.${SUBDOMAIN}.${DNS_TLD}" \
+        with_backoff balena env set REGISTRY2_HOST "registry2.${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add VPN_HOST "cloudlink.${SUBDOMAIN}.${DNS_TLD}" \
+        with_backoff balena env set VPN_HOST "cloudlink.${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add HOST "api.${SUBDOMAIN}.${DNS_TLD}" \
+        with_backoff balena env set HOST "api.${SUBDOMAIN}.${DNS_TLD}" \
           --service api \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add TOKEN_AUTH_CERT_ISSUER "api.${SUBDOMAIN}.${DNS_TLD}" \
+        with_backoff balena env set TOKEN_AUTH_CERT_ISSUER "api.${SUBDOMAIN}.${DNS_TLD}" \
           --service api \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add REGISTRY2_TOKEN_AUTH_ISSUER "api.${SUBDOMAIN}.${DNS_TLD}" \
+        with_backoff balena env set REGISTRY2_TOKEN_AUTH_ISSUER "api.${SUBDOMAIN}.${DNS_TLD}" \
           --service registry \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add REGISTRY2_TOKEN_AUTH_REALM "https://api.${SUBDOMAIN}.${DNS_TLD}/auth/v1/token" \
+        with_backoff balena env set REGISTRY2_TOKEN_AUTH_REALM "https://api.${SUBDOMAIN}.${DNS_TLD}/auth/v1/token" \
           --service registry \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add REGISTRY2_S3_REGION_ENDPOINT "s3.${SUBDOMAIN}.${DNS_TLD}" \
+        with_backoff balena env set REGISTRY2_S3_REGION_ENDPOINT "s3.${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add WEBRESOURCES_S3_HOST "s3.${SUBDOMAIN}.${DNS_TLD}" \
+        with_backoff balena env set WEBRESOURCES_S3_HOST "s3.${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
         # https://github.com/balena-io/cert-manager/blob/master/entry.sh#L255-L278
         # cert-manager will restore the last wildcard certificate from AWS/S3 to avoid
         # being rate limited by LetsEncrypt/ACME
-        with_backoff balena env add AWS_S3_BUCKET '${{ env.AWS_S3_CERTS_BUCKET }}' \
+        with_backoff balena env set AWS_S3_BUCKET '${{ env.AWS_S3_CERTS_BUCKET }}' \
           --service cert-manager \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add SUPERUSER_EMAIL "admin@${SUBDOMAIN}.${DNS_TLD}" \
+        with_backoff balena env set SUPERUSER_EMAIL "admin@${SUBDOMAIN}.${DNS_TLD}" \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add ORG_UNIT openBalena \
+        with_backoff balena env set ORG_UNIT openBalena \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
 
         # unstable/unsupported functionality
-        with_backoff balena env add HIDE_UNVERSIONED_ENDPOINT 'false' \
+        with_backoff balena env set HIDE_UNVERSIONED_ENDPOINT 'false' \
           --service api \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add RELEASE_ASSETS_TEST 'true' \
+        with_backoff balena env set RELEASE_ASSETS_TEST 'true' \
           --service sut \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
@@ -402,25 +401,25 @@ jobs:
         with_backoff balena login --token '${{ secrets.BALENA_API_KEY }}'
 
         # cert-manager requires it to get whoami information for the user
-        with_backoff balena env add API_TOKEN '${{ secrets.BALENA_API_KEY }}' \
+        with_backoff balena env set API_TOKEN '${{ secrets.BALENA_API_KEY }}' \
           --service cert-manager \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
         # cert-manager requires is to request wildcard SSL certificate from LetsEncrypt
-        with_backoff balena env add CLOUDFLARE_API_TOKEN '${{ secrets.CLOUDFLARE_API_TOKEN }}' \
+        with_backoff balena env set CLOUDFLARE_API_TOKEN '${{ secrets.CLOUDFLARE_API_TOKEN }}' \
           --service cert-manager \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
         # AWS credentials to backup/restore PKI assets
-        with_backoff balena env add AWS_ACCESS_KEY_ID '${{ env.AWS_ACCESS_KEY_ID }}' \
+        with_backoff balena env set AWS_ACCESS_KEY_ID '${{ env.AWS_ACCESS_KEY_ID }}' \
           --service cert-manager \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add AWS_SECRET_ACCESS_KEY '${{ env.AWS_SECRET_ACCESS_KEY }}' \
+        with_backoff balena env set AWS_SECRET_ACCESS_KEY '${{ env.AWS_SECRET_ACCESS_KEY }}' \
           --service cert-manager \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
-        with_backoff balena env add AWS_SESSION_TOKEN '${{ env.AWS_SESSION_TOKEN }}' \
+        with_backoff balena env set AWS_SESSION_TOKEN '${{ env.AWS_SESSION_TOKEN }}' \
           --service cert-manager \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
