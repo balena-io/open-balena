@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena-io-examples/setup-balena-action action to v0.0.69
+      hash: 9133d3fa26061a88a60a46f00aadc5e8a3787db8
+      body: |
+        Update balena-io-examples/setup-balena-action from 0.0.61 to 0.0.69
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.596
+  title: ""
+  date: 2025-12-10T09:27:24.804Z
+- commits:
     - subject: Update GitHub Actions
       hash: 6781512ca1018bb380c810887eb23b769199b0f1
       body: |
