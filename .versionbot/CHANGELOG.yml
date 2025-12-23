@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v43.5.1
+      hash: 0ea64891b34d98ecadd2d10decd30fb83ce4f51d
+      body: |
+        Update balena/open-balena-api from 43.3.7 to 43.5.1
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.606
+  title: ""
+  date: 2025-12-23T22:36:41.849Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to d469565
       hash: 2f7fd247cc285a22b74c6df458636067b14f2ddf
       body: |
