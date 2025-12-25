@@ -111,7 +111,7 @@ services:
       *with-default-healthcheck,
       *with-default-privileges,
     ]
-    image: balena/open-balena-registry:3.0.49
+    image: balena/open-balena-registry:3.0.50
     volumes:
       - certs-data:/certs
       - resin-data:/balena
@@ -140,7 +140,7 @@ services:
       *with-network-privileges,
       *with-default-privileges,
     ]
-    image: balena/open-balena-vpn:12.1.7
+    image: balena/open-balena-vpn:12.1.9
     depends_on:
       - api
     environment:
