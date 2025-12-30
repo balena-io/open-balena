@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Update all components together (locking change)"
+      hash: 2cc983b79d9636447e63efb8ffda5d3b08959ef6
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.607
+  title: ""
+  date: 2025-12-30T06:43:32.604Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v43.5.1
       hash: 0ea64891b34d98ecadd2d10decd30fb83ce4f51d
       body: |
