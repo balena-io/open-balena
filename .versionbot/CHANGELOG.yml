@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update actions/checkout digest to 064fe7f
+      hash: 0f4c93643c98ff9f64cc821a0e4d9baa9466a041
+      body: |
+        Update actions/checkout
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.624
+  title: ""
+  date: 2026-01-08T21:42:23.303Z
+- commits:
     - subject: Update balena/cert-manager Docker tag to v0.4.5
       hash: ea8887f3b701f270eeeb48718b75fb2d00182bcd
       body: |
