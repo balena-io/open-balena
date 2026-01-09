@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena-io-examples/setup-balena-action action to v0.0.79
+      hash: c1ccda822e7579b90c72e8e44c33cf5d7bb40024
+      body: |
+        Update balena-io-examples/setup-balena-action from 0.0.78 to 0.0.79
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.629
+  title: ""
+  date: 2026-01-09T23:37:08.925Z
+- commits:
     - subject: Update actions/checkout digest to 0c366fd
       hash: 6ed4eefbfebdd8ef14b894aa826e5a12ce241334
       body: |
