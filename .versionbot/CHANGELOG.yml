@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update actions/checkout digest to de0fac2
+      hash: 14e1cd60ce40988a6c977dcbb563002e2fe543a3
+      body: |
+        Update actions/checkout
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.627
+  title: ""
+  date: 2026-01-09T20:22:26.041Z
+- commits:
     - subject: Update balena-io-examples/setup-balena-action action to v0.0.78
       hash: 3acfb914567a1245df5f5888628d2902c74437ab
       body: |
