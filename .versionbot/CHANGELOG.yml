@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena-io-examples/setup-balena-action action to v0.0.80
+      hash: 2004805b6ca34f29cdfa40f1ce23ef3f3aff4c4d
+      body: |
+        Update balena-io-examples/setup-balena-action from 0.0.79 to 0.0.80
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.633
+  title: ""
+  date: 2026-01-12T22:25:50.721Z
+- commits:
     - subject: Update balena/open-balena-vpn Docker tag to v12.1.14
       hash: 58a9231f4be12f0571dbc2236ef302e3f23bf7b4
       body: |
