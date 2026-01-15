@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency balena-io/balena-cli to v23.2.23
+      hash: 4b061eb6ccb6a19bc5af42cf9c184094fdb1a4e6
+      body: |
+        Update balena-io/balena-cli from 23.2.17 to 23.2.23
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.643
+  title: ""
+  date: 2026-01-15T03:21:34.943Z
+- commits:
     - subject: Update balena/open-balena-vpn Docker tag to v12.1.15
       hash: c619ffd72da4ed0d50c8374e03805bc2c86eda0c
       body: |
