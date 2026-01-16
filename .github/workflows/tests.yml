@@ -124,7 +124,7 @@ jobs:
       uses: balena-io-examples/setup-balena-action@ab9d85bb1829271b0da797a359fbfb7e0f9213b7 # v0.0.95
       env:
         # renovate: datasource=github-releases depName=balena-io/balena-cli
-        BALENA_CLI_VERSION: v23.2.28
+        BALENA_CLI_VERSION: v23.2.30
       with:
         cli-version: ${{ env.BALENA_CLI_VERSION }}
 
