@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to e0972b3
+      hash: 5d8e66937606abc22cbb757d00036e98475ed974
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.651
+  title: ""
+  date: 2026-01-20T04:38:09.242Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v23.2.30
       hash: 83f9e0db227e364ae06eb3a220bc9cd51c50f94c
       body: |
