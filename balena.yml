@@ -23,4 +23,4 @@ data:
     - generic-amd64
     - genericx86-64-ext
     - intel-nuc
-version: 4.1.659
+version: 4.1.660
