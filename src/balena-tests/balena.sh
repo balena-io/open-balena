@@ -150,8 +150,12 @@ function create_fleet() {
 
 function download_os_image() {
     if ! [[ -s "$GUEST_IMAGE" ]]; then
+        local os_version
+        os_version="${OS_VERSION:1}"
+        os_version="${os_version//+/%2B}"
+
         with_backoff wget -qO /tmp/balena.zip \
-          "${BALENA_API_URL}/download?deviceType=${DEVICE_TYPE}&version=${OS_VERSION:1}&fileType=.zip"
+          "${BALENA_API_URL}/download?deviceType=${DEVICE_TYPE}&version=${os_version}&fileType=.zip"
 
         unzip -oq /tmp/balena.zip -d /tmp
 
