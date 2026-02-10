@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Handle balenaOS revision (rev) releases"
+      hash: b87a626dbc92d88263718e355cc58ba8a8e3647e
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.675
+  title: ""
+  date: 2026-02-10T21:37:51.405Z
+- commits:
     - subject: Update dependency ami to ami-0136735c2bb5cf5bf
       hash: 1c1423329bc21a395fb241b0ee835e8753c4f26d
       body: |
