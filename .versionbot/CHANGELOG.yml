@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to f487a3d
+      hash: 6ade8f82ac75b5d2665ecc965e04f876c613d4c5
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.676
+  title: ""
+  date: 2026-02-11T02:07:05.016Z
+- commits:
     - subject: "patch: Handle balenaOS revision (rev) releases"
       hash: b87a626dbc92d88263718e355cc58ba8a8e3647e
       body: ""
