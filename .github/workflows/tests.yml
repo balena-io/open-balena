@@ -114,10 +114,11 @@ jobs:
         # shellcheck disable=SC2153
         runner_arch="$(echo "${RUNNER_ARCH}" | tr '[:upper:]' '[:lower:]' | sed 's/x64/64bit/g')"
 
-        session-manager-plugin || (curl -sSfo session-manager-plugin.deb "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_${runner_arch}/session-manager-plugin.deb" \
-          && echo "$(cat session-manager-plugin.deb.sha256)" | sha256sum --check --status \
+        session-manager-plugin || (curl -sSfo "session-manager-plugin.deb.${runner_arch}" "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_${runner_arch}/session-manager-plugin.deb" \
+          && echo "$(cat session-manager-plugin.deb.${runner_arch}.sha256)" | sha256sum --check --status \
+          && ln -s session-manager-plugin.deb.${runner_arch} session-manager-plugin.deb \
           && sudo dpkg -i session-manager-plugin.deb \
-          && rm -f session-manager-plugin.deb)
+          && rm -f session-manager-plugin.deb session-manager-plugin.deb.${runner_arch})
 
     # https://github.com/balena-io-examples/setup-balena-action
     - name: Setup balena CLI
