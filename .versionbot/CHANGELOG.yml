@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v43.6.7
+      hash: 13277ad80901eb72648fdb2dba51a30e8c13f9bc
+      body: |
+        Update balena/open-balena-api from 43.6.3 to 43.6.7
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.679
+  title: ""
+  date: 2026-02-24T17:44:40.475Z
+- commits:
     - subject: "patch: Update session-manager-plugin hashes"
       hash: ca0ed72849b931589470321ae5636c97cc9f83ab
       body: ""
