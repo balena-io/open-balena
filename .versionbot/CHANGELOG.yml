@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Update session-manager-plugin hashes"
+      hash: ca0ed72849b931589470321ae5636c97cc9f83ab
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.678
+  title: ""
+  date: 2026-02-24T17:04:18.775Z
+- commits:
     - subject: Update balena/open-balena-registry Docker tag to v3.0.55
       hash: 65fef2315af85aaa2b92c2381668fdf9b2ff70ff
       body: |
