@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update redis Docker tag to v8.6
+      hash: eb23669aa6481f92bf3857e39ef48f02a59ac52c
+      body: |
+        Update redis from 8.4 to 8.6
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.685
+  title: ""
+  date: 2026-02-26T18:43:07.429Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v23.2.32
       hash: b0931070c41a79281405aa20cac1835a2c629f26
       body: |
