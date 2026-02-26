@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-s3 Docker tag to v3.0.22
+      hash: 622851f6b31ce86a821777c518d9fc25a36cae7d
+      body: |
+        Update balena/open-balena-s3 from 3.0.21 to 3.0.22
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.683
+  title: ""
+  date: 2026-02-26T16:43:25.552Z
+- commits:
     - subject: Update dependency ami
       hash: 1a6fb5168052a9fe92759590645a8d6d51b346c6
       body: |
