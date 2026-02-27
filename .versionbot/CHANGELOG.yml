@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update aws-actions/configure-aws-credentials digest to 3bd6229
+      hash: 47337567d834afdc2de7996342b4cde07d413e53
+      body: |
+        Update aws-actions/configure-aws-credentials
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.686
+  title: ""
+  date: 2026-02-27T16:37:01.695Z
+- commits:
     - subject: Update redis Docker tag to v8.6
       hash: eb23669aa6481f92bf3857e39ef48f02a59ac52c
       body: |
