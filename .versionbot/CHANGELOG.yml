@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-vpn Docker tag to v12.3.8
+      hash: 53495727a115c2beebde7e302f3e3e7393cc270e
+      body: |
+        Update balena/open-balena-vpn from 12.1.17 to 12.3.8
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.688
+  title: ""
+  date: 2026-03-02T18:52:02.009Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to 45ab090
       hash: 432e8f7fbbf186411769c7d59d886198c340f3f6
       body: |
