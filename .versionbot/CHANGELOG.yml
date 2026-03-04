@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v43.7.6
+      hash: e109031571b494a612eb3b209e84d615af5d1307
+      body: |
+        Update balena/open-balena-api from 43.7.5 to 43.7.6
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.696
+  title: ""
+  date: 2026-03-04T16:47:23.321Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v43.7.5
       hash: 5ddba61a94d3da53788b68705437c1b456f4893a
       body: |
