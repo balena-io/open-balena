@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update webfactory/ssh-agent action to v0.10.0
+      hash: 19cab8aa16ee8920ee2f0c4e7e6e319074fc0d26
+      body: |
+        Update webfactory/ssh-agent from 0.9.1 to 0.10.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.708
+  title: ""
+  date: 2026-03-11T18:44:40.355Z
+- commits:
     - subject: Update balena/open-balena-vpn Docker tag to v12.3.13
       hash: 87a89b7bfaf251c2635bfc0d8094bd9157689e31
       body: |
