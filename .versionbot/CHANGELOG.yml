@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update actions/create-github-app-token digest to fee1f7d
+      hash: 6173daa20e7284c209c347fc522e8825db9f4c04
+      body: |
+        Update actions/create-github-app-token
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.713
+  title: ""
+  date: 2026-03-13T23:27:21.371Z
+- commits:
     - subject: Update aws-actions/configure-aws-credentials digest to f8de47b
       hash: eefeb31b6f45fe496cd68919cb56b1527ebdeafb
       body: |
