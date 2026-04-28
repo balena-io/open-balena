@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Update component (unversioned) sigs."
+      hash: 9896118da1d9f79837785ad2ef5b680e1dea0d1d
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.755
+  title: ""
+  date: 2026-04-28T23:48:55.632Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v44.1.3
       hash: ac25f8c805020417a809cb71d76f912658b3579c
       body: |
