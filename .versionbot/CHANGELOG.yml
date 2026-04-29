@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency ami to ami-05cf1e9f73fbad2e2
+      hash: cf409f58342fb8b3b7e98556747bbbb49032b341
+      body: |
+        Update ami from ami-009d9173b44d0482b to ami-05cf1e9f73fbad2e2
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.756
+  title: ""
+  date: 2026-04-29T00:47:15.325Z
+- commits:
     - subject: "patch: Update component (unversioned) sigs."
       hash: 9896118da1d9f79837785ad2ef5b680e1dea0d1d
       body: ""
