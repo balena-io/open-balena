@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update ubuntu Docker tag to v26
+      hash: de59e62747a488fef14ac494e8df0ffea3c85eb4
+      body: |
+        Update ubuntu from 24.04 to resolute
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.761
+  title: ""
+  date: 2026-05-03T18:17:03.742Z
+- commits:
     - subject: Update balena/open-balena-vpn Docker tag to v12.3.22
       hash: 1a957abfd71950d9b0b0aa0aad22a6ed4483657e
       body: |
