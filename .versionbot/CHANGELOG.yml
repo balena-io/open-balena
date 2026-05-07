@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency ami to ami-09d76382cbfc09f06
+      hash: 14492d798dcc5cdfd72ec48e3b43d0b3a29c6e03
+      body: |
+        Update ami from ami-05cf1e9f73fbad2e2 to ami-09d76382cbfc09f06
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.765
+  title: ""
+  date: 2026-05-07T13:07:18.227Z
+- commits:
     - subject: Update balena/open-balena-haproxy Docker tag to v4.3.17
       hash: bcdf4be2c6f018ebb53ac41ed7637753ba8018f9
       body: |
