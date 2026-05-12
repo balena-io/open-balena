@@ -185,7 +185,7 @@ services:
   redis:
     <<: *base-service
     # https://redis.io/blog/what-redis-license-change-means-for-our-managed-service-providers/
-    image: redis:8.6-alpine
+    image: redis:8.6-alpine@sha256:d146f83b1e0f02fc27c26a50cee39338c736674c5959db84363e6ae3cd9e02d2
     volumes:
       - redis-data:/data
     healthcheck:
@@ -339,7 +339,7 @@ services:
       *with-extended-privileges,
       *with-network-privileges,
     ]
-    image: docker:28.5.2-dind
+    image: docker:28.5.2-dind@sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac
     entrypoint:
       - /bin/sh
       - -c
