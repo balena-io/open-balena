@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/ca-private Docker tag to v0.0.32
+      hash: 470eb3e3d3a8d402c4d3320cd252e2bad886946d
+      body: |
+        Update balena/ca-private from 0.0.31 to 0.0.32
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.784
+  title: ""
+  date: 2026-05-13T15:06:57.816Z
+- commits:
     - subject: Pin dependencies
       hash: 707cc37fbb7e69a87ab08ffa28e799d17f5dca23
       body: |
