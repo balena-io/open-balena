@@ -255,7 +255,7 @@ services:
   # https://github.com/cloudflare/cfssl/blob/master/doc/api/intro.txt
   balena-ca:
     <<: *base-service
-    image: balena/ca-private:0.0.31
+    image: balena/ca-private:0.0.32@sha256:3af451c8e65e26ef8639a4e3ef3a55fb4fa4e5366e3bf57497fd44686b632764
     volumes:
       - pki-data:/pki
       - certs-data:/certs
