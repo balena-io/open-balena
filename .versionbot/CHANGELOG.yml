@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update actions/create-github-app-token digest to bcd2ba4
+      hash: a5de18938a3427a2aca6354c43cd277925d008f5
+      body: |
+        Update actions/create-github-app-token
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.785
+  title: ""
+  date: 2026-05-13T15:56:59.791Z
+- commits:
     - subject: Update balena/ca-private Docker tag to v0.0.32
       hash: 470eb3e3d3a8d402c4d3320cd252e2bad886946d
       body: |
