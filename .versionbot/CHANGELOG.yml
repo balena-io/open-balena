@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/cert-manager Docker tag to v0.4.26
+      hash: 7af610575691a23457b7fc66cefaf3523e5e0e8c
+      body: |
+        Update balena/cert-manager from 0.4.24 to 0.4.26
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.786
+  title: ""
+  date: 2026-05-13T20:57:13.215Z
+- commits:
     - subject: Update actions/create-github-app-token digest to bcd2ba4
       hash: a5de18938a3427a2aca6354c43cd277925d008f5
       body: |
