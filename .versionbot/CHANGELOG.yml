@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-db Docker tag to v6.0.17
+      hash: 0d809ee6793de10e95e4719f6145e9e819bd76bb
+      body: |
+        Update balena/open-balena-db from 6.0.16 to 6.0.17
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.794
+  title: ""
+  date: 2026-05-14T23:51:53.733Z
+- commits:
     - subject: Update dependency ami to ami-0219f466aa992e69f
       hash: 94753677256df03249d0529c6d38e44bc6622d3c
       body: |
