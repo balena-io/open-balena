@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-db Docker tag to v6.0.18
+      hash: 73c48576bdb506cc5a4e48f4e609c6a32a2f1fac
+      body: |
+        Update balena/open-balena-db from 6.0.17 to 6.0.18
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.799
+  title: ""
+  date: 2026-05-19T03:17:20.449Z
+- commits:
     - subject: "patch: Correct DUT digest"
       hash: a0a6ad4a4f166d8b99c90141d429fd806d07436e
       body: Auto pinned digest in
