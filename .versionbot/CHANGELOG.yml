@@ -1,4 +1,17 @@
 - commits:
+    - subject: "patch: Correct DUT digest"
+      hash: a0a6ad4a4f166d8b99c90141d429fd806d07436e
+      body: Auto pinned digest in
+        https://github.com/balena-io/open-balena/commit/bedfe34cc97ad581cba66d5c3a554edcaf41da62
+        no longer exists in https://github.com/qemus/qemu/pkgs/container/qemu
+        (rebuilt?)
+      footer: {}
+      author: Anton B.
+      nested: []
+  version: 4.1.798
+  title: ""
+  date: 2026-05-19T01:18:36.724Z
+- commits:
     - subject: Update ghcr.io/qemus/qemu Docker tag to v7.30
       hash: bedfe34cc97ad581cba66d5c3a554edcaf41da62
       body: |
