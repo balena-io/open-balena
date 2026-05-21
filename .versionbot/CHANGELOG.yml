@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v46.0.24
+      hash: dc0bfc3e24447c38a774720e0e6d2232ee054f71
+      body: |
+        Update balena/open-balena-api from 46.0.23 to 46.0.24
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.808
+  title: ""
+  date: 2026-05-21T23:54:13.698Z
+- commits:
     - subject: Update balena/cert-manager Docker tag to v0.4.28
       hash: 6e1f9c7ec21404728b3c95f228bd1e11440cee19
       body: |
