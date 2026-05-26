@@ -41,13 +41,6 @@ x-default-privileges-trait: &with-default-privileges
   cap_add:
     - SYS_ADMIN
     - SYS_RESOURCE
-  security_opt:
-    - apparmor=unconfined
-
-x-extended-privileges-trait: &with-extended-privileges
-  security_opt:
-    - apparmor=unconfined
-    - seccomp=unconfined
 
 x-all-privileges-trait: &with-all-privileges
   privileged: true
@@ -287,7 +280,6 @@ services:
   sut:
     <<: [
       *base-service,
-      *with-extended-privileges,
       *with-network-privileges,
     ]
     build: src/balena-tests
@@ -310,7 +302,6 @@ services:
   dut:
     <<: [
       *base-service,
-      *with-extended-privileges,
       *with-network-privileges,
     ]
     # https://hub.docker.com/r/qemux/qemu
@@ -336,7 +327,6 @@ services:
   docker:
     <<: [
       *base-service,
-      *with-extended-privileges,
       *with-network-privileges,
     ]
     image: docker:28.5.2-dind@sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac
