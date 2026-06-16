@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-db Docker tag to v6.0.25
+      hash: 94af0601e54469241a62737155b31353dbd5720c
+      body: |
+        Update balena/open-balena-db from 6.0.22 to 6.0.25
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.818
+  title: ""
+  date: 2026-06-16T23:04:04.758Z
+- commits:
     - subject: Update redis Docker tag to v8.8
       hash: 910555e09b5af1c03cb220d7d8b487a0f0891fa4
       body: |
