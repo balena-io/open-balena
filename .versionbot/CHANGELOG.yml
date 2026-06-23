@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update ubuntu:26.04 Docker digest to 53958ec
+      hash: 4dde7d27f290321549b7cff50cc6585d4fc4afe4
+      body: |
+        Update ubuntu
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.823
+  title: ""
+  date: 2026-06-23T21:11:37.705Z
+- commits:
     - subject: "patch: Update session-manager-plugin hashes"
       hash: 4f643ed584fd06f2816c8699e6983968343887e0
       body: ""
