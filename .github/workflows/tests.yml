@@ -10,6 +10,7 @@ permissions:
   contents: read
   id-token: "write"  # AWS GitHub OIDC required: write
   packages: read
+  pull-requests: write
 
 # https://docs.github.com/en/actions/using-jobs/using-concurrency
 concurrency:
@@ -161,16 +162,6 @@ jobs:
       if: matrix.target == 'compose-private-pki'
       shell: bash
       run: sudo apt update && sudo apt install -y cloud-init
-
-    # https://github.com/actions/create-github-app-token
-    - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3
-      id: app-token
-      with:
-        app-id: ${{ vars.APP_ID }}
-        private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-        # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token
-        permission-contents: read
-        permission-pull-requests: write
 
     - name: generate SSH private key
       id: generate-key-pair
@@ -1076,7 +1067,7 @@ jobs:
 
       env:
         AWS_DEFAULT_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
-        GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        GH_TOKEN: ${{ github.token }}
 
     - name: remove balenaCloud SSH key
       if: always() && matrix.target == 'balena-public-pki'
