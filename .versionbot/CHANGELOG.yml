@@ -1,4 +1,25 @@
 - commits:
+    - subject: "patch: Update session-manager-plugin hashes"
+      hash: 4f643ed584fd06f2816c8699e6983968343887e0
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+    - subject: "tests.yml: Use GitHub Actions token to write PR comment"
+      hash: 8e0f164aef8d6b8e64371b4e08d1c7f1d3254c5d
+      body: |
+        Removes the requirement of a separate GitHub App.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+      nested: []
+  version: 4.1.822
+  title: ""
+  date: 2026-06-23T01:03:50.005Z
+- commits:
     - subject: Update balena/open-balena-vpn Docker tag to v12.3.47
       hash: 7706e67de02689abb93a7927d1b00e7ba3539ec9
       body: |
