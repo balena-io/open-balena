@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-registry Docker tag to v3.0.103
+      hash: 7849c47acc067cf836f2ddb08e95920cb2813b82
+      body: |
+        Update balena/open-balena-registry from 3.0.100 to 3.0.103
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.824
+  title: ""
+  date: 2026-06-24T02:41:58.110Z
+- commits:
     - subject: Update ubuntu:26.04 Docker digest to 53958ec
       hash: 4dde7d27f290321549b7cff50cc6585d4fc4afe4
       body: |
