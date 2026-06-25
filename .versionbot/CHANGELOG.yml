@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency balena-io/balena-cli to v25.1.9
+      hash: 9007c559ca65181041a605fe5d8b641a749c99b9
+      body: |
+        Update balena-io/balena-cli from 25.1.6 to 25.1.9
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.827
+  title: ""
+  date: 2026-06-25T15:21:44.896Z
+- commits:
     - subject: Update balena/open-balena-db Docker tag to v8
       hash: 0b769614738888909ab8583f63e9a467a9002c0a
       body: |
