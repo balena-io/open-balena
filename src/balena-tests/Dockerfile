@@ -1,7 +1,7 @@
 FROM ubuntu:26.04@sha256:53958ec7b67c2c9355df922dd08dbf0360611f8c3cdb656875e81873db9ffdba
 
 # renovate: datasource=github-releases depName=balena-io/balena-cli
-ARG BALENA_CLI_VERSION=v25.1.9
+ARG BALENA_CLI_VERSION=v25.1.10
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	bash \
