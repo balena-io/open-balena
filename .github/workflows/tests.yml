@@ -51,15 +51,15 @@ jobs:
           - target: compose-private-pki
             # https://docs.renovatebot.com/modules/datasource/aws-machine-image/
             # amiFilter=[{"Name":"owner-id","Values":["099720109477"]},{"Name":"name","Values":["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]},{"region":"us-east-1"}]
-            # currentImageName=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20260515
-            ami: ami-0fc0d6e8d70ab2d42
+            # currentImageName=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20260626
+            ami: ami-0a02a779008fa3b99
 
           # .. balenaCloud flow with Let's Encrypt (ACME) PKI
           - target: balena-public-pki
             # https://docs.renovatebot.com/modules/datasource/aws-machine-image/
             # amiFilter=[{"Name":"owner-id","Values":["491725000532"]},{"Name":"name","Values":["balenaOS-???.???.???-generic-amd64"]},{"region":"us-east-1"}]
-            # currentImageName=balenaOS-7.0.5-generic-amd64
-            ami: ami-0b5f1122a07051e91
+            # currentImageName=balenaOS-7.5.7-generic-amd64
+            ami: ami-0b56776cabce0c5f1
 
     environment:
       name: ${{ matrix.target }}
