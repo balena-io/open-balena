@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update redis:8.8-alpine Docker digest to 9d31717
+      hash: 0bfcae980f081232816b1f933e1fa96a13e76548
+      body: |
+        Update redis
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.841
+  title: ""
+  date: 2026-07-06T16:43:36.142Z
+- commits:
     - subject: Update balena/open-balena-vpn Docker tag to v12.3.68
       hash: 0ae7d3673db277e8ce3956612d90829bb14336cc
       body: |
