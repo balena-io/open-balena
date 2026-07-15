@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency ami
+      hash: 6b3fc495479a24031e792fc5b0ef0c4246630d98
+      body: |
+        Update ami from ami-0b5f1122a07051e91 to ami-034c9d5315fc97c2e
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.854
+  title: ""
+  date: 2026-07-15T02:13:06.876Z
+- commits:
     - subject: Update balena/cert-manager Docker tag to v0.4.29
       hash: 6dddeae788d29ba95f27e132df4de5c089c0b3ff
       body: |
