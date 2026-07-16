@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v48.1.18
+      hash: 44d0f4feb0c6ea8b4a1bd9a8faf17021fa7c6955
+      body: |
+        Update balena/open-balena-api from 48.1.16 to 48.1.18
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.859
+  title: ""
+  date: 2026-07-16T07:12:01.327Z
+- commits:
     - subject: Update ubuntu:26.04 Docker digest to 651ba3f
       hash: d12e82812452e7ca88e36bb85669616faff39722
       body: |
