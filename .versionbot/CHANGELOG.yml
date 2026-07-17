@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update ubuntu:26.04 Docker digest to 3131b4c
+      hash: aca506ed6c6bd78fecfef6494f1b29849db8d123
+      body: |
+        Update ubuntu
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.861
+  title: ""
+  date: 2026-07-17T00:47:17.862Z
+- commits:
     - subject: Update balena/cert-manager Docker tag to v0.4.30
       hash: 318780339e12508b83efed05494720435da8bdb2
       body: |
