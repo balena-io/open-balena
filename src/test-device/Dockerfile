@@ -1,6 +1,6 @@
 # https://hub.docker.com/r/qemux/qemu
 # https://github.com/qemus/qemu-docker
-FROM ghcr.io/qemus/qemu:7.37@sha256:b6bfb6fb5b4b08fc4fe39de724f75b7e6fdd794a0d1e618bb6e18c3d7ea02aba
+FROM ghcr.io/qemus/qemu:7.38@sha256:6b6f22e2654c4a1a82f06df396b1f9cca60aca5da1807d424d601e22f5c45676
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     minicom \
