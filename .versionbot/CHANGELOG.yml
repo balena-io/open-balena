@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency ami to ami-0eff26a8edf99afbc
+      hash: a96b5e0e77a3231fda4bb3b98ddd7d1e2b042648
+      body: |
+        Update ami from ami-034c9d5315fc97c2e to ami-0eff26a8edf99afbc
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.866
+  title: ""
+  date: 2026-07-21T14:07:18.553Z
+- commits:
     - subject: Update ghcr.io/qemus/qemu Docker tag to v7.37
       hash: 44826294d8f5dfd3c0ad7b04aad5562bc506dca6
       body: |
