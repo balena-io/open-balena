@@ -58,8 +58,8 @@ jobs:
           - target: balena-public-pki
             # https://docs.renovatebot.com/modules/datasource/aws-machine-image/
             # amiFilter=[{"Name":"owner-id","Values":["491725000532"]},{"Name":"name","Values":["balenaOS-???.???.???-generic-amd64"]},{"region":"us-east-1"}]
-            # currentImageName=balenaOS-7.6.0-generic-amd64
-            ami: ami-034c9d5315fc97c2e
+            # currentImageName=balenaOS-7.7.0-generic-amd64
+            ami: ami-0eff26a8edf99afbc
 
     environment:
       name: ${{ matrix.target }}
