@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update ghcr.io/qemus/qemu:7.42 Docker digest to 1d82a35
+      hash: 58367f23931c497ab0b81e64986d4cfa35854c31
+      body: |
+        Update ghcr.io/qemus/qemu
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.893
+  title: ""
+  date: 2026-07-31T01:46:52.947Z
+- commits:
     - subject: Update ghcr.io/qemus/qemu:7.42 Docker digest to 9715002
       hash: 730e465d5dea97f14119be17646a6483d8bda273
       body: |
