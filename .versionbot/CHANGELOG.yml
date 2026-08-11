@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-registry Docker tag to v3.0.115
+      hash: 5874081f4691d1ad7a13f71a4022149f1e66660f
+      body: |
+        Update balena/open-balena-registry from 3.0.114 to 3.0.115
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.906
+  title: ""
+  date: 2026-08-11T20:18:43.321Z
+- commits:
     - subject: Update ghcr.io/qemus/qemu:7.45 Docker digest to c002a55
       hash: eee4339e0e67bc45deb5bdd1d811c8b56fb6592b
       body: |
