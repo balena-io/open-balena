@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update ghcr.io/qemus/qemu:7.45 Docker digest to c002a55
+      hash: eee4339e0e67bc45deb5bdd1d811c8b56fb6592b
+      body: |
+        Update ghcr.io/qemus/qemu
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.905
+  title: ""
+  date: 2026-08-11T16:29:00.954Z
+- commits:
     - subject: Update balena-io-examples/setup-balena-action action to v0.1.0
       hash: c931ce21313678ab73ffe6cbd2f728b4ebe8f84e
       body: |
