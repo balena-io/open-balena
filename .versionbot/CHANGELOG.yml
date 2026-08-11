@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update ghcr.io/qemus/qemu:7.45 Docker digest to f5b5d39
+      hash: 60804e17f2a7cebf4a5f36d9e4c52cc44c8db962
+      body: |
+        Update ghcr.io/qemus/qemu
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.907
+  title: ""
+  date: 2026-08-11T23:57:11.617Z
+- commits:
     - subject: Update balena/open-balena-registry Docker tag to v3.0.115
       hash: 5874081f4691d1ad7a13f71a4022149f1e66660f
       body: |
