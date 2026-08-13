@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v49.0.8
+      hash: e4ab59f650abcffb5c63c5e8d8ea1337df2a6ba3
+      body: |
+        Update balena/open-balena-api from 49.0.6 to 49.0.8
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.912
+  title: ""
+  date: 2026-08-13T13:48:00.218Z
+- commits:
     - subject: Update ghcr.io/qemus/qemu:7.45 Docker digest to b3f02f3
       hash: 7f3b34a621cc994c628f557cb0d3f2e196e13998
       body: |
