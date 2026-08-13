@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-vpn Docker tag to v12.3.92
+      hash: e19ff4029d279cd949d6d74487e22a01a047579f
+      body: |
+        Update balena/open-balena-vpn from 12.3.86 to 12.3.92
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.914
+  title: ""
+  date: 2026-08-13T15:41:55.091Z
+- commits:
     - subject: Update ghcr.io/qemus/qemu:7.45 Docker digest to d368e5a
       hash: c92e20deb7323546211a9002d86c15b2f10be896
       body: |
