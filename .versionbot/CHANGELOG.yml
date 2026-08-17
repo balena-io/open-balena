@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update ghcr.io/qemus/qemu:7.45 Docker digest to 6557cad
+      hash: 661da285194433b028832596633061c158746556
+      body: |
+        Update ghcr.io/qemus/qemu
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.916
+  title: ""
+  date: 2026-08-17T23:56:28.128Z
+- commits:
     - subject: Update dependency ami to ami-096b91ead0f6e4fc7
       hash: 8751ff8f1c585264eab17f70f239088dc3ca3390
       body: |
