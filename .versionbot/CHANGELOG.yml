@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update redis:8.10-alpine Docker digest to becdda6
+      hash: 35c65489f07994b0c9a4cfe9f5f73629f9843dc9
+      body: |
+        Update redis
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.921
+  title: ""
+  date: 2026-08-20T18:51:56.269Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v25.2.5
       hash: e06ec0f7aa081b3e27c1e1a90e60f9ecda4d6550
       body: |
