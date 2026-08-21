@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update ubuntu:26.04 Docker digest to 2260313
+      hash: ef4a16f8b4d8b4fe756146c8b8b94b7e51c9e787
+      body: |
+        Update ubuntu
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.924
+  title: ""
+  date: 2026-08-21T15:17:24.814Z
+- commits:
     - subject: Update ghcr.io/qemus/qemu Docker tag to v7.48
       hash: 59e423b2e748326f537988c8a437b0c5ae1a33d3
       body: |
