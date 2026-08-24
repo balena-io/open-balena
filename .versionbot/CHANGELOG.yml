@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency flowzonify to v0.4.0
+      hash: 05c6caa03cff3590040dc454987dc3df23729d1e
+      body: |
+        Update flowzonify from 0.0.0 to 0.4.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.931
+  title: ""
+  date: 2026-08-24T21:14:53.424Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v49.0.14
       hash: a9634436caa4977fdfe874cc54410f8e3092e11f
       body: |
