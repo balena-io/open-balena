@@ -4,8 +4,7 @@ on:
   pull_request:
     types: [opened, synchronize, closed]
     branches: [main, master]
-  pull_request_target:
-    types: [opened, synchronize, closed]
+  push:
     branches: [main, master]
 
 permissions:
@@ -17,16 +16,7 @@ permissions:
 jobs:
   flowzone:
     name: Flowzone
-    uses: product-os/flowzone/.github/workflows/flowzone.yml@master
-    # prevent duplicate workflow executions for pull_request and pull_request_target
-    if: |
-      (
-        github.event.pull_request.head.repo.full_name == github.repository &&
-        github.event_name == 'pull_request'
-      ) || (
-        github.event.pull_request.head.repo.full_name != github.repository &&
-        github.event_name == 'pull_request_target'
-      )
+    uses: product-os/flowzone/.github/workflows/flowzone.yml@master # flowzonify 0.4.0
     secrets: inherit
     with:
       jobs_timeout_minutes: 60
