@@ -140,7 +140,7 @@ services:
       *with-network-privileges,
       *with-default-privileges,
     ]
-    image: balena/open-balena-vpn:12.3.103@sha256:ef41d90338a664788613b31abd7096fdb55c0f8fe10c554476380a2a0aed75fa
+    image: balena/open-balena-vpn:12.3.106@sha256:85b721b2c85d69b8f5d1dc2331c7885ad6174659b23a16bec46662a944c4f79a
     depends_on:
       - api
     environment:
