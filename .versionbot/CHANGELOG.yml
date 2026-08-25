@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/ca-private Docker tag to v0.0.33
+      hash: c5a3cff7bcc0a583ae41fe0436ea675242abdf9d
+      body: |
+        Update balena/ca-private from 0.0.32 to 0.0.33
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.938
+  title: ""
+  date: 2026-08-25T23:34:25.778Z
+- commits:
     - subject: Update ghcr.io/qemus/qemu:7.49 Docker digest to fa8470d
       hash: f42f7a87eed29904d711fca34b60bd957974d2a9
       body: |
