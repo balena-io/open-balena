@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-db Docker tag to v8.0.17
+      hash: 698dfc73c878c6860bfe648ee74da6cf6d8ab340
+      body: |
+        Update balena/open-balena-db from 8.0.16 to 8.0.17
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.932
+  title: ""
+  date: 2026-08-25T07:43:34.084Z
+- commits:
     - subject: Update dependency flowzonify to v0.4.0
       hash: 05c6caa03cff3590040dc454987dc3df23729d1e
       body: |
