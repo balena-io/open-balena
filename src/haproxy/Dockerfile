@@ -1,4 +1,4 @@
 # https://github.com/balena-io/open-balena-haproxy
-FROM balena/open-balena-haproxy:4.3.18@sha256:0a76ed72a926eb38152b3fe9938ed603be192295bceefee94d13397eddbb6ba1
+FROM balena/open-balena-haproxy:4.3.19@sha256:62689040658d3a716c88efa373e501869c9483ae540e9012042bf2e28facc6e5
 
 COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
