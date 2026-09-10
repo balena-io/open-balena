@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update ubuntu:26.04 Docker digest to 513c074
+      hash: 77d766738298262d980869a0edd719cc0c77bafd
+      body: |
+        Update ubuntu
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.948
+  title: ""
+  date: 2026-09-10T22:23:54.776Z
+- commits:
     - subject: Update dependency ami
       hash: 115a939b8a90fbf87642f03991af5aec18e2c307
       body: |
