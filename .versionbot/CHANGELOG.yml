@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update redis:8.10-alpine Docker digest to ba6e394
+      hash: 6f8e7bc69fe134b49fdad4a74458a695d49fd2f8
+      body: |
+        Update redis
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.958
+  title: ""
+  date: 2026-09-24T20:42:42.232Z
+- commits:
     - subject: Update ubuntu:26.04 Docker digest to da6fc2b
       hash: d6a9c289aba1f447fc9738828dd330f2467a23a8
       body: |
