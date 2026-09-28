@@ -51,8 +51,8 @@ jobs:
           - target: compose-private-pki
             # https://docs.renovatebot.com/modules/datasource/aws-machine-image/
             # amiFilter=[{"Name":"owner-id","Values":["099720109477"]},{"Name":"name","Values":["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]},{"region":"us-east-1"}]
-            # currentImageName=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20260904
-            ami: ami-025d99823a4caad37
+            # currentImageName=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20260923
+            ami: ami-0045d7fc2ad003464
 
           # .. balenaCloud flow with Let's Encrypt (ACME) PKI
           - target: balena-public-pki
