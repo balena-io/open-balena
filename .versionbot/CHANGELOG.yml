@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update dependency ami to ami-0045d7fc2ad003464
+      hash: 6ba1388e686effeef951c745175e66083b0c3908
+      body: |
+        Update ami from ami-025d99823a4caad37 to ami-0045d7fc2ad003464
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.964
+  title: ""
+  date: 2026-09-28T15:41:51.507Z
+- commits:
     - subject: Update balena/open-balena-vpn Docker tag to v12.3.132
       hash: 7aabe2797ee02443750ee310aa55ade0953e1cf7
       body: |
