@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-registry Docker tag to v3.1.8
+      hash: 686b61845659e50a13d5ffece7fc58c05a31d9b9
+      body: |
+        Update balena/open-balena-registry from 3.1.7 to 3.1.8
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.965
+  title: ""
+  date: 2026-09-29T00:37:58.586Z
+- commits:
     - subject: Update dependency ami to ami-0045d7fc2ad003464
       hash: 6ba1388e686effeef951c745175e66083b0c3908
       body: |
