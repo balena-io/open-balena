@@ -111,7 +111,7 @@ services:
       *with-default-healthcheck,
       *with-default-privileges,
     ]
-    image: balena/open-balena-registry:v3.1.7@sha256:cf68e697a7dbe2390aa3fcc26d5228e4c4b103368aaa0935e32884e4a22936a0
+    image: balena/open-balena-registry:3.1.8@sha256:ec74814ad246c0af5cf3517ea79b97de6bace3bb5aed1b098e7f478217a03705
     volumes:
       - certs-data:/certs
       - resin-data:/balena
