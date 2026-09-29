@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-vpn Docker tag to v12.3.135
+      hash: 70dbbb486f14513b6061eff15df11eb9321e595c
+      body: |
+        Update balena/open-balena-vpn from 12.3.132 to 12.3.135
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.966
+  title: ""
+  date: 2026-09-29T10:33:23.846Z
+- commits:
     - subject: Update balena/open-balena-registry Docker tag to v3.1.8
       hash: 686b61845659e50a13d5ffece7fc58c05a31d9b9
       body: |
