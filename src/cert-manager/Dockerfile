@@ -1,4 +1,4 @@
 # https://github.com/balena-io/cert-manager
-FROM balena/cert-manager:0.4.32@sha256:e97ab966635184bcba040a691313428ed0faee89bb370fa37d78bf5225afd625
+FROM balena/cert-manager:0.5.1@sha256:fbe0d09ae430e4fc9ce2af9bf85df881bbb9401424fcd983ec718cefae7bf82e
 
 COPY *.json /opt/
