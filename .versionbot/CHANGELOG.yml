@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/ca-private Docker tag to v0.0.35
+      hash: c92d6ae7850c2a130a3c699f5a2b23de7e01e0c2
+      body: |
+        Update balena/ca-private from 0.0.33 to 0.0.35
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.969
+  title: ""
+  date: 2026-10-08T14:39:46.492Z
+- commits:
     - subject: Update ubuntu:26.04 Docker digest to f144425
       hash: 467d4bf774994fb23725a56b704a1fae143f8cf9
       body: |
