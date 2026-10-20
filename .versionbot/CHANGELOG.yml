@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Update session-manager SHA(s)"
+      hash: 39de5258afd15a56c1046b921078670e123270f4
+      body: ""
+      footer: {}
+      author: Anton Belodedenko
+      nested: []
+  version: 4.1.970
+  title: ""
+  date: 2026-10-20T05:18:52.121Z
+- commits:
     - subject: Update balena/ca-private Docker tag to v0.0.35
       hash: c92d6ae7850c2a130a3c699f5a2b23de7e01e0c2
       body: |
