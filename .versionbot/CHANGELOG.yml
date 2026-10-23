@@ -1,4 +1,14 @@
 - commits:
+    - subject: "patch: Update IMAGE_STORAGE_ENDPOINT to use HTTPS"
+      hash: bdbbfa5b97fbb701d9f554f5a567c705cbe5bb5a
+      body: ""
+      footer: {}
+      author: Anton B.
+      nested: []
+  version: 4.1.974
+  title: ""
+  date: 2026-10-23T00:24:18.676Z
+- commits:
     - subject: Update balena/open-balena-db Docker tag to v8.0.28
       hash: 6a8f44cd0317fc395ecdac97f321b6d9da318ea4
       body: |
