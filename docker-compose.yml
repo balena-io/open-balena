@@ -156,7 +156,7 @@ services:
   # https://github.com/balena-io/open-balena-db
   db:
     <<: *base-service
-    image: balena/open-balena-db:8.0.28@sha256:42cc99cc7b3b93c49794a68e4fcec86f1d650af0d5805ff8ecae038ae6943df1
+    image: balena/open-balena-db:8.0.31@sha256:7c8518fe702e124da4f15095b8ccd1e772fc8f2a0d5f9b942199bfa28bac3e9c
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
