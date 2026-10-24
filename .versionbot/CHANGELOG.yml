@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update redis:8.10-alpine Docker digest to 0bf6577
+      hash: 55536d62e40be8bc9ec90e617de57224ef76cab0
+      body: |
+        Update redis
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.977
+  title: ""
+  date: 2026-10-24T15:34:41.570Z
+- commits:
     - subject: Update balena/open-balena-api Docker tag to v50
       hash: 1e15f1f993efa877b27760c3e1488ee10e13f20e
       body: |
