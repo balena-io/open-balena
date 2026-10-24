@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-vpn Docker tag to v12.3.192
+      hash: 259ff9d4ecd1538afa9a087429aebed9f9f5d399
+      body: |
+        Update balena/open-balena-vpn from 12.3.181 to 12.3.192
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.978
+  title: ""
+  date: 2026-10-24T16:39:52.525Z
+- commits:
     - subject: Update redis:8.10-alpine Docker digest to 0bf6577
       hash: 55536d62e40be8bc9ec90e617de57224ef76cab0
       body: |
