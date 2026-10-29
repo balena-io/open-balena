@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/cert-manager Docker tag to v0.5.5
+      hash: 5154e3fdbded8be9c44bae08bbc6cbc1cfa0f1d4
+      body: |
+        Update balena/cert-manager from 0.5.4 to 0.5.5
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.984
+  title: ""
+  date: 2026-10-29T18:28:33.964Z
+- commits:
     - subject: Update redis:8.10-alpine Docker digest to 21090af
       hash: 6fddf6d585e265d0687c8404ce0e6d5a3874ee95
       body: |
