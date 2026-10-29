@@ -76,7 +76,7 @@ services:
       *with-default-privileges,
       *with-default-volumes,
     ]
-    image: balena/open-balena-api:50.0.39@sha256:b199aad92691be9de99d540867a338731041ef0e4aefa60dcfcb87751baffffa
+    image: balena/open-balena-api:50.1.2@sha256:1fa98b017a272d898a2ad9834bad571fdea5743aea8f5271a606b270b1ad0d74
     depends_on:
       - db
       - redis
