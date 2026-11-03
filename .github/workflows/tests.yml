@@ -311,6 +311,14 @@ jobs:
           --service api \
           --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
+        # shorten device types cache timeouts (ms) during tests
+        with_backoff balena env set DEVICE_TYPES_CACHE_LOCAL_TIMEOUT 60000 \
+          --service api \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
+
+        with_backoff balena env set DEVICE_TYPES_CACHE_TIMEOUT 120000 \
+          --service api \
+          --device '${{ steps.register-test-device.outputs.balena_device_uuid }}'
 
         # to allow devices running locally to communicate to the local API, we can route
         # to the local Docker network aliases instead of public DNS, since (a) DNS_TLD is
@@ -935,6 +943,8 @@ jobs:
           && docker compose version \
           && docker compose config --no-interpolate >${COMMIT} \
           && cat <${COMMIT} >docker-compose.yml \
+          && yq -i .services.api.environment.DEVICE_TYPES_CACHE_LOCAL_TIMEOUT=60000 docker-compose.yml \
+          && yq -i .services.api.environment.DEVICE_TYPES_CACHE_TIMEOUT=120000 docker-compose.yml \
           && sudo -u balena --preserve-env=DNS_TLD\,VERBOSE\,PRODUCTION_MODE make up \
           && sudo -u balena make self-signed \
           && sudo -u balena make verify \
