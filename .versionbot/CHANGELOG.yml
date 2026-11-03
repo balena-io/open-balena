@@ -1,4 +1,16 @@
 - commits:
+    - subject: Reduce the DEVICE_TYPES cache timeouts during tests
+      hash: 488a38c5ce9c6d7e4a640f24f40fcdf521170ad2
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+      nested: []
+  version: 4.1.992
+  title: ""
+  date: 2026-11-03T21:48:14.168Z
+- commits:
     - subject: Update dependency balena-io/balena-cli to v25.2.7
       hash: 4b375549ea93ee6edc246ff52ee102f2ab73ff3c
       body: |
