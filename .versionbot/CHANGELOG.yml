@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update balena/open-balena-api Docker tag to v52
+      hash: 32441fae1ee7311f0b3b9a93dcdae8402c970ee5
+      body: |
+        Update balena/open-balena-api from 50.1.2 to 52.2.3
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.993
+  title: ""
+  date: 2026-11-03T22:23:15.079Z
+- commits:
     - subject: Reduce the DEVICE_TYPES cache timeouts during tests
       hash: 488a38c5ce9c6d7e4a640f24f40fcdf521170ad2
       body: ""
