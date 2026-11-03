@@ -23,6 +23,9 @@ jobs:
       cloudflare_website: open-balena
       balena_slugs: |
         balena/open-balena
+      # Open PRs share one queue for balena push. Merged-PR finalize and master never wait.
+      balena_publish_concurrency_group: >-
+        ${{ github.event_name == 'pull_request' && github.event.action != 'closed' && 'balena-api' || '' }}
 
   tests:
     name: openBalena tests
