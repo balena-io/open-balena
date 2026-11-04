@@ -1,4 +1,21 @@
 - commits:
+    - subject: Queue open-PR balena pushes in one concurrency group
+      hash: edf2d3a5f83b6b9028b1a74b80fe7d427a0cbe61
+      body: |
+        Parallel PRs hit API rate limits in `balena push`. Pass the new
+        Flowzone input on open PRs only, so merged-PR finalize and master
+        pushes never wait behind them.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+      nested: []
+  version: 4.1.995
+  title: ""
+  date: 2026-11-04T19:52:53.267Z
+- commits:
     - subject: Update balena/open-balena-vpn Docker tag to v12.4.5
       hash: ea24358baf05660ab55e3bd1b0e16eb0545ccc14
       body: |
