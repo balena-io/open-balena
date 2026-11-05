@@ -88,6 +88,7 @@ services:
       DB_HOST: db
       DB_PORT: 5432
       DB_USER: docker
+      DEVICE_TYPES_V1_PROXY_URL: https://api.balena-cloud.com/device-types/v1
       HOSTS_CONFIG: API_HOST:api,DB_HOST:db,DELTA_HOST:delta,HOST:api,REDIS_HOST:redis,TOKEN_AUTH_CERT_ISSUER:api,VPN_HOST:cloudlink,REGISTRY2_HOST:registry2
       IMAGE_STORAGE_BUCKET: resin-production-img-cloudformation
       IMAGE_STORAGE_ENDPOINT: https://s3.amazonaws.com

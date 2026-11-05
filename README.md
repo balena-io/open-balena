@@ -16,6 +16,17 @@ images to your devices.
 
 To learn more about openBalena, visit [balena.io/open][open-balena-website].
 
+> [!IMPORTANT]
+> **openBalena v5 changes how device types are resolved.** If you run an openBalena
+> version older than v5 and don't use a custom `IMAGE_STORAGE_BUCKET`:
+>
+> - you will stop receiving new balenaOS releases after **<BUCKET_PUBLISHING_END_DATE>**
+> - you will lose access to **all** balenaOS releases and won't be able to generate a
+>   `config.json` to provision new devices after **<LEGACY_BUCKET_SHUTDOWN_DATE>**
+>
+> To avoid this, migrate to v5. If you do use a custom `IMAGE_STORAGE_BUCKET`, upgrading
+> to v5 requires extra configuration. See the [v5 migration guide][v5-migration].
+
 - [Features](#features)
 - [Getting Started](#getting-started)
 - [Compatibility](#compatibility)
@@ -65,6 +76,10 @@ for them to be fully compatible with this release, as some features may not work
 While in-place openBalena upgrades may succeed, when performing major updates, it is
 recommended for a new instance to be deployed in parallel with the existing one, followed
 by copying state across and pointing a test device to the new instance.
+
+If you are upgrading from openBalena v4 or older, read the
+[v5 migration guide][v5-migration] first. It covers the new device type resolution and
+the deadlines for instances that still rely on the legacy balenaOS image bucket.
 
 
 ## Documentation
@@ -178,9 +193,11 @@ releases.
 
 ### Can a new device type be added to openBalena?
 openBalena imports the following public [device-types] "out of the box". You can specify
-your own contracts repository by overriding `CONTRACTS_PUBLIC_REPO_NAME`,
-`CONTRACTS_PUBLIC_REPO_OWNER` and `IMAGE_STORAGE_BUCKET` environment variables on the API
-service/container.
+your own contracts repository by overriding the `CONTRACTS_PUBLIC_REPO_NAME` and
+`CONTRACTS_PUBLIC_REPO_OWNER` environment variables on the API service/container. Since
+v5, the device type list is fetched from `DEVICE_TYPES_V1_PROXY_URL`, so you'll also need
+to serve your own device type JSON list and point that variable at it. See the
+[v5 migration guide](docs/migrating-to-v5.md#you-use-a-custom-s3-bucket).
 
 ### Are there open-source UI dashboards from the community for openBalena?
 Yes! Here are a few:
@@ -209,3 +226,4 @@ Yes! Here are a few:
 [open-balena-website]: https://balena.io/open
 [pulls]: https://github.com/balena-io/open-balena/pulls
 [device-types]: https://github.com/balena-io/contracts/blob/master/contracts/hw.device-type
+[v5-migration]: docs/migrating-to-v5.md
