@@ -1,4 +1,18 @@
 - commits:
+    - subject: Proxy the /device_types/v1 results from balena-cloud.com
+      hash: b92ea8cfd3ded50077cf1905d58507078cbd5646
+      body: ""
+      footer:
+        Change-type: major
+        change-type: major
+        See: https://github.com/balena-io/open-balena-api/pull/2447
+        see: https://github.com/balena-io/open-balena-api/pull/2447
+      author: Thodoris Greasidis
+      nested: []
+  version: 5.0.0
+  title: ""
+  date: 2026-11-16T18:08:33.212Z
+- commits:
     - subject: Update balena-io-examples/setup-balena-action action to v0.1.13
       hash: cb55afb0686fe1ad1b8ba8ca48daf4b297ecb491
       body: |
